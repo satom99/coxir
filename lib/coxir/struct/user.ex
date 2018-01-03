@@ -9,7 +9,6 @@ defmodule Coxir.Struct.User do
   end
 
   def get(user \\ "@me")
-  def get(nil), do: nil
   def get(%{id: id}),
     do: get(id)
 

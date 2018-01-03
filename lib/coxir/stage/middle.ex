@@ -205,6 +205,7 @@ defmodule Coxir.Stage.Middle do
         handle(:GUILD_MEMBER_UPDATE, member)
     end
     handle(:VOICE_SERVER_UPDATE, data)
+    data
   end
 
   # Not handled on purpose,

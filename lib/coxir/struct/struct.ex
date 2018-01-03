@@ -13,17 +13,23 @@ defmodule Coxir.Struct do
 
       defp put(map, key, value) do
         case map do
-          %{error: _error} -> map
-          object -> Map.put(map, key, value)
+          %{error: _error} ->
+            map
+          object ->
+            Map.put(map, key, value)
         end
       end
 
       defp replace(map, key, function) do
         map
         |> Map.get(key)
-        |> function.()
         |> case do
-          nil -> map
+          nil -> nil
+          value -> function.(value)
+        end
+        |> case do
+          nil ->
+            map
           value ->
             key
             |> Atom.to_string
@@ -33,14 +39,12 @@ defmodule Coxir.Struct do
               ^key ->
                 Map.replace(map, key, value)
               new ->
-                map
-                |> Map.put(new, value)
+                Map.put(map, new, value)
             end
         end
       end
 
       def get(%{id: id}), do: get(id)
-      def get(nil), do: nil
       def get(id) do
         fetch(id)
         |> case do
@@ -48,7 +52,7 @@ defmodule Coxir.Struct do
           data -> pretty(data)
         end
       end
-      
+
       def select(pattern \\ %{}) do
         :ets.tab2list(@table)
         |> Enum.map(&decode/1)

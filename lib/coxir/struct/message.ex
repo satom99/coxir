@@ -9,17 +9,18 @@ defmodule Coxir.Struct.Message do
     |> replace(:channel_id, &Channel.get/1)
   end
 
-  def reply(%{channel_id: channel}, content, tts \\ false),
-    do: Channel.send_message(channel, content, tts)
+  def reply(%{channel_id: channel}, content),
+    do: Channel.send_message(channel, content)
 
   def edit(%{id: id, channel_id: channel}, content) do
-    body = case content do
-      [embed: embed] ->
-        %{embed: embed}
-      content ->
+    content = \
+    cond do
+      is_binary(content) ->
         %{content: content}
+      true ->
+        content
     end
-    API.request(:patch, "channels/#{channel}/messages/#{id}", body)
+    API.request(:patch, "channels/#{channel}/messages/#{id}", content)
     |> pretty
   end
 

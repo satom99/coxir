@@ -27,4 +27,17 @@ defmodule Coxir.API.Base do
       | headers
     ]
   end
+
+  def process_response_body(""), do: ""
+  def process_response_body(body) do
+    Jason.decode!(body, keys: :atoms)
+  end
+
+  def process_headers(headers) do
+    headers
+    |> Map.new
+    |> Map.update("Retry-After", nil, &String.to_integer/1)
+    |> Map.update("X-RateLimit-Remaining", nil, &String.to_integer/1)
+    |> Map.update("X-RateLimit-Reset", nil, &String.to_integer(&1) * 1000)
+  end
 end

@@ -8,28 +8,32 @@ defmodule Coxir.Struct.Channel do
     |> replace(:owner_id, &User.get/1)
   end
 
-  def send_message(term, content, tts \\ false)
-  def send_message(%{id: id}, content, tts),
-    do: send_message(id, content, tts)
+  def send_message(%{id: id}, content),
+    do: send_message(id, content)
 
-  def send_message(channel, content, tts) do
-    body = case content do
-      [file: file, name: name] ->
-        {:multipart,
-          [{:file, file}, {:content, name}]
-        }
-      [embed: embed] ->
-        %{embed: embed}
-      content ->
-        %{content: content, tts: tts}
+  def send_message(channel, content) do
+    content = \
+    cond do
+      is_binary(content) ->
+        %{content: content}
+      file = content[:file] ->
+        %{file: file}
+      true ->
+        content
     end
-    headers = case body do
-      {:multipart, _list} ->
-        [{"Content-Type", "multipart/form-data"}]
-      _ ->
-        []
+
+    function = \
+    cond do
+      content[:file] ->
+        :request_multipart
+      true ->
+        :request
     end
-    API.request(:post, "channels/#{channel}/messages", body, headers)
+
+    arguments = [:post, "channels/#{channel}/messages", content]
+
+    API
+    |> apply(function, arguments)
     |> Message.pretty
   end
 

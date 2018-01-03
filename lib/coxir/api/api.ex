@@ -27,48 +27,41 @@ defmodule Coxir.API do
     end
   end
 
+  def request_multipart(method, route, body, options \\ [], headers \\ []) do
+    body = body
+    |> Enum.to_list
+    body = {:multipart, body}
+
+    headers = [
+      {"Content-Type", "multipart/form-data"}
+      | headers
+    ]
+    request(method, route, body, options, headers)
+  end
+
   defp response({_atom, struct}, route) do
     struct
     |> case do
-      %{headers: headers, status_code: code} ->
+      %{body: body, headers: headers, status_code: code} ->
         route = route
         |> route_param
 
-        header = &headers
-        |> List.keyfind(&1, 0)
-        |> case do
-          nil -> nil
-          tup -> elem(tup, 1)
-        end
+        reset = headers["X-RateLimit-Reset"]
+        remaining = headers["X-RateLimit-Remaining"]
 
-        reset = header.("X-RateLimit-Reset")
+        {route, reset, remaining} = \
+        headers["X-RateLimit-Global"]
         |> case do
-          nil -> nil
-          value ->
-            String.to_integer(value) * 1000
-        end
-
-        remaining = header.("X-RateLimit-Remaining")
-        |> case do
-          nil -> nil
-          value ->
-            String.to_integer(value)
-        end
-
-        header.("X-RateLimit-Global")
-        |> case do
-          nil -> :ok
+          nil ->
+            {route, reset, remaining}
           _global ->
-            retry = header.("Retry-After")
-            |> String.to_integer
-
-            route = :global
+            retry = headers["Retry-After"]
             reset = current_time() + retry
-            remaining = 0
+            {:global, reset, 0}
         end
 
         if reset && remaining do
-          remote = header.("Date")
+          remote = headers["Date"]
           |> date_header
 
           offset = (remote - current_time())
@@ -76,14 +69,6 @@ defmodule Coxir.API do
 
           {route, remaining, reset + offset}
           |> update_limit
-        end
-
-        body = struct
-        |> Map.get(:body)
-        |> case do
-          nil -> nil
-          body ->
-            Jason.decode!(body, keys: :atoms)
         end
 
         cond do
