@@ -27,41 +27,25 @@ defmodule Coxir.Voice do
     do: join(nil, id)
 
   def join(guild, channel) do
-    server = guild
-    || channel
-
-    if server do
-      server
-      |> get
-      |> case do
-        nil ->
-          user = User.get()
-          state = %{
-            server_id: server,
-            client_id: user.id
-          }
-          child = supervisor(
-            Server,
-            [state],
-            [id: server]
-          )
-          __MODULE__
-          |> Supervisor.start_child(child)
-        _pid -> :ok
-      end
+    guild
+    |> get
+    |> case do
+      nil ->
+        user = User.get()
+        state = %{
+          server_id: guild,
+          client_id: user.id
+        }
+        child = supervisor(
+          Server,
+          [state],
+          [id: guild]
+        )
+        __MODULE__
+        |> Supervisor.start_child(child)
+      _pid -> :ok
     end
-
-    (guild || "0")
-    |> Guild.shard
-    |> Gateway.send(
-      4,
-      %{
-        guild_id: guild,
-        channel_id: channel,
-        self_mute: false,
-        self_deaf: false
-      }
-    )
+    notify(guild, channel)
   end
 
   def leave(%{guild_id: guild}),
@@ -71,13 +55,13 @@ defmodule Coxir.Voice do
     do: leave(nil)
 
   def leave(guild),
-    do: join(guild, nil)
+    do: notify(guild, nil)
 
   def play(%{guild_id: guild}, term),
     do: play(guild, term)
 
-  def play(%{id: id}, term),
-    do: play(id, term)
+  def play(%{id: _id}, term),
+    do: play(nil, term)
 
   def play(server, term) do
     server
@@ -91,8 +75,8 @@ defmodule Coxir.Voice do
   def stop_playing(%{guild_id: guild}),
     do: stop_playing(guild)
 
-  def stop_playing(%{id: id}),
-    do: stop_playing(id)
+  def stop_playing(%{id: _id}),
+    do: stop_playing(nil)
 
   def stop_playing(server) do
     server
@@ -138,6 +122,20 @@ defmodule Coxir.Voice do
 
     __MODULE__
     |> Supervisor.delete_child(server)
+  end
+
+  defp notify(guild, channel) do
+    (guild || "0")
+    |> Guild.shard
+    |> Gateway.send(
+      4,
+      %{
+        guild_id: guild,
+        channel_id: channel,
+        self_mute: false,
+        self_deaf: false
+      }
+    )
   end
 
   defp get_audio(server) do

@@ -10,6 +10,7 @@ defmodule Coxir.Voice.Gateway do
   #  :token,
   #  :endpoint,
   #  :server_id,
+  #  :channel_id,
   #  :session_id,
   #  :user_id,
   #  :handler,
@@ -36,7 +37,7 @@ defmodule Coxir.Voice.Gateway do
     |> case do
       4014 -> :ok
       4015 -> :ok
-      _err -> Voice.leave(state.server_id)
+      _err -> Voice.stop(state.server_id)
     end
     {:ok, state}
   end
@@ -47,10 +48,13 @@ defmodule Coxir.Voice.Gateway do
   end
 
   def handle_info(:identify, state) do
+    server = state.server_id
+    || state.channel_id
+
     data = %{
       token: state.token,
       user_id: state.user_id,
-      server_id: state.server_id,
+      server_id: server,
       session_id: state.session_id
     }
     |> payload(0)

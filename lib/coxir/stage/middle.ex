@@ -155,7 +155,14 @@ defmodule Coxir.Stage.Middle do
     Member.pretty(data)
   end
   def handle(:PRESENCE_UPDATE, data) do
-    handle(:GUILD_MEMBER_UPDATE, data)
+    data
+    |> Map.get(:guild_id)
+    |> case do
+      nil ->
+        :ok
+      _ok ->
+        handle(:GUILD_MEMBER_UPDATE, data)
+    end
     :ignore
   end
 
@@ -169,10 +176,9 @@ defmodule Coxir.Stage.Middle do
 
   # Voice
   def handle(:VOICE_SERVER_UPDATE, data) do
-    server = data[:guild_id]
-    || data[:channel_id]
-
-    Voice.get(server)
+    data
+    |> Map.get(:guild_id)
+    |> Voice.get
     |> case do
       nil -> :ok
       pid -> Voice.update(pid, data)

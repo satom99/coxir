@@ -78,6 +78,7 @@ defmodule Coxir.Voice.Handler do
           token: token,
           endpoint: state.endpoint,
           server_id: state.server_id,
+          channel_id: state.channel_id,
           session_id: session_id,
           user_id: state.user_id,
           handler: self()
