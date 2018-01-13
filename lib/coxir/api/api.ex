@@ -85,7 +85,7 @@ defmodule Coxir.API do
   end
 
   defp route_param(route) do
-    ~r/\/(channels|guilds)\/([0-9]{15,})+/i
+    ~r/(channels|guilds)\/([0-9]{15,})+/i
     |> Regex.run(route)
     |> case do
       [match, _route, _param] ->

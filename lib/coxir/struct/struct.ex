@@ -15,7 +15,7 @@ defmodule Coxir.Struct do
         case map do
           %{error: _error} ->
             map
-          object ->
+          _object ->
             Map.put(map, key, value)
         end
       end

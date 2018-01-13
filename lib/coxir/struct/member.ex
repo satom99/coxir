@@ -5,7 +5,7 @@ defmodule Coxir.Struct.Member do
 
   def pretty(struct) do
     struct
-    |> replace(:user, &User.get/1)
+    |> replace(:user_id, &User.get/1)
     |> replace(:voice_id, &Channel.get/1)
   end
 

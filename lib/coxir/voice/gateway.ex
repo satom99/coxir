@@ -35,6 +35,7 @@ defmodule Coxir.Voice.Gateway do
     reason
     |> elem(1)
     |> case do
+      4009 -> :ok
       4014 -> :ok
       4015 -> :ok
       _err -> Voice.stop(state.server_id)

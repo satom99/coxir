@@ -91,6 +91,10 @@ defmodule Coxir.Gateway.Worker do
     {:close, %{state | session: nil}}
   end
 
+  def dispatch(%{op: 1}, state) do
+    handle_info(:heartbeat, state)
+  end
+
   def dispatch(%{op: 0, t: name, d: data, s: sequence}, state) do
     Producer.notify %{
       t: String.to_atom(name),

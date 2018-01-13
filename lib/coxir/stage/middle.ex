@@ -133,7 +133,7 @@ defmodule Coxir.Stage.Middle do
     |> Map.merge(
       %{
         id: {data.guild_id, data.user.id},
-        user: data.user.id
+        user_id: data.user.id
       }
     )
 
