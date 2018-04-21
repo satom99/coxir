@@ -12,9 +12,9 @@ defmodule Coxir.Struct.Guild do
     |> replace(:embed_channel_id, &Channel.get/1)
     |> replace(:widget_channel_id, &Channel.get/1)
     |> replace(:system_channel_id, &Channel.get/1)
-    |> replace(:channels, fn list -> Enum.map(list, &Channel.get/1) end)
-    |> replace(:members, fn list -> Enum.map(list, &Member.get/1) end)
-    |> replace(:roles, fn list -> Enum.map(list, &Role.get/1) end)
+    |> replace(:channels, &Channel.get/1)
+    |> replace(:members, &Member.get/1)
+    |> replace(:roles, &Role.get/1)
   end
 
   def shard(%{id: id}),

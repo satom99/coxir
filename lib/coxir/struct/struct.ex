@@ -25,22 +25,21 @@ defmodule Coxir.Struct do
         |> Map.get(key)
         |> case do
           nil -> nil
-          value -> function.(value)
+          list when is_list(list) ->
+            Enum.map(list, function)
+          value ->
+            function.(value)
         end
         |> case do
           nil ->
             map
           value ->
-            key
+            new = key
             |> Atom.to_string
             |> String.replace_trailing("_id", "")
             |> String.to_atom
-            |> case do
-              ^key ->
-                Map.replace(map, key, value)
-              new ->
-                Map.put(map, new, value)
-            end
+
+            Map.put(map, new, value)
         end
       end
 
