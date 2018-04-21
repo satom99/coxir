@@ -36,6 +36,10 @@ defmodule Coxir do
     Supervisor.start_link(children, options)
   end
 
+  @doc false
+  def child_spec(arg),
+    do: super(arg)
+
   defmacro __using__(_opts) do
     quote do
       alias Coxir.Struct.{User, Invite}

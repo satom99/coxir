@@ -33,6 +33,10 @@ defmodule Coxir.Gateway do
     Supervisor.start_link(children, options)
   end
 
+  @doc false
+  def child_spec(arg),
+    do: super(arg)
+
   def set_status(pid, status, game) do
     {since, afk} = status
     |> case do

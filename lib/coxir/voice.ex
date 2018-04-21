@@ -20,6 +20,10 @@ defmodule Coxir.Voice do
     Supervisor.start_link(children, options)
   end
 
+  @doc false
+  def child_spec(arg),
+    do: super(arg)
+
   def join(%{guild_id: guild, id: id}),
     do: join(guild, id)
 
