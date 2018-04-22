@@ -3,18 +3,18 @@ defmodule Coxir.Struct.Member do
 
   alias Coxir.Struct.{User, Role, Channel}
 
-  def get(%{id: server}, %{id: member}),
-    do: get(server, member)
-
-  def get(server, member),
-    do: get({server, member})
-
   def pretty(struct) do
     struct
     |> replace(:user_id, &User.get/1)
     |> replace(:voice_id, &Channel.get/1)
     |> replace(:roles, &Role.get/1)
   end
+
+  def get(%{id: server}, %{id: member}),
+    do: get(server, member)
+
+  def get(server, member),
+    do: get({server, member})
 
   def edit(%{id: id}, params),
     do: edit(id, params)

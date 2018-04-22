@@ -1,0 +1,16 @@
+language: elixir
+
+elixir: '1.6.4'
+otp_release: '20.3'
+
+script:
+  - mix docs
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  keep-history: false
+  local-dir: doc
+  on:
+    branch: master
