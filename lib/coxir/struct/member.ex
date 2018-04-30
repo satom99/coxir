@@ -16,11 +16,39 @@ defmodule Coxir.Struct.Member do
   def get(server, member),
     do: get({server, member})
 
-  def edit(%{id: id}, params),
-    do: edit(id, params)
+  def edit(%{id: id}, params), do: edit(id, params)
 
   def edit({guild, user}, params) do
     API.request(:patch, "guilds/#{guild}/members/#{user}", params)
+  end
+
+  @doc """
+  Edits a members name
+
+  ## Parameters
+     - member: Should be a member object, with an ID that's a tuple of guild, user.
+     - name: A string that to set the nick to, or nil.
+
+  """
+  def set_nick(%{id: id}, name), do: set_nick(id, name)
+
+  @doc """
+  Edits a members name
+
+  ## Parameters
+     - member: Should be a tuple of guild, user.
+     - name: A string that to set the nick to, or nil.
+  """
+  def set_nick({guild, user} = tuple, name) do
+    params = %{nick: name}
+
+    User.get()
+    |> case do
+      %{id: ^user} ->
+        API.request(:patch, "guilds/#{guild}/members/@me/nick", params)
+      _other ->
+        edit(tuple, params)
+    end
   end
 
   def kick(%{id: id}),
