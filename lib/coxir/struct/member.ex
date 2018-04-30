@@ -16,7 +16,8 @@ defmodule Coxir.Struct.Member do
   def get(server, member),
     do: get({server, member})
 
-  def edit(%{id: id}, params), do: edit(id, params)
+  def edit(%{id: id}, params),
+    do: edit(id, params)
 
   def edit({guild, user}, params) do
     API.request(:patch, "guilds/#{guild}/members/#{user}", params)
@@ -30,7 +31,8 @@ defmodule Coxir.Struct.Member do
      - name: A string that to set the nick to, or nil.
 
   """
-  def set_nick(%{id: id}, name), do: set_nick(id, name)
+  def set_nick(%{id: id}, name),
+    do: set_nick(id, name)
 
   @doc """
   Edits a members name
