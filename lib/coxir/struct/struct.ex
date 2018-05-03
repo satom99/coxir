@@ -114,7 +114,7 @@ defmodule Coxir.Struct do
       defp decode(data) do
         data
         |> Tuple.to_list
-        |> Enum.into(%{})
+        |> Map.new
       end
 
       defoverridable [get: 1]

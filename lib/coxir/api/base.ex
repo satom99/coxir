@@ -15,7 +15,9 @@ defmodule Coxir.API.Base do
   def process_request_body(""), do: ""
   def process_request_body({:multipart, _list} = body), do: body
   def process_request_body(body) do
-    Jason.encode!(body)
+    body
+    |> Map.new
+    |> Jason.encode!
   end
 
   def process_request_headers(headers) do

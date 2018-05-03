@@ -34,7 +34,7 @@ defmodule Coxir.Stage.Middle do
   # Local
   def handle(:READY, data) do
     for guild <- data.guilds do
-      Guild.update(guild)
+      handle(:GUILD_UPDATE, guild)
     end
     for channel <- data.private_channels do
       handle(:CHANNEL_CREATE, channel)
@@ -90,6 +90,9 @@ defmodule Coxir.Stage.Middle do
     for channel <- data.channels do
       handle(:CHANNEL_CREATE, Map.put(channel, :guild_id, data.id))
     end
+    for presence <- data.presences do
+      handle(:PRESENCE_UPDATE, Map.put(presence, :guild_id, data.id))
+    end
     for state <- data.voice_states do
       handle(:VOICE_STATE_UPDATE, Map.put(state, :guild_id, data.id))
     end
@@ -97,6 +100,7 @@ defmodule Coxir.Stage.Middle do
     |> Map.update!(:roles, &(for role <- &1, do: role.id))
     |> Map.update!(:members, &(for member <- &1, do: {data.id, member.user.id}))
     |> Map.update!(:channels, &(for channel <- &1, do: channel.id))
+    |> Map.delete(:presences)
     |> Map.delete(:voice_states)
 
     Guild.update(data)
