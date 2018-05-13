@@ -126,7 +126,7 @@ defmodule Coxir.API do
       remaining > -1 ->
         nil
       true ->
-        0
+        250
     end
   end
 

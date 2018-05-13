@@ -7,11 +7,13 @@ defmodule Coxir.Gateway.Worker do
 
   def start_link(state) do
     state = state
-    |> Map.merge %{
-      beat: nil,
-      session: nil,
-      sequence: nil
-    }
+    |> Map.merge(
+      %{
+        beat: nil,
+        session: nil,
+        sequence: nil
+      }
+    )
     WebSockex.start_link(state.gateway, __MODULE__, state)
   end
 
@@ -46,20 +48,23 @@ defmodule Coxir.Gateway.Worker do
   def handle_frame(_frame, state), do: {:ok, state}
 
   def dispatch(%{op: 10, d: data}, state) do
+    state = \
     case state.beat do
       nil ->
         beat = :timer.send_interval(
           data.heartbeat_interval,
           :heartbeat
         )
-        state = %{state | beat: beat}
-      _ -> :ok
+        %{state | beat: beat}
+      _other ->
+        state
     end
 
+    data = \
     case state.session do
       nil ->
         {family, _name} = :os.type
-        data = %{
+        %{
           token: state.token,
           properties: %{
             "$os": family,
@@ -72,7 +77,7 @@ defmodule Coxir.Gateway.Worker do
         }
         |> payload(2)
       session ->
-        data = %{
+        %{
           token: state.token,
           session_id: session,
           seq: state.sequence

@@ -13,7 +13,7 @@ defmodule Coxir.Stage.Producer do
 
   def notify(event) do
     __MODULE__
-    |> GenStage.cast {:notify, event}
+    |> GenStage.cast({:notify, event})
   end
 
   def handle_cast({:notify, event}, {queue, demand}) do
