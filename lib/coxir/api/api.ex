@@ -49,7 +49,7 @@ defmodule Coxir.API do
         reset = headers["X-RateLimit-Reset"]
         remaining = headers["X-RateLimit-Remaining"]
 
-        {route, reset, remaining} = \
+        {final, reset, remaining} = \
         headers["X-RateLimit-Global"]
         |> case do
           nil ->
@@ -67,8 +67,17 @@ defmodule Coxir.API do
           offset = (remote - current_time())
           |> abs
 
-          {route, remaining, reset + offset}
+          {final, remaining, reset + offset}
           |> update_limit
+        end
+
+        cond do
+          final != route ->
+            unlock(route)
+          !(reset && remaining) ->
+            unlock(route)
+          true ->
+            :ignore
         end
 
         cond do
@@ -80,6 +89,7 @@ defmodule Coxir.API do
             %{error: body, code: code}
         end
       %{reason: reason} ->
+        unlock(route)
         %{error: reason}
     end
   end
@@ -96,67 +106,106 @@ defmodule Coxir.API do
   end
 
   defp route_limit(route) do
-    remaining = route
-    |> count_limit
+    ignore = \
+    reset(:global)
     |> case do
-      false ->
-        route = :global
-        count_limit(route)
-        |> case do
-          false -> 0
-          count -> count
-        end
-      count ->
-        count
+      0 -> reset(route)
+      n -> n
+    end
+
+    remaining = \
+    count(:global)
+    |> case do
+      false -> count(route)
+      other -> other
     end
 
     cond do
-      remaining < 0 ->
-        case :ets.lookup(@table, route) do
-          [{_route, _remaining, reset}] ->
-            left = reset - current_time()
-            if left > 0 do
-              left
-            else
-              :ets.delete(@table, route)
-              nil
-            end
-        end
-      true -> nil
+      ignore > 0 ->
+        nil
+      remaining > -1 ->
+        nil
+      true ->
+        0
     end
   end
 
-  defp count_limit(route) do
+  defp count(route) do
+    arguments = \
+    [@table, route, {2, -1}]
+
+    arguments = \
+    case route do
+      :global ->
+        arguments
+      _other ->
+        tuple = {route, 1, :lock}
+        arguments ++ [tuple]
+    end
+
     try do
-      :ets.update_counter(@table, route, {2, -1})
+      apply(:ets, :update_counter, arguments)
     rescue
       _ -> false
     end
   end
 
-  defp update_limit({route, remaining, reset}) do
-    # update: {route, remaining, reset}
-    # stored: {index, _remaining, saved}
-    # when index == route and reset > saved -> update
-    # replaces the stored limit info when both guards are met
+  defp reset(route) do
+    return = \
+    case route do
+      :global ->
+        {:"$1", nil, 0}
+      _other ->
+        {:"$1", 0, :lock}
+    end
+
     fun = \
     [{
       {:"$1", :"$2", :"$3"},
       [{
         :andalso,
         {:==, :"$1", route},
-        {:>, :"$3", reset}
+        {:"/=", :"$3", :lock},
+        {:<, {:-, :"$3", current_time()}, 0}
+      }],
+      [{return}]
+    }]
+
+    :ets.select_replace(@table, fun)
+  end
+
+  defp unlock(route) do
+    fun = \
+    [{
+      {:"$1", :"$2", :"$3"},
+      [{
+        :andalso,
+        {:==, :"$1", route},
+        {:==, :"$3", :lock}
       }],
       [{
-        {route, remaining, reset}
+        {:"$1", 1, :"$3"}
       }]
     }]
-    try do
-      :ets.select_replace(@table, fun)
-    rescue
-      _ -> \
-      :ets.insert_new(@table, {route, remaining, reset})
-    end
+
+    :ets.select_replace(@table, fun)
+  end
+
+  defp update_limit({route, remaining, reset}) do
+    fun = \
+    [{
+      {:"$1", :"$2", :"$3"},
+      [{
+        :andalso,
+        {:==, :"$1", route},
+        {:==, :"$3", :lock}
+      }],
+      [{
+        {:"$1", remaining, reset}
+      }]
+    }]
+
+    :ets.select_replace(@table, fun)
   end
 
   defp current_time do

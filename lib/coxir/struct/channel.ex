@@ -105,7 +105,7 @@ defmodule Coxir.Struct.Channel do
     do: create_permission(id, overwrite, params)
 
   def create_permission(channel, overwrite, params),
-    do: Overwrite.edit(channel, overwrite, params)
+    do: Overwrite.edit(overwrite, channel, params)
 
   def create_invite(term, params \\ %{})
   def create_invite(%{id: id}, params),
