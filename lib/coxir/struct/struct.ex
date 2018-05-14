@@ -43,6 +43,14 @@ defmodule Coxir.Struct do
         end
       end
 
+      @doc """
+      Fetches a cached #{@table} object.
+
+      Returns an object if found
+      and `nil` otherwise.
+      """
+      @spec get(String.t) :: map | nil
+
       def get(%{id: id}), do: get(id)
       def get(id) do
         fetch(id)
@@ -51,6 +59,13 @@ defmodule Coxir.Struct do
           data -> pretty(data)
         end
       end
+
+      @doc """
+      Filters the cached #{@table} objects.
+
+      Returns a list of matched objects.
+      """
+      @spec select(map) :: list
 
       def select(pattern \\ %{}) do
         :ets.tab2list(@table)

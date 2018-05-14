@@ -3,6 +3,7 @@ defmodule Coxir.Voice do
   Handles and supervises all the audio
   logic behind voice channels.
   """
+  @type channel :: String.t | map
 
   use Supervisor
 
@@ -24,12 +25,20 @@ defmodule Coxir.Voice do
   def child_spec(arg),
     do: super(arg)
 
+  @doc """
+  Joins a given voice channel.
+
+  Always returns a truthy value.
+  """
+  @spec join(channel) :: any
+
   def join(%{guild_id: guild, id: id}),
     do: join(guild, id)
 
   def join(%{id: id}),
     do: join(nil, id)
 
+  @doc false
   def join(guild, channel) do
     guild
     |> get
@@ -52,6 +61,13 @@ defmodule Coxir.Voice do
     notify(guild, channel)
   end
 
+  @doc """
+  Leaves from a given voice channel.
+
+  Always returns a truthy value.
+  """
+  @spec leave(channel) :: any
+
   def leave(%{guild_id: guild}),
     do: leave(guild)
 
@@ -60,6 +76,14 @@ defmodule Coxir.Voice do
 
   def leave(guild),
     do: notify(guild, nil)
+
+  @doc """
+  Plays a term on a given voice channel.
+
+  Returns the atom `:ok` upon success
+  or the atom `:error` otherwise.
+  """
+  @spec play(channel, String.t | Stream.t) :: :ok | :error
 
   def play(%{guild_id: guild}, term),
     do: play(guild, term)
@@ -75,6 +99,13 @@ defmodule Coxir.Voice do
       pid -> Audio.play(pid, term)
     end
   end
+
+  @doc """
+  Stops sending audio to a given voice channel.
+
+  Always returns a truthy value.
+  """
+  @spec stop_playing(channel) :: any
 
   def stop_playing(%{guild_id: guild}),
     do: stop_playing(guild)
