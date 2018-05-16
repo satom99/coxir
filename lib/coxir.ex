@@ -36,6 +36,15 @@ defmodule Coxir do
     Supervisor.start_link(children, options)
   end
 
+  def token do
+    token = Application.get_env(:coxir, :token)
+    cond do
+      is_bitstring(token) -> token
+      is_function(token, 0) -> token.()
+      is_nil(token) -> raise "Please provide a token."
+    end
+  end
+
   @doc false
   def child_spec(arg),
     do: super(arg)

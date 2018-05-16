@@ -11,8 +11,7 @@ defmodule Coxir.Gateway do
 
   @doc false
   def start_link do
-    token = Application.get_env(:coxir, :token)
-    if !token, do: raise "Please provide a token."
+    token = Coxir.token
 
     %{url: gateway, shards: shards} = API.request(:get, "gateway/bot")
 
