@@ -40,7 +40,12 @@ defmodule Coxir do
     token = Application.get_env(:coxir, :token)
     cond do
       is_bitstring(token) -> token
-      is_function(token, 0) -> token.()
+      {mod, fun, arg} = token ->
+        if  is_atom(mod)
+        and is_atom(fun)
+        and is_list(arg) do 
+            apply(mod, fun, arg)
+          end
       is_nil(token) -> raise "Please provide a token."
     end
   end
