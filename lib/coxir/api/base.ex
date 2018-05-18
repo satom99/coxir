@@ -21,7 +21,7 @@ defmodule Coxir.API.Base do
   end
 
   def process_request_headers(headers) do
-    token = Coxir.token
+    token = Coxir.token()
     [
       {"User-Agent", "#{@library} (#{@website}, #{@version})"},
       {"Authorization", "Bot " <> token},
