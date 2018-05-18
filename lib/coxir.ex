@@ -36,23 +36,23 @@ defmodule Coxir do
     Supervisor.start_link(children, options)
   end
 
-  def token do
-    token = Application.get_env(:coxir, :token)
-    cond do
-      is_bitstring(token) -> token
-      {mod, fun, arg} = token ->
-        if  is_atom(mod)
-        and is_atom(fun)
-        and is_list(arg) do 
-            apply(mod, fun, arg)
-          end
-      is_nil(token) -> raise "Please provide a token."
-    end
-  end
-
   @doc false
   def child_spec(arg),
     do: super(arg)
+
+  @doc false
+  def token do
+    :coxir
+    |> Application.get_env(:token)
+    |> case do
+      nil ->
+        raise "Please provide a token."
+      {module, function} ->
+        apply(module, function, [])
+      token ->
+        token
+    end
+  end
 
   defmacro __using__(_opts) do
     quote do
