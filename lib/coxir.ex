@@ -40,6 +40,20 @@ defmodule Coxir do
   def child_spec(arg),
     do: super(arg)
 
+  @doc false
+  def token do
+    :coxir
+    |> Application.get_env(:token)
+    |> case do
+      nil ->
+        raise "Please provide a token."
+      function when is_function(function) ->
+        function.()
+      token ->
+        token
+    end
+  end
+
   defmacro __using__(_opts) do
     quote do
       alias Coxir.Struct.{User, Invite}
