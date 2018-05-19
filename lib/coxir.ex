@@ -47,8 +47,8 @@ defmodule Coxir do
     |> case do
       nil ->
         raise "Please provide a token."
-      {module, function} ->
-        apply(module, function, [])
+      function when is_function(function) ->
+        function.()
       token ->
         token
     end
