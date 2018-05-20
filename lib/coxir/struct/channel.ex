@@ -1,4 +1,15 @@
 defmodule Coxir.Struct.Channel do
+  @moduledoc """
+  Defines methods used to interact with Discord channels.
+
+  Refer to [this](https://discordapp.com/developers/docs/resources/channel#channel-object)
+  for a list of fields and a broader documentation.
+
+  In addition, the following fields are also embedded.
+  - `owner` - an user object
+  """
+  @type channel :: String.t | map
+
   use Coxir.Struct
 
   alias Coxir.Struct.{User, Member, Overwrite, Message}
@@ -7,6 +18,27 @@ defmodule Coxir.Struct.Channel do
     struct
     |> replace(:owner_id, &User.get/1)
   end
+
+  @doc """
+  Sends a message to a given channel.
+
+  Returns a message object upon success
+  or a map containing error information.
+
+  #### Content
+  Either a string or an enumerable with
+  the fields listed below.
+  - `content` - the message contents (up to 2000 characters)
+  - `embed` - embedded rich content, refer to
+    [this](https://discordapp.com/developers/docs/resources/channel#embed-object)
+  - `nonce` - used for optimistic message sending
+  - `file` - the path of the file being sent
+  - `tts` - true if this is a TTS message
+
+  Refer to [this](https://discordapp.com/developers/docs/resources/channel#create-message)
+  for a broader explanation on the fields and their defaults.
+  """
+  @spec send_message(channel, String.t | Enum.t) :: map
 
   def send_message(%{id: id}, content),
     do: send_message(id, content)
@@ -37,6 +69,14 @@ defmodule Coxir.Struct.Channel do
     |> Message.pretty
   end
 
+  @doc """
+  Fetches a message from a given channel.
+
+  Returns a message object upon success
+  or a map containing error information.
+  """
+  @spec get_message(channel, String.t) :: map
+
   def get_message(%{id: id}, message),
     do: get_message(id, message)
 
@@ -49,6 +89,24 @@ defmodule Coxir.Struct.Channel do
       message -> message
     end
   end
+
+  @doc """
+  Fetches messages from a given channel.
+
+  Returns a list of message objects upon success
+  or a map containing error information.
+
+  #### Query
+  Must be a keyword list with the fields listed below.
+  - `around` - get messages around this message ID
+  - `before` - get messages before this message ID
+  - `after` - get messages after this message ID
+  - `limit` - max number of messages to return
+
+  Refer to [this](https://discordapp.com/developers/docs/resources/channel#get-channel-messages)
+  for a broader explanation on the fields and their defaults.
+  """
+  @spec history(channel, Keyword.t) :: list | map
 
   def history(term, query \\ [])
   def history(%{id: id}, query),
@@ -65,6 +123,14 @@ defmodule Coxir.Struct.Channel do
     end
   end
 
+  @doc """
+  Fetches the pinned messages from a given channel.
+
+  Returns a list of message objects upon success
+  or a map containing error information.
+  """
+  @spec get_pinned_messages(channel) :: list | map
+
   def get_pinned_messages(%{id: id}),
     do: get_pinned_messages(id)
 
@@ -79,12 +145,42 @@ defmodule Coxir.Struct.Channel do
     end
   end
 
+  @doc """
+  Deletes multiple messages from a given channel.
+
+  Returns the atom `:ok` upon success
+  or a map containing error information.
+  """
+  @spec bulk_delete_messages(channel, list) :: :ok | map
+
   def bulk_delete_messages(%{id: id}, messages),
     do: bulk_delete_messages(id, messages)
 
   def bulk_delete_messages(channel, messages) do
     API.request(:post, "channels/#{channel}/messages/bulk-delete", messages)
   end
+
+  @doc """
+  Modifies a given channel.
+
+  Returns a channel object upon success
+  or a map containing error information.
+
+  #### Params
+  Must be an enumerable with the fields listed below.
+  - `name` - channel name (2-100 characters)
+  - `topic` - channel topic (up to 1024 characters)
+  - `nsfw` - whether the channel is NSFW
+  - `position` - the position in the left-hand listing
+  - `bitrate` - the bitrate in bits of the voice channel
+  - `user_limit` - the user limit of the voice channel
+  - `permission_overwrites` - channel or category-specific permissions
+  - `parent_id` - id of the new parent category
+
+  Refer to [this](https://discordapp.com/developers/docs/resources/channel#modify-channel)
+  for a broader explanation on the fields and their defaults.
+  """
+  @spec edit(channel, Enum.t) :: map
 
   def edit(%{id: id}, params),
     do: edit(id, params)
@@ -94,6 +190,14 @@ defmodule Coxir.Struct.Channel do
     |> pretty
   end
 
+  @doc """
+  Deletes a given channel.
+
+  Returns a channel object upon success
+  or a map containing error information.
+  """
+  @spec delete(channel) :: map
+
   def delete(%{id: id}),
     do: delete(id)
 
@@ -101,11 +205,36 @@ defmodule Coxir.Struct.Channel do
     API.request(:delete, "channels/#{channel}")
   end
 
+  @doc """
+  Creates a permission overwrite for a given channel.
+
+  Refer to `Coxir.Struct.Overwrite.edit/2` for more information.
+  """
+  @spec create_permission(channel, String.t, Enum.t) :: map
+
   def create_permission(%{id: id}, overwrite, params),
     do: create_permission(id, overwrite, params)
 
   def create_permission(channel, overwrite, params),
     do: Overwrite.edit(overwrite, channel, params)
+
+  @doc """
+  Creates an invite for a given channel.
+
+  Returns an invite object upon success
+  or a map containing error information.
+
+  #### Params
+  Must be an enumerable with the fields listed below.
+  - `max_uses` - max number of uses (0 if unlimited)
+  - `max_age` - duration in seconds before expiry (0 if never)
+  - `temporary` - whether this invite only grants temporary membership
+  - `unique` - whether not to try to reuse a similar invite
+
+  Refer to [this](https://discordapp.com/developers/docs/resources/channel#create-channel-invite)
+  for a broader explanation on the fields and their defaults.
+  """
+  @spec create_invite(channel, Enum.t) :: map
 
   def create_invite(term, params \\ %{})
   def create_invite(%{id: id}, params),
@@ -115,12 +244,33 @@ defmodule Coxir.Struct.Channel do
     API.request(:post, "channels/#{channel}/invites", params)
   end
 
+  @doc """
+  Fetches the invites from a given channel.
+
+  Returns a list of invite objects upon success
+  or a map containing error information.
+  """
+  @spec get_invites(channel) :: list | map
+
   def get_invites(%{id: id}),
     do: get_invites(id)
 
   def get_invites(channel) do
     API.request(:get, "channels/#{channel}/invites")
   end
+
+  @doc """
+  Creates a webhook for a given channel.
+
+  Returns a webhook object upon success
+  or a map containing error information.
+
+  #### Params
+  Must be an enumerable with the fields listed below.
+  - `name` - name of the webhook (2-23 characters)
+  - `avatar` - image for the default webhook avatar
+  """
+  @spec create_webhook(channel, Enum.t) :: map
 
   def create_webhook(%{id: id}, params),
     do: create_webhook(id, params)
@@ -129,12 +279,29 @@ defmodule Coxir.Struct.Channel do
     API.request(:post, "channels/#{channel}/webhooks", params)
   end
 
+  @doc """
+  Fetches the webhooks from a given channel.
+
+  Returns a list of webhook objects upon success
+  or a map containing error information.
+  """
+  @spec get_webhooks(channel) :: list | map
+
   def get_webhooks(%{id: id}),
     do: get_webhooks(id)
 
   def get_webhooks(channel) do
     API.request(:get, "channels/#{channel}/webhooks")
   end
+
+  @doc """
+  Fetches the users currently in a given voice channel.
+
+  Returns a list of user or member objects depending on
+  whether it's a private or a guild channel respectively
+  or a map containing error information.
+  """
+  @spec get_voice_members(channel) :: list | map
 
   def get_voice_members(%{id: id}),
     do: get_voice_members(id)

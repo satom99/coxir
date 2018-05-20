@@ -36,6 +36,16 @@ defmodule Coxir.Gateway do
   def child_spec(arg),
     do: super(arg)
 
+  @doc """
+  Changes the status on a given shard.
+
+  Takes in a `PID` obtained from `Coxir.Struct.Guild.shard/1`.
+
+  Refer to [this](https://discordapp.com/developers/docs/topics/gateway#update-status)
+  for more information.
+  """
+  @spec set_status(pid, String.t, map) :: any
+
   def set_status(pid, status, game) do
     {since, afk} = status
     |> case do
@@ -50,6 +60,14 @@ defmodule Coxir.Gateway do
     }
     send(pid, 3, data)
   end
+
+  @doc """
+  Changes the status on all shards.
+
+  Refer to `set_status/3` for more information.
+  """
+  @spec set_status(String.t, map) :: any
+
   def set_status(status, game) do
     __MODULE__
     |> Supervisor.which_children
