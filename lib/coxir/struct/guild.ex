@@ -76,6 +76,7 @@ defmodule Coxir.Struct.Guild do
   Refer to [this](https://discordapp.com/developers/docs/resources/guild#modify-guild)
   for a broader explanation on the fields and their defaults.
   """
+  @spec edit(guild, Enum.t) :: map
 
   def edit(%{id: id}, params),
     do: edit(id, params)
@@ -116,7 +117,7 @@ defmodule Coxir.Struct.Guild do
   end
 
   @doc """
-  Creates a role for a given guild.
+  Creates a role on a given guild.
 
   Returns a role object upon success
   or a map containing error information.
@@ -145,7 +146,7 @@ defmodule Coxir.Struct.Guild do
   end
 
   @doc """
-  Modifies the positions of a set of roles for a given guild.
+  Modifies the positions of a set of roles on a given guild.
 
   Returns a list of role objects upon success
   or a map containing error information.
@@ -198,7 +199,7 @@ defmodule Coxir.Struct.Guild do
   end
 
   @doc """
-  Creates a channel for a given guild.
+  Creates a channel on a given guild.
 
   Returns a channel object upon success
   or a map containing error information.
@@ -235,7 +236,7 @@ defmodule Coxir.Struct.Guild do
   Must be an enumerable with the fields listed below.
   - `access_token` - an oauth2 access token
   - `nick` - value to set the user's nickname to
-  - `roles` - array of role ids the member is assigned
+  - `roles` - list of role ids the user is assigned
   - `mute` - whether the user is muted
   - `deaf` - whether the user is deafened
 

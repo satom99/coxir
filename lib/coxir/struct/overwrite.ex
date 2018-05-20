@@ -26,7 +26,10 @@ defmodule Coxir.Struct.Overwrite do
   Must be an enumerable with the fields listed below.
   - `allow` - the bitwise value of all allowed permissions
   - `deny` - the bitwise value of all denied permissions
-  - `type` - `member` for a user or `role` for a role
+  - `type` - `member` for a member or `role` for a role
+
+  Refer to [this](https://discordapp.com/developers/docs/resources/channel#edit-channel-permissions)
+  for a broader explanation on the fields and their defaults.
   """
   @spec edit(overwrite, Enum.t) :: :ok | map
 

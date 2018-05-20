@@ -1,6 +1,6 @@
 defmodule Coxir.Struct.Webhook do
   @moduledoc """
-  Defines methods used to interact with channel permission overwrites.
+  Defines methods used to interact with channel webhooks.
 
   Refer to [this](https://discordapp.com/developers/docs/resources/webhook#webhook-object)
   for a list of fields and a broader documentation.
