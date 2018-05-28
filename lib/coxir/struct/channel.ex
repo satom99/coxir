@@ -157,7 +157,7 @@ defmodule Coxir.Struct.Channel do
     do: bulk_delete_messages(id, messages)
 
   def bulk_delete_messages(channel, messages) do
-    API.request(:post, "channels/#{channel}/messages/bulk-delete", messages)
+    API.request(:post, "channels/#{channel}/messages/bulk-delete", %{messages: messages})
   end
 
   @doc """
