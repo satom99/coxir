@@ -206,6 +206,21 @@ defmodule Coxir.Struct.Channel do
   end
 
   @doc """
+  Triggers the typing indicator on a given channel.
+
+  Returns the atom `:ok` upon success
+  or a map containing error information.
+  """
+  @spec typing(channel) :: :ok | map
+
+  def typing(%{id: id}),
+    do: typing(id)
+
+  def typing(channel) do
+    API.request(:post, "channels/#{channel}/typing")
+  end
+
+  @doc """
   Creates a permission overwrite for a given channel.
 
   Refer to `Coxir.Struct.Overwrite.edit/2` for more information.
