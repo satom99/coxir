@@ -314,4 +314,19 @@ defmodule Coxir.Struct.Channel do
       list -> list
     end
   end
+  
+  @doc """
+  Posts a typing indicator for the specified channel. 
+
+  Returns :ok atom upon success
+  or a map containing error information.
+  """
+  @spec typing(channel) :: map
+
+  def typing(%{id: id}),
+    do: typing(id)
+
+  def typing(channel) do
+    API.request(:post, "channels/#{channel}/typing")
+  end
 end
