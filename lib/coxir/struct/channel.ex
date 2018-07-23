@@ -230,7 +230,7 @@ defmodule Coxir.Struct.Channel do
     do: enable_nsfw(id)
 
   def enable_nsfw(channel) do
-    edit(channel, %{nsfw: true})
+    edit(channel, nsfw: true)
   end
 
   @doc """
@@ -245,7 +245,7 @@ defmodule Coxir.Struct.Channel do
     do: disable_nsfw(id)
 
   def disable_nsfw(channel) do
-    edit(channel, %{nsfw: false})
+    edit(channel, nsfw: false)
   end
 
   @doc """
