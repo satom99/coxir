@@ -79,9 +79,8 @@ defmodule Coxir.Struct.Webhook do
   """
   @spec set_name(String.t, String.t) :: map
 
-  def set_name(webhook, name) do
-    edit(webhook, %{name: name})
-  end
+  def set_name(webhook, name),
+    do: edit(webhook, name: name)
 
   @doc """
   Modifies the avatar of a given webhook.
@@ -91,9 +90,8 @@ defmodule Coxir.Struct.Webhook do
   """
   @spec set_avatar(String.t, String.t) :: map
 
-  def set_avatar(webhook, avatar) do
-    edit(webhook, %{avatar: avatar})
-  end
+  def set_avatar(webhook, avatar),
+    do: edit(webhook, avatar: avatar)
 
   @doc """
   Moves a given webhook to a given channel.
@@ -103,9 +101,8 @@ defmodule Coxir.Struct.Webhook do
   """
   @spec set_channel(String.t, String.t) :: map
 
-  def set_channel(webhook, channel_id) do
-    edit(webhook, %{avatar: channel_id})
-  end
+  def set_channel(webhook, channel_id),
+    do: edit(webhook, channel_id: channel_id)
 
   @doc """
   Deletes a given webhook.
