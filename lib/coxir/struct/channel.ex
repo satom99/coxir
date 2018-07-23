@@ -198,12 +198,8 @@ defmodule Coxir.Struct.Channel do
   """
   @spec set_name(channel, String.t) :: map
 
-  def set_name(%{id: id}, name),
-    do: set_name(id, name)
-
-  def set_name(channel, name) do
-    edit(channel, %{name: name})
-  end
+  def set_name(channel, name),
+    do: edit(channel, name: name)
 
   @doc """
   Modifies the topic of a given channel.
@@ -213,12 +209,8 @@ defmodule Coxir.Struct.Channel do
   """
   @spec set_topic(channel, String.t) :: map
 
-  def set_topic(%{id: id}, topic),
-    do: set_topic(id, topic)
-
-  def set_topic(channel, topic) do
-    edit(channel, %{topic: topic})
-  end
+  def set_topic(channel, topic),
+    do: edit(channel, topic: topic)
 
   @doc """
   Enables the NSFW status of a given channel.
@@ -258,12 +250,8 @@ defmodule Coxir.Struct.Channel do
   """
   @spec set_position(channel, Integer.t) :: map
 
-  def set_position(%{id: id}, position),
-    do: set_position(id, position)
-
-  def set_position(channel, position) do
-    edit(channel, %{position: position})
-  end
+  def set_position(channel, position),
+    do: edit(channel, position: position)
 
   @doc """
   Modifies the bitrate of a given voice channel.
@@ -273,12 +261,8 @@ defmodule Coxir.Struct.Channel do
   """
   @spec set_bitrate(channel, Integer.t) :: map
 
-  def set_bitrate(%{id: id}, bitrate),
-    do: set_bitrate(id, bitrate)
-
-  def set_bitrate(channel, bitrate) do
-    edit(channel, %{bitrate: bitrate})
-  end
+  def set_bitrate(channel, bitrate),
+    do: edit(channel, bitrate: bitrate)
 
   @doc """
   Modifies the user limit of a given voice channel.
@@ -288,12 +272,8 @@ defmodule Coxir.Struct.Channel do
   """
   @spec set_user_limit(channel, Integer.t) :: map
 
-  def set_user_limit(%{id: id}, limit),
-    do: set_user_limit(id, limit)
-
-  def set_user_limit(channel, limit) do
-    edit(channel, %{user_limit: limit})
-  end
+  def set_user_limit(channel, limit),
+    do: edit(channel, user_limit: limit)
 
   @doc """
   Modifies the permissions of a given channel.
@@ -303,12 +283,8 @@ defmodule Coxir.Struct.Channel do
   """
   @spec set_permissions(channel, Enum.t) :: map
 
-  def set_permissions(%{id: id}, permission_overwrites),
-    do: set_permissions(id, permission_overwrites)
-
-  def set_permissions(channel, permission_overwrites) do
-    edit(channel, %{permission_overwrites: permission_overwrites})
-  end
+  def set_permissions(channel, permission_overwrites),
+    do: edit(channel, permission_overwrites: permission_overwrites)
 
   @doc """
   Modifies the parent id of a given channel.
@@ -318,12 +294,8 @@ defmodule Coxir.Struct.Channel do
   """
   @spec set_parent(channel, String.t) :: map
 
-  def set_parent(%{id: id}, parent),
-    do: set_parent(id, parent)
-
-  def set_parent(channel, parent) do
-    edit(channel, %{parent_id: parent})
-  end
+  def set_parent(channel, parent),
+    do: edit(channel, parent_id: parent)
 
   @doc """
   Deletes a given channel.
