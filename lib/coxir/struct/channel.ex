@@ -163,6 +163,36 @@ defmodule Coxir.Struct.Channel do
   end
 
   @doc """
+  Modifies a given channel.
+
+  Returns a channel object upon success
+  or a map containing error information.
+
+  #### Params
+  Must be an enumerable with the fields listed below.
+  - `name` - channel name (2-100 characters)
+  - `topic` - channel topic (up to 1024 characters)
+  - `nsfw` - whether the channel is NSFW
+  - `position` - the position in the left-hand listing
+  - `bitrate` - the bitrate in bits of the voice channel
+  - `user_limit` - the user limit of the voice channel
+  - `permission_overwrites` - channel or category-specific permissions
+  - `parent_id` - id of the new parent category
+
+  Refer to [this](https://discordapp.com/developers/docs/resources/channel#modify-channel)
+  for a broader explanation on the fields and their defaults.
+  """
+  @spec edit(channel, Enum.t) :: map
+
+  def edit(%{id: id}, params),
+    do: edit(id, params)
+
+  def edit(channel, params) do
+    API.request(:patch, "channels/#{channel}", params)
+    |> pretty
+  end
+
+  @doc """
   Modifies the name of a given channel.
 
   Returns a channel object upon success
@@ -300,36 +330,6 @@ defmodule Coxir.Struct.Channel do
 
   def set_parent(channel, parent) do
     edit(channel, %{parent_id: parent})
-  end
-
-  @doc """
-  Modifies a given channel.
-
-  Returns a channel object upon success
-  or a map containing error information.
-
-  #### Params
-  Must be an enumerable with the fields listed below.
-  - `name` - channel name (2-100 characters)
-  - `topic` - channel topic (up to 1024 characters)
-  - `nsfw` - whether the channel is NSFW
-  - `position` - the position in the left-hand listing
-  - `bitrate` - the bitrate in bits of the voice channel
-  - `user_limit` - the user limit of the voice channel
-  - `permission_overwrites` - channel or category-specific permissions
-  - `parent_id` - id of the new parent category
-
-  Refer to [this](https://discordapp.com/developers/docs/resources/channel#modify-channel)
-  for a broader explanation on the fields and their defaults.
-  """
-  @spec edit(channel, Enum.t) :: map
-
-  def edit(%{id: id}, params),
-    do: edit(id, params)
-
-  def edit(channel, params) do
-    API.request(:patch, "channels/#{channel}", params)
-    |> pretty
   end
 
   @doc """
