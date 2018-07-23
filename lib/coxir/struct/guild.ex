@@ -58,6 +58,156 @@ defmodule Coxir.Struct.Guild do
   end
 
   @doc """
+  Modifies the name of a given guild.
+
+  Returns a guild object upon success
+  or a map containing error information.
+  """
+  @spec set_name(guild, String.t) :: map
+
+  def set_name(%{id: id}, name),
+    do: set_name(id, name)
+
+  def set_name(guild, name) do
+    edit(guild, %{name: name})
+  end
+
+  @doc """
+  Modifies the region of a given guild.
+
+  Returns a guild object upon success
+  or a map containing error information.
+  """
+  @spec set_region(guild, String.t) :: map
+
+  def set_region(%{id: id}, region),
+    do: set_region(id, region)
+
+  def set_region(guild, region) do
+    edit(guild, %{region: region})
+  end
+
+  @doc """
+  Modifies the icon of a given guild.
+
+  Returns a guild object upon success
+  or a map containing error information.
+  """
+  @spec set_region(guild, String.t) :: map
+
+  def set_icon(%{id: id}, icon),
+    do: set_icon(id, icon)
+
+  def set_icon(guild, icon) do
+    edit(guild, %{region: icon})
+  end
+
+  @doc """
+  Modifies the splash of a given guild (VIP only).
+
+  Returns a guild object upon success
+  or a map containing error information.
+  """
+  @spec set_splash(guild, String.t) :: map
+
+  def set_splash(%{id: id}, splash),
+    do: set_splash(id, splash)
+
+  def set_splash(guild, splash) do
+    edit(guild, %{splash: splash})
+  end
+
+  @doc """
+  Modifies the afk timeout of a given guild.
+
+  Returns a guild object upon success
+  or a map containing error information.
+  """
+  @spec set_afk_timeout(guild, Integer.t) :: map
+
+  def set_afk_timeout(%{id: id}, timeout),
+    do: set_afk_timeout(id, timeout)
+
+  def set_afk_timeout(guild, timeout) do
+    edit(guild, %{afk_timeout: timeout})
+  end
+
+  @doc """
+  Modifies the id for afk channel of a given guild.
+
+  Returns a guild object upon success
+  or a map containing error information.
+  """
+  @spec set_afk_channel(guild, String.t) :: map
+
+  def set_afk_channel(%{id: id}, channel_id),
+    do: set_afk_channel(id, channel_id)
+
+  def set_afk_channel(guild, channel_id) do
+    edit(guild, %{afk_channel_id: channel_id})
+  end
+
+  @doc """
+  Modifies the id of the channel to which system messages are sent of a given guild.
+
+  Returns a guild object upon success
+  or a map containing error information.
+  """
+  @spec set_system_channel(guild, String.t) :: map
+
+  def set_system_channel(%{id: id}, channel_id), #Maybe Channel module should have a shortcut to this function?
+    do: set_system_channel(id, channel_id)
+
+  def set_system_channel(guild, channel_id) do
+    edit(guild, %{system_channel_id: channel_id})
+  end
+
+  @doc """
+  Transfers the ownership of a given guild.
+
+  Returns a guild object upon success
+  or a map containing error information.
+  """
+  @spec transfer(guild, String.t) :: map
+
+  def transfer(%{id: id}, user_id),
+    do: transfer(id, user_id)
+
+  def transfer(guild, user_id) do
+    edit(guild, %{owner_id: user_id})
+  end
+
+  @doc """
+  Modifies the verification level of a given guild.
+
+  Returns a guild object upon success
+  or a map containing error information.
+  """
+  @spec set_verification_level(guild, Integer.t) :: map
+
+  def set_verification_level(%{id: id}, level),
+    do: set_verification_level(id, level)
+
+  def set_verification_level(guild, level) do
+    edit(guild, %{verification_level: level})
+  end
+
+  @doc """
+  Modifies the explicit content filter level of a given guild.
+
+  Returns a guild object upon success
+  or a map containing error information.
+  """
+  @spec set_content_filter(guild, Integer.t) :: map
+
+  def set_content_filter(%{id: id}, level),
+    do: set_content_filter(id, level)
+
+  def set_content_filter(guild, level) do
+    edit(guild, %{explicit_content_filter: level})
+  end
+
+  @doc """
   Modifies a given guild.
 
   Returns a guild object upon success
@@ -72,6 +222,11 @@ defmodule Coxir.Struct.Guild do
   - `afk_timeout` - voice AFK timeout in seconds
   - `afk_channel_id` - voice AFK channel
   - `system_channel_id` - channel to which system messages are sent
+  - `owner_id` - user id to transfer guild ownership to (must be owner)
+  - `verification_level` - verification level
+  - `default_message_notifications` - default message notification level
+  - `explicit_content_filter` - explicit content filter level
+
 
   Refer to [this](https://discordapp.com/developers/docs/resources/guild#modify-guild)
   for a broader explanation on the fields and their defaults.
