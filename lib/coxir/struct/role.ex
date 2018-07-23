@@ -17,6 +17,40 @@ defmodule Coxir.Struct.Role do
   def select(pattern)
 
   @doc """
+  Modifies a given role.
+
+  Returns a role object upon success
+  or a map containing error information.
+
+  #### Params
+  Must be an enumerable with the fields listed below.
+  - `name` - name of the role
+  - `color` - RGB color value
+  - `permissions` - bitwise of the permissions
+  - `hoist` - whether the role should be displayed separately
+  - `mentionable` - whether the role should be mentionable
+
+  Refer to [this](https://discordapp.com/developers/docs/resources/guild#modify-guild-role)
+  for a broader explanation on the fields and their defaults.
+  """
+  @spec edit(role, Enum.t) :: map
+
+  def edit(%{id: id, guild_id: guild}, params),
+    do: edit(id, guild, params)
+
+  @doc """
+  Modifies a given role.
+
+  Refer to `edit/2` for more information.
+  """
+  @spec edit(String.t, String.t, Enum.t) :: map
+
+  def edit(role, guild, params) do
+    API.request(:patch, "guilds/#{guild}/roles/#{role}", params)
+    |> put(:guild_id, guild)
+  end
+
+  @doc """
   Modifies the name of a given role.
 
   Returns a role object upon success
@@ -119,40 +153,6 @@ defmodule Coxir.Struct.Role do
 
   def disable_mentioning(role, guild_id) do
     edit(role, guild_id, %{mentionable: false})
-  end
-
-  @doc """
-  Modifies a given role.
-
-  Returns a role object upon success
-  or a map containing error information.
-
-  #### Params
-  Must be an enumerable with the fields listed below.
-  - `name` - name of the role
-  - `color` - RGB color value
-  - `permissions` - bitwise of the permissions
-  - `hoist` - whether the role should be displayed separately
-  - `mentionable` - whether the role should be mentionable
-
-  Refer to [this](https://discordapp.com/developers/docs/resources/guild#modify-guild-role)
-  for a broader explanation on the fields and their defaults.
-  """
-  @spec edit(role, Enum.t) :: map
-
-  def edit(%{id: id, guild_id: guild}, params),
-    do: edit(id, guild, params)
-
-  @doc """
-  Modifies a given role.
-
-  Refer to `edit/2` for more information.
-  """
-  @spec edit(String.t, String.t, Enum.t) :: map
-
-  def edit(role, guild, params) do
-    API.request(:patch, "guilds/#{guild}/roles/#{role}", params)
-    |> put(:guild_id, guild)
   end
 
   @doc """
