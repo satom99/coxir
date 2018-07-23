@@ -58,6 +58,39 @@ defmodule Coxir.Struct.Guild do
   end
 
   @doc """
+  Modifies a given guild.
+
+  Returns a guild object upon success
+  or a map containing error information.
+
+  #### Params
+  Must be an enumerable with the fields listed below.
+  - `name` - guild name
+  - `region` - guild voice region
+  - `icon` - base64 encoded 128x128 jpeg image
+  - `splash` - base64 encoded 128x128 jpeg image
+  - `afk_timeout` - voice AFK timeout in seconds
+  - `afk_channel_id` - voice AFK channel
+  - `system_channel_id` - channel to which system messages are sent
+  - `owner_id` - user id to transfer guild ownership to (must be owner)
+  - `verification_level` - verification level
+  - `default_message_notifications` - default message notification level
+  - `explicit_content_filter` - explicit content filter level
+
+  Refer to [this](https://discordapp.com/developers/docs/resources/guild#modify-guild)
+  for a broader explanation on the fields and their defaults.
+  """
+  @spec edit(guild, Enum.t) :: map
+
+  def edit(%{id: id}, params),
+    do: edit(id, params)
+
+  def edit(guild, params) do
+    API.request(:patch, "guilds/#{guild}", params)
+    |> pretty
+  end
+
+  @doc """
   Modifies the name of a given guild.
 
   Returns a guild object upon success
@@ -205,39 +238,6 @@ defmodule Coxir.Struct.Guild do
 
   def set_content_filter(guild, level) do
     edit(guild, %{explicit_content_filter: level})
-  end
-
-  @doc """
-  Modifies a given guild.
-
-  Returns a guild object upon success
-  or a map containing error information.
-
-  #### Params
-  Must be an enumerable with the fields listed below.
-  - `name` - guild name
-  - `region` - guild voice region
-  - `icon` - base64 encoded 128x128 jpeg image
-  - `splash` - base64 encoded 128x128 jpeg image
-  - `afk_timeout` - voice AFK timeout in seconds
-  - `afk_channel_id` - voice AFK channel
-  - `system_channel_id` - channel to which system messages are sent
-  - `owner_id` - user id to transfer guild ownership to (must be owner)
-  - `verification_level` - verification level
-  - `default_message_notifications` - default message notification level
-  - `explicit_content_filter` - explicit content filter level
-
-  Refer to [this](https://discordapp.com/developers/docs/resources/guild#modify-guild)
-  for a broader explanation on the fields and their defaults.
-  """
-  @spec edit(guild, Enum.t) :: map
-
-  def edit(%{id: id}, params),
-    do: edit(id, params)
-
-  def edit(guild, params) do
-    API.request(:patch, "guilds/#{guild}", params)
-    |> pretty
   end
 
   @doc """
