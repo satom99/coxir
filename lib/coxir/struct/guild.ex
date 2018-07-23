@@ -155,7 +155,7 @@ defmodule Coxir.Struct.Guild do
   """
   @spec set_system_channel(guild, String.t) :: map
 
-  def set_system_channel(%{id: id}, channel_id), #Maybe Channel module should have a shortcut to this function?
+  def set_system_channel(%{id: id}, channel_id),
     do: set_system_channel(id, channel_id)
 
   def set_system_channel(guild, channel_id) do
@@ -168,12 +168,12 @@ defmodule Coxir.Struct.Guild do
   Returns a guild object upon success
   or a map containing error information.
   """
-  @spec transfer(guild, String.t) :: map
+  @spec transfer_ownership(guild, String.t) :: map
 
-  def transfer(%{id: id}, user_id),
-    do: transfer(id, user_id)
+  def transfer_ownership(%{id: id}, user_id),
+    do: transfer_ownership(id, user_id)
 
-  def transfer(guild, user_id) do
+  def transfer_ownership(guild, user_id) do
     edit(guild, %{owner_id: user_id})
   end
 
@@ -226,7 +226,6 @@ defmodule Coxir.Struct.Guild do
   - `verification_level` - verification level
   - `default_message_notifications` - default message notification level
   - `explicit_content_filter` - explicit content filter level
-
 
   Refer to [this](https://discordapp.com/developers/docs/resources/guild#modify-guild)
   for a broader explanation on the fields and their defaults.
