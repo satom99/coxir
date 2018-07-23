@@ -10,8 +10,6 @@ defmodule Coxir.Struct.Channel do
   """
   @type channel :: String.t | map
 
-  require Logger
-
   use Coxir.Struct
 
   alias Coxir.Struct.{User, Member, Overwrite, Message}
@@ -279,11 +277,6 @@ defmodule Coxir.Struct.Channel do
     do: set_bitrate(id, bitrate)
 
   def set_bitrate(channel, bitrate) do
-    if bitrate != 128000 and bitrate < 8000 and bitrate > 96000 do
-      Logger.error fn ->
-        "\b[Coxir] The bitrate of the voice channel should be between 8000 and 96000 (128000 for VIP servers)."
-      end
-    end
     edit(channel, %{bitrate: bitrate})
   end
 
