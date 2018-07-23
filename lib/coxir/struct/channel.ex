@@ -10,6 +10,8 @@ defmodule Coxir.Struct.Channel do
   """
   @type channel :: String.t | map
 
+  require Logger
+
   use Coxir.Struct
 
   alias Coxir.Struct.{User, Member, Overwrite, Message}
@@ -158,6 +160,146 @@ defmodule Coxir.Struct.Channel do
 
   def bulk_delete_messages(channel, messages) do
     API.request(:post, "channels/#{channel}/messages/bulk-delete", %{messages: messages})
+  end
+
+  @doc """
+  Modifies the name of a given channel.
+
+  Returns a channel object upon success
+  or a map containing error information.
+  """
+  @spec set_name(channel, String.t) :: map
+
+  def set_name(%{id: id}, name),
+    do: set_name(id, name)
+
+  def set_name(channel, name) do
+    edit(channel, %{name: name})
+  end
+
+  @doc """
+  Modifies the topic of a given channel.
+
+  Returns a channel object upon success
+  or a map containing error information.
+  """
+  @spec set_topic(channel, String.t) :: map
+
+  def set_topic(%{id: id}, topic),
+    do: set_topic(id, topic)
+
+  def set_topic(channel, topic) do
+    edit(channel, %{topic: topic})
+  end
+
+  @doc """
+  Enables the NSFW status of a given channel.
+
+  Returns a channel object upon success
+  or a map containing error information.
+  """
+  @spec enable_nsfw(channel) :: map
+
+  def enable_nsfw(%{id: id}),
+    do: enable_nsfw(id)
+
+  def enable_nsfw(channel) do
+    edit(channel, %{nsfw: true})
+  end
+
+  @doc """
+  Disables the NSFW status of a given channel.
+
+  Returns a channel object upon success
+  or a map containing error information.
+  """
+  @spec disable_nsfw(channel) :: map
+
+  def disable_nsfw(%{id: id}),
+    do: disable_nsfw(id)
+
+  def disable_nsfw(channel) do
+    edit(channel, %{nsfw: false})
+  end
+
+  @doc """
+  Modifies the position of a given channel.
+
+  Returns a channel object upon success
+  or a map containing error information.
+  """
+  @spec set_position(channel, Integer.t) :: map
+
+  def set_position(%{id: id}, position),
+    do: set_position(id, position)
+
+  def set_position(channel, position) do
+    edit(channel, %{position: position})
+  end
+
+  @doc """
+  Modifies the bitrate of a given voice channel.
+
+  Returns a channel object upon success
+  or a map containing error information.
+  """
+  @spec set_bitrate(channel, Integer.t) :: map
+
+  def set_bitrate(%{id: id}, bitrate),
+    do: set_bitrate(id, bitrate)
+
+  def set_bitrate(channel, bitrate) do
+    if bitrate != 128000 and bitrate < 8000 and bitrate > 96000 do
+      Logger.error fn ->
+        "\b[Coxir] The bitrate of the voice channel should be between 8000 and 96000 (128000 for VIP servers)."
+      end
+    end
+    edit(channel, %{bitrate: bitrate})
+  end
+
+  @doc """
+  Modifies the user limit of a given voice channel.
+
+  Returns a channel object upon success
+  or a map containing error information.
+  """
+  @spec set_user_limit(channel, Integer.t) :: map
+
+  def set_user_limit(%{id: id}, limit),
+    do: set_user_limit(id, limit)
+
+  def set_user_limit(channel, limit) do
+    edit(channel, %{user_limit: limit})
+  end
+
+  @doc """
+  Modifies the permissions of a given channel.
+
+  Returns a channel object upon success
+  or a map containing error information.
+  """
+  @spec set_permissions(channel, Enum.t) :: map
+
+  def set_permissions(%{id: id}, permission_overwrites),
+    do: set_permissions(id, permission_overwrites)
+
+  def set_permissions(channel, permission_overwrites) do
+    edit(channel, %{permission_overwrites: permission_overwrites})
+  end
+
+  @doc """
+  Modifies the parent id of a given channel.
+
+  Returns a channel object upon success
+  or a map containing error information.
+  """
+  @spec set_parent(channel, String.t) :: map
+
+  def set_parent(%{id: id}, parent),
+    do: set_parent(id, parent)
+
+  def set_parent(channel, parent) do
+    edit(channel, %{parent_id: parent})
   end
 
   @doc """
