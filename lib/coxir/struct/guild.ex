@@ -101,9 +101,8 @@ defmodule Coxir.Struct.Guild do
   def set_name(%{id: id}, name),
     do: set_name(id, name)
 
-  def set_name(guild, name) do
-    edit(guild, %{name: name})
-  end
+  def set_name(guild, name),
+    do: edit(guild, name: name)
 
   @doc """
   Modifies the region of a given guild.
@@ -116,9 +115,8 @@ defmodule Coxir.Struct.Guild do
   def set_region(%{id: id}, region),
     do: set_region(id, region)
 
-  def set_region(guild, region) do
-    edit(guild, %{region: region})
-  end
+  def set_region(guild, region),
+    do: edit(guild, region: region)
 
   @doc """
   Modifies the icon of a given guild.
@@ -131,9 +129,8 @@ defmodule Coxir.Struct.Guild do
   def set_icon(%{id: id}, icon),
     do: set_icon(id, icon)
 
-  def set_icon(guild, icon) do
-    edit(guild, %{region: icon})
-  end
+  def set_icon(guild, icon),
+    do: edit(guild, icon: icon)
 
   @doc """
   Modifies the splash of a given guild (VIP only).
@@ -146,9 +143,8 @@ defmodule Coxir.Struct.Guild do
   def set_splash(%{id: id}, splash),
     do: set_splash(id, splash)
 
-  def set_splash(guild, splash) do
-    edit(guild, %{splash: splash})
-  end
+  def set_splash(guild, splash),
+    do: edit(guild, splash: splash)
 
   @doc """
   Modifies the afk timeout of a given guild.
@@ -161,9 +157,8 @@ defmodule Coxir.Struct.Guild do
   def set_afk_timeout(%{id: id}, timeout),
     do: set_afk_timeout(id, timeout)
 
-  def set_afk_timeout(guild, timeout) do
-    edit(guild, %{afk_timeout: timeout})
-  end
+  def set_afk_timeout(guild, timeout),
+    do: edit(guild, afk_timeout: timeout)
 
   @doc """
   Modifies the id for afk channel of a given guild.
@@ -176,9 +171,8 @@ defmodule Coxir.Struct.Guild do
   def set_afk_channel(%{id: id}, channel_id),
     do: set_afk_channel(id, channel_id)
 
-  def set_afk_channel(guild, channel_id) do
-    edit(guild, %{afk_channel_id: channel_id})
-  end
+  def set_afk_channel(guild, channel_id),
+    do: edit(guild, afk_channel_id: channel_id)
 
   @doc """
   Modifies the id of the channel to which system messages are sent of a given guild.
@@ -191,9 +185,8 @@ defmodule Coxir.Struct.Guild do
   def set_system_channel(%{id: id}, channel_id),
     do: set_system_channel(id, channel_id)
 
-  def set_system_channel(guild, channel_id) do
-    edit(guild, %{system_channel_id: channel_id})
-  end
+  def set_system_channel(guild, channel_id),
+    do: edit(guild, system_channel_id: channel_id)
 
   @doc """
   Transfers the ownership of a given guild.
@@ -206,9 +199,8 @@ defmodule Coxir.Struct.Guild do
   def transfer_ownership(%{id: id}, user_id),
     do: transfer_ownership(id, user_id)
 
-  def transfer_ownership(guild, user_id) do
-    edit(guild, %{owner_id: user_id})
-  end
+  def transfer_ownership(guild, user_id),
+    do: edit(guild, owner_id: user_id)
 
   @doc """
   Modifies the verification level of a given guild.
@@ -221,9 +213,8 @@ defmodule Coxir.Struct.Guild do
   def set_verification_level(%{id: id}, level),
     do: set_verification_level(id, level)
 
-  def set_verification_level(guild, level) do
-    edit(guild, %{verification_level: level})
-  end
+  def set_verification_level(guild, level),
+    do: edit(guild, verification_level: level)
 
   @doc """
   Modifies the explicit content filter level of a given guild.
@@ -236,9 +227,8 @@ defmodule Coxir.Struct.Guild do
   def set_content_filter(%{id: id}, level),
     do: set_content_filter(id, level)
 
-  def set_content_filter(guild, level) do
-    edit(guild, %{explicit_content_filter: level})
-  end
+  def set_content_filter(guild, level),
+    do: edit(guild, explicit_content_filter: level)
 
   @doc """
   Deletes a given guild.
