@@ -61,9 +61,8 @@ defmodule Coxir.Struct.Role do
   def set_name(%{id: id, guild_id: guild}, name),
     do: set_name(id, guild, name)
 
-  def set_name(role, guild_id, name) do
-    edit(role, guild_id, %{name: name})
-  end
+  def set_name(role, guild, name),
+    do: edit(role, guild, name: name)
 
   @doc """
   Modifies the color of a given role.
@@ -76,9 +75,8 @@ defmodule Coxir.Struct.Role do
   def set_color(%{id: id, guild_id: guild}, color),
     do: set_color(id, guild, color)
 
-  def set_color(role, guild_id, color) do
-    edit(role, guild_id, %{color: color})
-  end
+  def set_color(role, guild, color),
+    do: edit(role, guild, color: color)
 
   @doc """
   Modifies the permissions of a given role.
@@ -91,9 +89,8 @@ defmodule Coxir.Struct.Role do
   def set_permissions(%{id: id, guild_id: guild}, permissions),
     do: set_permissions(id, guild, permissions)
 
-  def set_permissions(role, guild_id, permissions) do
-    edit(role, guild_id, %{permissions: permissions})
-  end
+  def set_permissions(role, guild, permissions),
+    do: edit(role, guild, permissions: permissions)
 
   @doc """
   Hoists a given role.
@@ -106,8 +103,8 @@ defmodule Coxir.Struct.Role do
   def hoist(%{id: id, guild_id: guild}),
     do: hoist(id, guild)
 
-  def hoist(role, guild_id) do
-    edit(role, guild_id, %{hoist: true})
+  def hoist(role, guild) do
+    edit(role, guild, hoist: true)
   end
 
   @doc """
@@ -121,8 +118,8 @@ defmodule Coxir.Struct.Role do
   def unhoist(%{id: id, guild_id: guild}),
     do: unhoist(id, guild)
 
-  def unhoist(role, guild_id) do
-    edit(role, guild_id, %{hoist: false})
+  def unhoist(role, guild) do
+    edit(role, guild, hoist: false)
   end
 
   @doc """
@@ -136,8 +133,8 @@ defmodule Coxir.Struct.Role do
   def enable_mentioning(%{id: id, guild_id: guild}),
     do: enable_mentioning(id, guild)
 
-  def enable_mentioning(role, guild_id) do
-    edit(role, guild_id, %{mentionable: true})
+  def enable_mentioning(role, guild) do
+    edit(role, guild, mentionable: true)
   end
 
   @doc """
@@ -151,8 +148,8 @@ defmodule Coxir.Struct.Role do
   def disable_mentioning(%{id: id, guild_id: guild}),
     do: disable_mentioning(id, guild)
 
-  def disable_mentioning(role, guild_id) do
-    edit(role, guild_id, %{mentionable: false})
+  def disable_mentioning(role, guild) do
+    edit(role, guild, mentionable: false)
   end
 
   @doc """
