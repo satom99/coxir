@@ -39,7 +39,7 @@ defmodule Coxir.Struct.Role do
   """
   @spec set_color(role, String.t, Integer.t) :: map
 
-  def set_color(%{id: id, guild_id: guild}, color), #Role.set_color("role_id", "guild_id", color)
+  def set_color(%{id: id, guild_id: guild}, color),
     do: set_color(id, guild, color)
 
   def set_color(role, guild_id, color) do
