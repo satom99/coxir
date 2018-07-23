@@ -37,6 +37,42 @@ defmodule Coxir.Struct.Webhook do
   end
 
   @doc """
+  Modifies the name of a given webhook.
+
+  Returns a webhook object upon success
+  or a map containing error information.
+  """
+  @spec set_name(String.t, String.t) :: map
+
+  def set_name(webhook, name) do
+    edit(webhook, %{name: name})
+  end
+
+  @doc """
+  Modifies the avatar of a given webhook.
+
+  Returns a webhook object upon success
+  or a map containing error information.
+  """
+  @spec set_avatar(String.t, String.t) :: map
+
+  def set_avatar(webhook, avatar) do
+    edit(webhook, %{avatar: avatar})
+  end
+
+  @doc """
+  Moves a given webhook to a given channel.
+
+  Returns a webhook object upon success
+  or a map containing error information.
+  """
+  @spec set_channel(String.t, String.t) :: map
+
+  def set_channel(webhook, channel_id) do
+    edit(webhook, %{avatar: channel_id})
+  end
+
+  @doc """
   Modifies a given webhook.
 
   Returns a webhook object upon success
