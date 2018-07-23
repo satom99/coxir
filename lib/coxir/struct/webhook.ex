@@ -37,6 +37,41 @@ defmodule Coxir.Struct.Webhook do
   end
 
   @doc """
+  Modifies a given webhook.
+
+  Returns a webhook object upon success
+  or a map containing error information.
+
+  #### Params
+  Must be an enumerable with the fields listed below.
+  - `name` - the default name of the webhook
+  - `avatar` - image for the default webhook avatar
+  - `channel_id` - the new channel id to be moved to
+
+  Refer to [this](https://discordapp.com/developers/docs/resources/webhook#modify-webhook)
+  for a broader explanation on the fields and their defaults.
+  """
+  @spec edit(String.t, Enum.t) :: map
+
+  def edit(webhook, params) do
+    API.request(:patch, "webhooks/#{webhook}", params)
+    |> pretty
+  end
+
+  @doc """
+  Modifies a given webhook.
+
+  Refer to [this](https://discordapp.com/developers/docs/resources/webhook#modify-webhook-with-token)
+  for more information.
+  """
+  @spec edit_with_token(String.t, String.t, Enum.t) :: map
+
+  def edit_with_token(webhook, token, params) do
+    API.request(:patch, "webhooks/#{webhook}/#{token}", params)
+    |> pretty
+  end
+
+  @doc """
   Modifies the name of a given webhook.
 
   Returns a webhook object upon success
@@ -70,41 +105,6 @@ defmodule Coxir.Struct.Webhook do
 
   def set_channel(webhook, channel_id) do
     edit(webhook, %{avatar: channel_id})
-  end
-
-  @doc """
-  Modifies a given webhook.
-
-  Returns a webhook object upon success
-  or a map containing error information.
-
-  #### Params
-  Must be an enumerable with the fields listed below.
-  - `name` - the default name of the webhook
-  - `avatar` - image for the default webhook avatar
-  - `channel_id` - the new channel id to be moved to
-
-  Refer to [this](https://discordapp.com/developers/docs/resources/webhook#modify-webhook)
-  for a broader explanation on the fields and their defaults.
-  """
-  @spec edit(String.t, Enum.t) :: map
-
-  def edit(webhook, params) do
-    API.request(:patch, "webhooks/#{webhook}", params)
-    |> pretty
-  end
-
-  @doc """
-  Modifies a given webhook.
-
-  Refer to [this](https://discordapp.com/developers/docs/resources/webhook#modify-webhook-with-token)
-  for more information.
-  """
-  @spec edit_with_token(String.t, String.t, Enum.t) :: map
-
-  def edit_with_token(webhook, token, params) do
-    API.request(:patch, "webhooks/#{webhook}/#{token}", params)
-    |> pretty
   end
 
   @doc """
