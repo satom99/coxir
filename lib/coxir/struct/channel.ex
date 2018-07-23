@@ -198,6 +198,9 @@ defmodule Coxir.Struct.Channel do
   """
   @spec set_name(channel, String.t) :: map
 
+  def set_name(%{id: id}, name),
+    do: set_name(id, name)
+
   def set_name(channel, name),
     do: edit(channel, name: name)
 
@@ -208,6 +211,9 @@ defmodule Coxir.Struct.Channel do
   or a map containing error information.
   """
   @spec set_topic(channel, String.t) :: map
+
+  def set_topic(%{id: id}, topic),
+    do: set_topic(id, topic)
 
   def set_topic(channel, topic),
     do: edit(channel, topic: topic)
@@ -250,6 +256,9 @@ defmodule Coxir.Struct.Channel do
   """
   @spec set_position(channel, Integer.t) :: map
 
+  def set_position(%{id: id}, position),
+    do: set_position(id, position)
+
   def set_position(channel, position),
     do: edit(channel, position: position)
 
@@ -260,6 +269,9 @@ defmodule Coxir.Struct.Channel do
   or a map containing error information.
   """
   @spec set_bitrate(channel, Integer.t) :: map
+
+  def set_bitrate(%{id: id}, bitrate),
+    do: set_bitrate(id, bitrate)
 
   def set_bitrate(channel, bitrate),
     do: edit(channel, bitrate: bitrate)
@@ -272,6 +284,9 @@ defmodule Coxir.Struct.Channel do
   """
   @spec set_user_limit(channel, Integer.t) :: map
 
+  def set_user_limit(%{id: id}, limit),
+    do: set_user_limit(id, limit)
+
   def set_user_limit(channel, limit),
     do: edit(channel, user_limit: limit)
 
@@ -283,8 +298,11 @@ defmodule Coxir.Struct.Channel do
   """
   @spec set_permissions(channel, Enum.t) :: map
 
-  def set_permissions(channel, permission_overwrites),
-    do: edit(channel, permission_overwrites: permission_overwrites)
+  def set_permissions(%{id: id}, permissions),
+    do: set_permissions(id, permissions)
+
+  def set_permissions(channel, permissions),
+    do: edit(channel, permission_overwrites: permissions)
 
   @doc """
   Modifies the parent id of a given channel.
@@ -293,6 +311,9 @@ defmodule Coxir.Struct.Channel do
   or a map containing error information.
   """
   @spec set_parent(channel, String.t) :: map
+
+  def set_parent(%{id: id}, parent),
+    do: set_parent(id, parent)
 
   def set_parent(channel, parent),
     do: edit(channel, parent_id: parent)
