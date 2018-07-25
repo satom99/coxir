@@ -218,7 +218,7 @@ defmodule Coxir.Struct.Channel do
   Returns a channel object upon success
   or a map containing error information.
   """
-  @spec enable_nsfw(channel, Boolean.t) :: map
+  @spec set_nsfw(channel, Boolean.t) :: map
 
   def set_nsfw(channel, state),
     do: edit(channel, nsfw: state)
