@@ -93,33 +93,18 @@ defmodule Coxir.Struct.Role do
     do: edit(role, guild, permissions: permissions)
 
   @doc """
-  Hoists a given role.
+  Modifies the hoisting of a given role.
 
   Returns a role object upon success
   or a map containing error information.
   """
-  @spec hoist(role, String.t) :: map
+  @spec set_hoist(role, String.t, Boolean.t) :: map
 
-  def hoist(%{id: id, guild_id: guild}),
-    do: hoist(id, guild)
+  def set_hoist(%{id: id, guild_id: guild}, state),
+    do: hoist(id, guild, state)
 
-  def hoist(role, guild) do
-    edit(role, guild, hoist: true)
-  end
-
-  @doc """
-  Unhoists a given role.
-
-  Returns a role object upon success
-  or a map containing error information.
-  """
-  @spec unhoist(role, String.t) :: map
-
-  def unhoist(%{id: id, guild_id: guild}),
-    do: unhoist(id, guild)
-
-  def unhoist(role, guild) do
-    edit(role, guild, hoist: false)
+  def set_hoist(role, guild, state) do
+    edit(role, guild, hoist: state)
   end
 
   @doc """
