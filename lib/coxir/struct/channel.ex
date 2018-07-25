@@ -213,27 +213,15 @@ defmodule Coxir.Struct.Channel do
     do: edit(channel, topic: topic)
 
   @doc """
-  Enables the NSFW status of a given channel.
+  Modifies the NSFW status of a given channel.
 
   Returns a channel object upon success
   or a map containing error information.
   """
-  @spec enable_nsfw(channel) :: map
+  @spec enable_nsfw(channel, Boolean.t) :: map
 
-  def enable_nsfw(channel) do
-    edit(channel, nsfw: true)
-  end
-
-  @doc """
-  Disables the NSFW status of a given channel.
-
-  Returns a channel object upon success
-  or a map containing error information.
-  """
-  @spec disable_nsfw(channel) :: map
-
-  def disable_nsfw(channel) do
-    edit(channel, nsfw: false)
+  def set_nsfw(channel, state) do
+    edit(channel, nsfw: state)
   end
 
   @doc """
