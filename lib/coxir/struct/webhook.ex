@@ -101,8 +101,8 @@ defmodule Coxir.Struct.Webhook do
   """
   @spec set_channel(String.t, String.t) :: map
 
-  def set_channel(webhook, channel_id),
-    do: edit(webhook, channel_id: channel_id)
+  def set_channel(webhook, channel),
+    do: edit(webhook, channel_id: channel)
 
   @doc """
   Deletes a given webhook.
