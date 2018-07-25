@@ -153,8 +153,8 @@ defmodule Coxir.Struct.Guild do
   """
   @spec set_afk_channel(guild, String.t) :: map
 
-  def set_afk_channel(guild, channel_id),
-    do: edit(guild, afk_channel_id: channel_id)
+  def set_afk_channel(guild, channel),
+    do: edit(guild, afk_channel_id: channel)
 
   @doc """
   Modifies the id of the channel to which system messages are sent of a given guild.
@@ -164,8 +164,8 @@ defmodule Coxir.Struct.Guild do
   """
   @spec set_system_channel(guild, String.t) :: map
 
-  def set_system_channel(guild, channel_id),
-    do: edit(guild, system_channel_id: channel_id)
+  def set_system_channel(guild, channel),
+    do: edit(guild, system_channel_id: channel)
 
   @doc """
   Transfers the ownership of a given guild.
@@ -175,8 +175,8 @@ defmodule Coxir.Struct.Guild do
   """
   @spec transfer_ownership(guild, String.t) :: map
 
-  def transfer_ownership(guild, user_id),
-    do: edit(guild, owner_id: user_id)
+  def transfer_ownership(guild, user),
+    do: edit(guild, owner_id: user)
 
   @doc """
   Modifies the verification level of a given guild.
