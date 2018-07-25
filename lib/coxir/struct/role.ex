@@ -100,12 +100,11 @@ defmodule Coxir.Struct.Role do
   """
   @spec set_hoist(role, Boolean.t) :: map
 
-  def set_hoist(%{id: id, guild_id: guild}, state),
-    do: set_hoist(id, guild, state)
+  def set_hoist(%{id: id, guild_id: guild}, bool),
+    do: set_hoist(id, guild, bool)
 
-  def set_hoist(role, guild, state) do
-    edit(role, guild, hoist: state)
-  end
+  def set_hoist(role, guild, bool),
+    do: edit(role, guild, hoist: bool)
 
   @doc """
   Modifies the mentioning status of a given role.
@@ -113,14 +112,13 @@ defmodule Coxir.Struct.Role do
   Returns a role object upon success
   or a map containing error information.
   """
-  @spec set_mentioning(role, Boolean.t) :: map
+  @spec set_mentionable(role, Boolean.t) :: map
 
-  def set_mentioning(%{id: id, guild_id: guild}, state),
-    do: set_mentioning(id, guild, state)
+  def set_mentionable(%{id: id, guild_id: guild}, bool),
+    do: set_mentionable(id, guild, bool)
 
-  def set_mentioning(role, guild, state) do
-    edit(role, guild, mentionable: state)
-  end
+  def set_mentionable(role, guild, bool),
+    do: edit(role, guild, mentionable: bool)
 
   @doc """
   Deletes a given role.
