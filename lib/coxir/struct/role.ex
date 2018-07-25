@@ -123,33 +123,18 @@ defmodule Coxir.Struct.Role do
   end
 
   @doc """
-  Enables mentioning a given role.
+  Modifies the mentioning status of a given role.
 
   Returns a role object upon success
   or a map containing error information.
   """
-  @spec enable_mentioning(role, String.t) :: map
+  @spec set_mentioning(role, String.t, Boolean.t) :: map
 
-  def enable_mentioning(%{id: id, guild_id: guild}),
-    do: enable_mentioning(id, guild)
+  def set_mentioning(%{id: id, guild_id: guild}, state),
+    do: set_mentioning(id, guild, state)
 
-  def enable_mentioning(role, guild) do
-    edit(role, guild, mentionable: true)
-  end
-
-  @doc """
-  Disables mentioning a given role.
-
-  Returns a role object upon success
-  or a map containing error information.
-  """
-  @spec disable_mentioning(role, String.t) :: map
-
-  def disable_mentioning(%{id: id, guild_id: guild}),
-    do: disable_mentioning(id, guild)
-
-  def disable_mentioning(role, guild) do
-    edit(role, guild, mentionable: false)
+  def set_mentioning(role, guild, state) do
+    edit(role, guild, mentionable: state)
   end
 
   @doc """
