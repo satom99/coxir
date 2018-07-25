@@ -101,7 +101,7 @@ defmodule Coxir.Struct.Role do
   @spec set_hoist(role, Boolean.t) :: map
 
   def set_hoist(%{id: id, guild_id: guild}, state),
-    do: hoist(id, guild, state)
+    do: set_hoist(id, guild, state)
 
   def set_hoist(role, guild, state) do
     edit(role, guild, hoist: state)
