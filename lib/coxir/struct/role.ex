@@ -98,7 +98,7 @@ defmodule Coxir.Struct.Role do
   Returns a role object upon success
   or a map containing error information.
   """
-  @spec set_hoist(role, Boolean.t) :: map
+  @spec set_hoist(role, boolean) :: map
 
   def set_hoist(%{id: id, guild_id: guild}, bool),
     do: set_hoist(id, guild, bool)
@@ -112,7 +112,7 @@ defmodule Coxir.Struct.Role do
   Returns a role object upon success
   or a map containing error information.
   """
-  @spec set_mentionable(role, Boolean.t) :: map
+  @spec set_mentionable(role, boolean) :: map
 
   def set_mentionable(%{id: id, guild_id: guild}, bool),
     do: set_mentionable(id, guild, bool)
