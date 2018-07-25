@@ -220,8 +220,8 @@ defmodule Coxir.Struct.Channel do
   """
   @spec set_nsfw(channel, Boolean.t) :: map
 
-  def set_nsfw(channel, state),
-    do: edit(channel, nsfw: state)
+  def set_nsfw(channel, bool),
+    do: edit(channel, nsfw: bool)
 
   @doc """
   Modifies the position of a given channel.
