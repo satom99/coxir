@@ -1,5 +1,10 @@
 # coxir
 
+[![License](https://img.shields.io/github/license/satom99/coxir.svg)](https://github.com/satom99/coxir/blob/master/LICENSE)
+[![Build Status](https://travis-ci.org/satom99/coxir.svg?branch=master)](https://travis-ci.org/satom99/coxir)
+[![Join Discord](https://img.shields.io/badge/discord-join-7289DA.svg)](https://discord.gg/6JrqNEX)
+[![Donate](https://img.shields.io/badge/donate-PayPal-yellow.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=JKKHNZF6RAKDA&item_name=coxir&currency_code=USD)
+
 An Elixir wrapper for Discord.
 Based on [nostrum](https://github.com/Kraigie/nostrum)
 and [alchemy](https://github.com/cronokirby/alchemy).
