@@ -94,7 +94,7 @@ defmodule Coxir.Struct.Webhook do
     do: edit(webhook, avatar: avatar)
 
   @doc """
-  Moves a given webhook to a given channel.
+  Modifies the channel of a given webhook.
 
   Returns a webhook object upon success
   or a map containing error information.

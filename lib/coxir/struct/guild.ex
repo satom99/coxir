@@ -72,10 +72,6 @@ defmodule Coxir.Struct.Guild do
   - `afk_timeout` - voice AFK timeout in seconds
   - `afk_channel_id` - voice AFK channel
   - `system_channel_id` - channel to which system messages are sent
-  - `owner_id` - user id to transfer guild ownership to (must be owner)
-  - `verification_level` - verification level
-  - `default_message_notifications` - default message notification level
-  - `explicit_content_filter` - explicit content filter level
 
   Refer to [this](https://discordapp.com/developers/docs/resources/guild#modify-guild)
   for a broader explanation on the fields and their defaults.
@@ -102,17 +98,6 @@ defmodule Coxir.Struct.Guild do
     do: edit(guild, name: name)
 
   @doc """
-  Modifies the region of a given guild.
-
-  Returns a guild object upon success
-  or a map containing error information.
-  """
-  @spec set_region(guild, String.t) :: map
-
-  def set_region(guild, region),
-    do: edit(guild, region: region)
-
-  @doc """
   Modifies the icon of a given guild.
 
   Returns a guild object upon success
@@ -124,7 +109,18 @@ defmodule Coxir.Struct.Guild do
     do: edit(guild, icon: icon)
 
   @doc """
-  Modifies the splash of a given guild (VIP only).
+  Modifies the region of a given guild.
+
+  Returns a guild object upon success
+  or a map containing error information.
+  """
+  @spec set_region(guild, String.t) :: map
+
+  def set_region(guild, region),
+    do: edit(guild, region: region)
+
+  @doc """
+  Modifies the splash of a given guild.
 
   Returns a guild object upon success
   or a map containing error information.
@@ -135,7 +131,7 @@ defmodule Coxir.Struct.Guild do
     do: edit(guild, splash: splash)
 
   @doc """
-  Modifies the afk timeout of a given guild.
+  Modifies the voice AFK timeout of a given guild.
 
   Returns a guild object upon success
   or a map containing error information.
@@ -146,7 +142,7 @@ defmodule Coxir.Struct.Guild do
     do: edit(guild, afk_timeout: timeout)
 
   @doc """
-  Modifies the id for afk channel of a given guild.
+  Modifies the voice AFK channel of a given guild.
 
   Returns a guild object upon success
   or a map containing error information.
@@ -157,7 +153,7 @@ defmodule Coxir.Struct.Guild do
     do: edit(guild, afk_channel_id: channel)
 
   @doc """
-  Modifies the id of the channel to which system messages are sent of a given guild.
+  Modifies the channel to which system messages are sent on a given guild.
 
   Returns a guild object upon success
   or a map containing error information.
@@ -166,39 +162,6 @@ defmodule Coxir.Struct.Guild do
 
   def set_system_channel(guild, channel),
     do: edit(guild, system_channel_id: channel)
-
-  @doc """
-  Transfers the ownership of a given guild.
-
-  Returns a guild object upon success
-  or a map containing error information.
-  """
-  @spec transfer_ownership(guild, String.t) :: map
-
-  def transfer_ownership(guild, user),
-    do: edit(guild, owner_id: user)
-
-  @doc """
-  Modifies the verification level of a given guild.
-
-  Returns a guild object upon success
-  or a map containing error information.
-  """
-  @spec set_verification_level(guild, Integer.t) :: map
-
-  def set_verification_level(guild, level),
-    do: edit(guild, verification_level: level)
-
-  @doc """
-  Modifies the explicit content filter level of a given guild.
-
-  Returns a guild object upon success
-  or a map containing error information.
-  """
-  @spec set_content_filter(guild, Integer.t) :: map
-
-  def set_content_filter(guild, level),
-    do: edit(guild, explicit_content_filter: level)
 
   @doc """
   Deletes a given guild.

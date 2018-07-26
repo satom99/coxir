@@ -213,17 +213,6 @@ defmodule Coxir.Struct.Channel do
     do: edit(channel, topic: topic)
 
   @doc """
-  Modifies the NSFW status of a given channel.
-
-  Returns a channel object upon success
-  or a map containing error information.
-  """
-  @spec set_nsfw(channel, boolean) :: map
-
-  def set_nsfw(channel, bool),
-    do: edit(channel, nsfw: bool)
-
-  @doc """
   Modifies the position of a given channel.
 
   Returns a channel object upon success
@@ -233,6 +222,28 @@ defmodule Coxir.Struct.Channel do
 
   def set_position(channel, position),
     do: edit(channel, position: position)
+
+  @doc """
+  Modifies the parent category of a given channel.
+
+  Returns a channel object upon success
+  or a map containing error information.
+  """
+  @spec set_parent(channel, String.t) :: map
+
+  def set_parent(channel, parent),
+    do: edit(channel, parent_id: parent)
+
+  @doc """
+  Modifies the NSFW flag of a given channel.
+
+  Returns a channel object upon success
+  or a map containing error information.
+  """
+  @spec set_nsfw(channel, boolean) :: map
+
+  def set_nsfw(channel, bool),
+    do: edit(channel, nsfw: bool)
 
   @doc """
   Modifies the bitrate of a given voice channel.
@@ -255,28 +266,6 @@ defmodule Coxir.Struct.Channel do
 
   def set_user_limit(channel, limit),
     do: edit(channel, user_limit: limit)
-
-  @doc """
-  Modifies the permissions of a given channel.
-
-  Returns a channel object upon success
-  or a map containing error information.
-  """
-  @spec set_permissions(channel, Enum.t) :: map
-
-  def set_permissions(channel, permissions),
-    do: edit(channel, permission_overwrites: permissions)
-
-  @doc """
-  Modifies the parent id of a given channel.
-
-  Returns a channel object upon success
-  or a map containing error information.
-  """
-  @spec set_parent(channel, String.t) :: map
-
-  def set_parent(channel, parent),
-    do: edit(channel, parent_id: parent)
 
   @doc """
   Deletes a given channel.

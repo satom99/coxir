@@ -93,7 +93,7 @@ defmodule Coxir.Struct.Role do
     do: edit(role, guild, permissions: permissions)
 
   @doc """
-  Modifies the hoisting of a given role.
+  Modifies the hoist flag of a given role.
 
   Returns a role object upon success
   or a map containing error information.
@@ -107,7 +107,7 @@ defmodule Coxir.Struct.Role do
     do: edit(role, guild, hoist: bool)
 
   @doc """
-  Modifies the mentioning status of a given role.
+  Modifies the mentionable flag of a given role.
 
   Returns a role object upon success
   or a map containing error information.
