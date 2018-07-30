@@ -103,7 +103,7 @@ defmodule Coxir.Struct.Guild do
   Returns a guild object upon success
   or a map containing error information.
   """
-  @spec set_region(guild, String.t) :: map
+  @spec set_icon(guild, String.t) :: map
 
   def set_icon(guild, icon),
     do: edit(guild, icon: icon)

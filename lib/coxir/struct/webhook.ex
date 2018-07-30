@@ -17,7 +17,6 @@ defmodule Coxir.Struct.Webhook do
   Returns a webhook object upon success
   or a map containing error information.
   """
-
   def get(webhook) do
     API.request(:get, "webhooks/#{webhook}")
     |> pretty
