@@ -51,6 +51,111 @@ defmodule Coxir.Struct.Role do
   end
 
   @doc """
+  Changes the name of a given role.
+
+  Returns a role object upon success
+  or a map containing error information.
+  """
+  @spec set_name(role, String.t) :: map
+
+  def set_name(%{id: id, guild_id: guild}, name),
+    do: set_name(id, guild, name)
+
+  @doc """
+  Changes the name of a given role.
+
+  Refer to `set_name/2` for more information.
+  """
+  @spec set_name(String.t, String.t, String.t) :: map
+
+  def set_name(role, guild, name),
+    do: edit(role, guild, name: name)
+
+  @doc """
+  Changes the color of a given role.
+
+  Returns a role object upon success
+  or a map containing error information.
+  """
+  @spec set_color(role, Integer.t) :: map
+
+  def set_color(%{id: id, guild_id: guild}, color),
+    do: set_color(id, guild, color)
+
+  @doc """
+  Changes the color of a given role.
+
+  Refer to `set_color/2` for more information.
+  """
+  @spec set_color(String.t, String.t, Integer.t) :: map
+
+  def set_color(role, guild, color),
+    do: edit(role, guild, color: color)
+
+  @doc """
+  Changes the permissions of a given role.
+
+  Returns a role object upon success
+  or a map containing error information.
+  """
+  @spec set_permissions(role, Integer.t) :: map
+
+  def set_permissions(%{id: id, guild_id: guild}, permissions),
+    do: set_permissions(id, guild, permissions)
+
+  @doc """
+  Changes the permissions of a given role.
+
+  Refer to `set_permissions/2` for more information.
+  """
+  @spec set_permissions(String.t, String.t, Integer.t) :: map
+
+  def set_permissions(role, guild, permissions),
+    do: edit(role, guild, permissions: permissions)
+
+  @doc """
+  Changes the hoist flag of a given role.
+
+  Returns a role object upon success
+  or a map containing error information.
+  """
+  @spec set_hoist(role, boolean) :: map
+
+  def set_hoist(%{id: id, guild_id: guild}, bool),
+    do: set_hoist(id, guild, bool)
+
+  @doc """
+  Changes the hoist flag of a given role.
+
+  Refer to `set_hoist/2` for more information.
+  """
+  @spec set_hoist(String.t, String.t, boolean) :: map
+
+  def set_hoist(role, guild, bool),
+    do: edit(role, guild, hoist: bool)
+
+  @doc """
+  Changes the mentionable flag of a given role.
+
+  Returns a role object upon success
+  or a map containing error information.
+  """
+  @spec set_mentionable(role, boolean) :: map
+
+  def set_mentionable(%{id: id, guild_id: guild}, bool),
+    do: set_mentionable(id, guild, bool)
+
+  @doc """
+  Changes the mentionable flag of a given role.
+
+  Refer to `set_mentionable/2` for more information.
+  """
+  @spec set_mentionable(String.t, String.t, boolean) :: map
+
+  def set_mentionable(role, guild, bool),
+    do: edit(role, guild, mentionable: bool)
+
+  @doc """
   Deletes a given role.
 
   Returns the atom `:ok` upon success

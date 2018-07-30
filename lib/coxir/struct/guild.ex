@@ -87,6 +87,83 @@ defmodule Coxir.Struct.Guild do
   end
 
   @doc """
+  Changes the name of a given guild.
+
+  Returns a guild object upon success
+  or a map containing error information.
+  """
+  @spec set_name(guild, String.t) :: map
+
+  def set_name(guild, name),
+    do: edit(guild, name: name)
+
+  @doc """
+  Changes the icon of a given guild.
+
+  Returns a guild object upon success
+  or a map containing error information.
+  """
+  @spec set_icon(guild, String.t) :: map
+
+  def set_icon(guild, icon),
+    do: edit(guild, icon: icon)
+
+  @doc """
+  Changes the region of a given guild.
+
+  Returns a guild object upon success
+  or a map containing error information.
+  """
+  @spec set_region(guild, String.t) :: map
+
+  def set_region(guild, region),
+    do: edit(guild, region: region)
+
+  @doc """
+  Changes the splash of a given guild.
+
+  Returns a guild object upon success
+  or a map containing error information.
+  """
+  @spec set_splash(guild, String.t) :: map
+
+  def set_splash(guild, splash),
+    do: edit(guild, splash: splash)
+
+  @doc """
+  Changes the voice AFK timeout of a given guild.
+
+  Returns a guild object upon success
+  or a map containing error information.
+  """
+  @spec set_afk_timeout(guild, Integer.t) :: map
+
+  def set_afk_timeout(guild, timeout),
+    do: edit(guild, afk_timeout: timeout)
+
+  @doc """
+  Changes the voice AFK channel of a given guild.
+
+  Returns a guild object upon success
+  or a map containing error information.
+  """
+  @spec set_afk_channel(guild, String.t) :: map
+
+  def set_afk_channel(guild, channel),
+    do: edit(guild, afk_channel_id: channel)
+
+  @doc """
+  Changes the channel to which system messages are sent on a given guild.
+
+  Returns a guild object upon success
+  or a map containing error information.
+  """
+  @spec set_system_channel(guild, String.t) :: map
+
+  def set_system_channel(guild, channel),
+    do: edit(guild, system_channel_id: channel)
+
+  @doc """
   Deletes a given guild.
 
   Returns the atom `:ok` upon success

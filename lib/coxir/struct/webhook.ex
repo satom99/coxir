@@ -17,7 +17,6 @@ defmodule Coxir.Struct.Webhook do
   Returns a webhook object upon success
   or a map containing error information.
   """
-
   def get(webhook) do
     API.request(:get, "webhooks/#{webhook}")
     |> pretty
@@ -70,6 +69,39 @@ defmodule Coxir.Struct.Webhook do
     API.request(:patch, "webhooks/#{webhook}/#{token}", params)
     |> pretty
   end
+
+  @doc """
+  Changes the name of a given webhook.
+
+  Returns a webhook object upon success
+  or a map containing error information.
+  """
+  @spec set_name(String.t, String.t) :: map
+
+  def set_name(webhook, name),
+    do: edit(webhook, name: name)
+
+  @doc """
+  Changes the avatar of a given webhook.
+
+  Returns a webhook object upon success
+  or a map containing error information.
+  """
+  @spec set_avatar(String.t, String.t) :: map
+
+  def set_avatar(webhook, avatar),
+    do: edit(webhook, avatar: avatar)
+
+  @doc """
+  Changes the channel of a given webhook.
+
+  Returns a webhook object upon success
+  or a map containing error information.
+  """
+  @spec set_channel(String.t, String.t) :: map
+
+  def set_channel(webhook, channel),
+    do: edit(webhook, channel_id: channel)
 
   @doc """
   Deletes a given webhook.

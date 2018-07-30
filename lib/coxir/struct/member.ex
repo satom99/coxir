@@ -92,6 +92,17 @@ defmodule Coxir.Struct.Member do
   end
 
   @doc """
+  Changes the voice channel of a given member.
+
+  Returns the atom `:ok` upon success
+  or a map containing error information.
+  """
+  @spec move(member, String.t) :: :ok | map
+
+  def move(member, channel),
+    do: edit(member, channel_id: channel)
+
+  @doc """
   Kicks a given member.
 
   Returns the atom `:ok` upon success

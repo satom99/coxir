@@ -18,7 +18,6 @@ defmodule Coxir.Struct.Invite do
   Returns an invite object upon success
   or a map containing error information.
   """
-
   def get(code) do
     API.request(:get, "invites/#{code}")
   end

@@ -191,6 +191,83 @@ defmodule Coxir.Struct.Channel do
   end
 
   @doc """
+  Changes the name of a given channel.
+
+  Returns a channel object upon success
+  or a map containing error information.
+  """
+  @spec set_name(channel, String.t) :: map
+
+  def set_name(channel, name),
+    do: edit(channel, name: name)
+
+  @doc """
+  Changes the topic of a given channel.
+
+  Returns a channel object upon success
+  or a map containing error information.
+  """
+  @spec set_topic(channel, String.t) :: map
+
+  def set_topic(channel, topic),
+    do: edit(channel, topic: topic)
+
+  @doc """
+  Changes the position of a given channel.
+
+  Returns a channel object upon success
+  or a map containing error information.
+  """
+  @spec set_position(channel, Integer.t) :: map
+
+  def set_position(channel, position),
+    do: edit(channel, position: position)
+
+  @doc """
+  Changes the parent category of a given channel.
+
+  Returns a channel object upon success
+  or a map containing error information.
+  """
+  @spec set_parent(channel, String.t) :: map
+
+  def set_parent(channel, parent),
+    do: edit(channel, parent_id: parent)
+
+  @doc """
+  Changes the NSFW flag of a given channel.
+
+  Returns a channel object upon success
+  or a map containing error information.
+  """
+  @spec set_nsfw(channel, boolean) :: map
+
+  def set_nsfw(channel, bool),
+    do: edit(channel, nsfw: bool)
+
+  @doc """
+  Changes the bitrate of a given voice channel.
+
+  Returns a channel object upon success
+  or a map containing error information.
+  """
+  @spec set_bitrate(channel, Integer.t) :: map
+
+  def set_bitrate(channel, bitrate),
+    do: edit(channel, bitrate: bitrate)
+
+  @doc """
+  Changes the user limit of a given voice channel.
+
+  Returns a channel object upon success
+  or a map containing error information.
+  """
+  @spec set_user_limit(channel, Integer.t) :: map
+
+  def set_user_limit(channel, limit),
+    do: edit(channel, user_limit: limit)
+
+  @doc """
   Deletes a given channel.
 
   Returns a channel object upon success
