@@ -87,7 +87,7 @@ defmodule Coxir.Struct.Guild do
   end
 
   @doc """
-  Modifies the name of a given guild.
+  Changes the name of a given guild.
 
   Returns a guild object upon success
   or a map containing error information.
@@ -98,7 +98,7 @@ defmodule Coxir.Struct.Guild do
     do: edit(guild, name: name)
 
   @doc """
-  Modifies the icon of a given guild.
+  Changes the icon of a given guild.
 
   Returns a guild object upon success
   or a map containing error information.
@@ -109,7 +109,7 @@ defmodule Coxir.Struct.Guild do
     do: edit(guild, icon: icon)
 
   @doc """
-  Modifies the region of a given guild.
+  Changes the region of a given guild.
 
   Returns a guild object upon success
   or a map containing error information.
@@ -120,7 +120,7 @@ defmodule Coxir.Struct.Guild do
     do: edit(guild, region: region)
 
   @doc """
-  Modifies the splash of a given guild.
+  Changes the splash of a given guild.
 
   Returns a guild object upon success
   or a map containing error information.
@@ -131,7 +131,7 @@ defmodule Coxir.Struct.Guild do
     do: edit(guild, splash: splash)
 
   @doc """
-  Modifies the voice AFK timeout of a given guild.
+  Changes the voice AFK timeout of a given guild.
 
   Returns a guild object upon success
   or a map containing error information.
@@ -142,7 +142,7 @@ defmodule Coxir.Struct.Guild do
     do: edit(guild, afk_timeout: timeout)
 
   @doc """
-  Modifies the voice AFK channel of a given guild.
+  Changes the voice AFK channel of a given guild.
 
   Returns a guild object upon success
   or a map containing error information.
@@ -153,7 +153,7 @@ defmodule Coxir.Struct.Guild do
     do: edit(guild, afk_channel_id: channel)
 
   @doc """
-  Modifies the channel to which system messages are sent on a given guild.
+  Changes the channel to which system messages are sent on a given guild.
 
   Returns a guild object upon success
   or a map containing error information.

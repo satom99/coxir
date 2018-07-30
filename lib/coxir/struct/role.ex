@@ -51,7 +51,7 @@ defmodule Coxir.Struct.Role do
   end
 
   @doc """
-  Modifies the name of a given role.
+  Changes the name of a given role.
 
   Returns a role object upon success
   or a map containing error information.
@@ -65,7 +65,7 @@ defmodule Coxir.Struct.Role do
     do: edit(role, guild, name: name)
 
   @doc """
-  Modifies the color of a given role.
+  Changes the color of a given role.
 
   Returns a role object upon success
   or a map containing error information.
@@ -79,7 +79,7 @@ defmodule Coxir.Struct.Role do
     do: edit(role, guild, color: color)
 
   @doc """
-  Modifies the permissions of a given role.
+  Changes the permissions of a given role.
 
   Returns a role object upon success
   or a map containing error information.
@@ -93,7 +93,7 @@ defmodule Coxir.Struct.Role do
     do: edit(role, guild, permissions: permissions)
 
   @doc """
-  Modifies the hoist flag of a given role.
+  Changes the hoist flag of a given role.
 
   Returns a role object upon success
   or a map containing error information.
@@ -107,7 +107,7 @@ defmodule Coxir.Struct.Role do
     do: edit(role, guild, hoist: bool)
 
   @doc """
-  Modifies the mentionable flag of a given role.
+  Changes the mentionable flag of a given role.
 
   Returns a role object upon success
   or a map containing error information.

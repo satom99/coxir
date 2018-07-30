@@ -72,7 +72,7 @@ defmodule Coxir.Struct.Webhook do
   end
 
   @doc """
-  Modifies the name of a given webhook.
+  Changes the name of a given webhook.
 
   Returns a webhook object upon success
   or a map containing error information.
@@ -83,7 +83,7 @@ defmodule Coxir.Struct.Webhook do
     do: edit(webhook, name: name)
 
   @doc """
-  Modifies the avatar of a given webhook.
+  Changes the avatar of a given webhook.
 
   Returns a webhook object upon success
   or a map containing error information.
@@ -94,7 +94,7 @@ defmodule Coxir.Struct.Webhook do
     do: edit(webhook, avatar: avatar)
 
   @doc """
-  Modifies the channel of a given webhook.
+  Changes the channel of a given webhook.
 
   Returns a webhook object upon success
   or a map containing error information.

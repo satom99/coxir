@@ -191,7 +191,7 @@ defmodule Coxir.Struct.Channel do
   end
 
   @doc """
-  Modifies the name of a given channel.
+  Changes the name of a given channel.
 
   Returns a channel object upon success
   or a map containing error information.
@@ -202,7 +202,7 @@ defmodule Coxir.Struct.Channel do
     do: edit(channel, name: name)
 
   @doc """
-  Modifies the topic of a given channel.
+  Changes the topic of a given channel.
 
   Returns a channel object upon success
   or a map containing error information.
@@ -213,7 +213,7 @@ defmodule Coxir.Struct.Channel do
     do: edit(channel, topic: topic)
 
   @doc """
-  Modifies the position of a given channel.
+  Changes the position of a given channel.
 
   Returns a channel object upon success
   or a map containing error information.
@@ -224,7 +224,7 @@ defmodule Coxir.Struct.Channel do
     do: edit(channel, position: position)
 
   @doc """
-  Modifies the parent category of a given channel.
+  Changes the parent category of a given channel.
 
   Returns a channel object upon success
   or a map containing error information.
@@ -235,7 +235,7 @@ defmodule Coxir.Struct.Channel do
     do: edit(channel, parent_id: parent)
 
   @doc """
-  Modifies the NSFW flag of a given channel.
+  Changes the NSFW flag of a given channel.
 
   Returns a channel object upon success
   or a map containing error information.
@@ -246,7 +246,7 @@ defmodule Coxir.Struct.Channel do
     do: edit(channel, nsfw: bool)
 
   @doc """
-  Modifies the bitrate of a given voice channel.
+  Changes the bitrate of a given voice channel.
 
   Returns a channel object upon success
   or a map containing error information.
@@ -257,7 +257,7 @@ defmodule Coxir.Struct.Channel do
     do: edit(channel, bitrate: bitrate)
 
   @doc """
-  Modifies the user limit of a given voice channel.
+  Changes the user limit of a given voice channel.
 
   Returns a channel object upon success
   or a map containing error information.
