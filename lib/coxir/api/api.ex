@@ -5,9 +5,9 @@ defmodule Coxir.API do
   """
 
   alias Coxir.API.Base
-  
-  @major_parameters ["channels", "guilds", "webhooks"]
+
   @table :rates
+  @major_parameters ["guilds", "channels", "webhooks"]
 
   @doc false
   def create_tables do
@@ -22,17 +22,19 @@ defmodule Coxir.API do
   """
   @spec request(atom, String.t, String.t, Keyword.t, Keyword.t) :: :ok | map
 
-  def request(method, route, body \\ "", options \\ [], headers \\ []) do
+  def request(method, path, body \\ "", options \\ [], headers \\ []) do
+    route = path
+    |> router(method)
+
     route
-    |> ratelimit(method)
     |> route_limit
     |> case do
       nil ->
-        Base.request(method, route, body, headers, options)
-        |> response(route, method)
+        Base.request(method, path, body, headers, options)
+        |> response(route)
       limit ->
         Process.sleep(limit)
-        request(method, route, body, options, headers)
+        request(method, path, body, options, headers)
     end
   end
 
@@ -43,7 +45,7 @@ defmodule Coxir.API do
   """
   @spec request_multipart(atom, String.t, String.t, Keyword.t, Keyword.t) :: :ok | map
 
-  def request_multipart(method, route, body, options \\ [], headers \\ []) do
+  def request_multipart(method, path, body, options \\ [], headers \\ []) do
     body = body
     |> Enum.to_list
     body = {:multipart, body}
@@ -52,16 +54,13 @@ defmodule Coxir.API do
       {"Content-Type", "multipart/form-data"}
       | headers
     ]
-    request(method, route, body, options, headers)
+    request(method, path, body, options, headers)
   end
 
-  defp response({_atom, struct}, route, method) do
+  defp response({_atom, struct}, route) do
     struct
     |> case do
       %{body: body, headers: headers, status_code: code} ->
-        route = route
-        |> ratelimit(method)
-
         reset = headers["X-RateLimit-Reset"]
         remaining = headers["X-RateLimit-Remaining"]
 
@@ -110,19 +109,19 @@ defmodule Coxir.API do
     end
   end
 
-  def ratelimit(route, method) do
+  defp router(path, method) do
     ~r|/?([\w-]+)/(?:\d+)|i
-    |> Regex.run(route)
+    |> Regex.run(path)
     |> case do
       [final, param] when param in @major_parameters ->
         cond do
           String.contains?(final, "messages") and method == :delete ->
-            route
+            path
           true ->
             final
         end
       _other ->
-        route
+        path
     end
   end
 
