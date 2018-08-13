@@ -43,7 +43,7 @@ defmodule Coxir.API do
 
   Refer to `request/5` for more information.
   """
-  @spec request_multipart(atom, String.t, String.t, Keyword.t, Keyword.t) :: :ok | map
+  @spec request_multipart(atom, String.t, Keyword.t, Keyword.t, Keyword.t) :: :ok | map
 
   def request_multipart(method, path, body, options \\ [], headers \\ []) do
     body = body
