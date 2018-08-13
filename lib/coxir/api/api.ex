@@ -60,7 +60,7 @@ defmodule Coxir.API do
     |> case do
       %{body: body, headers: headers, status_code: code} ->
         route = route
-        |> route_param
+        |> ratelimit(method)
 
         reset = headers["X-RateLimit-Reset"]
         remaining = headers["X-RateLimit-Remaining"]
