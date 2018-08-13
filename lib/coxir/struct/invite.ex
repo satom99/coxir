@@ -5,7 +5,7 @@ defmodule Coxir.Struct.Invite do
   Refer to [this](https://discordapp.com/developers/docs/resources/invite#invite-object)
   for a list of fields and a broader documentation.
   """
-  @type invite :: String.t | map
+  @type invite :: String.t() | map
 
   use Coxir.Struct
 
