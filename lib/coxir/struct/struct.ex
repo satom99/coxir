@@ -49,7 +49,7 @@ defmodule Coxir.Struct do
       Returns an object if found
       and `nil` otherwise.
       """
-      @spec get(String.t) :: map | nil
+      @spec get(String.t()) :: map | nil
 
       def get(%{id: id}), do: get(id)
       def get(id) do

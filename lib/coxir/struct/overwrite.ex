@@ -5,7 +5,7 @@ defmodule Coxir.Struct.Overwrite do
   Refer to [this](https://discordapp.com/developers/docs/resources/channel#overwrite-object)
   for a list of fields and a broader documentation.
   """
-  @type overwrite :: String.t | map
+  @type overwrite :: String.t() | map
 
   use Coxir.Struct
 
@@ -31,7 +31,7 @@ defmodule Coxir.Struct.Overwrite do
   Refer to [this](https://discordapp.com/developers/docs/resources/channel#edit-channel-permissions)
   for a broader explanation on the fields and their defaults.
   """
-  @spec edit(overwrite, Enum.t) :: :ok | map
+  @spec edit(overwrite, Enum.t()) :: :ok | map
 
   def edit(%{id: id, channel: channel}, params),
     do: edit(id, channel, params)
@@ -41,7 +41,7 @@ defmodule Coxir.Struct.Overwrite do
 
   Refer to `edit/2` for more information.
   """
-  @spec edit(String.t, String.t, Enum.t) :: :ok | map
+  @spec edit(String.t(), String.t(), Enum.t()) :: :ok | map
 
   def edit(overwrite, channel, params) do
     API.request(:put, "channels/#{channel}/permissions/#{overwrite}", params)
@@ -63,7 +63,7 @@ defmodule Coxir.Struct.Overwrite do
 
   Refer to `delete/1` for more information.
   """
-  @spec delete(String.t, String.t) :: :ok | map
+  @spec delete(String.t(), String.t()) :: :ok | map
 
   def delete(overwrite, channel) do
     API.request(:delete, "channels/#{channel}/permissions/#{overwrite}")
