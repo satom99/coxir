@@ -55,7 +55,7 @@ defmodule Coxir.API do
     request(method, route, body, options, headers)
   end
 
-  defp response({_atom, struct}, route) do
+  defp response({_atom, struct}, route, method) do
     struct
     |> case do
       %{body: body, headers: headers, status_code: code} ->
