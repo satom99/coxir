@@ -9,7 +9,7 @@ defmodule Coxir.Struct.Message do
   - `guild` - a guild object
   - `channel` - a channel object
   """
-  @type message :: String.t | map
+  @type message :: String.t() | map
 
   use Coxir.Struct
 
@@ -26,7 +26,7 @@ defmodule Coxir.Struct.Message do
 
   Refer to `Coxir.Struct.Channel.send_message/2` for more information.
   """
-  @spec reply(message, String.t | Enum.t) :: map
+  @spec reply(message, String.t() | Enum.t()) :: map
 
   def reply(%{channel_id: channel}, content),
     do: Channel.send_message(channel, content)
@@ -44,7 +44,7 @@ defmodule Coxir.Struct.Message do
   - `embed` - embedded rich content, refer to
     [this](https://discordapp.com/developers/docs/resources/channel#embed-object)
   """
-  @spec edit(message, String.t | Enum.t) :: map
+  @spec edit(message, String.t() | Enum.t()) :: map
 
   def edit(%{id: id, channel_id: channel}, content) do
     content = \
@@ -100,7 +100,7 @@ defmodule Coxir.Struct.Message do
   Returns the atom `:ok` upon success
   or a map containing error information.
   """
-  @spec react(message, String.t) :: :ok | map
+  @spec react(message, String.t()) :: :ok | map
 
   def react(%{id: id, channel_id: channel}, emoji) do
     API.request(:put, "channels/#{channel}/messages/#{id}/reactions/#{emoji}/@me")
@@ -112,7 +112,7 @@ defmodule Coxir.Struct.Message do
   Returns a list of user objects upon success
   or a map containing error information.
   """
-  @spec get_reactions(message, String.t) :: list | map
+  @spec get_reactions(message, String.t()) :: list | map
 
   def get_reactions(%{id: id, channel_id: channel}, emoji) do
     API.request(:get, "channels/#{channel}/messages/#{id}/reactions/#{emoji}")
@@ -124,7 +124,7 @@ defmodule Coxir.Struct.Message do
   Returns the atom `:ok` upon success
   or a map containing error information.
   """
-  @spec delete_reaction(message, String.t, String.t) :: :ok | map
+  @spec delete_reaction(message, String.t(), String.t()) :: :ok | map
 
   def delete_reaction(%{id: id, channel_id: channel}, emoji, user \\ "@me") do
     API.request(:delete, "channels/#{channel}/messages/#{id}/reactions/#{emoji}/#{user}")

@@ -8,7 +8,7 @@ defmodule Coxir.Struct.User do
   In addition, the following fields are also embedded.
   - `voice` - a channel object
   """
-  @type user :: String.t | map
+  @type user :: String.t() | map
 
   use Coxir.Struct
 
@@ -47,7 +47,7 @@ defmodule Coxir.Struct.User do
   Refer to [this](https://discordapp.com/developers/docs/resources/user#modify-current-user)
   for a broader explanation on the fields and their defaults.
   """
-  @spec edit(Enum.t) :: map
+  @spec edit(Enum.t()) :: map
 
   def edit(params) do
     API.request(:patch, "users/@me", params)
@@ -80,7 +80,7 @@ defmodule Coxir.Struct.User do
   Refer to [this](https://discordapp.com/developers/docs/resources/user#get-current-user-guilds)
   for a broader explanation on the fields and their defaults.
   """
-  @spec get_guilds(Keyword.t) :: list | map
+  @spec get_guilds(Keyword.t()) :: list | map
 
   def get_guilds(query \\ []) do
     API.request(:get, "users/@me/guilds", "", params: query)
@@ -116,7 +116,7 @@ defmodule Coxir.Struct.User do
   Refer to [this](https://discordapp.com/developers/docs/resources/user#create-group-dm)
   for a broader explanation on the fields and their defaults.
   """
-  @spec create_group(Enum.t) :: map
+  @spec create_group(Enum.t()) :: map
 
   def create_group(params) do
     API.request(:post, "users/@me/channels", params)

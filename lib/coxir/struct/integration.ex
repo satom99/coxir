@@ -5,7 +5,7 @@ defmodule Coxir.Struct.Integration do
   Refer to [this](https://discordapp.com/developers/docs/resources/guild#integration-object)
   for a list of fields and a broader documentation.
   """
-  @type integration :: String.t | map
+  @type integration :: String.t() | map
 
   use Coxir.Struct
 
@@ -31,7 +31,7 @@ defmodule Coxir.Struct.Integration do
   Refer to [this](https://discordapp.com/developers/docs/resources/guild#modify-guild-integration)
   for a broader explanation on the fields and their defaults.
   """
-  @spec edit(integration, Enum.t) :: :ok | map
+  @spec edit(integration, Enum.t()) :: :ok | map
 
   def edit(%{id: id, guild_id: guild}, params),
     do: edit(id, guild, params)
@@ -41,7 +41,7 @@ defmodule Coxir.Struct.Integration do
 
   Refer to `edit/2` for more information.
   """
-  @spec edit(String.t, String.t, Enum.t) :: :ok | map
+  @spec edit(String.t(), String.t(), Enum.t()) :: :ok | map
 
   def edit(integration, guild, params) do
     API.request(:patch, "guilds/#{guild}/integrations/#{integration}", params)
@@ -63,7 +63,7 @@ defmodule Coxir.Struct.Integration do
 
   Refer to `sync/1` for more information.
   """
-  @spec sync(String.t, String.t) :: :ok | map
+  @spec sync(String.t(), String.t()) :: :ok | map
 
   def sync(integration, guild) do
     API.request(:post, "guilds/#{guild}/integrations/#{integration}/sync")
@@ -85,7 +85,7 @@ defmodule Coxir.Struct.Integration do
 
   Refer to `delete/1` for more information.
   """
-  @spec delete(String.t, String.t) :: :ok | map
+  @spec delete(String.t(), String.t()) :: :ok | map
 
   def delete(integration, guild) do
     API.request(:delete, "guilds/#{guild}/integrations/#{integration}")
