@@ -5,7 +5,8 @@ defmodule Coxir.API do
   """
 
   alias Coxir.API.Base
-
+  
+  @major_parameters ["channels", "guilds", "webhooks"]
   @table :rates
 
   @doc false
@@ -23,12 +24,12 @@ defmodule Coxir.API do
 
   def request(method, route, body \\ "", options \\ [], headers \\ []) do
     route
-    |> route_param
+    |> ratelimit(method)
     |> route_limit
     |> case do
       nil ->
         Base.request(method, route, body, headers, options)
-        |> response(route)
+        |> response(route, method)
       limit ->
         Process.sleep(limit)
         request(method, route, body, options, headers)
@@ -109,13 +110,18 @@ defmodule Coxir.API do
     end
   end
 
-  defp route_param(route) do
-    ~r/(channels|guilds)\/([0-9]{15,})+/i
+  def ratelimit(route, method) do
+    ~r|/?([\w-]+)/(?:\d+)|i
     |> Regex.run(route)
     |> case do
-      [match, _route, _param] ->
-        match
-      nil ->
+      [final, param] when param in @major_parameters ->
+        cond do
+          String.contains?(final, "messages") and method == :delete ->
+            route
+          true ->
+            final
+        end
+      _other ->
         route
     end
   end
