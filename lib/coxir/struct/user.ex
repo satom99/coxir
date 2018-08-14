@@ -87,9 +87,10 @@ defmodule Coxir.Struct.User do
   end
 
   @doc """
-  Creates a direct message channel with a given user.
+  Creates a DM channel with a given user.
 
-  Refer to [this](Coxir.Struct.Channel.send_message/2) for more information.
+  Returns a channel object upon success
+  or a map containing error information.
   """
   @spec create_dm(user) :: map
 
@@ -102,10 +103,9 @@ defmodule Coxir.Struct.User do
   end
 
   @doc """
-  Sends a DM to a given user.
+  Sends a direct message to a given user.
 
-  Returns a message object upon success
-  or a map containing error information.
+  Refer to [this](Coxir.Struct.Channel.send_message/2) for more information.
   """
   @spec send_message(user, String.t) :: map
 
