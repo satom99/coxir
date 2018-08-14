@@ -116,7 +116,7 @@ defmodule Coxir.Struct.User do
     recipient
     |> create_dm
     |> case do
-      %{id: channel} -> Channel.send_message(content)
+      %{id: channel} -> Channel.send_message(channel, content)
       other -> other
     end
   end
