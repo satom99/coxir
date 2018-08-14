@@ -87,10 +87,9 @@ defmodule Coxir.Struct.User do
   end
 
   @doc """
-  Creates a DM channel with a given user.
+  Creates a direct message channel with a given user.
 
-  Returns a channel object upon success
-  or a map containing error information.
+  Refer to [this](Coxir.Struct.Channel.send_message/2) for more information.
   """
   @spec create_dm(user) :: map
 
@@ -98,8 +97,13 @@ defmodule Coxir.Struct.User do
     do: create_dm(id)
 
   def create_dm(recipient) do
-    API.request(:post, "users/@me/channels", %{recipient_id: recipient})
-    |> Channel.pretty
+    response = API.request(:post, "users/@me/channels", %{recipient_id: recipient})
+    response.code
+    |> case do
+      nil -> response
+      _ -> response |> Channel.pretty
+    end
+
   end
 
   @doc """
@@ -114,9 +118,16 @@ defmodule Coxir.Struct.User do
     do: send_message(id, content)
 
   def send_message(recipient, content) do
-    create_dm(recipient)
-    |> Channel.send_message(content)
-    |> Channel.pretty
+    response = \
+      recipient
+      |> create_dm
+    response.code
+    |> case do
+      nil -> response
+        |> Channel.send_message(content)
+      _other -> response.error
+    end
+
   end
 
   @doc """
