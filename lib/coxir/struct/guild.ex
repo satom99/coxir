@@ -14,7 +14,7 @@ defmodule Coxir.Struct.Guild do
   - `members` - list of member objects
   - `roles` - list of role objects
   """
-  @type guild :: String.t() | map
+  @type guild :: String.t | map
 
   use Coxir.Struct
   use Bitwise
@@ -76,7 +76,7 @@ defmodule Coxir.Struct.Guild do
   Refer to [this](https://discordapp.com/developers/docs/resources/guild#modify-guild)
   for a broader explanation on the fields and their defaults.
   """
-  @spec edit(guild, Enum.t()) :: map
+  @spec edit(guild, Enum.t) :: map
 
   def edit(%{id: id}, params),
     do: edit(id, params)
@@ -92,7 +92,7 @@ defmodule Coxir.Struct.Guild do
   Returns a guild object upon success
   or a map containing error information.
   """
-  @spec set_name(guild, String.t()) :: map
+  @spec set_name(guild, String.t) :: map
 
   def set_name(guild, name),
     do: edit(guild, name: name)
@@ -103,7 +103,7 @@ defmodule Coxir.Struct.Guild do
   Returns a guild object upon success
   or a map containing error information.
   """
-  @spec set_icon(guild, String.t()) :: map
+  @spec set_icon(guild, String.t) :: map
 
   def set_icon(guild, icon),
     do: edit(guild, icon: icon)
@@ -114,7 +114,7 @@ defmodule Coxir.Struct.Guild do
   Returns a guild object upon success
   or a map containing error information.
   """
-  @spec set_region(guild, String.t()) :: map
+  @spec set_region(guild, String.t) :: map
 
   def set_region(guild, region),
     do: edit(guild, region: region)
@@ -125,7 +125,7 @@ defmodule Coxir.Struct.Guild do
   Returns a guild object upon success
   or a map containing error information.
   """
-  @spec set_splash(guild, String.t()) :: map
+  @spec set_splash(guild, String.t) :: map
 
   def set_splash(guild, splash),
     do: edit(guild, splash: splash)
@@ -147,7 +147,7 @@ defmodule Coxir.Struct.Guild do
   Returns a guild object upon success
   or a map containing error information.
   """
-  @spec set_afk_channel(guild, String.t()) :: map
+  @spec set_afk_channel(guild, String.t) :: map
 
   def set_afk_channel(guild, channel),
     do: edit(guild, afk_channel_id: channel)
@@ -158,7 +158,7 @@ defmodule Coxir.Struct.Guild do
   Returns a guild object upon success
   or a map containing error information.
   """
-  @spec set_system_channel(guild, String.t()) :: map
+  @spec set_system_channel(guild, String.t) :: map
 
   def set_system_channel(guild, channel),
     do: edit(guild, system_channel_id: channel)
@@ -210,7 +210,7 @@ defmodule Coxir.Struct.Guild do
   Refer to [this](https://discordapp.com/developers/docs/resources/guild#create-guild-role)
   for a broader explanation on the fields and their defaults.
   """
-  @spec create_role(guild, Enum.t()) :: map
+  @spec create_role(guild, Enum.t) :: map
 
   def create_role(guild, params \\ %{})
   def create_role(%{id: id}, params),
@@ -294,7 +294,7 @@ defmodule Coxir.Struct.Guild do
   Refer to [this](https://discordapp.com/developers/docs/resources/guild#create-guild-channel)
   for a broader explanation on the fields and their defaults.
   """
-  @spec create_channel(guild, Enum.t()) :: map
+  @spec create_channel(guild, Enum.t) :: map
 
   def create_channel(%{id: id}, params),
     do: create_channel(id, params)
@@ -320,7 +320,7 @@ defmodule Coxir.Struct.Guild do
   Refer to [this](https://discordapp.com/developers/docs/resources/guild#add-guild-member)
   for a broader explanation on the fields and their defaults.
   """
-  @spec add_member(guild, String.t(), Enum.t()) :: map
+  @spec add_member(guild, String.t, Enum.t) :: map
 
   def add_member(%{id: id}, user, params),
     do: add_member(id, user, params)
@@ -336,7 +336,7 @@ defmodule Coxir.Struct.Guild do
   Returns a member object upon success
   or a map containing error information.
   """
-  @spec get_member(guild, String.t()) :: map
+  @spec get_member(guild, String.t) :: map
 
   def get_member(%{id: id}, user),
     do: get_member(id, user)
@@ -366,7 +366,7 @@ defmodule Coxir.Struct.Guild do
   Refer to [this](https://discordapp.com/developers/docs/resources/guild#list-guild-members)
   for a broader explanation on the fields and their defaults.
   """
-  @spec list_members(guild, Keyword.t()) :: list | map
+  @spec list_members(guild, Keyword.t) :: list | map
 
   def list_members(term, query \\ [])
   def list_members(%{id: id}, query),
@@ -395,7 +395,7 @@ defmodule Coxir.Struct.Guild do
   Must be a keyword list with the fields listed below.
   - `days` - number of days to count prune for (1 or more)
   """
-  @spec get_prune(guild, Keyword.t()) :: map
+  @spec get_prune(guild, Keyword.t) :: map
 
   def get_prune(%{id: id}, query),
     do: get_prune(id, query)
@@ -414,7 +414,7 @@ defmodule Coxir.Struct.Guild do
   Must be a keyword list with the fields listed below.
   - `days` - number of days to count prune for (1 or more)
   """
-  @spec do_prune(guild, Keyword.t()) :: map
+  @spec do_prune(guild, Keyword.t) :: map
 
   def do_prune(%{id: id}, query),
     do: do_prune(id, query)
@@ -444,7 +444,7 @@ defmodule Coxir.Struct.Guild do
   Returns the atom `:ok` upon success
   or a map containing error information.
   """
-  @spec unban(guild, String.t()) :: :ok | map
+  @spec unban(guild, String.t) :: :ok | map
 
   def unban(%{id: id}, user),
     do: unban(id, user)
@@ -479,7 +479,7 @@ defmodule Coxir.Struct.Guild do
   - `type` - the integration type
   - `id` - the integration id
   """
-  @spec create_integration(guild, Enum.t()) :: :ok | map
+  @spec create_integration(guild, Enum.t) :: :ok | map
 
   def create_integration(%{id: id}, params),
     do: create_integration(id, params)

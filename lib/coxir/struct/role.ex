@@ -5,7 +5,7 @@ defmodule Coxir.Struct.Role do
   Refer to [this](https://discordapp.com/developers/docs/topics/permissions#role-object)
   for a list of fields and a broader documentation.
   """
-  @type role :: String.t() | map
+  @type role :: String.t | map
 
   use Coxir.Struct
 
@@ -33,7 +33,7 @@ defmodule Coxir.Struct.Role do
   Refer to [this](https://discordapp.com/developers/docs/resources/guild#modify-guild-role)
   for a broader explanation on the fields and their defaults.
   """
-  @spec edit(role, Enum.t()) :: map
+  @spec edit(role, Enum.t) :: map
 
   def edit(%{id: id, guild_id: guild}, params),
     do: edit(id, guild, params)
@@ -43,7 +43,7 @@ defmodule Coxir.Struct.Role do
 
   Refer to `edit/2` for more information.
   """
-  @spec edit(String.t(), String.t(), Enum.t()) :: map
+  @spec edit(String.t, String.t, Enum.t) :: map
 
   def edit(role, guild, params) do
     API.request(:patch, "guilds/#{guild}/roles/#{role}", params)
@@ -56,7 +56,7 @@ defmodule Coxir.Struct.Role do
   Returns a role object upon success
   or a map containing error information.
   """
-  @spec set_name(role, String.t()) :: map
+  @spec set_name(role, String.t) :: map
 
   def set_name(%{id: id, guild_id: guild}, name),
     do: set_name(id, guild, name)
@@ -66,7 +66,7 @@ defmodule Coxir.Struct.Role do
 
   Refer to `set_name/2` for more information.
   """
-  @spec set_name(String.t(), String.t(), String.t()) :: map
+  @spec set_name(String.t, String.t, String.t) :: map
 
   def set_name(role, guild, name),
     do: edit(role, guild, name: name)
@@ -87,7 +87,7 @@ defmodule Coxir.Struct.Role do
 
   Refer to `set_color/2` for more information.
   """
-  @spec set_color(String.t(), String.t(), Integer.t) :: map
+  @spec set_color(String.t, String.t, Integer.t) :: map
 
   def set_color(role, guild, color),
     do: edit(role, guild, color: color)
@@ -108,7 +108,7 @@ defmodule Coxir.Struct.Role do
 
   Refer to `set_permissions/2` for more information.
   """
-  @spec set_permissions(String.t(), String.t(), Integer.t) :: map
+  @spec set_permissions(String.t, String.t, Integer.t) :: map
 
   def set_permissions(role, guild, permissions),
     do: edit(role, guild, permissions: permissions)
@@ -129,7 +129,7 @@ defmodule Coxir.Struct.Role do
 
   Refer to `set_hoist/2` for more information.
   """
-  @spec set_hoist(String.t(), String.t(), boolean) :: map
+  @spec set_hoist(String.t, String.t, boolean) :: map
 
   def set_hoist(role, guild, bool),
     do: edit(role, guild, hoist: bool)
@@ -150,7 +150,7 @@ defmodule Coxir.Struct.Role do
 
   Refer to `set_mentionable/2` for more information.
   """
-  @spec set_mentionable(String.t(), String.t(), boolean) :: map
+  @spec set_mentionable(String.t, String.t, boolean) :: map
 
   def set_mentionable(role, guild, bool),
     do: edit(role, guild, mentionable: bool)
@@ -171,7 +171,7 @@ defmodule Coxir.Struct.Role do
 
   Refer to `delete/1` for more information.
   """
-  @spec delete(String.t(), String.t()) :: :ok | map
+  @spec delete(String.t, String.t) :: :ok | map
 
   def delete(role, guild) do
     API.request(:delete, "guilds/#{guild}/roles/#{role}")

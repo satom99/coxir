@@ -3,7 +3,7 @@ defmodule Coxir.Voice do
   Handles and supervises all the audio
   logic behind voice channels.
   """
-  @type channel :: String.t() | map
+  @type channel :: String.t | map
 
   use Supervisor
 
@@ -83,7 +83,7 @@ defmodule Coxir.Voice do
   Returns the atom `:ok` upon success
   or the atom `:error` otherwise.
   """
-  @spec play(channel, String.t() | Stream.t()) :: :ok | :error
+  @spec play(channel, String.t | Stream.t) :: :ok | :error
 
   def play(%{guild_id: guild}, term),
     do: play(guild, term)

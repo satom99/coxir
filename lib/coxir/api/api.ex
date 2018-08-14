@@ -19,7 +19,7 @@ defmodule Coxir.API do
   Returns raw data, the atom `:ok`
   or a map containing error information.
   """
-  @spec request(atom, String.t(), String.t(), Keyword.t(), Keyword.t()) :: :ok | map
+  @spec request(atom, String.t, String.t, Keyword.t, Keyword.t) :: :ok | map
 
   def request(method, route, body \\ "", options \\ [], headers \\ []) do
     route
@@ -40,7 +40,7 @@ defmodule Coxir.API do
 
   Refer to `request/5` for more information.
   """
-  @spec request_multipart(atom, String.t(), String.t(), Keyword.t(), Keyword.t()) :: :ok | map
+  @spec request_multipart(atom, String.t, String.t, Keyword.t, Keyword.t) :: :ok | map
 
   def request_multipart(method, route, body, options \\ [], headers \\ []) do
     body = body

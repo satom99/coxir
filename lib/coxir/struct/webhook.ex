@@ -28,7 +28,7 @@ defmodule Coxir.Struct.Webhook do
   Refer to [this](https://discordapp.com/developers/docs/resources/webhook#get-webhook-with-token)
   for more information.
   """
-  @spec get_with_token(String.t(), String.t()) :: map
+  @spec get_with_token(String.t, String.t) :: map
 
   def get_with_token(webhook, token) do
     API.request(:get, "webhooks/#{webhook}/#{token}")
@@ -50,7 +50,7 @@ defmodule Coxir.Struct.Webhook do
   Refer to [this](https://discordapp.com/developers/docs/resources/webhook#modify-webhook)
   for a broader explanation on the fields and their defaults.
   """
-  @spec edit(String.t(), Enum.t()) :: map
+  @spec edit(String.t, Enum.t) :: map
 
   def edit(webhook, params) do
     API.request(:patch, "webhooks/#{webhook}", params)
@@ -63,7 +63,7 @@ defmodule Coxir.Struct.Webhook do
   Refer to [this](https://discordapp.com/developers/docs/resources/webhook#modify-webhook-with-token)
   for more information.
   """
-  @spec edit_with_token(String.t(), String.t(), Enum.t()) :: map
+  @spec edit_with_token(String.t, String.t, Enum.t) :: map
 
   def edit_with_token(webhook, token, params) do
     API.request(:patch, "webhooks/#{webhook}/#{token}", params)
@@ -76,7 +76,7 @@ defmodule Coxir.Struct.Webhook do
   Returns a webhook object upon success
   or a map containing error information.
   """
-  @spec set_name(String.t(), String.t()) :: map
+  @spec set_name(String.t, String.t) :: map
 
   def set_name(webhook, name),
     do: edit(webhook, name: name)
@@ -87,7 +87,7 @@ defmodule Coxir.Struct.Webhook do
   Returns a webhook object upon success
   or a map containing error information.
   """
-  @spec set_avatar(String.t(), String.t()) :: map
+  @spec set_avatar(String.t, String.t) :: map
 
   def set_avatar(webhook, avatar),
     do: edit(webhook, avatar: avatar)
@@ -98,7 +98,7 @@ defmodule Coxir.Struct.Webhook do
   Returns a webhook object upon success
   or a map containing error information.
   """
-  @spec set_channel(String.t(), String.t()) :: map
+  @spec set_channel(String.t, String.t) :: map
 
   def set_channel(webhook, channel),
     do: edit(webhook, channel_id: channel)
@@ -109,7 +109,7 @@ defmodule Coxir.Struct.Webhook do
   Returns the atom `:ok` upon success
   or a map containing error information.
   """
-  @spec delete(String.t()) :: :ok | map
+  @spec delete(String.t) :: :ok | map
 
   def delete(webhook) do
     API.request(:delete, "webhooks/#{webhook}")
@@ -121,7 +121,7 @@ defmodule Coxir.Struct.Webhook do
   Refer to [this](https://discordapp.com/developers/docs/resources/webhook#delete-webhook-with-token)
   for more information.
   """
-  @spec delete_with_token(String.t(), String.t()) :: :ok | map
+  @spec delete_with_token(String.t, String.t) :: :ok | map
 
   def delete_with_token(webhook, token) do
     API.request(:delete, "webhooks/#{webhook}/#{token}")
@@ -133,7 +133,7 @@ defmodule Coxir.Struct.Webhook do
   Refer to [this](https://discordapp.com/developers/docs/resources/webhook#execute-webhook)
   for more information.
   """
-  @spec execute(String.t(), String.t(), Enum.t(), boolean) :: map
+  @spec execute(String.t, String.t, Enum.t, boolean) :: map
 
   def execute(webhook, token, params, wait \\ false) do
     API.request(:post, "webhooks/#{webhook}/#{token}", params, params: [wait: wait])
@@ -145,7 +145,7 @@ defmodule Coxir.Struct.Webhook do
   Refer to [this](https://discordapp.com/developers/docs/resources/webhook#execute-slackcompatible-webhook)
   for more information.
   """
-  @spec execute_slack(String.t(), String.t(), Enum.t(), boolean) :: map
+  @spec execute_slack(String.t, String.t, Enum.t, boolean) :: map
 
   def execute_slack(webhook, token, params, wait \\ false) do
     API.request(:post, "webhooks/#{webhook}/#{token}/slack", params, params: [wait: wait])
@@ -157,7 +157,7 @@ defmodule Coxir.Struct.Webhook do
   Refer to [this](https://discordapp.com/developers/docs/resources/webhook#execute-githubcompatible-webhook)
   for more information.
   """
-  @spec execute_github(String.t(), String.t(), Enum.t(), boolean) :: map
+  @spec execute_github(String.t, String.t, Enum.t, boolean) :: map
 
   def execute_github(webhook, token, params, wait \\ false) do
     API.request(:post, "webhooks/#{webhook}/#{token}/github", params, params: [wait: wait])

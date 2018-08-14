@@ -8,7 +8,7 @@ defmodule Coxir.Struct.Channel do
   In addition, the following fields are also embedded.
   - `owner` - an user object
   """
-  @type channel :: String.t() | map
+  @type channel :: String.t | map
 
   use Coxir.Struct
 
@@ -38,7 +38,7 @@ defmodule Coxir.Struct.Channel do
   Refer to [this](https://discordapp.com/developers/docs/resources/channel#create-message)
   for a broader explanation on the fields and their defaults.
   """
-  @spec send_message(channel, String.t() | Enum.t()) :: map
+  @spec send_message(channel, String.t | Enum.t) :: map
 
   def send_message(%{id: id}, content),
     do: send_message(id, content)
@@ -75,7 +75,7 @@ defmodule Coxir.Struct.Channel do
   Returns a message object upon success
   or a map containing error information.
   """
-  @spec get_message(channel, String.t()) :: map
+  @spec get_message(channel, String.t) :: map
 
   def get_message(%{id: id}, message),
     do: get_message(id, message)
@@ -106,7 +106,7 @@ defmodule Coxir.Struct.Channel do
   Refer to [this](https://discordapp.com/developers/docs/resources/channel#get-channel-messages)
   for a broader explanation on the fields and their defaults.
   """
-  @spec history(channel, Keyword.t()) :: list | map
+  @spec history(channel, Keyword.t) :: list | map
 
   def history(term, query \\ [])
   def history(%{id: id}, query),
@@ -195,7 +195,7 @@ defmodule Coxir.Struct.Channel do
   Refer to [this](https://discordapp.com/developers/docs/resources/channel#modify-channel)
   for a broader explanation on the fields and their defaults.
   """
-  @spec edit(channel, Enum.t()) :: map
+  @spec edit(channel, Enum.t) :: map
 
   def edit(%{id: id}, params),
     do: edit(id, params)
@@ -211,7 +211,7 @@ defmodule Coxir.Struct.Channel do
   Returns a channel object upon success
   or a map containing error information.
   """
-  @spec set_name(channel, String.t()) :: map
+  @spec set_name(channel, String.t) :: map
 
   def set_name(channel, name),
     do: edit(channel, name: name)
@@ -222,7 +222,7 @@ defmodule Coxir.Struct.Channel do
   Returns a channel object upon success
   or a map containing error information.
   """
-  @spec set_topic(channel, String.t()) :: map
+  @spec set_topic(channel, String.t) :: map
 
   def set_topic(channel, topic),
     do: edit(channel, topic: topic)
@@ -244,7 +244,7 @@ defmodule Coxir.Struct.Channel do
   Returns a channel object upon success
   or a map containing error information.
   """
-  @spec set_parent(channel, String.t()) :: map
+  @spec set_parent(channel, String.t) :: map
 
   def set_parent(channel, parent),
     do: edit(channel, parent_id: parent)
@@ -302,7 +302,7 @@ defmodule Coxir.Struct.Channel do
 
   Refer to `Coxir.Struct.Overwrite.edit/2` for more information.
   """
-  @spec create_permission(channel, String.t(), Enum.t()) :: map
+  @spec create_permission(channel, String.t, Enum.t) :: map
 
   def create_permission(%{id: id}, overwrite, params),
     do: create_permission(id, overwrite, params)
@@ -326,7 +326,7 @@ defmodule Coxir.Struct.Channel do
   Refer to [this](https://discordapp.com/developers/docs/resources/channel#create-channel-invite)
   for a broader explanation on the fields and their defaults.
   """
-  @spec create_invite(channel, Enum.t()) :: map
+  @spec create_invite(channel, Enum.t) :: map
 
   def create_invite(term, params \\ %{})
   def create_invite(%{id: id}, params),
@@ -362,7 +362,7 @@ defmodule Coxir.Struct.Channel do
   - `name` - name of the webhook (2-23 characters)
   - `avatar` - image for the default webhook avatar
   """
-  @spec create_webhook(channel, Enum.t()) :: map
+  @spec create_webhook(channel, Enum.t) :: map
 
   def create_webhook(%{id: id}, params),
     do: create_webhook(id, params)

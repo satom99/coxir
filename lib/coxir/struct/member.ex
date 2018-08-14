@@ -59,7 +59,7 @@ defmodule Coxir.Struct.Member do
   Refer to [this](https://discordapp.com/developers/docs/resources/guild#modify-guild-member)
   for a broader explanation on the fields and their defaults.
   """
-  @spec edit(member, Enum.t()) :: :ok | map
+  @spec edit(member, Enum.t) :: :ok | map
 
   def edit(%{id: id}, params),
     do: edit(id, params)
@@ -74,7 +74,7 @@ defmodule Coxir.Struct.Member do
   Returns a map with a `nick` field
   or a map containing error information.
   """
-  @spec set_nick(member, String.t()) :: map
+  @spec set_nick(member, String.t) :: map
 
   def set_nick(%{id: id}, name),
     do: set_nick(id, name)
@@ -97,7 +97,7 @@ defmodule Coxir.Struct.Member do
   Returns the atom `:ok` upon success
   or a map containing error information.
   """
-  @spec move(member, String.t()) :: :ok | map
+  @spec move(member, String.t) :: :ok | map
 
   def move(member, channel),
     do: edit(member, channel_id: channel)
@@ -128,7 +128,7 @@ defmodule Coxir.Struct.Member do
   - `delete-message-days` - number of days to delete the messages for (0-7)
   - `reason` - reason for the ban
   """
-  @spec ban(member, Keyword.t()) :: :ok | map
+  @spec ban(member, Keyword.t) :: :ok | map
 
   def ban(%{id: id}, query),
     do: ban(id, query)
@@ -143,7 +143,7 @@ defmodule Coxir.Struct.Member do
   Returns the atom `:ok` upon success
   or a map containing error information.
   """
-  @spec add_role(member, String.t()) :: :ok | map
+  @spec add_role(member, String.t) :: :ok | map
 
   def add_role(%{id: id}, role),
     do: add_role(id, role)
@@ -158,7 +158,7 @@ defmodule Coxir.Struct.Member do
   Returns the atom `:ok` upon success
   or a map containing error information.
   """
-  @spec remove_role(member, String.t()) :: :ok | map
+  @spec remove_role(member, String.t) :: :ok | map
 
   def remove_role(%{id: id}, role),
     do: remove_role(id, role)

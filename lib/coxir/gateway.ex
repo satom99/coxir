@@ -44,7 +44,7 @@ defmodule Coxir.Gateway do
   Refer to [this](https://discordapp.com/developers/docs/topics/gateway#update-status)
   for more information.
   """
-  @spec set_status(pid, String.t(), map) :: any
+  @spec set_status(pid, String.t, map) :: any
 
   def set_status(pid, status, game) do
     {since, afk} = status
@@ -66,7 +66,7 @@ defmodule Coxir.Gateway do
 
   Refer to `set_status/3` for more information.
   """
-  @spec set_status(String.t(), map) :: any
+  @spec set_status(String.t, map) :: any
 
   def set_status(status, game) do
     __MODULE__
