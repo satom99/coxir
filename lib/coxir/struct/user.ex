@@ -141,4 +141,25 @@ defmodule Coxir.Struct.User do
       error -> error
     end
   end
+
+  @doc """
+  Sends a direct message to a given user.
+
+  Refer to `Coxir.Struct.Channel.send_message/2` for more information.
+  """
+  @spec send_message(user, String.t | Enum.t) :: map
+
+  def send_message(%{id: id}, content),
+    do: send_message(id, content)
+
+  def send_message(user, content) do
+    user
+    |> create_dm
+    |> case do
+      %{id: channel} ->
+        Channel.send_message(channel, content)
+      other ->
+        other
+    end
+  end
 end
