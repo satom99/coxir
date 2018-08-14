@@ -103,25 +103,6 @@ defmodule Coxir.Struct.User do
   end
 
   @doc """
-  Sends a direct message to a given user.
-
-  Refer to [this](Coxir.Struct.Channel.send_message/2) for more information.
-  """
-  @spec send_message(user, String.t) :: map
-
-  def send_message(%{id: id}, content),
-    do: send_message(id, content)
-
-  def send_message(recipient, content) do
-    recipient
-    |> create_dm
-    |> case do
-      %{id: channel} -> Channel.send_message(channel, content)
-      other -> other
-    end
-  end
-
-  @doc """
   Creates a group DM channel.
 
   Returns a channel object upon success
@@ -158,6 +139,27 @@ defmodule Coxir.Struct.User do
           Channel.pretty(channel)
         end
       error -> error
+    end
+  end
+
+  @doc """
+  Sends a direct message to a given user.
+
+  Refer to `Coxir.Struct.Channel.send_message/2` for more information.
+  """
+  @spec send_message(user, String.t | Enum.t) :: map
+
+  def send_message(%{id: id}, content),
+    do: send_message(id, content)
+
+  def send_message(user, content) do
+    user
+    |> create_dm
+    |> case do
+      %{id: channel} ->
+        Channel.send_message(channel, content)
+      other ->
+        other
     end
   end
 end
