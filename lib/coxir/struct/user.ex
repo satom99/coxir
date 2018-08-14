@@ -103,6 +103,23 @@ defmodule Coxir.Struct.User do
   end
 
   @doc """
+  Sends a DM to a given user.
+
+  Returns a message object upon success
+  or a map containing error information.
+  """
+  @spec send_message(user, String.t) :: map
+
+  def send_message(%{id: id}, content),
+    do: send_message(id, content)
+
+  def send_message(recipient, content) do
+    create_dm(recipient)
+    |> Channel.send_message(content)
+    |> Channel.pretty
+  end
+
+  @doc """
   Creates a group DM channel.
 
   Returns a channel object upon success
