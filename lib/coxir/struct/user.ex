@@ -97,13 +97,8 @@ defmodule Coxir.Struct.User do
     do: create_dm(id)
 
   def create_dm(recipient) do
-    response = API.request(:post, "users/@me/channels", %{recipient_id: recipient})
-    response.code
-    |> case do
-      nil -> response
-      _ -> response |> Channel.pretty
-    end
-
+    API.request(:post, "users/@me/channels", %{recipient_id: recipient})
+    |> Channel.pretty
   end
 
   @doc """
@@ -118,16 +113,12 @@ defmodule Coxir.Struct.User do
     do: send_message(id, content)
 
   def send_message(recipient, content) do
-    response = \
-      recipient
-      |> create_dm
-    response.code
+    recipient
+    |> create_dm
     |> case do
-      nil -> response
-        |> Channel.send_message(content)
-      _other -> response.error
+      %{id: channel} -> Channel.send_message(content)
+      other -> other
     end
-
   end
 
   @doc """
