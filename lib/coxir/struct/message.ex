@@ -143,7 +143,7 @@ defmodule Coxir.Struct.Message do
   end
   
   @doc """
-  Checks whether the given message is an activity.
+  Checks whether a given message is an activity.
 
   Returns a boolean.
   """
