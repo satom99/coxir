@@ -115,7 +115,7 @@ defmodule Coxir.API do
     |> case do
       [route, param] when param in @major_parameters ->
         cond do
-          String.contains?(final, "messages") and method == :delete ->
+          String.contains?(route, "messages") and method == :delete ->
             "#{method}:#{path}"
           true ->
             route
