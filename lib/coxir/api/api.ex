@@ -113,12 +113,12 @@ defmodule Coxir.API do
     ~r|/?([\w-]+)/(?:\d+)|i
     |> Regex.run(path)
     |> case do
-      [final, param] when param in @major_parameters ->
+      [route, param] when param in @major_parameters ->
         cond do
           String.contains?(final, "messages") and method == :delete ->
             path
           true ->
-            final
+            route
         end
       _other ->
         path
