@@ -19,9 +19,14 @@ defmodule Coxir.Struct.User do
     |> replace(:voice_id, &Channel.get/1)
   end
 
-  def get(user \\ "@me")
+  def get(user \\ :local)
   def get(%{id: id}),
     do: get(id)
+
+  def get(:local) do
+    get_id
+    |> get
+  end
 
   def get(user) do
     super(user)
@@ -31,6 +36,20 @@ defmodule Coxir.Struct.User do
         |> pretty
       user -> user
     end
+  end
+
+  @doc """
+  Computes the local user's ID.
+
+  Returns a snowflake.
+  """
+  @spec get_id() :: String.t
+
+  def get_id do
+    Coxir.token
+    |> String.split(".")
+    |> Kernel.hd
+    |> Base.decode64!
   end
 
   @doc """
@@ -139,6 +158,27 @@ defmodule Coxir.Struct.User do
           Channel.pretty(channel)
         end
       error -> error
+    end
+  end
+
+  @doc """
+  Sends a direct message to a given user.
+
+  Refer to `Coxir.Struct.Channel.send_message/2` for more information.
+  """
+  @spec send_message(user, String.t | Enum.t) :: map
+
+  def send_message(%{id: id}, content),
+    do: send_message(id, content)
+
+  def send_message(user, content) do
+    user
+    |> create_dm
+    |> case do
+      %{id: channel} ->
+        Channel.send_message(channel, content)
+      other ->
+        other
     end
   end
 end
