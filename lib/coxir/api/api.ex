@@ -116,7 +116,7 @@ defmodule Coxir.API do
       [route, param] when param in @major_parameters ->
         cond do
           String.contains?(final, "messages") and method == :delete ->
-            "delete:#{path}"
+            "#{method}:#{path}"
           true ->
             route
         end
