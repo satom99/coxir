@@ -82,9 +82,9 @@ defmodule Coxir.Struct.Member do
   def set_nick({guild, user} = tuple, name) do
     params = %{nick: name}
 
-    User.get()
+    User.get_id()
     |> case do
-      %{id: ^user} ->
+      ^user ->
         API.request(:patch, "guilds/#{guild}/members/@me/nick", params)
       _other ->
         edit(tuple, params)

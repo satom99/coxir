@@ -44,10 +44,9 @@ defmodule Coxir.Voice do
     |> get
     |> case do
       nil ->
-        user = User.get()
         state = %{
           server_id: guild,
-          client_id: user.id
+          client_id: User.get_id()
         }
         child = supervisor(
           Server,

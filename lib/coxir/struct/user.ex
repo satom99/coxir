@@ -19,9 +19,14 @@ defmodule Coxir.Struct.User do
     |> replace(:voice_id, &Channel.get/1)
   end
 
-  def get(user \\ "@me")
+  def get(user \\ :local)
   def get(%{id: id}),
     do: get(id)
+
+  def get(:local) do
+    get_id
+    |> get
+  end
 
   def get(user) do
     super(user)
@@ -31,6 +36,20 @@ defmodule Coxir.Struct.User do
         |> pretty
       user -> user
     end
+  end
+
+  @doc """
+  Computes the local user's ID.
+
+  Returns a snowflake.
+  """
+  @spec get_id() :: String.t
+
+  def get_id do
+    Coxir.token
+    |> String.split(".")
+    |> Kernel.hd
+    |> Base.decode64!
   end
 
   @doc """
