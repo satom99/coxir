@@ -9,7 +9,7 @@ defmodule Coxir.Struct.Message do
   - `guild` - a guild object
   - `channel` - a channel object
   """
-  @type message :: String.t | map
+  @type message :: map
 
   use Coxir.Struct
 
