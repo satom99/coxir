@@ -141,4 +141,41 @@ defmodule Coxir.Struct.Message do
   def delete_all_reactions(%{id: id, channel_id: channel}) do
     API.request(:delete, "channels/#{channel}/messages/#{id}/reactions")
   end
+  
+  @doc """
+  Checks if the given message is an activity.
+
+  Returns a boolean.
+  """
+  @spec is_activity(String.t()) :: Boolean.t
+
+  def is_activity(%{id: id}),
+    do: is_activity(id)
+
+  def is_activity(id) do
+    id
+    |> get_activity != nil
+  end
+
+  @doc """
+  Returns the activity of the given message.
+
+  Returns a map containing the activity or nil upon failure.
+  """
+  @spec get_activity(String.t()) :: map | Boolean.t
+
+  def get_activity(%{id: id}),
+    do: get_activity(id)
+
+  def get_activity(id) do
+    id
+    |> get
+    |> case do
+      nil ->
+        nil
+      other ->
+        other
+        |> Map.fetch(:activity)
+    end
+  end
 end
