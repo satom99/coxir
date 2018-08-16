@@ -555,10 +555,10 @@ defmodule Coxir.Struct.Guild do
   end
   
   @doc """
-  Fetches the vanity url code for a given guild.
+  Fetches the vanity url code of a given guild.
 
-  Returns a string containig the vanity url
-  code or a map containing error information.
+  Returns a string representing the code
+  or a map containing error information.
   """
   @spec get_vanity_url(guild) :: String.t | map
 
@@ -568,10 +568,10 @@ defmodule Coxir.Struct.Guild do
   def get_vanity_url(guild) do
     API.request(:get, "guilds/#{guild}/vanity-url")
     |> case do
-      %{code: _, error: _} = result ->
-        result
-      other ->
-        other[:code]
+      %{error: _value} = error ->
+        error
+      invite ->
+        invite[:code]
     end
   end
 end
