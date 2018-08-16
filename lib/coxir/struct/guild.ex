@@ -560,12 +560,12 @@ defmodule Coxir.Struct.Guild do
   Returns a string representing the code
   or a map containing error information.
   """
-  @spec get_vanity_url(guild) :: String.t | map
+  @spec get_vanity_code(guild) :: String.t | map
 
-  def get_vanity_url(%{id: id}),
-    do: get_vanity_url(id)
+  def get_vanity_code(%{id: id}),
+    do: get_vanity_code(id)
 
-  def get_vanity_url(guild) do
+  def get_vanity_code(guild) do
     API.request(:get, "guilds/#{guild}/vanity-url")
     |> case do
       %{error: _value} = error ->
