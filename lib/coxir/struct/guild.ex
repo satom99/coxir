@@ -513,6 +513,38 @@ defmodule Coxir.Struct.Guild do
   end
 
   @doc """
+  Modifies an integration from a given guild.
+
+  Returns a Returns a 204 empty response upon success
+  or a map containing error information.
+  """
+
+  @spec edit_integration(guild, String.t, Enum.t) :: map
+
+  def edit_integration(%{id: id}, integration, params),
+    do: edit_integration(id, integration, params)
+
+  def edit_integration(guild, integration, params) do
+    API.request(:patch, "guilds/#{guild}/integrations/#{integration}", params)
+  end
+
+  @doc """
+  Syncs an integration from a given guild.
+
+  Returns a Returns a 204 empty response upon success
+  or a map containing error information.
+  """
+
+  @spec sync_integration(guild, String.t) :: map
+
+  def sync_integration(%{id: id}, integration),
+    do: sync_integration(id, integration)
+
+  def sync_integration(guild, integration) do
+    API.request(:post, "guilds/#{guild}/integrations/#{integration}/sync")
+  end
+  
+  @doc """
   Fetches the webhooks from a given guild.
 
   Returns a list of webhook objects
