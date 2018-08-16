@@ -166,4 +166,55 @@ defmodule Coxir.Struct.Member do
   def remove_role({guild, user}, role) do
     API.request(:delete, "guilds/#{guild}/members/#{user}/roles/#{role}")
   end
+  
+  @doc """
+  Checks if a role exists in a given member.
+
+  Returns a boolean representing whether it exists or not.
+  """
+  @spec has_role?(String.t, String.t, String.t) :: Boolean.t
+
+  def has_role?(guild, user, role) do
+    try do
+      for member_role <- get(guild, user)[:roles] do
+        member_role[:id] == role && throw(:found) || false
+      end
+      |> Enum.at(0)
+    catch
+      :found ->
+        true
+    end
+  end
+
+  @doc """
+  Returns a role from a given member.
+
+  Returns a map containing the information
+  of the role, or nil upon failure.
+  """
+  @spec get_role(String.t, String.t, String.t) :: map | nil
+
+  def get_role(guild, user, role) do
+    try do
+      for member_role <- get(guild, user)[:roles] do
+        member_role[:id] == role && throw(member_role) || nil
+      end
+      |> Enum.at(0)
+    catch
+      role ->
+        role
+    end
+  end
+  
+  @doc """
+  Returns all the roles from a given member.
+
+  Returns a list of maps containing the information
+  of the roles, or nil upon failure.
+  """
+  @spec get_all_roles(String.t, String.t, String.t) :: List.t | nil
+
+  def get_all_roles(guild, user, role) do
+    get(guild, user)[:roles]
+  end
 end
