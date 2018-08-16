@@ -553,4 +553,25 @@ defmodule Coxir.Struct.Guild do
   def get_regions do
     API.request(:get, "voice/regions")
   end
+  
+  @doc """
+  Fetches the vanity url code for a given guild.
+
+  Returns a string containig the vanity url
+  code or a map containing error information.
+  """
+  @spec get_vanity_url(guild) :: String.t | map
+
+  def get_vanity_url(%{id: id}),
+    do: get_vanity_url(id)
+
+  def get_vanity_url(guild) do
+    API.request(:get, "guilds/#{guild}/vanity-url")
+    |> case do
+      %{code: code, error: error} ->
+        %{code: code, error: error}
+      result ->
+        result[:code]
+    end
+  end
 end
