@@ -71,6 +71,41 @@ defmodule Coxir.Struct.User do
   def edit(params) do
     API.request(:patch, "users/@me", params)
   end
+  
+  @doc """
+  Modifies the username of the local user.
+
+  Returns a user object upon success
+  or a map containing error information.
+  """
+  @spec set_username(String.t) :: map
+
+  def set_username(username) do
+    edit(username: username)
+  end
+
+  @doc """
+  Modifies the avatar of the local user.
+
+  Returns a user object upon success
+  or a map containing error information.
+  """
+  @spec set_avatar(String.t) :: map
+
+  def set_avatar(avatar) do
+    avatar = String.contains?(avatar, "data:") and avatar or (
+      if !String.contains?(avatar, "data:") do
+        File.read(avatar)
+        |> case do
+          {:ok, content} ->
+            "data:;base64," <> Base.encode64(content)
+          other ->
+            other
+        end
+      end
+    )
+    edit(avatar: avatar)
+  end
 
   @doc """
   Fetches a list of connections for the local user.
