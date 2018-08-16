@@ -166,4 +166,17 @@ defmodule Coxir.Struct.Member do
   def remove_role({guild, user}, role) do
     API.request(:delete, "guilds/#{guild}/members/#{user}/roles/#{role}")
   end
+  
+  @doc """
+  Checks whether a given member has a role.
+
+  Returns a boolean.
+  """
+  @spec has_role?(member, String.t) :: boolean
+
+  def has_role?(%{roles: roles}, role) do
+    roles
+    |> Enum.find(& &1[:id] == role)
+    != nil
+  end
 end
