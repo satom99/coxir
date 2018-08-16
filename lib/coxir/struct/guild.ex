@@ -568,10 +568,10 @@ defmodule Coxir.Struct.Guild do
   def get_vanity_url(guild) do
     API.request(:get, "guilds/#{guild}/vanity-url")
     |> case do
-      %{code: code, error: error} ->
-        %{code: code, error: error}
-      result ->
-        result[:code]
+      %{code: _, error: _} = result ->
+        result
+      other ->
+        other[:code]
     end
   end
 end
