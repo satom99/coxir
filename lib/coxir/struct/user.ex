@@ -104,6 +104,21 @@ defmodule Coxir.Struct.User do
   def get_guilds(query \\ []) do
     API.request(:get, "users/@me/guilds", "", params: query)
   end
+  
+  @doc """
+  Leaves from a given guild.
+
+  Returns the atom `:ok` upon success
+  or a map containing error information.
+  """
+  @spec leave(guild) :: :ok | map
+
+  def leave(%{id: id}),
+    do: leave(id)
+
+  def leave(guild) do
+    Guild.leave(guild)
+  end
 
   @doc """
   Creates a DM channel with a given user.
