@@ -73,36 +73,53 @@ defmodule Coxir.Struct.User do
   end
   
   @doc """
-  Modifies the username of the local user.
+  Changes the username of the local user.
 
-  Returns a user object upon success
+  Returns an user object upon success
   or a map containing error information.
   """
   @spec set_username(String.t) :: map
 
-  def set_username(username) do
-    edit(username: username)
-  end
+  def set_username(name),
+    do: edit(username: name)
 
   @doc """
-  Modifies the avatar of the local user.
+  Changes the avatar of the local user.
 
-  Returns a user object upon success
+  Returns an user object upon success
   or a map containing error information.
+
+  #### Avatar
+  Either a proper data URI scheme
+  or the path of an image's file.
+
+  Refer to [this](https://discordapp.com/developers/docs/resources/user#avatar-data)
+  for a broader explanation.
   """
   @spec set_avatar(String.t) :: map
 
   def set_avatar(avatar) do
-    avatar = String.contains?(avatar, "data:") and avatar or (
-      File.read(avatar)
-      |> case do
-        {:ok, content} ->
-          "data:;base64," <> Base.encode64(content)
-        other ->
-          other
-      end
-    )
-    edit(avatar: avatar)
+    cond do
+      String.starts_with?(avatar, "data:image") ->
+        edit(avatar: avatar)
+      true ->
+        avatar
+        |> File.read
+        |> case do
+          {:ok, content} ->
+            content = content
+            |> Base.encode64
+
+            scheme = "data:;base64,#{content}"
+
+            edit(avatar: scheme)
+          {:error, reason} ->
+            reason = reason
+            |> :file.format_error
+
+            %{error: reason}
+        end
+    end
   end
 
   @doc """
