@@ -150,20 +150,7 @@ defmodule Coxir.Struct.Message do
   @spec is_activity?(message) :: boolean
 
   def is_activity?(message) do
-    message
-    |> get_activity
-    != nil
-  end
-
-  @doc """
-  Returns the activity of a given message.
-
-  Returns a map if present
-  and `nil` otherwise.
-  """
-  @spec get_activity(message) :: map | nil
-
-  def get_activity(message) do
     message[:activity]
+    != nil
   end
 end
