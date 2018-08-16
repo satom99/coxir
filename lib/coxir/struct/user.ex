@@ -94,14 +94,12 @@ defmodule Coxir.Struct.User do
 
   def set_avatar(avatar) do
     avatar = String.contains?(avatar, "data:") and avatar or (
-      if !String.contains?(avatar, "data:") do
-        File.read(avatar)
-        |> case do
-          {:ok, content} ->
-            "data:;base64," <> Base.encode64(content)
-          other ->
-            other
-        end
+      File.read(avatar)
+      |> case do
+        {:ok, content} ->
+          "data:;base64," <> Base.encode64(content)
+        other ->
+          other
       end
     )
     edit(avatar: avatar)
