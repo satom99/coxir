@@ -12,7 +12,7 @@ defmodule Coxir.Struct.User do
 
   use Coxir.Struct
 
-  alias Coxir.Struct.{Channel}
+  alias Coxir.Struct.{Channel, Guild}
 
   def pretty(struct) do
     struct
@@ -103,6 +103,21 @@ defmodule Coxir.Struct.User do
 
   def get_guilds(query \\ []) do
     API.request(:get, "users/@me/guilds", "", params: query)
+  end
+  
+  @doc """
+  Leaves from a given guild.
+
+  Returns the atom `:ok` upon success
+  or a map containing error information.
+  """
+  @spec leave(String.t | map) :: :ok | map
+
+  def leave(%{id: id}),
+    do: leave(id)
+
+  def leave(guild) do
+    Guild.leave(guild)
   end
 
   @doc """
