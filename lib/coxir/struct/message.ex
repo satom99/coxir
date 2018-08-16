@@ -147,7 +147,7 @@ defmodule Coxir.Struct.Message do
 
   Returns a boolean.
   """
-  @spec is_activity?(message) :: Boolean.t
+  @spec is_activity?(message) :: boolean
 
   def is_activity?(message) do
     message
