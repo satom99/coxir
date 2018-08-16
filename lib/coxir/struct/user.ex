@@ -12,7 +12,7 @@ defmodule Coxir.Struct.User do
 
   use Coxir.Struct
 
-  alias Coxir.Struct.{Channel}
+  alias Coxir.Struct.{Channel, Guild}
 
   def pretty(struct) do
     struct
