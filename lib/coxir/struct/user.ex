@@ -116,6 +116,7 @@ defmodule Coxir.Struct.User do
           {:error, reason} ->
             reason = reason
             |> :file.format_error
+            |> List.to_string
 
             %{error: reason}
         end
