@@ -111,7 +111,7 @@ defmodule Coxir.Struct.User do
   Returns the atom `:ok` upon success
   or a map containing error information.
   """
-  @spec leave(guild) :: :ok | map
+  @spec leave(String.t | map) :: :ok | map
 
   def leave(%{id: id}),
     do: leave(id)
