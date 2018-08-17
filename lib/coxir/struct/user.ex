@@ -104,7 +104,7 @@ defmodule Coxir.Struct.User do
         edit(avatar: avatar)
       String.starts_with?(avatar, "http") ->
         response = HTTPotion.get(avatar)
-        HTTPotion.Response.success?(response) && update_avatar(response.body) || response
+        (HTTPotion.Response.success?(response) && update_avatar(response.body)) || response
       true ->
         avatar
         |> File.read
