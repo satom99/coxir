@@ -71,6 +71,57 @@ defmodule Coxir.Struct.User do
   def edit(params) do
     API.request(:patch, "users/@me", params)
   end
+  
+  @doc """
+  Changes the username of the local user.
+
+  Returns an user object upon success
+  or a map containing error information.
+  """
+  @spec set_username(String.t) :: map
+
+  def set_username(name),
+    do: edit(username: name)
+
+  @doc """
+  Changes the avatar of the local user.
+
+  Returns an user object upon success
+  or a map containing error information.
+
+  #### Avatar
+  Either a proper data URI scheme
+  or the path of an image's file.
+
+  Refer to [this](https://discordapp.com/developers/docs/resources/user#avatar-data)
+  for a broader explanation.
+  """
+  @spec set_avatar(String.t) :: map
+
+  def set_avatar(avatar) do
+    cond do
+      String.starts_with?(avatar, "data:image") ->
+        edit(avatar: avatar)
+      true ->
+        avatar
+        |> File.read
+        |> case do
+          {:ok, content} ->
+            content = content
+            |> Base.encode64
+
+            scheme = "data:;base64,#{content}"
+
+            edit(avatar: scheme)
+          {:error, reason} ->
+            reason = reason
+            |> :file.format_error
+            |> List.to_string
+
+            %{error: reason}
+        end
+    end
+  end
 
   @doc """
   Fetches a list of connections for the local user.
