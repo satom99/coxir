@@ -102,17 +102,15 @@ defmodule Coxir.Struct.User do
     cond do
       String.starts_with?(avatar, "data:image") ->
         edit(avatar: avatar)
+      String.starts_with?(avatar, "http") ->
+        response = HTTPotion.get(avatar)
+        HTTPotion.Response.success?(response) && update_avatar(response.body) || response
       true ->
         avatar
         |> File.read
         |> case do
           {:ok, content} ->
-            content = content
-            |> Base.encode64
-
-            scheme = "data:;base64,#{content}"
-
-            edit(avatar: scheme)
+            update_avatar(content)
           {:error, reason} ->
             reason = reason
             |> :file.format_error
@@ -121,6 +119,14 @@ defmodule Coxir.Struct.User do
             %{error: reason}
         end
     end
+  end
+
+  defp update_avatar(content) do
+    content = content
+    |> Base.encode64
+
+    scheme = "data:;base64,#{content}"
+    edit(avatar: scheme)
   end
 
   @doc """
