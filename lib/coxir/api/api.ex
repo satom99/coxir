@@ -7,7 +7,7 @@ defmodule Coxir.API do
   alias Coxir.API.Base
 
   @table :rates
-  @major_parameters ["guilds", "channels", "webhooks"]
+  @major_params ["guilds", "channels", "webhooks"]
 
   @doc false
   def create_tables do
@@ -113,7 +113,7 @@ defmodule Coxir.API do
     ~r|/?([\w-]+)/(?:\d+)|i
     |> Regex.run(path)
     |> case do
-      [route, param] when param in @major_parameters ->
+      [route, param] when param in @major_params ->
         cond do
           String.contains?(path, "messages") and method == :delete ->
             "#{route}/messages:#{method}"
