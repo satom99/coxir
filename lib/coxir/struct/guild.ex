@@ -437,6 +437,22 @@ defmodule Coxir.Struct.Guild do
   def get_bans(guild) do
     API.request(:get, "guilds/#{guild}/bans")
   end
+  
+  @doc """
+  Retrieves the ban information for the given member.
+
+  Returns a ban object for the given user
+  or a map containing error information.
+
+  """
+  @spec get_ban(guild, String.t) :: map
+
+  def get_ban(%{id: id}, user),
+    do: get_ban(id, user)
+
+  def get_ban(guild, user) do
+    API.request(:get, "guilds/#{guild}/bans/#{user}")
+  end
 
   @doc """
   Removes the ban for an user on a given guild.
