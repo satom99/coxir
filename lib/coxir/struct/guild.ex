@@ -574,4 +574,20 @@ defmodule Coxir.Struct.Guild do
         invite[:code]
     end
   end
+  
+  @doc """
+  Returns whether the given guild is lazy.
+
+  Returns a boolean.
+  """
+  @spec is_lazy(guild) :: String.t | map
+
+  def is_lazy(id) when is_binary(id) do
+    get(id)
+    |> is_lazy
+  end
+
+  def is_lazy(guild) do
+    guild[:large] == true
+  end
 end
