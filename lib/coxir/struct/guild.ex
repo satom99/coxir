@@ -439,11 +439,10 @@ defmodule Coxir.Struct.Guild do
   end
   
   @doc """
-  Retrieves the ban information for the given member.
+  Fetches the ban for an user on a given guild.
 
-  Returns a ban object for the given user
-  or a map containing error information.
-
+  Returns a ban object or a map
+  containing error information.
   """
   @spec get_ban(guild, String.t) :: map
 
