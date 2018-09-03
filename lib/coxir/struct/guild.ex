@@ -580,7 +580,7 @@ defmodule Coxir.Struct.Guild do
 
   Returns a boolean.
   """
-  @spec is_lazy(guild) :: String.t | map
+  @spec is_lazy(guild) :: Boolean.t
 
   def is_lazy(id) when is_binary(id) do
     get(id)
