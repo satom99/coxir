@@ -108,9 +108,9 @@ defmodule Coxir.Struct.Member do
   Returns the atom `:ok` upon success
   or a map containing error information.
   """
-  @spec kick(member, String.t) :: :ok | map
+  @spec kick(member, [String.t]) :: :ok | map
 
-  def kick(%{id: id}, reason),
+  def kick(%{id: id}, reason \\ nil),
     do: kick(id, reason)
 
   def kick({guild, user}, reason) do
