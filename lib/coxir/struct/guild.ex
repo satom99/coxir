@@ -6,7 +6,7 @@ defmodule Coxir.Struct.Guild do
   for a list of fields and a broader documentation.
 
   In addition, the following fields are also embedded.
-  - `owner` - an user object
+  - `owner` - a user object
   - `afk_channel` - a channel object
   - `embed_channel` - a channel object
   - `system_channel` - a channel object
@@ -304,7 +304,7 @@ defmodule Coxir.Struct.Guild do
   end
 
   @doc """
-  Adds an user to a given guild.
+  Adds a user to a given guild.
 
   Returns a member object upon success
   or a map containing error information.
@@ -437,9 +437,24 @@ defmodule Coxir.Struct.Guild do
   def get_bans(guild) do
     API.request(:get, "guilds/#{guild}/bans")
   end
+  
+  @doc """
+  Fetches the ban for a user on a given guild.
+
+  Returns a ban object
+  or a map containing error information.
+  """
+  @spec get_ban(guild, String.t) :: map
+
+  def get_ban(%{id: id}, user),
+    do: get_ban(id, user)
+
+  def get_ban(guild, user) do
+    API.request(:get, "guilds/#{guild}/bans/#{user}")
+  end
 
   @doc """
-  Removes the ban for an user on a given guild.
+  Removes the ban for a user on a given guild.
 
   Returns the atom `:ok` upon success
   or a map containing error information.
