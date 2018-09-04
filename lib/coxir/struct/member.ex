@@ -114,7 +114,7 @@ defmodule Coxir.Struct.Member do
     do: kick(id, reason)
 
   def kick({guild, user}, reason) do
-    API.request(:delete, "guilds/#{guild}/members/#{user}", "", params: %{reason: reason})
+    API.request(:delete, "guilds/#{guild}/members/#{user}", "", params: [reason: reason])
   end
 
   @doc """
