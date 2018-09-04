@@ -110,7 +110,8 @@ defmodule Coxir.Struct.Member do
   """
   @spec kick(member, String.t) :: :ok | map
 
-  def kick(%{id: id}, reason \\ ""),
+  def kick(term, reason \\ "")
+  def kick(%{id: id}, reason),
     do: kick(id, reason)
 
   def kick({guild, user}, reason) do
