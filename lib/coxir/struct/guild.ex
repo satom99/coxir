@@ -576,18 +576,19 @@ defmodule Coxir.Struct.Guild do
   end
   
   @doc """
-  Returns whether the given guild is lazy.
+  Checks whether a given guild is lazy.
 
   Returns a boolean.
   """
-  @spec is_lazy(guild) :: Boolean.t
+  @spec is_lazy?(guild) :: boolean
 
-  def is_lazy(id) when is_binary(id) do
+  def is_lazy?(id) when is_binary(id) do
     get(id)
-    |> is_lazy
+    |> is_lazy?
   end
 
-  def is_lazy(guild) do
-    guild[:large] == true
+  def is_lazy?(guild) do
+    guild[:lazy]
+    == true
   end
 end
