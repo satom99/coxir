@@ -23,6 +23,7 @@ defmodule Coxir.Struct.Member do
     |> replace(:user_id, &User.get/1)
     |> replace(:voice_id, &Channel.get/1)
     |> replace(:roles, &Role.get/1)
+    |> Map.merge(%{avatar_url: User.get_avatar(struct)})
   end
 
   @doc """
