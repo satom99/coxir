@@ -17,27 +17,28 @@ defmodule Coxir.Struct.User do
   def pretty(struct) do
     struct
     |> replace(:voice_id, &Channel.get/1)
-    |> put(:avatar_url, get_avatar(struct)})
+    |> put(:avatar_url, get_avatar(struct))
   end
-  
-  defp get_avatar(user) do
-    avatar = user[:avatar]
-    if avatar do
-      ext = if String.contains?(avatar, "_a"), do: "gif", else: "png"
-      "https://cdn.discordapp.com/avatars/#{user[:id]}/#{avatar}.#{ext}"
-    else
-      avatar_modulo = \
-        (user[:discriminator] || "99999")
-        |> Integer.parse
-        |> elem(0)
-        |> case do
-          99999 ->
-            1
-          discriminator ->
-            rem(discriminator, 5)
-        end
 
-      "https://cdn.discordapp.com/embed/avatars/#{avatar_modulo}"
+  defp get_avatar(user) do
+    user[:avatar]
+    |> case do
+      nil ->
+        avatar_modulo = \
+          (user[:discriminator] || "99999")
+          |> Integer.parse
+          |> elem(0)
+          |> case do
+            99999 ->
+              1
+            discriminator ->
+              rem(discriminator, 5)
+          end
+        "https://cdn.discordapp.com/embed/avatars/#{avatar_modulo}"
+
+      avatar ->
+        ext = if String.contains?(avatar, "_a"), do: "gif", else: "png"
+        "https://cdn.discordapp.com/avatars/#{user[:id]}/#{avatar}.#{ext}"
     end
   end
 
