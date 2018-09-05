@@ -17,7 +17,7 @@ defmodule Coxir.Struct.User do
   def pretty(struct) do
     struct
     |> replace(:voice_id, &Channel.get/1)
-    |> Map.merge(%{avatar_url: get_avatar(struct)})
+    |> put(%{avatar_url: get_avatar(struct)})
   end
   
   defp get_avatar(user) do
