@@ -20,7 +20,7 @@ defmodule Coxir.Struct.User do
     |> Map.merge(%{avatar_url: get_avatar(struct)})
   end
   
-  def get_avatar(user) do
+  defp get_avatar(user) do
     avatar = user[:avatar]
     if avatar do
       ext = if String.contains?(avatar, "_a"), do: "gif", else: "png"
