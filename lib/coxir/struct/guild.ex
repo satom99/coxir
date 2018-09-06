@@ -437,11 +437,11 @@ defmodule Coxir.Struct.Guild do
   def get_bans(guild) do
     API.request(:get, "guilds/#{guild}/bans")
   end
-  
+
   @doc """
   Fetches the ban for a user on a given guild.
 
-  Returns a ban object
+  Returns a ban object upon success
   or a map containing error information.
   """
   @spec get_ban(guild, String.t) :: map
@@ -568,7 +568,7 @@ defmodule Coxir.Struct.Guild do
   def get_regions do
     API.request(:get, "voice/regions")
   end
-  
+
   @doc """
   Fetches the vanity url code of a given guild.
 
@@ -588,22 +588,5 @@ defmodule Coxir.Struct.Guild do
       invite ->
         invite[:code]
     end
-  end
-  
-  @doc """
-  Checks whether a given guild is lazy.
-
-  Returns a boolean.
-  """
-  @spec is_lazy?(guild) :: boolean
-
-  def is_lazy?(id) when is_binary(id) do
-    get(id)
-    |> is_lazy?
-  end
-
-  def is_lazy?(guild) do
-    guild[:lazy]
-    == true
   end
 end
