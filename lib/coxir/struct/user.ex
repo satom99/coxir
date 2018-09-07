@@ -7,6 +7,7 @@ defmodule Coxir.Struct.User do
 
   In addition, the following fields are also embedded.
   - `voice` - a channel object
+  - `avatar_url` - an URL for the avatar
   """
   @type user :: String.t | map
 
@@ -17,6 +18,7 @@ defmodule Coxir.Struct.User do
   def pretty(struct) do
     struct
     |> replace(:voice_id, &Channel.get/1)
+    |> put(:avatar_url, get_avatar(struct))
   end
 
   def get(user \\ :local)
@@ -24,7 +26,7 @@ defmodule Coxir.Struct.User do
     do: get(id)
 
   def get(:local) do
-    get_id
+    get_id()
     |> get
   end
 
@@ -46,7 +48,7 @@ defmodule Coxir.Struct.User do
   @spec get_id() :: String.t
 
   def get_id do
-    Coxir.token
+    Coxir.token()
     |> String.split(".")
     |> Kernel.hd
     |> Base.decode64!
@@ -71,7 +73,7 @@ defmodule Coxir.Struct.User do
   def edit(params) do
     API.request(:patch, "users/@me", params)
   end
-  
+
   @doc """
   Changes the username of the local user.
 
@@ -232,4 +234,42 @@ defmodule Coxir.Struct.User do
         other
     end
   end
+
+  @doc """
+  Computes the URL for a given user's avatar.
+
+  Returns a string upon success
+  or a map containing error information.
+  """
+  @spec get_avatar(user) :: String.t | map
+
+  def get_avatar(id) when is_binary(id) do
+    get(id)
+    |> case do
+      %{id: _id} = user ->
+        get_avatar(user)
+      other ->
+        other
+    end
+  end
+
+  def get_avatar(%{avatar_url: value}), do: value
+  def get_avatar(%{avatar: nil, discriminator: discriminator}) do
+    index = discriminator
+    |> String.to_integer
+    |> rem(5)
+
+    "https://cdn.discordapp.com/embed/avatars/#{index}.png"
+  end
+  def get_avatar(%{avatar: avatar, id: id}) do
+    extension = avatar
+    |> String.starts_with?("a_")
+    |> case do
+      true -> "gif"
+      false -> "png"
+    end
+
+    "https://cdn.discordapp.com/avatars/#{id}/#{avatar}.#{extension}"
+  end
+  def get_avatar(_other), do: nil
 end
