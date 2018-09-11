@@ -54,7 +54,7 @@ defmodule Coxir.Struct.Guild do
   Refer to [this](https://discordapp.com/developers/docs/resources/guild#create-guild)
   for a broader explanation on the fields and their defaults.
   """
-  @spec create(Enum.t)
+  @spec create(Enum.t) :: map
   def create(params) do
     API.request(:POST, "/guilds", params)
   end
