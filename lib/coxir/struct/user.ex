@@ -7,6 +7,7 @@ defmodule Coxir.Struct.User do
 
   In addition, the following fields are also embedded.
   - `voice` - a channel object
+  - `avatar_url` - an URL for the avatar
   """
   @type user :: String.t | map
 
@@ -17,11 +18,17 @@ defmodule Coxir.Struct.User do
   def pretty(struct) do
     struct
     |> replace(:voice_id, &Channel.get/1)
+    |> put(:avatar_url, get_avatar(struct))
   end
 
-  def get(user \\ "@me")
+  def get(user \\ :local)
   def get(%{id: id}),
     do: get(id)
+
+  def get(:local) do
+    get_id()
+    |> get
+  end
 
   def get(user) do
     super(user)
@@ -31,6 +38,20 @@ defmodule Coxir.Struct.User do
         |> pretty
       user -> user
     end
+  end
+
+  @doc """
+  Computes the local user's ID.
+
+  Returns a snowflake.
+  """
+  @spec get_id() :: String.t
+
+  def get_id do
+    Coxir.token()
+    |> String.split(".")
+    |> Kernel.hd
+    |> Base.decode64!
   end
 
   @doc """
@@ -51,6 +72,57 @@ defmodule Coxir.Struct.User do
 
   def edit(params) do
     API.request(:patch, "users/@me", params)
+  end
+
+  @doc """
+  Changes the username of the local user.
+
+  Returns an user object upon success
+  or a map containing error information.
+  """
+  @spec set_username(String.t) :: map
+
+  def set_username(name),
+    do: edit(username: name)
+
+  @doc """
+  Changes the avatar of the local user.
+
+  Returns an user object upon success
+  or a map containing error information.
+
+  #### Avatar
+  Either a proper data URI scheme
+  or the path of an image's file.
+
+  Refer to [this](https://discordapp.com/developers/docs/resources/user#avatar-data)
+  for a broader explanation.
+  """
+  @spec set_avatar(String.t) :: map
+
+  def set_avatar(avatar) do
+    cond do
+      String.starts_with?(avatar, "data:image") ->
+        edit(avatar: avatar)
+      true ->
+        avatar
+        |> File.read
+        |> case do
+          {:ok, content} ->
+            content = content
+            |> Base.encode64
+
+            scheme = "data:;base64,#{content}"
+
+            edit(avatar: scheme)
+          {:error, reason} ->
+            reason = reason
+            |> :file.format_error
+            |> List.to_string
+
+            %{error: reason}
+        end
+    end
   end
 
   @doc """
@@ -141,4 +213,63 @@ defmodule Coxir.Struct.User do
       error -> error
     end
   end
+
+  @doc """
+  Sends a direct message to a given user.
+
+  Refer to `Coxir.Struct.Channel.send_message/2` for more information.
+  """
+  @spec send_message(user, String.t | Enum.t) :: map
+
+  def send_message(%{id: id}, content),
+    do: send_message(id, content)
+
+  def send_message(user, content) do
+    user
+    |> create_dm
+    |> case do
+      %{id: channel} ->
+        Channel.send_message(channel, content)
+      other ->
+        other
+    end
+  end
+
+  @doc """
+  Computes the URL for a given user's avatar.
+
+  Returns a string upon success
+  or a map containing error information.
+  """
+  @spec get_avatar(user) :: String.t | map
+
+  def get_avatar(id) when is_binary(id) do
+    get(id)
+    |> case do
+      %{id: _id} = user ->
+        get_avatar(user)
+      other ->
+        other
+    end
+  end
+
+  def get_avatar(%{avatar_url: value}), do: value
+  def get_avatar(%{avatar: nil, discriminator: discriminator}) do
+    index = discriminator
+    |> String.to_integer
+    |> rem(5)
+
+    "https://cdn.discordapp.com/embed/avatars/#{index}.png"
+  end
+  def get_avatar(%{avatar: avatar, id: id}) do
+    extension = avatar
+    |> String.starts_with?("a_")
+    |> case do
+      true -> "gif"
+      false -> "png"
+    end
+
+    "https://cdn.discordapp.com/avatars/#{id}/#{avatar}.#{extension}"
+  end
+  def get_avatar(_other), do: nil
 end

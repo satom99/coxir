@@ -114,4 +114,4 @@ One may as well define their own
 [Consumer](https://github.com/satom99/coxir/blob/master/lib/coxir/stage/consumer.ex)
 and manually subscribe to the processes
 returned by `Stage.middles()` - which effectively are
-the last stage and responsible of caching data internally.
+the last stage and responsible for caching data internally.

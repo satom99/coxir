@@ -9,14 +9,15 @@ defmodule Coxir.Struct.Message do
   - `guild` - a guild object
   - `channel` - a channel object
   """
-  @type message :: String.t | map
+  @type message :: map
 
   use Coxir.Struct
 
-  alias Coxir.Struct.{Guild, Channel}
+  alias Coxir.Struct.{User, Guild, Channel}
 
   def pretty(struct) do
     struct
+    |> replace(:author, &User.get/1)
     |> replace(:guild_id, &Guild.get/1)
     |> replace(:channel_id, &Channel.get/1)
   end
@@ -140,5 +141,17 @@ defmodule Coxir.Struct.Message do
 
   def delete_all_reactions(%{id: id, channel_id: channel}) do
     API.request(:delete, "channels/#{channel}/messages/#{id}/reactions")
+  end
+
+  @doc """
+  Checks whether a given message is an activity.
+
+  Returns a boolean.
+  """
+  @spec is_activity?(message) :: boolean
+
+  def is_activity?(message) do
+    message[:activity]
+    != nil
   end
 end

@@ -161,6 +161,21 @@ defmodule Coxir.Struct.Channel do
   end
 
   @doc """
+  Triggers the typing indicator on a given channel.
+
+  Returns the atom `:ok` upon success
+  or a map containing error information.
+  """
+  @spec typing(channel) :: :ok | map
+
+  def typing(%{id: id}),
+    do: typing(id)
+
+  def typing(channel) do
+    API.request(:post, "channels/#{channel}/typing")
+  end
+
+  @doc """
   Modifies a given channel.
 
   Returns a channel object upon success
@@ -280,21 +295,6 @@ defmodule Coxir.Struct.Channel do
 
   def delete(channel) do
     API.request(:delete, "channels/#{channel}")
-  end
-
-  @doc """
-  Triggers the typing indicator on a given channel.
-
-  Returns the atom `:ok` upon success
-  or a map containing error information.
-  """
-  @spec typing(channel) :: :ok | map
-
-  def typing(%{id: id}),
-    do: typing(id)
-
-  def typing(channel) do
-    API.request(:post, "channels/#{channel}/typing")
   end
 
   @doc """

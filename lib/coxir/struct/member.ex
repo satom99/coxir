@@ -82,9 +82,9 @@ defmodule Coxir.Struct.Member do
   def set_nick({guild, user} = tuple, name) do
     params = %{nick: name}
 
-    User.get()
+    User.get_id()
     |> case do
-      %{id: ^user} ->
+      ^user ->
         API.request(:patch, "guilds/#{guild}/members/@me/nick", params)
       _other ->
         edit(tuple, params)
@@ -108,13 +108,14 @@ defmodule Coxir.Struct.Member do
   Returns the atom `:ok` upon success
   or a map containing error information.
   """
-  @spec kick(member) :: :ok | map
+  @spec kick(member, String.t) :: :ok | map
 
-  def kick(%{id: id}),
-    do: kick(id)
+  def kick(term, reason \\ "")
+  def kick(%{id: id}, reason),
+    do: kick(id, reason)
 
-  def kick({guild, user}) do
-    API.request(:delete, "guilds/#{guild}/members/#{user}")
+  def kick({guild, user}, reason) do
+    API.request(:delete, "guilds/#{guild}/members/#{user}", "", params: [reason: reason])
   end
 
   @doc """
@@ -165,5 +166,18 @@ defmodule Coxir.Struct.Member do
 
   def remove_role({guild, user}, role) do
     API.request(:delete, "guilds/#{guild}/members/#{user}/roles/#{role}")
+  end
+  
+  @doc """
+  Checks whether a given member has a role.
+
+  Returns a boolean.
+  """
+  @spec has_role?(member, String.t) :: boolean
+
+  def has_role?(%{roles: roles}, role) do
+    roles
+    |> Enum.find(& &1[:id] == role)
+    != nil
   end
 end

@@ -6,7 +6,7 @@ defmodule Coxir.Struct.Guild do
   for a list of fields and a broader documentation.
 
   In addition, the following fields are also embedded.
-  - `owner` - an user object
+  - `owner` - a user object
   - `afk_channel` - a channel object
   - `embed_channel` - a channel object
   - `system_channel` - a channel object
@@ -329,7 +329,7 @@ defmodule Coxir.Struct.Guild do
   end
 
   @doc """
-  Adds an user to a given guild.
+  Adds a user to a given guild.
 
   Returns a member object upon success
   or a map containing error information.
@@ -464,7 +464,22 @@ defmodule Coxir.Struct.Guild do
   end
 
   @doc """
-  Removes the ban for an user on a given guild.
+  Fetches the ban for a user on a given guild.
+
+  Returns a ban object upon success
+  or a map containing error information.
+  """
+  @spec get_ban(guild, String.t) :: map
+
+  def get_ban(%{id: id}, user),
+    do: get_ban(id, user)
+
+  def get_ban(guild, user) do
+    API.request(:get, "guilds/#{guild}/bans/#{user}")
+  end
+
+  @doc """
+  Removes the ban for a user on a given guild.
 
   Returns the atom `:ok` upon success
   or a map containing error information.
@@ -577,5 +592,26 @@ defmodule Coxir.Struct.Guild do
 
   def get_regions do
     API.request(:get, "voice/regions")
+  end
+
+  @doc """
+  Fetches the vanity url code of a given guild.
+
+  Returns a string representing the code
+  or a map containing error information.
+  """
+  @spec get_vanity_code(guild) :: String.t | map
+
+  def get_vanity_code(%{id: id}),
+    do: get_vanity_code(id)
+
+  def get_vanity_code(guild) do
+    API.request(:get, "guilds/#{guild}/vanity-url")
+    |> case do
+      %{error: _value} = error ->
+        error
+      invite ->
+        invite[:code]
+    end
   end
 end
