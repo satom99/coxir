@@ -10,7 +10,7 @@ defmodule Coxir.Stage.Consumer do
       handler: handler,
       public: []
     }
-    GenStage.start_link(__MODULE__, state, spawn_opt: [fullsweep_after: 0])
+    GenStage.start_link(__MODULE__, state)
   end
 
   def init(state) do
