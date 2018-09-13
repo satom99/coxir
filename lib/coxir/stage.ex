@@ -9,12 +9,9 @@ defmodule Coxir.Stage do
 
   def start_link do
     children = [
-      worker(Producer, [])
+      worker(Producer, []),
+      worker(Middle, [], [id: 1])
     ]
-    ++ \
-    for index <- 1..@limit do
-      worker(Middle, [], [id: index])
-    end
     options = [
       strategy: :one_for_one,
       name: __MODULE__
