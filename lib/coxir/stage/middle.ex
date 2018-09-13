@@ -8,7 +8,7 @@ defmodule Coxir.Stage.Middle do
   alias Coxir.Struct.{Guild, Role, Member, Channel, Message, User}
 
   def start_link do
-    GenStage.start_link __MODULE__, :ok, fullsweep_after: 0
+    GenStage.start_link __MODULE__, :ok
   end
 
   def init(state) do
