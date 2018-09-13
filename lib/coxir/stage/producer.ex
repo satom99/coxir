@@ -4,11 +4,11 @@ defmodule Coxir.Stage.Producer do
   use GenStage
 
   def start_link do
-    GenStage.start_link __MODULE__, [], name: __MODULE__
+    GenStage.start_link(__MODULE__, [], name: __MODULE__)
   end
 
   def init(_state) do
-    {:producer, {:queue.new(), 0}}
+    {:producer, {:queue.new(), 0}, buffer_size: 2000}
   end
 
   def notify(event) do

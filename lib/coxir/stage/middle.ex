@@ -8,11 +8,11 @@ defmodule Coxir.Stage.Middle do
   alias Coxir.Struct.{Guild, Role, Member, Channel, Message, User}
 
   def start_link do
-    GenStage.start_link __MODULE__, :ok
+    GenStage.start_link __MODULE__, :ok, fullsweep_after: 0
   end
 
   def init(state) do
-    {:producer_consumer, state, subscribe_to: [Producer]}
+    {:producer_consumer, state, [subscribe_to: [Producer], buffer_size: 2000]}
   end
 
   def handle_events(events, _from, state) do

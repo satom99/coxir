@@ -8,7 +8,8 @@ defmodule Coxir.Stage.Consumer do
   def start_link(handler) do
     state = %{
       handler: handler,
-      public: []
+      public: [],
+      fullsweep_after: 0
     }
     GenStage.start_link __MODULE__, state
   end
@@ -19,7 +20,7 @@ defmodule Coxir.Stage.Consumer do
 
   def handle_events(events, _from, %{handler: handler, public: public} = state) do
     public = handle(handler, events, public)
-    {:noreply, [], %{state | public: public}}
+    {:noreply, [], %{state | public: public}, :hibernate}
   end
 
   def handle(_handler, [], state), do: state
