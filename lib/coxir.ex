@@ -22,7 +22,6 @@ defmodule Coxir do
 
   @doc false
   def start(_type, _args) do
-    :erlang.system_flag(:fullsweep_after, 0)
     children = [
       supervisor(Voice, []),
       supervisor(Stage, []),
