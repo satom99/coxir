@@ -21,6 +21,12 @@ defmodule Coxir.Struct.User do
     |> put(:avatar_url, get_avatar(struct))
   end
 
+  @doc """
+  Fetches either the bot user or a cached user object.
+  If not found, it will get requested through the API.
+
+  Returns an object if found and `nil` otherwise.
+  """
   def get(user \\ :local)
   def get(%{id: id}),
     do: get(id)
@@ -34,8 +40,10 @@ defmodule Coxir.Struct.User do
     super(user)
     |> case do
       nil ->
-        API.request(:get, "users/#{user}")
-        |> pretty
+        user = API.request(:get, "users/#{user}")
+
+        update(user)
+        pretty(user)
       user -> user
     end
   end
