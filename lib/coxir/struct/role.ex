@@ -6,12 +6,51 @@ defmodule Coxir.Struct.Role do
   for a list of fields and a broader documentation.
   """
   @type role :: String.t | map
+  @type guild :: String.t | map
 
   use Coxir.Struct
 
-  @doc false
-  def get(id),
-    do: super(id)
+  @doc """
+  Fetches a cached role object.
+  If not found, it will get requested through the API.
+
+  Returns an object if found and `nil` otherwise.
+  """
+  @spec get(role, guild) :: map | nil
+
+  def get(%{id: role}, %{id: guild}),
+    do: get(role, guild)
+
+  def get(role, guild),
+    do: get({role, guild})
+
+  def get(id) do
+    super(id)
+    |> case do
+      nil ->
+        case id do
+          {req_role, guild} ->
+            API.request(:get, "/guilds/#{guild}/roles")
+            |> case do
+              %{error: _value} = error ->
+                error
+
+              roles ->
+                role = roles
+                |> Enum.filter(fn role -> role.id == req_role end)
+
+                update(role)
+                pretty(role)
+            end
+
+          _other ->
+            nil
+        end
+
+      role ->
+        role
+    end
+  end
 
   @doc false
   def select(pattern)
