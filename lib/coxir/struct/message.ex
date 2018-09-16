@@ -9,7 +9,9 @@ defmodule Coxir.Struct.Message do
   - `guild` - a guild object
   - `channel` - a channel object
   """
+  
   @type message :: map
+  @type channel :: String.t() | map
 
   use Coxir.Struct
 
@@ -20,6 +22,45 @@ defmodule Coxir.Struct.Message do
     |> replace(:author, &User.get/1)
     |> replace(:guild_id, &Guild.get/1)
     |> replace(:channel_id, &Channel.get/1)
+  end
+  
+  @doc """
+  Fetches a cached message object.
+  If not found, it will get requested through the API.
+
+  Returns an object if found and `nil` otherwise.
+  """
+  @spec get(message, channel) :: map | nil
+
+  def get(%{id: message}, %{id: channel}),
+    do: get(message, channel)
+
+  def get(message, channel),
+    do: get({message, channel})
+
+  def get(id) do
+    super(id)
+    |> case do
+      nil ->
+        case id do
+          {message, channel} ->
+            API.request(:get, "/channels/#{channel}/messages/#{message}")
+            |> case do
+              %{error: _value} = error ->
+                error
+
+              message ->
+                update(message)
+                pretty(message)
+            end
+
+          _other ->
+            nil
+        end
+
+      message ->
+        message
+    end
   end
 
   @doc """
