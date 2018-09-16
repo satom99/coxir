@@ -51,6 +51,13 @@ defmodule Coxir.Struct.Member do
             error
 
           member ->
+            member =
+              member
+              |> Map.merge(%{
+                id: {member.guild_id, member.user.id},
+                user_id: member.user.id
+              })
+
             update(member)
             pretty(member)
         end
@@ -59,6 +66,7 @@ defmodule Coxir.Struct.Member do
         member
     end
   end
+  
   @doc """
   Modifies a given member.
 
