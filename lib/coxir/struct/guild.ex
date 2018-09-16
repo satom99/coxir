@@ -51,7 +51,7 @@ defmodule Coxir.Struct.Guild do
   """
   @spec create(Enum.t) :: map
   def create(params) do
-    API.request(:POST, "guilds", params)
+    API.request(:post, "guilds", params)
   end
 
   @doc """
