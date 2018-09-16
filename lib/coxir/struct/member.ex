@@ -27,6 +27,7 @@ defmodule Coxir.Struct.Member do
 
   @doc """
   Fetches a cached member object.
+  If not found, it will get requested through the API.
 
   Returns an object if found and `nil` otherwise.
   """
@@ -38,10 +39,26 @@ defmodule Coxir.Struct.Member do
   def get(server, member),
     do: get({server, member})
 
-  @doc false
-  def get(id),
-    do: super(id)
+  def get(id) do
+    super(id)
+    |> case do
+      nil ->
+        {guild, user} = id
 
+        API.request(:get, "/guilds/#{guild}/members/#{user}")
+        |> case do
+          %{error: _value} = error ->
+            error
+
+          member ->
+            update(member)
+            pretty(member)
+        end
+
+      member ->
+        member
+    end
+  end
   @doc """
   Modifies a given member.
 
