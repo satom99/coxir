@@ -32,7 +32,8 @@ defmodule Coxir.Mixfile do
       {:websockex, "~> 0.4.1"},
       {:httpoison, "~> 0.13.0"},
       {:gen_stage, "~> 0.14.0"},
-      {:ex_doc, "~> 0.18.1", only: :dev}
+      {:ex_doc, "~> 0.18.1", only: :dev},
+      {:simple_ttl, github: "awlexus/simplettl"}
     ]
   end
 
