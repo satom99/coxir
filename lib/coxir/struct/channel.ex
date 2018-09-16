@@ -18,6 +18,33 @@ defmodule Coxir.Struct.Channel do
     struct
     |> replace(:owner_id, &User.get/1)
   end
+  
+  @doc """
+  Fetches a cached channel object.
+  If not found, it will get requested through the API.
+
+  Returns an object if found and `nil` otherwise.
+  """
+  @spec get(String.t()) :: map | nil
+
+  def get(id) do
+    super(id)
+    |> case do
+      nil ->
+        API.request(:get, "channels/#{id}")
+        |> case do
+          %{error: _value} = error ->
+            error
+
+          channel ->
+            update(channel)
+            pretty(channel)
+        end
+
+      channel ->
+        channel
+    end
+  end
 
   @doc """
   Sends a message to a given channel.
