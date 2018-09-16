@@ -35,28 +35,23 @@ defmodule Coxir.Struct.Guild do
   end
 
   @doc """
-  Creates a guild with the given information
+  Creates a guild.
 
   Returns a guild object upon success
   or a map containing error information.
 
   #### Params
-  Must be an enumerable with any of the fields listed below.
-  - `name` - name of the created guild
-  - `region` - voice region id in the created guild
-  - `icon` - base64 128x128 jpeg image icon in the created guild
-  - `verification_level` - the verification level in the created guild
-  - `default_message_notifications` - the default notification level in the created guild
-  - `explicit_content_filter` - the explicit content filter level in the created guild
-  - `roles` - the roles in the created guild
-  - `channels` - the channels in the created guild
+  Must be an enumerable with the fields listed below.
+  - `name` - name of the guild
+  - `region` - desired voice region id
+  - `icon` - base64 128x128 jpeg image
 
   Refer to [this](https://discordapp.com/developers/docs/resources/guild#create-guild)
   for a broader explanation on the fields and their defaults.
   """
   @spec create(Enum.t) :: map
   def create(params) do
-    API.request(:POST, "/guilds", params)
+    API.request(:POST, "guilds", params)
   end
 
   @doc """
