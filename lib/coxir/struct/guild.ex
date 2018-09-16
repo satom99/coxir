@@ -33,6 +33,33 @@ defmodule Coxir.Struct.Guild do
     |> replace(:members, &Member.get/1)
     |> replace(:roles, &Role.get/1)
   end
+  
+  @doc """
+  Fetches a cached guild object.
+  If not found, it will get requested through the API.
+
+  Returns an object if found and `nil` otherwise.
+  """
+  @spec get(String.t()) :: map | nil
+
+  def get(id) do
+    super(id)
+    |> case do
+      nil ->
+        API.request(:get, "guilds/#{id}")
+        |> case do
+          %{error: _value} = error ->
+            error
+
+          guild ->
+            update(guild)
+            pretty(guild)
+        end
+
+      guild ->
+        guild
+    end
+  end
 
   @doc """
   Used to grab the shard of a given guild.
