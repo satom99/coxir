@@ -57,6 +57,7 @@ defmodule Coxir.Struct.Member do
                 id: {guild, member.user.id},
                 user_id: member.user.id
               })
+              |> Map.update(:roles, [], &(Role.get(&1, guild)))
 
             update(member)
             pretty(member)
