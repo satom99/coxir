@@ -36,11 +36,17 @@ defmodule Coxir.Struct.Role do
                 error
 
               roles ->
-                role = roles
-                |> Enum.filter(fn role -> role.id == req_role end)
+                roles = roles
+                |> Enum.filter(fn role -> (role.id in req_role) end)
 
-                update(role)
-                pretty(role)
+                for role <- roles do
+                  role
+                  |> Map.put(:guild_id, guild)
+                  |> update()
+                  
+                  pretty(role)
+                end
+
             end
 
           _other ->
