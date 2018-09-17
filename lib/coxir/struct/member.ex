@@ -54,7 +54,7 @@ defmodule Coxir.Struct.Member do
             member =
               member
               |> Map.merge(%{
-                id: {member.guild_id, member.user.id},
+                id: {guild, member.user.id},
                 user_id: member.user.id
               })
 
