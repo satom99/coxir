@@ -54,10 +54,10 @@ defmodule Coxir.Struct.Member do
             member =
               member
               |> Map.merge(%{
-                id: {guild, member.user.id},
-                user_id: member.user.id
+                id: {guild, user},
+                user_id: user
               })
-              |> Map.update(:roles, [], &(Role.get(&1, guild)))
+              |> Map.update(:roles, [], &Role.get(&1, guild))
 
             update(member)
             pretty(member)
