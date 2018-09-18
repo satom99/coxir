@@ -259,6 +259,18 @@ defmodule Coxir.Struct.Channel do
 
   def set_nsfw(channel, bool),
     do: edit(channel, nsfw: bool)
+    
+  @doc """
+  Sets the channel's slowmode rate limit
+  in seconds for the given channel.
+
+  Returns a channel object upon success
+  or a map containing error information.
+  """
+  @spec set_rate_limit(channel, Integer.t) :: map
+
+  def set_rate_limit(channel, limit),
+    do: edit(channel, rate_limit_per_user: limit)
 
   @doc """
   Changes the bitrate of a given voice channel.
