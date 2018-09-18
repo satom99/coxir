@@ -262,7 +262,8 @@ defmodule Coxir.Struct.Channel do
     
   @doc """
   Sets slowmode rate limit in seconds for
-  the given channel.
+  the given channel. Limit should be between
+  0 and 120.
 
   Returns a channel object upon success
   or a map containing error information.
