@@ -268,9 +268,9 @@ defmodule Coxir.Struct.Channel do
   Returns a channel object upon success
   or a map containing error information.
   """
-  @spec set_rate_limit(channel, Integer.t) :: map
+  @spec set_slowmode(channel, Integer.t) :: map
 
-  def set_rate_limit(channel, limit),
+  def set_slowmode(channel, limit),
     do: edit(channel, rate_limit_per_user: limit)
 
   @doc """
