@@ -33,12 +33,8 @@ defmodule Coxir.Stage.Middle do
 
   # Local
   def handle(:READY, data) do
-    for guild <- data.guilds do
-      handle(:GUILD_UPDATE, guild)
-    end
-    for channel <- data.private_channels do
-      handle(:CHANNEL_CREATE, channel)
-    end
+    Enum.each(data.guilds, fn(guild) -> handle(:GUILD_UPDATE, guild) end)
+    Enum.each(data.private_channels, fn(channel) -> handle(:CHANNEL_CREATE, channel) end)
     User.update(data.user)
     User.pretty(data.user)
   end
@@ -73,33 +69,22 @@ defmodule Coxir.Stage.Middle do
     Message.pretty(data)
   end
   def handle(:MESSAGE_DELETE_BULK, data) do
-    for id <- data.ids do
-      handle(:MESSAGE_DELETE, %{id: id, channel_id: data.channel_id})
-    end
+    Enum.each(data.ids, fn(id) -> handle(:MESSAGE_DELETE, %{id: id, channel_id: data.channel_id}) end)
     :ignore
   end
 
   # Guilds
   def handle(:GUILD_CREATE, data) do
-    for role <- data.roles do
-      handle(:GUILD_ROLE_CREATE, %{role: role, guild_id: data.id})
-    end
-    for member <- data.members do
-      handle(:GUILD_MEMBER_ADD, Map.put(member, :guild_id, data.id))
-    end
-    for channel <- data.channels do
-      handle(:CHANNEL_CREATE, Map.put(channel, :guild_id, data.id))
-    end
-    for presence <- data.presences do
-      handle(:PRESENCE_UPDATE, Map.put(presence, :guild_id, data.id))
-    end
-    for state <- data.voice_states do
-      handle(:VOICE_STATE_UPDATE, Map.put(state, :guild_id, data.id))
-    end
+    Enum.each(data.roles, fn(role) -> handle(:GUILD_ROLE_CREATE, %{role: role, guild_id: data.id}) end)
+    Enum.each(data.members, fn(member) -> handle(:GUILD_MEMBER_ADD, Map.put(member, :guild_id, data.id)) end)
+    Enum.each(data.channels, fn(channel) -> handle(:CHANNEL_CREATE, Map.put(channel, :guild_id, data.id)) end)
+    Enum.each(data.presences, fn(presence) -> handle(:PRESENCE_UPDATE, Map.put(presence, :guild_id, data.id)) end)
+    Enum.each(data.voice_states, fn(state) -> handle(:VOICE_STATE_UPDATE, Map.put(state, :guild_id, data.id)) end)
+
     data = data
-    |> Map.update!(:roles, &(for role <- &1, do: role.id))
-    |> Map.update!(:members, &(for member <- &1, do: {data.id, member.user.id}))
-    |> Map.update!(:channels, &(for channel <- &1, do: channel.id))
+    |> Map.update!(:roles, &(for role <- &1, do: :binary.copy(role.id)))
+    |> Map.update!(:members, &(for member <- &1, do: {:binary.copy(data.id), :binary.copy(member.user.id)}))
+    |> Map.update!(:channels, &(for channel <- &1, do: :binary.copy(channel.id)))
     |> Map.delete(:presences)
     |> Map.delete(:voice_states)
 
@@ -149,9 +134,7 @@ defmodule Coxir.Stage.Middle do
     :ignore
   end
   def handle(:GUILD_MEMBERS_CHUNK, data) do
-    for member <- data.members do
-      handle(:GUILD_MEMBER_ADD, Map.put(member, :guild_id, data.guild_id))
-    end
+    Enum.each(data.members, fn(member) -> handle(:GUILD_MEMBER_ADD, Map.put(member, :guild_id, data.guild_id)) end)
     :ignore
   end
   def handle(:GUILD_MEMBER_REMOVE, data) do
