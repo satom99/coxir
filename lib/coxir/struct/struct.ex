@@ -106,7 +106,6 @@ defmodule Coxir.Struct do
           struct ->
             Map.merge(struct, data)
         end
-
         :ets.insert @table, encode(data)
       end
 
@@ -120,9 +119,18 @@ defmodule Coxir.Struct do
       end
 
       defp encode(data) do
+        id = \
+        case data.id do
+          {a, b} ->
+            {:binary.copy(a), :binary.copy(b)}
+
+          id ->
+            :binary.copy(id)
+        end
+        
         data
         |> Map.to_list
-        |> List.insert_at(0, {:id, data.id})
+        |> List.insert_at(0, {:id, id})
         |> List.to_tuple
       end
 

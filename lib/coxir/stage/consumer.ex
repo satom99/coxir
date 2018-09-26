@@ -24,9 +24,7 @@ defmodule Coxir.Stage.Consumer do
 
   def handle(_handler, [], state), do: state
   def handle(handler, [event | events], state) do
-    handler
-    |> apply(:handle_event, [event, state])
-    |> case do
+    case handler.handle_event(event, state) do
       {:ok, state} ->
         handle(handler, events, state)
       term ->

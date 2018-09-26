@@ -148,12 +148,12 @@ defmodule Coxir.Voice.Gateway do
 
   defp parse(term) do
     term
-    |> Jason.decode!(keys: :atoms)
+    |> Poison.decode!(keys: :atoms)
   end
 
   defp encode(term) do
     term
-    |> Jason.encode!
+    |> Poison.encode!
   end
 
   defp payload(data, op) do

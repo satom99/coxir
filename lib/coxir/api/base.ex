@@ -17,7 +17,7 @@ defmodule Coxir.API.Base do
   def process_request_body(body) do
     body
     |> Map.new
-    |> Jason.encode!
+    |> Poison.encode!
   end
 
   def process_request_headers(headers) do
@@ -32,7 +32,7 @@ defmodule Coxir.API.Base do
 
   def process_response_body(""), do: ""
   def process_response_body(body) do
-    Jason.decode!(body, keys: :atoms)
+    Poison.decode!(body, keys: :atoms)
   end
 
   def process_headers(headers) do
