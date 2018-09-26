@@ -27,7 +27,7 @@ defmodule Coxir.Mixfile do
   defp deps do
     [
       {:kcl, "~> 1.1"},
-      {:jason, "~> 1.1"},
+      {:poison, "~> 3.1"},
       {:porcelain, "~> 2.0"},
       {:websockex, "~> 0.4.1"},
       {:httpoison, "~> 0.13.0"},
