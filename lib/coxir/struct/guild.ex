@@ -35,26 +35,23 @@ defmodule Coxir.Struct.Guild do
   end
 
   @doc """
-  Used to grab the shard of a given guild.
+  Creates a guild.
 
-  Returns the `PID` of the shard's process.
+  Returns a guild object upon success
+  or a map containing error information.
+
+  #### Params
+  Must be an enumerable with the fields listed below.
+  - `name` - name of the guild
+  - `region` - desired voice region id
+  - `icon` - base64 128x128 jpeg image
+
+  Refer to [this](https://discordapp.com/developers/docs/resources/guild#create-guild)
+  for a broader explanation on the fields and their defaults.
   """
-  @spec shard(guild) :: pid
-
-  def shard(%{id: id}),
-    do: shard(id)
-
-  def shard(guild) do
-    guild = guild
-    |> String.to_integer
-
-    shards = Gateway
-    |> Supervisor.count_children
-    |> Map.get(:workers)
-
-    (guild >>> 22)
-    |> rem(shards)
-    |> Gateway.get
+  @spec create(Enum.t) :: map
+  def create(params) do
+    API.request(:post, "guilds", params)
   end
 
   @doc """
@@ -191,6 +188,29 @@ defmodule Coxir.Struct.Guild do
 
   def leave(guild) do
     API.request(:delete, "users/@me/guilds/#{guild}")
+  end
+
+  @doc """
+  Used to grab the shard of a given guild.
+
+  Returns the `PID` of the shard's process.
+  """
+  @spec shard(guild) :: pid
+
+  def shard(%{id: id}),
+    do: shard(id)
+
+  def shard(guild) do
+    guild = guild
+    |> String.to_integer
+
+    shards = Gateway
+    |> Supervisor.count_children
+    |> Map.get(:workers)
+
+    (guild >>> 22)
+    |> rem(shards)
+    |> Gateway.get
   end
 
   @doc """
