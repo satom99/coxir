@@ -18,11 +18,11 @@ defmodule Coxir.Voice.Audio do
   #}
   def start_link(state) do
     state = state
-    |> Map.merge %{
+    |> Map.merge(%{
       player: nil,
       sequence: 0,
       timestamp: 0
-    }
+    })
     GenServer.start_link __MODULE__, state
   end
 
@@ -33,11 +33,11 @@ defmodule Coxir.Voice.Audio do
 
   def play(pid, term) do
     pid
-    |> GenServer.call {:play, term}
+    |> GenServer.call({:play, term})
   end
   def stop(pid) do
     pid
-    |> GenServer.call :stop
+    |> GenServer.call(:stop)
   end
 
   def handle_call({:play, term}, _from, state) do
@@ -49,9 +49,9 @@ defmodule Coxir.Voice.Audio do
         Task.start_link(
           fn ->
             state = state
-            |> Map.merge %{
+            |> Map.merge(%{
               audio: audio
-            }
+            })
             do_player(term, state)
           end
         )

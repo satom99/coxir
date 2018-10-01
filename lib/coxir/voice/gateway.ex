@@ -106,12 +106,12 @@ defmodule Coxir.Voice.Gateway do
     )
 
     state = state
-    |> Map.merge %{
+    |> Map.merge(%{
       udp: udp,
       ip: remote,
       port: data.port,
       ssrc: data.ssrc
-    }
+    })
 
     data = %{
       protocol: "udp",
@@ -131,12 +131,12 @@ defmodule Coxir.Voice.Gateway do
     |> Map.merge(data)
 
     data = data
-    |> Map.merge %{
+    |> Map.merge(%{
       udp: state.udp,
       ssrc: state.ssrc,
       port: state.port,
       ip: state.ip
-    }
+    })
 
     state.handler
     |> send({:update, data})
