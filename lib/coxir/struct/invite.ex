@@ -18,7 +18,7 @@ defmodule Coxir.Struct.Invite do
   Returns an invite object upon success
   or a map containing error information.
 
-  Accepts an optional parameter `with_counts`
+  Accepts an optional argument `with_counts`
   in which the invite struct will contain two
   extra keys, approximate_member_count, the
   number of members in the server, and
