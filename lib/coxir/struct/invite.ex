@@ -17,9 +17,18 @@ defmodule Coxir.Struct.Invite do
 
   Returns an invite object upon success
   or a map containing error information.
+
+  Accepts an optional parameter `with_counts`
+  in which the invite struct will contain two
+  extra keys, approximate_member_count, the
+  number of members in the server, and
+  approximate_presence_count which is the number
+  of users in the server who are currently online.
   """
-  def get(code) do
-    API.request(:get, "invites/#{code}")
+  @spec get(invite, boolean()) :: map
+
+  def get(code, with_counts \\ false) do
+    API.request(:get, "invites/#{code}?with_counts=#{with_counts}")
   end
 
   @doc """
