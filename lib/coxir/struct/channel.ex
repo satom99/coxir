@@ -259,11 +259,9 @@ defmodule Coxir.Struct.Channel do
 
   def set_nsfw(channel, bool),
     do: edit(channel, nsfw: bool)
-    
+
   @doc """
-  Sets slowmode rate limit in seconds for
-  the given channel. Limit should be between
-  0 and 120.
+  Change the slowmode rate of a given channel.
 
   Returns a channel object upon success
   or a map containing error information.
