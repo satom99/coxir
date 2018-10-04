@@ -17,9 +17,12 @@ defmodule Coxir.Struct.Invite do
 
   Returns an invite object upon success
   or a map containing error information.
+
+  Refer to [this](https://discordapp.com/developers/docs/resources/invite#get-invite)
+  for more information.
   """
-  def get(code) do
-    API.request(:get, "invites/#{code}")
+  def get(code, with_counts? \\ false) do
+    API.request(:get, "invites/#{code}", "", params: [with_counts: with_counts?])
   end
 
   @doc """
