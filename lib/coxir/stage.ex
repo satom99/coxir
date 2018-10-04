@@ -7,6 +7,10 @@ defmodule Coxir.Stage do
 
   @limit System.schedulers_online()
 
+  def init(args) do
+    {:ok, args}
+  end
+
   def start_link do
     children = [
       worker(Producer, [])

@@ -6,6 +6,10 @@ defmodule Coxir.Voice.Handler do
   alias Coxir.Voice
   alias Coxir.Voice.{Server, Gateway, Audio}
 
+  def init(args) do
+    {:ok, args}
+  end
+
   #{
   #  :server_id,
   #  :client_id,

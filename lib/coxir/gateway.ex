@@ -9,6 +9,10 @@ defmodule Coxir.Gateway do
   alias Coxir.API
   alias Coxir.Gateway.Worker
 
+  def init(args) do
+    {:ok, args}
+  end
+
   @doc false
   def start_link do
     token = Coxir.token()

@@ -20,6 +20,10 @@ defmodule Coxir do
   alias Coxir.{API, Struct}
   alias Coxir.{Voice, Stage, Gateway}
 
+  def init(args) do
+    {:ok, args}
+  end
+
   @doc false
   def start(_type, _args) do
     children = [

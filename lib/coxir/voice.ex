@@ -11,6 +11,10 @@ defmodule Coxir.Voice do
   alias Coxir.Struct.{User, Guild}
   alias Coxir.Voice.{Server, Audio}
 
+  def init(args) do
+    {:ok, args}
+  end
+
   @doc false
   def start_link do
     children = []
