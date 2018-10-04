@@ -261,6 +261,17 @@ defmodule Coxir.Struct.Channel do
     do: edit(channel, nsfw: bool)
 
   @doc """
+  Change the slowmode rate of a given channel.
+
+  Returns a channel object upon success
+  or a map containing error information.
+  """
+  @spec set_slowmode(channel, Integer.t) :: map
+
+  def set_slowmode(channel, limit),
+    do: edit(channel, rate_limit_per_user: limit)
+
+  @doc """
   Changes the bitrate of a given voice channel.
 
   Returns a channel object upon success
