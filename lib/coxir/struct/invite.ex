@@ -10,6 +10,9 @@ defmodule Coxir.Struct.Invite do
   use Coxir.Struct
 
   @doc false
+  def get(id)
+
+  @doc false
   def select(pattern)
 
   @doc """
