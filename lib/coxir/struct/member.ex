@@ -193,7 +193,7 @@ defmodule Coxir.Struct.Member do
   def remove_role({guild, user}, role) do
     API.request(:delete, "guilds/#{guild}/members/#{user}/roles/#{role}")
   end
-  
+
   @doc """
   Checks whether a given member has a role.
 

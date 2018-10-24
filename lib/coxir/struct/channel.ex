@@ -260,7 +260,7 @@ defmodule Coxir.Struct.Channel do
   Returns a channel object upon success
   or a map containing error information.
   """
-  @spec set_position(channel, Integer.t) :: map
+  @spec set_position(channel, integer) :: map
 
   def set_position(channel, position),
     do: edit(channel, position: position)
@@ -288,12 +288,23 @@ defmodule Coxir.Struct.Channel do
     do: edit(channel, nsfw: bool)
 
   @doc """
+  Change the slowmode rate of a given channel.
+
+  Returns a channel object upon success
+  or a map containing error information.
+  """
+  @spec set_slowmode(channel, integer) :: map
+
+  def set_slowmode(channel, limit),
+    do: edit(channel, rate_limit_per_user: limit)
+
+  @doc """
   Changes the bitrate of a given voice channel.
 
   Returns a channel object upon success
   or a map containing error information.
   """
-  @spec set_bitrate(channel, Integer.t) :: map
+  @spec set_bitrate(channel, integer) :: map
 
   def set_bitrate(channel, bitrate),
     do: edit(channel, bitrate: bitrate)
@@ -304,7 +315,7 @@ defmodule Coxir.Struct.Channel do
   Returns a channel object upon success
   or a map containing error information.
   """
-  @spec set_user_limit(channel, Integer.t) :: map
+  @spec set_user_limit(channel, integer) :: map
 
   def set_user_limit(channel, limit),
     do: edit(channel, user_limit: limit)

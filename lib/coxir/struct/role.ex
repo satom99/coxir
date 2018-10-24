@@ -122,7 +122,7 @@ defmodule Coxir.Struct.Role do
   Returns a role object upon success
   or a map containing error information.
   """
-  @spec set_color(role, Integer.t) :: map
+  @spec set_color(role, integer) :: map
 
   def set_color(%{id: id, guild_id: guild}, color),
     do: set_color(id, guild, color)
@@ -132,7 +132,7 @@ defmodule Coxir.Struct.Role do
 
   Refer to `set_color/2` for more information.
   """
-  @spec set_color(String.t, String.t, Integer.t) :: map
+  @spec set_color(String.t, String.t, integer) :: map
 
   def set_color(role, guild, color),
     do: edit(role, guild, color: color)
@@ -143,7 +143,7 @@ defmodule Coxir.Struct.Role do
   Returns a role object upon success
   or a map containing error information.
   """
-  @spec set_permissions(role, Integer.t) :: map
+  @spec set_permissions(role, integer) :: map
 
   def set_permissions(%{id: id, guild_id: guild}, permissions),
     do: set_permissions(id, guild, permissions)
@@ -153,7 +153,7 @@ defmodule Coxir.Struct.Role do
 
   Refer to `set_permissions/2` for more information.
   """
-  @spec set_permissions(String.t, String.t, Integer.t) :: map
+  @spec set_permissions(String.t, String.t, integer) :: map
 
   def set_permissions(role, guild, permissions),
     do: edit(role, guild, permissions: permissions)
