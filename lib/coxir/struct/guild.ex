@@ -133,7 +133,7 @@ defmodule Coxir.Struct.Guild do
   Returns a guild object upon success
   or a map containing error information.
   """
-  @spec set_afk_timeout(guild, Integer.t) :: map
+  @spec set_afk_timeout(guild, integer) :: map
 
   def set_afk_timeout(guild, timeout),
     do: edit(guild, afk_timeout: timeout)
