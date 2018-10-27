@@ -156,26 +156,21 @@ defmodule Coxir.Struct.Message do
   end
 
   @doc """
-  Checks whether a given message contains any images or videos
+  Checks whether a given message contains any images or videos.
+
+  Returns a boolean.
   """
   @spec contains_media?(message) :: boolean
 
-  def contains_media?(message) do
-    attachment_with_media?(message) || embed_with_media?(message)
-  end
-
-  defp attachment_with_media?(%{attachments: attachments}) do
+  def contains_media?(%{attachments: attachments}) do
     attachments
-    |> Enum.any?(&Map.has_key?(&1, :width))
+    |> Enum.any?(& &1[:width])
   end
-  defp attachment_with_media?(_), do: false
 
-  defp embed_with_media?(%{embeds: embeds}) do
-    has_type?(embeds, "image") || has_type?(embeds, "video")
+  def contains_media?(%{embeds: embeds}) do
+    embeds
+    |> Enum.any?(& &1[:image] || &1[:video])
   end
-  defp embed_with_media?(_), do: false
 
-  defp has_type?(maps, type) do
-    Enum.any?(maps, &(&1.type == type))
-  end
+  def contains_media?(_message), do: false
 end
