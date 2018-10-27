@@ -160,22 +160,8 @@ defmodule Coxir.Struct.Message do
   """
   @spec contains_media?(message) :: boolean
 
-  def contains_media?(message) do
-    attachment_with_media?(message) || embed_with_media?(message)
-  end
-
-  defp attachment_with_media?(%{attachments: attachments}) do
-    attachments
-    |> Enum.any?(&Map.has_key?(&1, :width))
-  end
-  defp attachment_with_media?(_), do: false
-
-  defp embed_with_media?(%{embeds: embeds}) do
-    has_type?(embeds, "image") || has_type?(embeds, "video")
-  end
-  defp embed_with_media?(_), do: false
-
-  defp has_type?(maps, type) do
-    Enum.any?(maps, &(&1.type == type))
+  def contains_media?(%{attachments: attachments, embeds: embeds}) do
+    Enum.any?(attachments, &Map.has_key?(&1, :width))
+    || Enum.any?(embeds, &(&1.type == "image" || &1.type == "video"))
   end
 end
