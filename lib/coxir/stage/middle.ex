@@ -187,7 +187,7 @@ defmodule Coxir.Stage.Middle do
       nil -> :ok
       pid -> Voice.update(pid, data)
     end
-    :ignore
+    data
   end
 
   def handle(:VOICE_STATE_UPDATE, data) do
