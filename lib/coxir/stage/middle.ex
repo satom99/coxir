@@ -44,20 +44,20 @@ defmodule Coxir.Stage.Middle do
   end
   def handle(:USER_UPDATE, data) do
     User.update(data)
-    :ignore
+    data
   end
 
   # Channels
   def handle(:CHANNEL_CREATE, data) do
     Channel.update(data)
-    :ignore
+    data
   end
   def handle(:CHANNEL_UPDATE, data) do
     handle(:CHANNEL_CREATE, data)
   end
   def handle(:CHANNEL_DELETE, data) do
     Channel.remove(data)
-    :ignore
+    data
   end
 
   # Messages
@@ -76,7 +76,7 @@ defmodule Coxir.Stage.Middle do
     for id <- data.ids do
       handle(:MESSAGE_DELETE, %{id: id, channel_id: data.channel_id})
     end
-    :ignore
+    data
   end
 
   # Guilds
@@ -108,26 +108,26 @@ defmodule Coxir.Stage.Middle do
   end
   def handle(:GUILD_UPDATE, data) do
     Guild.update(data)
-    :ignore
+    data
   end
   def handle(:GUILD_DELETE, data) do
     Voice.stop(data.id)
     Guild.remove(data)
-    :ignore
+    data
   end
 
   def handle(:GUILD_ROLE_CREATE, data) do
     data.role
     |> Map.put(:guild_id, data.guild_id)
     |> Role.update
-    :ignore
+    data
   end
   def handle(:GUILD_ROLE_UPDATE, data) do
     handle(:GUILD_ROLE_CREATE, data)
   end
   def handle(:GUILD_ROLE_DELETE, data) do
     Role.remove(data.role_id)
-    :ignore
+    data
   end
 
   def handle(:GUILD_MEMBER_ADD, data) do
@@ -146,13 +146,13 @@ defmodule Coxir.Stage.Middle do
   end
   def handle(:GUILD_MEMBER_UPDATE, data) do
     handle(:GUILD_MEMBER_ADD, data)
-    :ignore
+    data
   end
   def handle(:GUILD_MEMBERS_CHUNK, data) do
     for member <- data.members do
       handle(:GUILD_MEMBER_ADD, Map.put(member, :guild_id, data.guild_id))
     end
-    :ignore
+    data
   end
   def handle(:GUILD_MEMBER_REMOVE, data) do
     Member.remove({data.guild_id, data.user.id})
@@ -167,7 +167,7 @@ defmodule Coxir.Stage.Middle do
       _ok ->
         handle(:GUILD_MEMBER_UPDATE, data)
     end
-    :ignore
+    :data
   end
 
   def handle(:GUILD_EMOJIS_UPDATE, data) do
@@ -175,7 +175,7 @@ defmodule Coxir.Stage.Middle do
       id: data.guild_id,
       emojis: data.emojis
     }
-    :ignore
+    data
   end
 
   # Voice
