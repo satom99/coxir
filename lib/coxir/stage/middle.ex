@@ -44,20 +44,20 @@ defmodule Coxir.Stage.Middle do
   end
   def handle(:USER_UPDATE, data) do
     User.update(data)
-    data
+    User.pretty(data)
   end
 
   # Channels
   def handle(:CHANNEL_CREATE, data) do
     Channel.update(data)
-    data
+    Channel.pretty(data)
   end
   def handle(:CHANNEL_UPDATE, data) do
     handle(:CHANNEL_CREATE, data)
   end
   def handle(:CHANNEL_DELETE, data) do
     Channel.remove(data)
-    data
+    Channel.pretty(data)
   end
 
   # Messages
@@ -108,7 +108,7 @@ defmodule Coxir.Stage.Middle do
   end
   def handle(:GUILD_UPDATE, data) do
     Guild.update(data)
-    data
+    Guild.pretty(data)
   end
   def handle(:GUILD_DELETE, data) do
     Voice.stop(data.id)
@@ -117,10 +117,11 @@ defmodule Coxir.Stage.Middle do
   end
 
   def handle(:GUILD_ROLE_CREATE, data) do
-    data.role
+    role = data.role
     |> Map.put(:guild_id, data.guild_id)
-    |> Role.update
-    data
+
+    Role.update(role)
+    Role.pretty(role)
   end
   def handle(:GUILD_ROLE_UPDATE, data) do
     handle(:GUILD_ROLE_CREATE, data)
@@ -146,13 +147,12 @@ defmodule Coxir.Stage.Middle do
   end
   def handle(:GUILD_MEMBER_UPDATE, data) do
     handle(:GUILD_MEMBER_ADD, data)
-    data
   end
   def handle(:GUILD_MEMBERS_CHUNK, data) do
     for member <- data.members do
       handle(:GUILD_MEMBER_ADD, Map.put(member, :guild_id, data.guild_id))
     end
-    data
+    :ignore
   end
   def handle(:GUILD_MEMBER_REMOVE, data) do
     Member.remove({data.guild_id, data.user.id})
@@ -163,11 +163,10 @@ defmodule Coxir.Stage.Middle do
     |> Map.get(:guild_id)
     |> case do
       nil ->
-        :ok
+        data
       _ok ->
         handle(:GUILD_MEMBER_UPDATE, data)
     end
-    :data
   end
 
   def handle(:GUILD_EMOJIS_UPDATE, data) do
@@ -209,7 +208,6 @@ defmodule Coxir.Stage.Middle do
         handle(:GUILD_MEMBER_UPDATE, member)
     end
     handle(:VOICE_SERVER_UPDATE, data)
-    data
   end
 
   # Not handled on purpose,
