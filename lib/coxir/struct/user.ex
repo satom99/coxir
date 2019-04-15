@@ -1,4 +1,5 @@
 defmodule Coxir.Struct.User do
+  use Bitwise
   @moduledoc """
   Defines methods used to interact with Discord users.
 
