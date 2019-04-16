@@ -297,7 +297,10 @@ defmodule Coxir.Struct.User do
   def get_creation_date(%{creation_date: value}), do: value
 
   def get_creation_date(%{id: id}) do
-    ((String.to_integer(id) >>> 22) + 1_420_070_400_000)
+    id
+    |> String.to_integer()
+    |> bsr(22)
+    |> Kernel.+(1_420_070_400_000)
     |> DateTime.from_unix!(:millisecond)
     |> DateTime.to_string()
   end
