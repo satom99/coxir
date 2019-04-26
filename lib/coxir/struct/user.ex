@@ -12,6 +12,7 @@ defmodule Coxir.Struct.User do
   @type user :: String.t | map
 
   use Coxir.Struct
+  use Bitwise
 
   alias Coxir.Struct.{Channel}
 
@@ -277,31 +278,22 @@ defmodule Coxir.Struct.User do
   @doc """
   Computes the date a user made their account.
 
-  Returns a map upon success
-  or a map containing error information.
+  Returns a date struct.
   """
-  @spec get_creation_date(user) :: map
+  @spec get_creation_date(user) :: DateTime.t
 
-  def get_creation_date(id) when is_binary(id) do
-    get(id)
-    |> case do
-      %{id: _id} = user ->
-        get_creation_date(user)
+  def get_creation_date(%{creation_date: value}),
+    do: value
 
-      other ->
-        other
-    end
-  end
+  def get_creation_date(%{id: id}),
+    do: get_creation_date(id)
 
-  def get_creation_date(%{creation_date: value}), do: value
+  def get_creation_date(user) do
+    user = user
+    |> String.to_integer
 
-  def get_creation_date(%{id: id}) do
-    id
-    |> String.to_integer()
-    |> :erlang.bsr(22)
+    (user >>> 22)
     |> Kernel.+(1_420_070_400_000)
-    |> DateTime.from_unix!(:millisecond)
+    |> DateTime.from_unix!(:milliseconds)
   end
-
-  def get_creation_date(_other), do: nil
 end
