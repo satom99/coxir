@@ -302,7 +302,6 @@ defmodule Coxir.Struct.User do
     |> bsr(22)
     |> Kernel.+(1_420_070_400_000)
     |> DateTime.from_unix!(:millisecond)
-    |> DateTime.to_string()
   end
 
   def get_creation_date(_other), do: nil
