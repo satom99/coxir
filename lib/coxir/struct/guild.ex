@@ -616,26 +616,21 @@ defmodule Coxir.Struct.Guild do
   Returns a string upon success
   or a map containing error information.
   """
-  @spec get_icon(guild) :: String.t() | map
+  @spec get_icon(guild) :: String.t | map
 
   def get_icon(id) when is_binary(id) do
     get(id)
     |> case do
       %{id: _id} = guild ->
         get_icon(guild)
-
       other ->
         other
     end
   end
 
-  def get_icon(%{icon_url: value}), do: value
-
   def get_icon(%{icon: nil}), do: nil
-
+  def get_icon(%{icon_url: value}), do: value
   def get_icon(%{icon: icon, id: id}) do
     "https://cdn.discordapp.com/icons/#{id}/#{icon}.png"
   end
-
-  def get_icon(_other), do: nil
 end
