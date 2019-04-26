@@ -1,5 +1,4 @@
 defmodule Coxir.Struct.User do
-  use Bitwise
   @moduledoc """
   Defines methods used to interact with Discord users.
 
@@ -299,7 +298,7 @@ defmodule Coxir.Struct.User do
   def get_creation_date(%{id: id}) do
     id
     |> String.to_integer()
-    |> bsr(22)
+    |> :erlang.bsr(22)
     |> Kernel.+(1_420_070_400_000)
     |> DateTime.from_unix!(:millisecond)
   end
