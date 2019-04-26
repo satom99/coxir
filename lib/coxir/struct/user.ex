@@ -280,7 +280,7 @@ defmodule Coxir.Struct.User do
   Returns a map upon success
   or a map containing error information.
   """
-  @spec get_creation_date(user) :: String.t() | map
+  @spec get_creation_date(user) :: map
 
   def get_creation_date(id) when is_binary(id) do
     get(id)
