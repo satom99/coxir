@@ -277,7 +277,7 @@ defmodule Coxir.Struct.User do
   @doc """
   Computes the date a user made their account.
 
-  Returns a string upon success
+  Returns a map upon success
   or a map containing error information.
   """
   @spec get_creation_date(user) :: String.t() | map
