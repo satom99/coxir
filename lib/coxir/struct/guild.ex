@@ -633,4 +633,5 @@ defmodule Coxir.Struct.Guild do
   def get_icon(%{icon: icon, id: id}) do
     "https://cdn.discordapp.com/icons/#{id}/#{icon}.png"
   end
+  def get_icon(_other), do: nil
 end
