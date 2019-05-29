@@ -29,21 +29,6 @@ defmodule Coxir.Struct.Invite do
   end
 
   @doc """
-  Accepts a given invite.
-
-  Returns an invite object upon success
-  or a map containing error information.
-  """
-  @spec accept(invite) :: map
-
-  def accept(%{code: code}),
-    do: accept(code)
-
-  def accept(code) do
-    API.request(:post, "invites/#{code}")
-  end
-
-  @doc """
   Deletes a given invite.
 
   Returns an invite object upon success

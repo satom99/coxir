@@ -12,6 +12,7 @@ defmodule Coxir.Struct.User do
   @type user :: String.t | map
 
   use Coxir.Struct
+  use Bitwise
 
   alias Coxir.Struct.{Channel}
 
@@ -19,6 +20,7 @@ defmodule Coxir.Struct.User do
     struct
     |> replace(:voice_id, &Channel.get/1)
     |> put(:avatar_url, get_avatar(struct))
+    |> put(:creation_date, get_creation_date(struct))
   end
 
   def get(user \\ :local)
@@ -272,4 +274,26 @@ defmodule Coxir.Struct.User do
     "https://cdn.discordapp.com/avatars/#{id}/#{avatar}.#{extension}"
   end
   def get_avatar(_other), do: nil
+  
+  @doc """
+  Computes the date a user made their account.
+
+  Returns a date struct.
+  """
+  @spec get_creation_date(user) :: DateTime.t
+
+  def get_creation_date(%{creation_date: value}),
+    do: value
+
+  def get_creation_date(%{id: id}),
+    do: get_creation_date(id)
+
+  def get_creation_date(user) do
+    user = user
+    |> String.to_integer
+
+    (user >>> 22)
+    |> Kernel.+(1_420_070_400_000)
+    |> DateTime.from_unix!(:milliseconds)
+  end
 end
