@@ -230,7 +230,7 @@ defmodule Coxir.API do
 
   defp current_time do
     DateTime.utc_now
-    |> DateTime.to_unix(:milliseconds)
+    |> DateTime.to_unix(:millisecond)
   end
 
   defp date_header(header) do

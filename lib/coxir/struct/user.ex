@@ -274,7 +274,7 @@ defmodule Coxir.Struct.User do
     "https://cdn.discordapp.com/avatars/#{id}/#{avatar}.#{extension}"
   end
   def get_avatar(_other), do: nil
-  
+
   @doc """
   Computes the date a user made their account.
 
@@ -294,6 +294,6 @@ defmodule Coxir.Struct.User do
 
     (user >>> 22)
     |> Kernel.+(1_420_070_400_000)
-    |> DateTime.from_unix!(:milliseconds)
+    |> DateTime.from_unix!(:millisecond)
   end
 end
