@@ -2,7 +2,7 @@ defmodule Coxir.Struct.User do
   @moduledoc """
   Defines methods used to interact with Discord users.
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/user#user-object)
+  Refer to [this](https://discord.com/developers/docs/resources/user#user-object)
   for a list of fields and a broader documentation.
 
   In addition, the following fields are also embedded.
@@ -67,7 +67,7 @@ defmodule Coxir.Struct.User do
   - `username` - the user's username
   - `avatar` - the user's avatar
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/user#modify-current-user)
+  Refer to [this](https://discord.com/developers/docs/resources/user#modify-current-user)
   for a broader explanation on the fields and their defaults.
   """
   @spec edit(Enum.t) :: map
@@ -97,7 +97,7 @@ defmodule Coxir.Struct.User do
   Either a proper data URI scheme
   or the path of an image's file.
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/user#avatar-data)
+  Refer to [this](https://discord.com/developers/docs/resources/user#avatar-data)
   for a broader explanation.
   """
   @spec set_avatar(String.t) :: map
@@ -130,7 +130,7 @@ defmodule Coxir.Struct.User do
   @doc """
   Fetches a list of connections for the local user.
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/user#get-user-connections)
+  Refer to [this](https://discord.com/developers/docs/resources/user#get-user-connections)
   for more information.
   """
   @spec get_connections() :: list | map
@@ -151,7 +151,7 @@ defmodule Coxir.Struct.User do
   - `after` - get guilds after this guild ID
   - `max` - max number of guilds to return
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/user#get-current-user-guilds)
+  Refer to [this](https://discord.com/developers/docs/resources/user#get-current-user-guilds)
   for a broader explanation on the fields and their defaults.
   """
   @spec get_guilds(Keyword.t) :: list | map
@@ -187,7 +187,7 @@ defmodule Coxir.Struct.User do
   - `access_tokens` - access tokens of users
   - `nicks` - a map of user ids and their respective nicknames
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/user#create-group-dm)
+  Refer to [this](https://discord.com/developers/docs/resources/user#create-group-dm)
   for a broader explanation on the fields and their defaults.
   """
   @spec create_group(Enum.t) :: map

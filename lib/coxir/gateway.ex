@@ -41,7 +41,7 @@ defmodule Coxir.Gateway do
 
   Takes in a `PID` obtained from `Coxir.Struct.Guild.shard/1`.
 
-  Refer to [this](https://discordapp.com/developers/docs/topics/gateway#update-status)
+  Refer to [this](https://discord.com/developers/docs/topics/gateway#update-status)
   for more information.
   """
   @spec set_status(pid, String.t, map) :: any
