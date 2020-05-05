@@ -76,7 +76,6 @@ defmodule Coxir.Stage.Middle do
     for id <- data.ids do
       handle(:MESSAGE_DELETE, %{id: id, channel_id: data.channel_id})
     end
-    data
   end
 
   # Guilds
