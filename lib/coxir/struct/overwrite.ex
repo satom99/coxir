@@ -2,7 +2,7 @@ defmodule Coxir.Struct.Overwrite do
   @moduledoc """
   Defines methods used to interact with channel permission overwrites.
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/channel#overwrite-object)
+  Refer to [this](https://discord.com/developers/docs/resources/channel#overwrite-object)
   for a list of fields and a broader documentation.
   """
   @type overwrite :: String.t | map
@@ -28,7 +28,7 @@ defmodule Coxir.Struct.Overwrite do
   - `deny` - the bitwise value of all denied permissions
   - `type` - `member` for a member or `role` for a role
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/channel#edit-channel-permissions)
+  Refer to [this](https://discord.com/developers/docs/resources/channel#edit-channel-permissions)
   for a broader explanation on the fields and their defaults.
   """
   @spec edit(overwrite, Enum.t) :: :ok | map
