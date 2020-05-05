@@ -2,7 +2,7 @@ defmodule Coxir.Struct.Member do
   @moduledoc """
   Defines methods used to interact with guild members.
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/guild#guild-member-object)
+  Refer to [this](https://discord.com/developers/docs/resources/guild#guild-member-object)
   for a list of fields and a broader documentation.
 
   In addition, the following fields are also embedded.
@@ -56,7 +56,7 @@ defmodule Coxir.Struct.Member do
   - `deaf` - whether the member is deafened
   - `channel_id` - id of a voice channel to move the member to
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/guild#modify-guild-member)
+  Refer to [this](https://discord.com/developers/docs/resources/guild#modify-guild-member)
   for a broader explanation on the fields and their defaults.
   """
   @spec edit(member, Enum.t) :: :ok | map

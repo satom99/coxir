@@ -9,7 +9,7 @@ defmodule Coxir.API.Base do
   @library @project[:name]
 
   def process_url(path) do
-    "https://discordapp.com/api/" <> path
+    "https://discord.com/api/" <> path
   end
 
   def process_request_body(""), do: ""

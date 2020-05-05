@@ -2,7 +2,7 @@ defmodule Coxir.Struct.Channel do
   @moduledoc """
   Defines methods used to interact with Discord channels.
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/channel#channel-object)
+  Refer to [this](https://discord.com/developers/docs/resources/channel#channel-object)
   for a list of fields and a broader documentation.
 
   In addition, the following fields are also embedded.
@@ -30,12 +30,12 @@ defmodule Coxir.Struct.Channel do
   the fields listed below.
   - `content` - the message contents (up to 2000 characters)
   - `embed` - embedded rich content, refer to
-    [this](https://discordapp.com/developers/docs/resources/channel#embed-object)
+    [this](https://discord.com/developers/docs/resources/channel#embed-object)
   - `nonce` - used for optimistic message sending
   - `file` - the path of the file being sent
   - `tts` - true if this is a TTS message
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/channel#create-message)
+  Refer to [this](https://discord.com/developers/docs/resources/channel#create-message)
   for a broader explanation on the fields and their defaults.
   """
   @spec send_message(channel, String.t | Enum.t) :: map
@@ -103,7 +103,7 @@ defmodule Coxir.Struct.Channel do
   - `after` - get messages after this message ID
   - `limit` - max number of messages to return
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/channel#get-channel-messages)
+  Refer to [this](https://discord.com/developers/docs/resources/channel#get-channel-messages)
   for a broader explanation on the fields and their defaults.
   """
   @spec history(channel, Keyword.t) :: list | map
@@ -192,7 +192,7 @@ defmodule Coxir.Struct.Channel do
   - `permission_overwrites` - channel or category-specific permissions
   - `parent_id` - id of the new parent category
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/channel#modify-channel)
+  Refer to [this](https://discord.com/developers/docs/resources/channel#modify-channel)
   for a broader explanation on the fields and their defaults.
   """
   @spec edit(channel, Enum.t) :: map
@@ -334,7 +334,7 @@ defmodule Coxir.Struct.Channel do
   - `temporary` - whether this invite only grants temporary membership
   - `unique` - whether not to try to reuse a similar invite
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/channel#create-channel-invite)
+  Refer to [this](https://discord.com/developers/docs/resources/channel#create-channel-invite)
   for a broader explanation on the fields and their defaults.
   """
   @spec create_invite(channel, Enum.t) :: map

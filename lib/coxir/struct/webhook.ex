@@ -2,7 +2,7 @@ defmodule Coxir.Struct.Webhook do
   @moduledoc """
   Defines methods used to interact with channel webhooks.
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/webhook#webhook-object)
+  Refer to [this](https://discord.com/developers/docs/resources/webhook#webhook-object)
   for a list of fields and a broader documentation.
   """
 
@@ -25,7 +25,7 @@ defmodule Coxir.Struct.Webhook do
   @doc """
   Fetches a webhook.
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/webhook#get-webhook-with-token)
+  Refer to [this](https://discord.com/developers/docs/resources/webhook#get-webhook-with-token)
   for more information.
   """
   @spec get_with_token(String.t, String.t) :: map
@@ -47,7 +47,7 @@ defmodule Coxir.Struct.Webhook do
   - `avatar` - image for the default webhook avatar
   - `channel_id` - the new channel id to be moved to
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/webhook#modify-webhook)
+  Refer to [this](https://discord.com/developers/docs/resources/webhook#modify-webhook)
   for a broader explanation on the fields and their defaults.
   """
   @spec edit(String.t, Enum.t) :: map
@@ -60,7 +60,7 @@ defmodule Coxir.Struct.Webhook do
   @doc """
   Modifies a given webhook.
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/webhook#modify-webhook-with-token)
+  Refer to [this](https://discord.com/developers/docs/resources/webhook#modify-webhook-with-token)
   for more information.
   """
   @spec edit_with_token(String.t, String.t, Enum.t) :: map
@@ -118,7 +118,7 @@ defmodule Coxir.Struct.Webhook do
   @doc """
   Deletes a given webhook.
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/webhook#delete-webhook-with-token)
+  Refer to [this](https://discord.com/developers/docs/resources/webhook#delete-webhook-with-token)
   for more information.
   """
   @spec delete_with_token(String.t, String.t) :: :ok | map
@@ -130,7 +130,7 @@ defmodule Coxir.Struct.Webhook do
   @doc """
   Executes a given webhook.
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/webhook#execute-webhook)
+  Refer to [this](https://discord.com/developers/docs/resources/webhook#execute-webhook)
   for more information.
   """
   @spec execute(String.t, String.t, Enum.t, boolean) :: map
@@ -142,7 +142,7 @@ defmodule Coxir.Struct.Webhook do
   @doc """
   Executes a given *Slack* webhook.
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/webhook#execute-slackcompatible-webhook)
+  Refer to [this](https://discord.com/developers/docs/resources/webhook#execute-slackcompatible-webhook)
   for more information.
   """
   @spec execute_slack(String.t, String.t, Enum.t, boolean) :: map
@@ -154,7 +154,7 @@ defmodule Coxir.Struct.Webhook do
   @doc """
   Executes a given *GitHub* webhook.
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/webhook#execute-githubcompatible-webhook)
+  Refer to [this](https://discord.com/developers/docs/resources/webhook#execute-githubcompatible-webhook)
   for more information.
   """
   @spec execute_github(String.t, String.t, Enum.t, boolean) :: map
