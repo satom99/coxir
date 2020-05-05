@@ -112,7 +112,7 @@ defmodule Coxir.Stage.Middle do
   def handle(:GUILD_DELETE, data) do
     Voice.stop(data.id)
     Guild.remove(data)
-    data
+    Guild.pretty(data)
   end
 
   def handle(:GUILD_ROLE_CREATE, data) do
