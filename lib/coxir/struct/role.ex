@@ -2,7 +2,7 @@ defmodule Coxir.Struct.Role do
   @moduledoc """
   Defines methods used to interact with guild roles.
 
-  Refer to [this](https://discordapp.com/developers/docs/topics/permissions#role-object)
+  Refer to [this](https://discord.com/developers/docs/topics/permissions#role-object)
   for a list of fields and a broader documentation.
   """
   @type role :: String.t | map
@@ -30,7 +30,7 @@ defmodule Coxir.Struct.Role do
   - `hoist` - whether the role should be displayed separately
   - `mentionable` - whether the role should be mentionable
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/guild#modify-guild-role)
+  Refer to [this](https://discord.com/developers/docs/resources/guild#modify-guild-role)
   for a broader explanation on the fields and their defaults.
   """
   @spec edit(role, Enum.t) :: map

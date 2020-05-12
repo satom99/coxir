@@ -2,7 +2,7 @@ defmodule Coxir.Struct.Guild do
   @moduledoc """
   Defines methods used to interact with Discord guilds.
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/guild#guild-object)
+  Refer to [this](https://discord.com/developers/docs/resources/guild#guild-object)
   for a list of fields and a broader documentation.
 
   In addition, the following fields are also embedded.
@@ -32,6 +32,7 @@ defmodule Coxir.Struct.Guild do
     |> replace(:channels, &Channel.get/1)
     |> replace(:members, &Member.get/1)
     |> replace(:roles, &Role.get/1)
+    |> put(:icon_url, get_icon(struct))
   end
 
   @doc """
@@ -46,7 +47,7 @@ defmodule Coxir.Struct.Guild do
   - `region` - desired voice region id
   - `icon` - base64 128x128 jpeg image
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/guild#create-guild)
+  Refer to [this](https://discord.com/developers/docs/resources/guild#create-guild)
   for a broader explanation on the fields and their defaults.
   """
   @spec create(Enum.t) :: map
@@ -70,7 +71,7 @@ defmodule Coxir.Struct.Guild do
   - `afk_channel_id` - voice AFK channel
   - `system_channel_id` - channel to which system messages are sent
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/guild#modify-guild)
+  Refer to [this](https://discord.com/developers/docs/resources/guild#modify-guild)
   for a broader explanation on the fields and their defaults.
   """
   @spec edit(guild, Enum.t) :: map
@@ -227,7 +228,7 @@ defmodule Coxir.Struct.Guild do
   - `hoist` - whether the role should be displayed separately
   - `mentionable` - whether the role should be mentionable
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/guild#create-guild-role)
+  Refer to [this](https://discord.com/developers/docs/resources/guild#create-guild-role)
   for a broader explanation on the fields and their defaults.
   """
   @spec create_role(guild, Enum.t) :: map
@@ -311,7 +312,7 @@ defmodule Coxir.Struct.Guild do
   - `permission_overwrites` - channel-specific permissions
   - `parent_id` - id of the parent category
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/guild#create-guild-channel)
+  Refer to [this](https://discord.com/developers/docs/resources/guild#create-guild-channel)
   for a broader explanation on the fields and their defaults.
   """
   @spec create_channel(guild, Enum.t) :: map
@@ -337,7 +338,7 @@ defmodule Coxir.Struct.Guild do
   - `mute` - whether the user is muted
   - `deaf` - whether the user is deafened
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/guild#add-guild-member)
+  Refer to [this](https://discord.com/developers/docs/resources/guild#add-guild-member)
   for a broader explanation on the fields and their defaults.
   """
   @spec add_member(guild, String.t, Enum.t) :: map
@@ -383,7 +384,7 @@ defmodule Coxir.Struct.Guild do
   - `limit` - max number of members to return (1-1000)
   - `after` - the highest user id in the previous page
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/guild#list-guild-members)
+  Refer to [this](https://discord.com/developers/docs/resources/guild#list-guild-members)
   for a broader explanation on the fields and their defaults.
   """
   @spec list_members(guild, Keyword.t) :: list | map
@@ -609,4 +610,28 @@ defmodule Coxir.Struct.Guild do
         invite[:code]
     end
   end
+  @doc """
+  Computes the URL for a given guild's icon.
+
+  Returns a string upon success
+  or a map containing error information.
+  """
+  @spec get_icon(guild) :: String.t | map
+
+  def get_icon(id) when is_binary(id) do
+    get(id)
+    |> case do
+      %{id: _id} = guild ->
+        get_icon(guild)
+      other ->
+        other
+    end
+  end
+
+  def get_icon(%{icon: nil}), do: nil
+  def get_icon(%{icon_url: value}), do: value
+  def get_icon(%{icon: icon, id: id}) do
+    "https://cdn.discordapp.com/icons/#{id}/#{icon}.png"
+  end
+  def get_icon(_other), do: nil
 end

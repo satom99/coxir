@@ -2,7 +2,7 @@ defmodule Coxir.Struct.Message do
   @moduledoc """
   Defines methods used to interact with channel messages.
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/channel#message-object)
+  Refer to [this](https://discord.com/developers/docs/resources/channel#message-object)
   for a list of fields and a broader documentation.
 
   In addition, the following fields are also embedded.
@@ -43,7 +43,7 @@ defmodule Coxir.Struct.Message do
   the fields listed below.
   - `content` - the message contents (up to 2000 characters)
   - `embed` - embedded rich content, refer to
-    [this](https://discordapp.com/developers/docs/resources/channel#embed-object)
+    [this](https://discord.com/developers/docs/resources/channel#embed-object)
   """
   @spec edit(message, String.t | Enum.t) :: map
 
@@ -161,9 +161,8 @@ defmodule Coxir.Struct.Message do
   Returns a boolean.
   """
   @spec contains_media?(message) :: boolean
-
   def contains_media?(%{attachments: attachments, embeds: embeds}) do
-    Enum.any?(attachments, & &1[:width])
-    || Enum.any?(embeds, &(&1[:image] || &1[:video]))
+    Enum.any?(attachments, & &1[:width]) or
+    Enum.any?(embeds, &(&1[:image] || &1[:video]))
   end
 end

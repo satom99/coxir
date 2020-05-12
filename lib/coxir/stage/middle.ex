@@ -44,20 +44,20 @@ defmodule Coxir.Stage.Middle do
   end
   def handle(:USER_UPDATE, data) do
     User.update(data)
-    :ignore
+    User.pretty(data)
   end
 
   # Channels
   def handle(:CHANNEL_CREATE, data) do
     Channel.update(data)
-    :ignore
+    Channel.pretty(data)
   end
   def handle(:CHANNEL_UPDATE, data) do
     handle(:CHANNEL_CREATE, data)
   end
   def handle(:CHANNEL_DELETE, data) do
     Channel.remove(data)
-    :ignore
+    Channel.pretty(data)
   end
 
   # Messages
@@ -76,7 +76,6 @@ defmodule Coxir.Stage.Middle do
     for id <- data.ids do
       handle(:MESSAGE_DELETE, %{id: id, channel_id: data.channel_id})
     end
-    :ignore
   end
 
   # Guilds
@@ -108,26 +107,27 @@ defmodule Coxir.Stage.Middle do
   end
   def handle(:GUILD_UPDATE, data) do
     Guild.update(data)
-    :ignore
+    Guild.pretty(data)
   end
   def handle(:GUILD_DELETE, data) do
     Voice.stop(data.id)
     Guild.remove(data)
-    :ignore
+    Guild.pretty(data)
   end
 
   def handle(:GUILD_ROLE_CREATE, data) do
-    data.role
+    role = data.role
     |> Map.put(:guild_id, data.guild_id)
-    |> Role.update
-    :ignore
+
+    Role.update(role)
+    Role.pretty(role)
   end
   def handle(:GUILD_ROLE_UPDATE, data) do
     handle(:GUILD_ROLE_CREATE, data)
   end
   def handle(:GUILD_ROLE_DELETE, data) do
     Role.remove(data.role_id)
-    :ignore
+    data
   end
 
   def handle(:GUILD_MEMBER_ADD, data) do
@@ -146,7 +146,6 @@ defmodule Coxir.Stage.Middle do
   end
   def handle(:GUILD_MEMBER_UPDATE, data) do
     handle(:GUILD_MEMBER_ADD, data)
-    :ignore
   end
   def handle(:GUILD_MEMBERS_CHUNK, data) do
     for member <- data.members do
@@ -163,11 +162,10 @@ defmodule Coxir.Stage.Middle do
     |> Map.get(:guild_id)
     |> case do
       nil ->
-        :ok
+        data
       _ok ->
         handle(:GUILD_MEMBER_UPDATE, data)
     end
-    :ignore
   end
 
   def handle(:GUILD_EMOJIS_UPDATE, data) do
@@ -175,7 +173,7 @@ defmodule Coxir.Stage.Middle do
       id: data.guild_id,
       emojis: data.emojis
     }
-    :ignore
+    data
   end
 
   # Voice
@@ -187,7 +185,7 @@ defmodule Coxir.Stage.Middle do
       nil -> :ok
       pid -> Voice.update(pid, data)
     end
-    :ignore
+    data
   end
 
   def handle(:VOICE_STATE_UPDATE, data) do
@@ -209,7 +207,6 @@ defmodule Coxir.Stage.Middle do
         handle(:GUILD_MEMBER_UPDATE, member)
     end
     handle(:VOICE_SERVER_UPDATE, data)
-    data
   end
 
   # Not handled on purpose,

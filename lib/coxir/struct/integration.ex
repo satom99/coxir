@@ -2,7 +2,7 @@ defmodule Coxir.Struct.Integration do
   @moduledoc """
   Defines methods used to interact with guild integrations.
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/guild#integration-object)
+  Refer to [this](https://discord.com/developers/docs/resources/guild#integration-object)
   for a list of fields and a broader documentation.
   """
   @type integration :: String.t | map
@@ -28,7 +28,7 @@ defmodule Coxir.Struct.Integration do
   - `expire_grace_period` - period (in seconds) where lapsed subscriptions will be ignored
   - `enable_emoticons` - whether emoticons should be synced for this integration (*Twitch*)
 
-  Refer to [this](https://discordapp.com/developers/docs/resources/guild#modify-guild-integration)
+  Refer to [this](https://discord.com/developers/docs/resources/guild#modify-guild-integration)
   for a broader explanation on the fields and their defaults.
   """
   @spec edit(integration, Enum.t) :: :ok | map
