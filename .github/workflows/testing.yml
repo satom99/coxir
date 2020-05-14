@@ -25,11 +25,11 @@ jobs:
       - name: Artifact:deps
         uses: actions/upload-artifact@v2
         with:
-          path: deps/
+          path: deps/**
       - name: Artifact:build
         uses: actions/upload-artifact@v2
         with:
-          path: _build/
+          path: _build/**
   test:
     runs-on: ubuntu-latest
     needs: build
