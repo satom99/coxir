@@ -14,7 +14,8 @@ defmodule Coxir.MixProject do
 
   defp deps do
     [
-      {:ecto, "~> 3.4"}
+      {:ecto, "~> 3.4"},
+      {:ex_doc, "~> 0.22.0", only: :dev}
     ]
   end
 end
