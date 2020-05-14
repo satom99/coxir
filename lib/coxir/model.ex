@@ -7,7 +7,7 @@ defmodule Coxir.Model do
       use Ecto.Schema
 
       alias Coxir.Snowflake
-      alias Coxir.Model.{User, Guild}
+      alias Coxir.Model.{User, Guild, Channel}
 
       @primary_key {:id, Snowflake, []}
     end
