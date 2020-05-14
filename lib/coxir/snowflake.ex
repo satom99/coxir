@@ -33,8 +33,7 @@ defmodule Coxir.Snowflake do
   end
 
   def dump(value) when is_snowflake(value) do
-    value = to_string(value)
-    {:ok, value}
+    {:ok, to_string(value)}
   end
 
   def dump(_value) do
