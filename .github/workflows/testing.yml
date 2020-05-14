@@ -10,9 +10,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout
+      - uses: actions/checkout@v2
       - name: Setup Elixir
-        uses: actions/setup-elixir
+        uses: actions/setup-elixir@v1
         with:
           elixir-version: 1.10.3
           otp-version: 23.0
