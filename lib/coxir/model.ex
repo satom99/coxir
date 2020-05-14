@@ -7,6 +7,8 @@ defmodule Coxir.Model do
       use Ecto.Schema
 
       @primary_key {:id, :id, []}
+
+      alias Coxir.Model.{User, Guild}
     end
   end
 end
