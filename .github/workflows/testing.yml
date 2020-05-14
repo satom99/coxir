@@ -18,5 +18,5 @@ jobs:
           otp-version: 23.0
       - name: Download dependencies
         run: mix deps.get
-      - name: Run tests
-        run: mix test
+      - name: Compile
+        run: mix compile
