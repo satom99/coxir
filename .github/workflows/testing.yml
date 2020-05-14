@@ -7,42 +7,15 @@ on:
     branches: [master]
 
 jobs:
-  build:
+  validation:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Setup Elixir
-        uses: actions/setup-elixir@v1
+      - uses: actions/setup-elixir@v1
         with:
           elixir-version: 1.10.3
           otp-version: "22.0"
-      - name: Download dependencies
-        run: mix deps.get
-      - name: Compile
-        run: mix compile
-      - name: Display files
-        run: ls -R
-      - name: Artifact:deps
-        uses: actions/upload-artifact@v2
-        with:
-          path: deps/**
-      - name: Artifact:build
-        uses: actions/upload-artifact@v2
-        with:
-          path: _build/**
-  test:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Download Artifact:deps
-        uses: actions/download-artifact@v2
-        with:
-          name: Artifact:deps
-          path: "."
-      - name: Download Artifact:build
-        uses: actions/download-artifact@v2
-        with:
-          name: Artifact:build
-          path: "."
-      - name: Display files
-        run: ls -R
+      - run: mix deps.get
+      - run: mix compile
+      - run: mix format --check-formatted
+      - run: mix test
