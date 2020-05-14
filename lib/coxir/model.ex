@@ -6,9 +6,10 @@ defmodule Coxir.Model do
     quote location: :keep do
       use Ecto.Schema
 
-      @primary_key {:id, :id, []}
-
+      alias Coxir.Snowflake
       alias Coxir.Model.{User, Guild}
+
+      @primary_key {:id, Snowflake, []}
     end
   end
 end
