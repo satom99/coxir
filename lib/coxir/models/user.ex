@@ -5,8 +5,8 @@ defmodule Coxir.Model.User do
   use Coxir.Model
 
   embedded_schema do
-    field :username, :string
-    field :discriminator, :string
-    field :avatar, :string
+    field(:username, :string)
+    field(:discriminator, :string)
+    field(:avatar, :string)
   end
 end

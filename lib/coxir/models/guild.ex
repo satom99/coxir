@@ -5,8 +5,8 @@ defmodule Coxir.Model.Guild do
   use Coxir.Model
 
   embedded_schema do
-    field :name, :string
+    field(:name, :string)
 
-    belongs_to :owner, User
+    belongs_to(:owner, User)
   end
 end
