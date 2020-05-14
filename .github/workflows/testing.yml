@@ -1,0 +1,22 @@
+name: Testing
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout
+      - name: Setup Elixir
+        uses: actions/setup-elixir
+        with:
+          elixir-version: 1.10.3
+          otp-version: 23.0
+      - name: Download dependencies
+        run: mix deps.get
+      - name: Run tests
+        run: mix test
