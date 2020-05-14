@@ -2,6 +2,9 @@ name: Validation
 
 on: [push, pull_request]
 
+env:
+  MIX_ENV: test
+
 jobs:
   validation:
     runs-on: ubuntu-latest
