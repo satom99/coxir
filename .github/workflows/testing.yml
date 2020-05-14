@@ -20,6 +20,8 @@ jobs:
         run: mix deps.get
       - name: Compile
         run: mix compile
+      - name: Display files
+        run: ls -R
       - name: Artifact:deps
         uses: actions/upload-artifact@v2
         with:
