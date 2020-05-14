@@ -15,6 +15,7 @@ jobs:
         uses: actions/setup-elixir@v1
         with:
           elixir-version: 1.10.3
+          otp-version: 23
       - name: Download dependencies
         run: mix deps.get
       - name: Compile
