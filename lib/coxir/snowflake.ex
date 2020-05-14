@@ -27,4 +27,17 @@ defmodule Coxir.Snowflake do
   def cast(_value) do
     :error
   end
+
+  def load(value) do
+    cast(value)
+  end
+
+  def dump(value) when is_snowflake(value) do
+    value = to_string(value)
+    {:ok, value}
+  end
+
+  def dump(_value) do
+    :error
+  end
 end
