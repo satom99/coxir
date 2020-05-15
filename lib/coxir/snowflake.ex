@@ -4,6 +4,8 @@ defmodule Coxir.Snowflake do
   """
   use Ecto.Type
 
+  @type t :: integer
+
   defguard is_snowflake(value) when is_integer(value) and value in 0..0xFFFFFFFFFFFFFFFF
 
   def type do
