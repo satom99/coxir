@@ -4,7 +4,7 @@ defmodule Coxir.Storage do
   """
   alias Coxir.{Model, Snowflake}
 
-  @callback fetch(Model.t(), Snowflake.t()) :: {:ok, Model.t()} | :error
+  @callback get(Model.t(), Snowflake.t()) :: Model.t() | nil
 
-  @callback store(struct) :: any
+  @callback put(struct) :: any
 end
