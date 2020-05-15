@@ -6,5 +6,5 @@ defmodule Coxir.Storage do
 
   @callback get(Model.t(), Snowflake.t()) :: Model.t() | nil
 
-  @callback put(Model.t()) :: any
+  @callback put(Model.t()) :: term
 end
