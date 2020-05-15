@@ -7,4 +7,10 @@ defmodule Coxir.Storage do
   @callback get(Model.t(), Snowflake.t()) :: Model.t() | nil
 
   @callback put(Model.t()) :: term
+
+  defmacro __using__(_options) do
+    quote do
+      @behaviour Coxir.Storage
+    end
+  end
 end
