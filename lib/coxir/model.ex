@@ -12,6 +12,7 @@ defmodule Coxir.Model do
       alias Coxir.Model.{User, Guild, Channel, Message}
 
       @primary_key {:id, Snowflake, []}
+      @foreign_key_type Snowflake
     end
   end
 end
