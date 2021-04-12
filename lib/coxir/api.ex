@@ -15,5 +15,7 @@ defmodule Coxir.API do
 
   plug(Coxir.API.Token)
 
+  plug(Coxir.API.Limiter)
+
   plug(Tesla.Middleware.KeepRequest)
 end
