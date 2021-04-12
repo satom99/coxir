@@ -22,5 +22,9 @@ erl_crash.dump
 # Ignore package tarball (built via "mix hex.build").
 coxir-*.tar
 
-# Custom ignored files
+# Temporary files for e.g. tests
+/tmp
+
+# Custom ignored files
 .elixir_ls
+.DS_Store

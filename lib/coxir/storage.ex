@@ -4,13 +4,15 @@ defmodule Coxir.Storage do
   """
   alias Coxir.{Model, Snowflake}
 
+  @callback put(Model.t()) :: Model.t()
+
+  @callback all(Model.t()) :: list(Model.t())
+
   @callback get(Model.t(), Snowflake.t()) :: Model.t() | nil
 
-  @callback put(Model.t()) :: term
+  @callback preload(Model.t(), Keyword.t()) :: Model.t()
 
-  defmacro __using__(_options) do
-    quote do
-      @behaviour Coxir.Storage
-    end
-  end
+  @callback start_link() :: GenServer.on_start()
+
+  @optional_callbacks [start_link: 0]
 end

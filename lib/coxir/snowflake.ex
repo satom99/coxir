@@ -6,14 +6,18 @@ defmodule Coxir.Snowflake do
 
   @type t :: integer
 
-  defguard is_snowflake(value) when is_integer(value) and value in 0..0xFFFFFFFFFFFFFFFF
+  defguard is_snowflake(term) when is_integer(term) and term in 0..0xFFFFFFFFFFFFFFFF
 
   def type do
-    :string
+    :integer
   end
 
-  def cast(value) when is_binary(value) do
-    case Integer.parse(value) do
+  def cast(integer) when is_snowflake(integer) do
+    {:ok, integer}
+  end
+
+  def cast(string) when is_binary(string) do
+    case Integer.parse(string) do
       {integer, ""} ->
         cast(integer)
 
@@ -22,23 +26,20 @@ defmodule Coxir.Snowflake do
     end
   end
 
-  def cast(value) when is_snowflake(value) do
-    {:ok, value}
-  end
-
-  def cast(_value) do
+  def cast(_term) do
     :error
   end
 
-  def load(value) do
-    cast(value)
+  @spec load(any) :: :error | {:ok, non_neg_integer}
+  def load(term) do
+    cast(term)
   end
 
-  def dump(value) when is_snowflake(value) do
-    {:ok, to_string(value)}
+  def dump(integer) when is_snowflake(integer) do
+    {:ok, integer}
   end
 
-  def dump(_value) do
+  def dump(_term) do
     :error
   end
 end
