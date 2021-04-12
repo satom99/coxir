@@ -1,7 +1,7 @@
 defmodule Coxir.API.Base do
   @moduledoc false
 
-  use Tesla, only: []
+  use Tesla
 
   adapter(Tesla.Adapter.Gun)
 
