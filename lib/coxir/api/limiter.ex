@@ -1,6 +1,6 @@
 defmodule Coxir.API.Limiter do
   @moduledoc """
-  Work in progress.
+  Responsible for handling ratelimits.
   """
   @behaviour Tesla.Middleware
 

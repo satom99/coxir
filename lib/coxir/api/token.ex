@@ -1,6 +1,6 @@
 defmodule Coxir.API.Token do
   @moduledoc """
-  Work in progress.
+  Introduces the `Authorization` request header.
   """
   @behaviour Tesla.Middleware
 

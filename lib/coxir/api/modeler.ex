@@ -1,6 +1,6 @@
 defmodule Coxir.API.Modeler do
   @moduledoc """
-  Work in progress.
+  Transforms responses into `t:Coxir.Model.t/0` and stores them.
   """
   @behaviour Tesla.Middleware
 
