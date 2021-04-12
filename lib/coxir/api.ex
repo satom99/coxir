@@ -1,7 +1,7 @@
-defmodule Coxir.API.Base do
+defmodule Coxir.API do
   @moduledoc false
 
-  use Tesla
+  use Tesla, only: []
 
   adapter(Tesla.Adapter.Gun)
 
@@ -12,4 +12,6 @@ defmodule Coxir.API.Base do
   plug(Tesla.Middleware.Headers, [{"User-Agent", "coxir"}])
 
   plug(Tesla.Middleware.PathParams)
+
+  plug(Tesla.Middleware.KeepRequest)
 end
