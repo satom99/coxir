@@ -13,5 +13,7 @@ defmodule Coxir.API do
 
   plug(Tesla.Middleware.PathParams)
 
+  plug(Coxir.API.Token)
+
   plug(Tesla.Middleware.KeepRequest)
 end
