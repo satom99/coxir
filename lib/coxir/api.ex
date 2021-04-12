@@ -7,11 +7,11 @@ defmodule Coxir.API do
 
   plug(Tesla.Middleware.JSON)
 
+  plug(Tesla.Middleware.PathParams)
+
   plug(Tesla.Middleware.BaseUrl, "https://discord.com/api")
 
   plug(Tesla.Middleware.Headers, [{"User-Agent", "coxir"}])
-
-  plug(Tesla.Middleware.PathParams)
 
   plug(Coxir.API.Token)
 
