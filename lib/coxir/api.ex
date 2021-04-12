@@ -18,4 +18,6 @@ defmodule Coxir.API do
   plug(Coxir.API.Limiter)
 
   plug(Tesla.Middleware.KeepRequest)
+
+  plug(Tesla.Middleware.Logger, debug: false)
 end
