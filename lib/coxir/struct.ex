@@ -1,4 +1,4 @@
-defmodule Coxir.Model do
+defmodule Coxir.Struct do
   @moduledoc """
   Work in progress.
   """
@@ -9,7 +9,7 @@ defmodule Coxir.Model do
       use Ecto.Schema
 
       alias Coxir.Snowflake
-      alias Coxir.Model.{User, Guild, Channel}
+      alias Coxir.{User, Guild, Channel}
 
       @primary_key {:id, Snowflake, []}
       @foreign_key_type Snowflake

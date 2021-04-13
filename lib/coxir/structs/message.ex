@@ -1,8 +1,8 @@
-defmodule Coxir.Model.Message do
+defmodule Coxir.Message do
   @moduledoc """
   Work in progress.
   """
-  use Coxir.Model
+  use Coxir.Struct
 
   embedded_schema do
     field(:content, :string)

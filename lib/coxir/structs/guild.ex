@@ -1,8 +1,8 @@
-defmodule Coxir.Model.Guild do
+defmodule Coxir.Guild do
   @moduledoc """
   Work in progress.
   """
-  use Coxir.Model
+  use Coxir.Struct
 
   embedded_schema do
     field(:name, :string)

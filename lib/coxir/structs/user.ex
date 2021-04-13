@@ -1,8 +1,8 @@
-defmodule Coxir.Model.User do
+defmodule Coxir.User do
   @moduledoc """
   Work in progress.
   """
-  use Coxir.Model
+  use Coxir.Struct
 
   embedded_schema do
     field(:username, :string)
