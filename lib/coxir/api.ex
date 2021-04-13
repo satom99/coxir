@@ -7,6 +7,8 @@ defmodule Coxir.API do
 
   plug(Tesla.Middleware.JSON)
 
+  plug(Tesla.Middleware.PathParams)
+
   plug(Tesla.Middleware.BaseUrl, "https://discord.com/api")
 
   plug(Tesla.Middleware.Headers, [{"User-Agent", "coxir"}])
@@ -16,8 +18,6 @@ defmodule Coxir.API do
   plug(Coxir.API.Limiter)
 
   plug(Coxir.API.Modeler)
-
-  plug(Tesla.Middleware.PathParams)
 
   plug(Tesla.Middleware.KeepRequest)
 end
