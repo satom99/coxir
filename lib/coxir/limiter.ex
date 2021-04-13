@@ -10,5 +10,5 @@ defmodule Coxir.Limiter do
 
   @callback child_spec(term) :: Supervisor.child_spec()
 
-  @optional_callbacks [child_spec: 0]
+  @optional_callbacks [child_spec: 1]
 end
