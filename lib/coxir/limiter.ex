@@ -55,7 +55,11 @@ defmodule Coxir.Limiter.Default do
           {
             :andalso,
             {:==, :"$1", bucket},
-            {:<, :"$3", reset}
+            {
+              :orelse,
+              {:>, :"$2", limit},
+              {:<, :"$3", reset}
+            }
           }
         ],
         [
