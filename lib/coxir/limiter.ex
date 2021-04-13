@@ -31,6 +31,11 @@ defmodule Coxir.Limiter.Default do
     GenServer.start_link(__MODULE__, nil)
   end
 
+  def init(state) do
+    :ets.new(@table, [:named_table, :public])
+    {:ok, state}
+  end
+
   def put(bucket, limit, reset) do
     matcher = [
       {
@@ -87,11 +92,6 @@ defmodule Coxir.Limiter.Default do
       timeout = reset - current_time()
       {:error, timeout}
     end
-  end
-
-  def init(state) do
-    :ets.new(@table, [:named_table, :public])
-    {:ok, state}
   end
 
   defp current_time do
