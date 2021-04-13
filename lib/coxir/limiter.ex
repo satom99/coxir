@@ -24,7 +24,7 @@ defmodule Coxir.Limiter do
     end
   end
 
-  def current_time do
+  def time_now do
     DateTime.to_unix(DateTime.utc_now(), :millisecond)
   end
 end
@@ -84,7 +84,7 @@ defmodule Coxir.Limiter.Default do
             {
               :orelse,
               {:>, :"$2", 0},
-              {:<, {:-, :"$3", current_time()}, 0}
+              {:<, {:-, :"$3", time_now()}, 0}
             }
           }
         ],
@@ -100,7 +100,7 @@ defmodule Coxir.Limiter.Default do
       :ok
     else
       reset = :ets.lookup_element(@table, bucket, 3)
-      timeout = reset - current_time()
+      timeout = reset - time_now()
       {:error, timeout}
     end
   end
