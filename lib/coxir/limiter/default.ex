@@ -74,7 +74,7 @@ defmodule Coxir.Limiter.Default do
         ],
         [
           {
-            {:"$1", {:-, :"$2", 1}, time_now() + 5000}
+            {:"$1", :"$2", time_now() + 5000}
           }
         ]
       }
