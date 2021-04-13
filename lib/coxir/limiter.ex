@@ -103,11 +103,14 @@ defmodule Coxir.Limiter.Default do
     if :ets.select_replace(@table, matcher) > 0 do
       :ok
     else
-      reset = :ets.lookup_element(@table, bucket, 3)
-      timeout = reset - time_now()
-      {:error, timeout}
+      case :ets.lookup(@table, bucket) do
+        [{^bucket, _limit, reset}] ->
+          timeout = reset - time_now()
+          {:error, timeout}
+
+        _none ->
+          :ok
+      end
     end
-  rescue
-    _error -> :ok
   end
 end
