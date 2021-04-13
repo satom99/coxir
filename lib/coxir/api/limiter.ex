@@ -9,9 +9,9 @@ defmodule Coxir.API.Limiter do
   @major_params ["guilds", "channels", "webhooks"]
   @regex ~r|/?([\w-]+)/(?:\d+)|i
 
-  @header_global "X-RateLimit-Global"
-  @header_remaining "X-RateLimit-Remaining"
-  @header_reset "X-RateLimit-Reset"
+  @header_global "x-ratelimit-global"
+  @header_remaining "x-ratelimit-remaining"
+  @header_reset "x-ratelimit-reset"
 
   def call(env, next, _options) do
     bucket = get_bucket(env)
@@ -30,6 +30,8 @@ defmodule Coxir.API.Limiter do
       reset = Tesla.get_header(response, @header_reset)
 
       if remaining && reset do
+        remaining = String.to_integer(remaining)
+        reset = String.to_integer(reset)
         bucket = if global, do: :global, else: bucket
         Limiter.put(bucket, remaining, reset)
       end
