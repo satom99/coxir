@@ -22,16 +22,16 @@ defmodule Coxir.Limiter do
     end
   end
 
+  def child_spec(term) do
+    limiter().child_spec(term)
+  end
+
   def put(bucket, limit, reset) do
     limiter().put(bucket, limit, reset)
   end
 
   def hit(bucket) do
     limiter().hit(bucket)
-  end
-
-  def child_spec(term) do
-    limiter().child_spec(term)
   end
 
   def time_now do
