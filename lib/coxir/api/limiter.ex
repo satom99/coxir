@@ -40,10 +40,14 @@ defmodule Coxir.API.Limiter do
     end
   end
 
-  defp get_bucket(%{method: _method, url: url}) do
+  defp get_bucket(%{method: method, url: url}) do
     case Regex.run(@regex, url) do
       [route, param] when param in @major_params ->
-        route
+        if String.contains?(url, "messages") and method == :delete do
+          "delete:" <> route
+        else
+          route
+        end
 
       _other ->
         url
