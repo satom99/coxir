@@ -6,6 +6,10 @@ defmodule Coxir.API.Limiter do
 
   @behaviour Tesla.Middleware
 
+  @header_global "X-RateLimit-Global"
+  @header_remaining "X-RateLimit-Remaining"
+  @header_reset "X-RateLimit-Reset"
+
   @major_params ["guilds", "channels", "webhooks"]
   @regex ~r|/?([\w-]+)/(?:\d+)|i
 
@@ -21,9 +25,9 @@ defmodule Coxir.API.Limiter do
     end
 
     with {:ok, response} <- Tesla.run(env, next) do
-      global = Tesla.get_header(response, "X-RateLimit-Global")
-      remaining = Tesla.get_header(response, "X-RateLimit-Remaining")
-      reset = Tesla.get_header(response, "X-RateLimit-Reset")
+      global = Tesla.get_header(response, @header_global)
+      remaining = Tesla.get_header(response, @header_remaining)
+      reset = Tesla.get_header(response, @header_reset)
 
       if remaining && reset do
         bucket = if global, do: :global, else: bucket
