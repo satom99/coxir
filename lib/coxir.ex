@@ -10,10 +10,12 @@ defmodule Coxir do
     children = [
       Limiter
     ]
+
     options = [
       strategy: :one_for_one,
       name: __MODULE__
     ]
+
     Supervisor.start_link(children, options)
   end
 end
