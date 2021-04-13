@@ -20,6 +20,4 @@ defmodule Coxir.API do
   plug(Tesla.Middleware.PathParams)
 
   plug(Tesla.Middleware.KeepRequest)
-
-  plug(Tesla.Middleware.Logger, debug: false)
 end
