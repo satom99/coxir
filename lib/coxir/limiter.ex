@@ -15,6 +15,18 @@ defmodule Coxir.Limiter do
   @callback child_spec(term) :: Supervisor.child_spec()
 
   @optional_callbacks [child_spec: 1]
+
+  defmacro __using__(_options) do
+    quote location: :keep do
+      @behaviour Coxir.Limiter
+
+      alias Coxir.Limiter
+    end
+  end
+
+  def current_time do
+    DateTime.to_unix(DateTime.utc_now(), :millisecond)
+  end
 end
 
 defmodule Coxir.Limiter.Default do
@@ -22,8 +34,7 @@ defmodule Coxir.Limiter.Default do
   Work in progress.
   """
   use GenServer
-
-  @behaviour Coxir.Limiter
+  use Coxir.Limiter
 
   @table __MODULE__
 
@@ -73,7 +84,7 @@ defmodule Coxir.Limiter.Default do
             {
               :orelse,
               {:>, :"$2", 0},
-              {:<, {:-, :"$3", current_time()}, 0}
+              {:<, {:-, :"$3", Limiter.current_time()}, 0}
             }
           }
         ],
@@ -89,12 +100,8 @@ defmodule Coxir.Limiter.Default do
       :ok
     else
       reset = :ets.lookup_element(@table, bucket, 3)
-      timeout = reset - current_time()
+      timeout = reset - Limiter.current_time()
       {:error, timeout}
     end
-  end
-
-  defp current_time do
-    DateTime.to_unix(DateTime.utc_now(), :millisecond)
   end
 end
