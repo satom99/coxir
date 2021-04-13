@@ -8,7 +8,7 @@ defmodule Coxir.Limiter do
 
   @callback hit(bucket) :: :ok | {:error, integer}
 
-  @callback start_link() :: GenServer.on_start()
+  @callback child_spec(term) :: Supervisor.child_spec()
 
-  @optional_callbacks [start_link: 0]
+  @optional_callbacks [child_spec: 0]
 end
