@@ -6,12 +6,12 @@ defmodule Coxir.API.Limiter do
 
   @behaviour Tesla.Middleware
 
+  @major_params ["guilds", "channels", "webhooks"]
+  @regex ~r|/?([\w-]+)/(?:\d+)|i
+
   @header_global "X-RateLimit-Global"
   @header_remaining "X-RateLimit-Remaining"
   @header_reset "X-RateLimit-Reset"
-
-  @major_params ["guilds", "channels", "webhooks"]
-  @regex ~r|/?([\w-]+)/(?:\d+)|i
 
   def call(env, next, _options) do
     bucket = get_bucket(env)
