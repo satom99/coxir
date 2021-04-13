@@ -14,7 +14,7 @@ defmodule Coxir.API.Limiter do
   @header_reset "x-ratelimit-reset"
 
   def call(env, next, _options) do
-    bucket = get_bucket(env)
+    bucket = bucket_name(env)
 
     with {:error, timeout} <- Limiter.hit(:global) do
       Process.sleep(timeout)
@@ -40,7 +40,7 @@ defmodule Coxir.API.Limiter do
     end
   end
 
-  defp get_bucket(%{method: method, url: url}) do
+  defp bucket_name(%{method: method, url: url}) do
     case Regex.run(@regex, url) do
       [route, param] when param in @major_params ->
         if method == :delete and String.contains?(url, "messages") do
