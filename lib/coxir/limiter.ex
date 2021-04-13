@@ -22,7 +22,23 @@ defmodule Coxir.Limiter do
     end
   end
 
+  def put(bucket, limit, reset) do
+    limiter().put(bucket, limit, reset)
+  end
+
+  def hit(bucket) do
+    limiter().hit(bucket)
+  end
+
+  def child_spec(term) do
+    limiter().child_spec(term)
+  end
+
   def time_now do
     DateTime.to_unix(DateTime.utc_now(), :millisecond)
+  end
+
+  defp limiter do
+    Application.get_env(:coxir, :limiter, Coxir.Limiter.Default)
   end
 end
