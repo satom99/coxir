@@ -11,6 +11,12 @@ defmodule Coxir.MixProject do
     ]
   end
 
+  def application do
+    [
+      mod: {Coxir, []}
+    ]
+  end
+
   defp deps do
     [
       {:ecto, "~> 3.6"},
