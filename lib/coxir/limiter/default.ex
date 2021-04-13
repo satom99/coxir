@@ -7,8 +7,8 @@ defmodule Coxir.Limiter.Default do
 
   @table __MODULE__
 
-  def start_link do
-    GenServer.start_link(__MODULE__, nil, name: __MODULE__)
+  def start_link(state) do
+    GenServer.start_link(__MODULE__, state, name: __MODULE__)
   end
 
   def init(state) do
