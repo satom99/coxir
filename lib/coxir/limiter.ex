@@ -14,8 +14,6 @@ defmodule Coxir.Limiter do
 
   @callback child_spec(term) :: Supervisor.child_spec()
 
-  @optional_callbacks [child_spec: 1]
-
   defmacro __using__(_options) do
     quote location: :keep do
       @behaviour Coxir.Limiter
