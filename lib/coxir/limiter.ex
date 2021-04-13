@@ -8,11 +8,11 @@ defmodule Coxir.Limiter do
 
   @type reset :: integer
 
+  @callback child_spec(term) :: Supervisor.child_spec()
+
   @callback put(bucket, limit, reset) :: :ok
 
   @callback hit(bucket) :: :ok | {:error, timeout}
-
-  @callback child_spec(term) :: Supervisor.child_spec()
 
   defmacro __using__(_options) do
     quote location: :keep do
