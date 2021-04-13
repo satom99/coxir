@@ -31,7 +31,7 @@ defmodule Coxir.API.Limiter do
 
       if remaining && reset do
         remaining = String.to_integer(remaining)
-        reset = String.to_integer(reset)
+        reset = String.to_integer(reset) * 1000
         bucket = if global, do: :global, else: bucket
         Limiter.put(bucket, remaining, reset)
       end
