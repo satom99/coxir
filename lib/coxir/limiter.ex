@@ -4,9 +4,13 @@ defmodule Coxir.Limiter do
   """
   @type bucket :: String.t()
 
-  @callback put(bucket, integer) :: :ok
+  @type limit :: integer
 
-  @callback hit(bucket) :: :ok | {:error, integer}
+  @type reset :: integer
+
+  @callback put(bucket, limit, reset) :: :ok
+
+  @callback hit(bucket) :: :ok | {:error, timeout}
 
   @callback child_spec(term) :: Supervisor.child_spec()
 
