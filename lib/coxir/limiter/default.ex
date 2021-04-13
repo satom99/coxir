@@ -1,6 +1,6 @@
 defmodule Coxir.Limiter.Default do
   @moduledoc """
-  Work in progress.
+  Stores bucket information in ets.
   """
   use GenServer
   use Coxir.Limiter
