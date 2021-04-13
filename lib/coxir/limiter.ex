@@ -20,7 +20,7 @@ defmodule Coxir.Limiter do
     quote location: :keep do
       @behaviour Coxir.Limiter
 
-      alias Coxir.Limiter
+      import Coxir.Limiter
     end
   end
 
@@ -84,7 +84,7 @@ defmodule Coxir.Limiter.Default do
             {
               :orelse,
               {:>, :"$2", 0},
-              {:<, {:-, :"$3", Limiter.current_time()}, 0}
+              {:<, {:-, :"$3", current_time()}, 0}
             }
           }
         ],
@@ -100,7 +100,7 @@ defmodule Coxir.Limiter.Default do
       :ok
     else
       reset = :ets.lookup_element(@table, bucket, 3)
-      timeout = reset - Limiter.current_time()
+      timeout = reset - current_time()
       {:error, timeout}
     end
   end
