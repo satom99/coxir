@@ -53,7 +53,8 @@ defmodule Coxir.Storage do
   end
 
   def merge(%model{} = base, %model{} = overwrite) do
-    params = Map.from_struct(overwrite)
+    fields = get_fields(model)
+    params = Map.take(overwrite, fields)
 
     base
     |> change(params)
