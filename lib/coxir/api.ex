@@ -1,6 +1,7 @@
 defmodule Coxir.API do
-  @moduledoc false
-
+  @moduledoc """
+  Work in progress.
+  """
   use Tesla, only: []
 
   adapter(Tesla.Adapter.Gun)
