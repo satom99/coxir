@@ -56,8 +56,8 @@ defmodule Coxir.Storage do
     storage().delete(struct)
   end
 
-  def preload(struct, preloads) do
-    Loader.preload(struct, preloads)
+  def preload(struct, preloads, options \\ []) do
+    Loader.preload(struct, preloads, options)
   end
 
   defp storage do
