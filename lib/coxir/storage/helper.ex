@@ -4,8 +4,8 @@ defmodule Coxir.Storage.Helper do
   """
   import Ecto.Changeset
 
-  def merge(%module{} = base, %module{} = overwrite) do
-    fields = get_fields(module)
+  def merge(%model{} = base, %model{} = overwrite) do
+    fields = get_fields(model)
     params = Map.take(overwrite, fields)
 
     base
@@ -13,15 +13,15 @@ defmodule Coxir.Storage.Helper do
     |> apply_changes
   end
 
-  def get_fields(module) do
-    fields = module.__schema__(:fields)
-    primary = module.__schema__(:primary_key)
+  def get_fields(model) do
+    fields = model.__schema__(:fields)
+    primary = model.__schema__(:primary_key)
     primary ++ (fields -- primary)
   end
 
-  def get_values(%module{} = struct) do
+  def get_values(%model{} = struct) do
     Enum.map(
-      get_fields(module),
+      get_fields(model),
       fn name ->
         Map.fetch!(struct, name)
       end

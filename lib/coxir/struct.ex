@@ -1,4 +1,4 @@
-defmodule Coxir.Struct do
+defmodule Coxir.Model do
   @moduledoc """
   Work in progress.
   """

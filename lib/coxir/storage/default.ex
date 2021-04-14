@@ -16,24 +16,24 @@ defmodule Coxir.Storage.Default do
     {:ok, state}
   end
 
-  def handle_call({:create_table, module}, _from, state) do
+  def handle_call({:create_table, model}, _from, state) do
     table =
-      with nil <- lookup_table(module) do
-        table = :ets.new(module, [:public])
-        :ets.insert(@table, {module, table})
+      with nil <- lookup_table(model) do
+        table = :ets.new(model, [:public])
+        :ets.insert(@table, {model, table})
         table
       end
 
     {:reply, table, state}
   end
 
-  def put(%module{id: primary} = struct) do
-    table = get_table(module)
+  def put(%model{id: primary} = struct) do
+    table = get_table(model)
 
     struct =
       case :ets.lookup(table, primary) do
         [stored] ->
-          stored = from_record(module, stored)
+          stored = from_record(model, stored)
           merge(stored, struct)
 
         _none ->
@@ -46,40 +46,40 @@ defmodule Coxir.Storage.Default do
     struct
   end
 
-  def all(module) do
-    module
+  def all(model) do
+    model
     |> get_table
     |> :ets.tab2list()
-    |> Enum.map(&from_record(module, &1))
+    |> Enum.map(&from_record(model, &1))
   end
 
-  def get(module, primary) do
+  def get(model, primary) do
     record =
-      module
+      model
       |> get_table
       |> :ets.lookup(primary)
       |> List.first()
 
     if record do
-      from_record(module, record)
+      from_record(model, record)
     end
   end
 
-  def delete(%module{id: primary} = struct) do
-    table = get_table(module)
+  def delete(%model{id: primary} = struct) do
+    table = get_table(model)
     :ets.delete(table, primary)
     struct
   end
 
-  defp get_table(module) do
-    with nil <- lookup_table(module) do
-      GenServer.call(__MODULE__, {:create_table, module})
+  defp get_table(model) do
+    with nil <- lookup_table(model) do
+      GenServer.call(__MODULE__, {:create_table, model})
     end
   end
 
-  defp lookup_table(module) do
-    case :ets.lookup(@table, module) do
-      [{^module, table}] ->
+  defp lookup_table(model) do
+    case :ets.lookup(@table, model) do
+      [{^model, table}] ->
         table
 
       _none ->
@@ -93,10 +93,10 @@ defmodule Coxir.Storage.Default do
     |> List.to_tuple()
   end
 
-  defp from_record(module, record) do
-    fields = get_fields(module)
+  defp from_record(model, record) do
+    fields = get_fields(model)
     values = Tuple.to_list(record)
     params = Enum.zip(fields, values)
-    struct(module, params)
+    struct(model, params)
   end
 end
