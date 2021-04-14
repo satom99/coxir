@@ -95,6 +95,19 @@ defmodule Coxir.Storage.Default do
     struct
   end
 
+  defp to_record(struct) do
+    struct
+    |> get_values()
+    |> List.to_tuple()
+  end
+
+  defp from_record(model, record) do
+    fields = get_fields(model)
+    values = Tuple.to_list(record)
+    params = Enum.zip(fields, values)
+    struct(model, params)
+  end
+
   defp get_table(model) do
     with nil <- lookup_table(model) do
       GenServer.call(__MODULE__, {:create_table, model})
@@ -109,18 +122,5 @@ defmodule Coxir.Storage.Default do
       _none ->
         nil
     end
-  end
-
-  defp to_record(struct) do
-    struct
-    |> get_values()
-    |> List.to_tuple()
-  end
-
-  defp from_record(model, record) do
-    fields = get_fields(model)
-    values = Tuple.to_list(record)
-    params = Enum.zip(fields, values)
-    struct(model, params)
   end
 end
