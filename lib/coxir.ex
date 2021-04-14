@@ -4,11 +4,12 @@ defmodule Coxir do
   """
   use Application
 
-  alias Coxir.Limiter
+  alias Coxir.{Limiter, Storage}
 
   def start(_type, _args) do
     children = [
-      Limiter
+      Limiter,
+      Storage
     ]
 
     options = [
