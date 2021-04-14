@@ -15,4 +15,28 @@ defmodule Coxir.Storage do
   @callback preload(Model.t(), Keyword.t()) :: Model.t()
 
   @optional_callbacks [preload: 2]
+
+  def child_spec(term) do
+    storage().child_spec(term)
+  end
+
+  def put(model) do
+    storage().put(model)
+  end
+
+  def all(model) do
+    storage().all(model)
+  end
+
+  def get(model) do
+    storage().get(model)
+  end
+
+  def preload(model) do
+    storage().preload(model)
+  end
+
+  defp storage do
+    Application.get_env(:coxir, :storage, Coxir.Storage.Default)
+  end
 end
