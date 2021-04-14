@@ -1,6 +1,6 @@
 defmodule Coxir.Storage.Default do
   @moduledoc """
-  Work in progress.
+  Stores models in ets.
   """
   use Coxir.Storage
   use GenServer
