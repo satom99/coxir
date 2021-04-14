@@ -33,6 +33,10 @@ defmodule Coxir.Storage do
   def get(model, primary) do
     storage().get(model, primary)
   end
+
+  def delete(struct) do
+    storage().delete(struct)
+  end
   end
 
   def preload(model) do
