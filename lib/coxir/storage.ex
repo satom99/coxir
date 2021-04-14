@@ -48,6 +48,10 @@ defmodule Coxir.Storage do
     storage().get_by(model, clauses)
   end
 
+  def select(model, clauses) do
+    storage().select(model, clauses)
+  end
+
   def delete(struct) do
     storage().delete(struct)
   end
