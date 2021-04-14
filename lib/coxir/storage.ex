@@ -12,11 +12,7 @@ defmodule Coxir.Storage do
 
   @callback get(Model.t(), Snowflake.t()) :: Model.t() | nil
 
-  @callback preload(Model.t(), Keyword.t()) :: Model.t()
-
   @callback delete(Model.t()) :: Model.t()
-
-  @optional_callbacks [preload: 2]
 
   defmacro __using__(_options) do
     quote location: :keep do
@@ -40,10 +36,6 @@ defmodule Coxir.Storage do
 
   def get(model, primary) do
     storage().get(model, primary)
-  end
-
-  def preload(struct) do
-    storage().preload(struct)
   end
 
   def delete(struct) do
