@@ -1,6 +1,6 @@
 defmodule Coxir.Storage.Helper do
   @moduledoc """
-  Work in progress.
+  Common helper functions for `Coxir.Storage` implementations.
   """
   import Ecto.Changeset
 

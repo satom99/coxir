@@ -1,6 +1,6 @@
 defmodule Coxir.Limiter.Helper do
   @moduledoc """
-  Work in progress.
+  Common helper functions for `Coxir.Limiter` implementations.
   """
   def time_now do
     DateTime.to_unix(DateTime.utc_now(), :millisecond)
