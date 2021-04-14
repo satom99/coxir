@@ -18,7 +18,7 @@ defmodule Coxir.Limiter do
     quote location: :keep do
       @behaviour Coxir.Limiter
 
-      import Coxir.Limiter
+      import Coxir.Limiter.Helper
     end
   end
 
@@ -32,10 +32,6 @@ defmodule Coxir.Limiter do
 
   def hit(bucket) do
     limiter().hit(bucket)
-  end
-
-  def time_now do
-    DateTime.to_unix(DateTime.utc_now(), :millisecond)
   end
 
   defp limiter do

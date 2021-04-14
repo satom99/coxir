@@ -2,8 +2,6 @@ defmodule Coxir.Storage do
   @moduledoc """
   Work in progress.
   """
-  import Ecto.Changeset
-
   alias Coxir.{Model, Snowflake}
 
   @callback child_spec(term) :: Supervisor.child_spec()
@@ -24,7 +22,7 @@ defmodule Coxir.Storage do
     quote location: :keep do
       @behaviour Coxir.Storage
 
-      import Coxir.Storage
+      import Coxir.Storage.Helper
     end
   end
 
@@ -50,30 +48,6 @@ defmodule Coxir.Storage do
 
   def delete(struct) do
     storage().delete(struct)
-  end
-
-  def merge(%model{} = base, %model{} = overwrite) do
-    fields = get_fields(model)
-    params = Map.take(overwrite, fields)
-
-    base
-    |> change(params)
-    |> apply_changes
-  end
-
-  def get_fields(model) do
-    fields = model.__schema__(:fields)
-    primary = model.__schema__(:primary_key)
-    primary ++ (fields -- primary)
-  end
-
-  def get_values(%model{} = struct) do
-    Enum.map(
-      get_fields(model),
-      fn name ->
-        Map.fetch!(struct, name)
-      end
-    )
   end
 
   defp storage do
