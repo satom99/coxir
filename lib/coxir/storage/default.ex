@@ -20,7 +20,7 @@ defmodule Coxir.Storage.Default do
     table =
       with nil <- lookup_table(model) do
         table = :ets.new(model, [:public])
-        :ets.insert_new(@table, {model, table})
+        :ets.insert(@table, {model, table})
         table
       end
 
