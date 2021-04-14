@@ -110,7 +110,7 @@ defmodule Coxir.Storage.Default do
   defp clauses_pattern(model, clauses) do
     fields = get_fields(model)
 
-    matcher =
+    pattern =
       Enum.map(
         fields,
         fn name ->
@@ -118,7 +118,7 @@ defmodule Coxir.Storage.Default do
         end
       )
 
-    List.to_tuple(matcher)
+    List.to_tuple(pattern)
   end
 
   defp get_table(model) do
