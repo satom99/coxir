@@ -12,6 +12,8 @@ defmodule Coxir.Storage do
 
   @callback get(Model.name(), Snowflake.t()) :: Model.object() | nil
 
+  @callback get_by(Model.name(), Keyword.t()) :: Model.object() | nil
+
   @callback delete(Model.object()) :: Model.object()
 
   defmacro __using__(_options) do
@@ -36,6 +38,10 @@ defmodule Coxir.Storage do
 
   def get(model, primary) do
     storage().get(model, primary)
+  end
+
+  def get_by(model, clauses) do
+    sotrage().get_by(model, clauses)
   end
 
   def delete(struct) do
