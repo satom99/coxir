@@ -66,7 +66,7 @@ defmodule Coxir.Storage.Default do
   end
 
   def get_by(model, clauses) do
-    matcher = matcher_from_clauses(model, clauses)
+    matcher = clauses_pattern(model, clauses)
 
     table = get_table(model)
 
@@ -80,7 +80,7 @@ defmodule Coxir.Storage.Default do
   end
 
   def select(model, clauses) do
-    matcher = matcher_from_clauses(model, clauses)
+    matcher = clauses_pattern(model, clauses)
 
     model
     |> get_table()
@@ -107,7 +107,7 @@ defmodule Coxir.Storage.Default do
     struct(model, params)
   end
 
-  defp matcher_from_clauses(model, clauses) do
+  defp clauses_pattern(model, clauses) do
     fields = get_fields(model)
 
     matcher =
