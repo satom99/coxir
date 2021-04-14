@@ -4,6 +4,8 @@ defmodule Coxir.Storage do
   """
   alias Coxir.{Model, Snowflake}
 
+  @callback child_spec(term) :: Supervisor.child_spec()
+
   @callback put(Model.t()) :: Model.t()
 
   @callback all(Model.t()) :: list(Model.t())
@@ -11,8 +13,4 @@ defmodule Coxir.Storage do
   @callback get(Model.t(), Snowflake.t()) :: Model.t() | nil
 
   @callback preload(Model.t(), Keyword.t()) :: Model.t()
-
-  @callback child_spec(term) :: Supervisor.child_spec()
-
-  @optional_callbacks [child_spec: 1]
 end
