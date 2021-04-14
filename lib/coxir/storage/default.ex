@@ -65,6 +65,30 @@ defmodule Coxir.Storage.Default do
     end
   end
 
+  def get_by(model, clauses) do
+    fields = get_fields(model)
+
+    matcher =
+      Enum.map(
+        fields,
+        fn name ->
+          Keyword.get(clauses, name, :_)
+        end
+      )
+
+    matcher = List.to_tuple(matcher)
+
+    record =
+      model
+      |> get_table()
+      |> :ets.match_object(matcher)
+      |> List.first()
+
+    if record do
+      from_record(model, record)
+    end
+  end
+
   def delete(%model{id: primary} = struct) do
     table = get_table(model)
     :ets.delete(table, primary)
