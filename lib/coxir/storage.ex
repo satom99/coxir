@@ -2,6 +2,8 @@ defmodule Coxir.Storage do
   @moduledoc """
   Work in progress.
   """
+  import Ecto.Changeset
+
   alias Coxir.{Model, Snowflake}
 
   @callback child_spec(term) :: Supervisor.child_spec()
@@ -17,6 +19,14 @@ defmodule Coxir.Storage do
   @callback delete(Model.t()) :: Model.t()
 
   @optional_callbacks [preload: 2]
+
+  defmacro __using__(_options) do
+    quote location: :keep do
+      @behaviour Coxir.Storage
+
+      import Coxir.Storage
+    end
+  end
 
   def child_spec(term) do
     storage().child_spec(term)
@@ -34,13 +44,26 @@ defmodule Coxir.Storage do
     storage().get(model, primary)
   end
 
+  def preload(struct) do
+    storage().preload(struct)
+  end
+
   def delete(struct) do
     storage().delete(struct)
   end
+
+  def merge(%model{} = base, %model{} = overwrite) do
+    params = Map.from_struct(overwrite)
+
+    base
+    |> change(params)
+    |> apply_changes
   end
 
-  def preload(model) do
-    storage().preload(model)
+  def get_fields(model) do
+    fields = model.__schema__(:fields)
+    primary = model.__schema__(:primary_key)
+    primary ++ (fields -- primary)
   end
 
   defp storage do
