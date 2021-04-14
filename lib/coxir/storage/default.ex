@@ -77,7 +77,9 @@ defmodule Coxir.Storage.Default do
   end
 
   defp to_record(struct) do
-    get_values(struct)
+    struct
+    |> get_values()
+    |> List.to_tuple()
   end
 
   defp from_record(model, record) do

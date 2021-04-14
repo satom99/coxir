@@ -67,17 +67,12 @@ defmodule Coxir.Storage do
   end
 
   def get_values(%model{} = struct) do
-    fields = get_fields(model)
-
-    values =
-      Enum.map(
-        fields,
-        fn name ->
-          Map.fetch!(struct, name)
-        end
-      )
-
-    List.to_tuple(values)
+    Enum.map(
+      get_fields(model),
+      fn name ->
+        Map.fetch!(struct, name)
+      end
+    )
   end
 
   defp storage do
