@@ -41,7 +41,7 @@ defmodule Coxir.Storage do
   end
 
   def get_by(model, clauses) do
-    sotrage().get_by(model, clauses)
+    storage().get_by(model, clauses)
   end
 
   def delete(struct) do
