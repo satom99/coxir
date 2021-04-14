@@ -14,6 +14,8 @@ defmodule Coxir.Storage do
 
   @callback preload(Model.t(), Keyword.t()) :: Model.t()
 
+  @callback delete(Model.t()) :: Model.t()
+
   @optional_callbacks [preload: 2]
 
   def child_spec(term) do
