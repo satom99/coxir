@@ -1,4 +1,4 @@
-defmodule Coxir.Snowflake do
+defmodule Coxir.Model.Snowflake do
   @moduledoc """
   Work in progress.
   """

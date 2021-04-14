@@ -10,7 +10,7 @@ defmodule Coxir.Model do
     quote location: :keep do
       use Ecto.Schema
 
-      alias Coxir.Snowflake
+      alias Coxir.Model.Snowflake
       alias Coxir.{User, Guild, Channel}
 
       @primary_key {:id, Snowflake, []}
