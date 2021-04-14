@@ -66,17 +66,7 @@ defmodule Coxir.Storage.Default do
   end
 
   def get_by(model, clauses) do
-    fields = get_fields(model)
-
-    matcher =
-      Enum.map(
-        fields,
-        fn name ->
-          Keyword.get(clauses, name, :_)
-        end
-      )
-
-    matcher = List.to_tuple(matcher)
+    matcher = matcher_from_clauses(model, clauses)
 
     table = get_table(model)
 
@@ -87,6 +77,15 @@ defmodule Coxir.Storage.Default do
       _other ->
         nil
     end
+  end
+
+  def select(model, clauses) do
+    matcher = matcher_from_clauses(model, clauses)
+
+    model
+    |> get_table()
+    |> :ets.match_object(matcher)
+    |> Enum.map(&from_record(model, &1))
   end
 
   def delete(%model{id: primary} = struct) do
@@ -106,6 +105,20 @@ defmodule Coxir.Storage.Default do
     values = Tuple.to_list(record)
     params = Enum.zip(fields, values)
     struct(model, params)
+  end
+
+  defp matcher_from_clauses(model, clauses) do
+    fields = get_fields(model)
+
+    matcher =
+      Enum.map(
+        fields,
+        fn name ->
+          Keyword.get(clauses, name, :_)
+        end
+      )
+
+    List.to_tuple(matcher)
   end
 
   defp get_table(model) do

@@ -16,6 +16,8 @@ defmodule Coxir.Storage do
 
   @callback get_by(Model.name(), Keyword.t()) :: Model.object() | nil
 
+  @callback select(Model.name(), Keyword.t()) :: list(Model.object())
+
   @callback delete(Model.object()) :: Model.object()
 
   defmacro __using__(_options) do
