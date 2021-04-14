@@ -76,18 +76,8 @@ defmodule Coxir.Storage.Default do
     end
   end
 
-  defp to_record(%model{} = struct) do
-    fields = get_fields(model)
-
-    values =
-      Enum.map(
-        fields,
-        fn name ->
-          Map.fetch!(struct, name)
-        end
-      )
-
-    List.to_tuple(values)
+  defp to_record(struct) do
+    get_values(struct)
   end
 
   defp from_record(model, record) do

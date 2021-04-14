@@ -66,6 +66,20 @@ defmodule Coxir.Storage do
     primary ++ (fields -- primary)
   end
 
+  def get_values(%model{} = struct) do
+    fields = get_fields(model)
+
+    values =
+      Enum.map(
+        fields,
+        fn name ->
+          Map.fetch!(struct, name)
+        end
+      )
+
+    List.to_tuple(values)
+  end
+
   defp storage do
     Application.get_env(:coxir, :storage, Coxir.Storage.Default)
   end
