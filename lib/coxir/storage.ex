@@ -6,13 +6,13 @@ defmodule Coxir.Storage do
 
   @callback child_spec(term) :: Supervisor.child_spec()
 
-  @callback put(Model.t()) :: Model.t()
+  @callback put(Model.object()) :: Model.object()
 
-  @callback all(Model.t()) :: list(Model.t())
+  @callback all(Model.name()) :: list(Model.object())
 
-  @callback get(Model.t(), Snowflake.t()) :: Model.t() | nil
+  @callback get(Model.name(), Snowflake.t()) :: Model.object() | nil
 
-  @callback delete(Model.t()) :: Model.t()
+  @callback delete(Model.object()) :: Model.object()
 
   defmacro __using__(_options) do
     quote location: :keep do

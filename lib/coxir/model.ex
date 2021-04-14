@@ -2,7 +2,9 @@ defmodule Coxir.Model do
   @moduledoc """
   Work in progress.
   """
-  @type t :: struct
+  @type name :: module
+
+  @type object :: struct
 
   defmacro __using__(_options) do
     quote location: :keep do
