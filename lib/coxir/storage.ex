@@ -2,17 +2,17 @@ defmodule Coxir.Storage do
   @moduledoc """
   Work in progress.
   """
-  alias Coxir.{Model, Snowflake}
+  alias Coxir.{Struct, Snowflake}
 
   @callback child_spec(term) :: Supervisor.child_spec()
 
-  @callback put(Model.t()) :: Model.t()
+  @callback put(Struct.t()) :: Struct.t()
 
-  @callback all(Model.t()) :: list(Model.t())
+  @callback all(Struct.t()) :: list(Struct.t())
 
-  @callback get(Model.t(), Snowflake.t()) :: Model.t() | nil
+  @callback get(Struct.t(), Snowflake.t()) :: Struct.t() | nil
 
-  @callback delete(Model.t()) :: Model.t()
+  @callback delete(Struct.t()) :: Struct.t()
 
   defmacro __using__(_options) do
     quote location: :keep do
@@ -30,12 +30,12 @@ defmodule Coxir.Storage do
     storage().put(struct)
   end
 
-  def all(model) do
-    storage().all(model)
+  def all(module) do
+    storage().all(module)
   end
 
-  def get(model, primary) do
-    storage().get(model, primary)
+  def get(module, primary) do
+    storage().get(module, primary)
   end
 
   def delete(struct) do
