@@ -30,8 +30,9 @@ defmodule Coxir.Storage do
     storage().all(model)
   end
 
-  def get(model) do
-    storage().get(model)
+  def get(model, primary) do
+    storage().get(model, primary)
+  end
   end
 
   def preload(model) do
