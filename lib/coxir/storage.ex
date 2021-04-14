@@ -2,6 +2,8 @@ defmodule Coxir.Storage do
   @moduledoc """
   Work in progress.
   """
+  alias Coxir.Storage.Loader
+
   alias Coxir.{Model, Snowflake}
 
   @callback child_spec(term) :: Supervisor.child_spec()
@@ -46,6 +48,10 @@ defmodule Coxir.Storage do
 
   def delete(struct) do
     storage().delete(struct)
+  end
+
+  def preload(struct, preloads) do
+    Loader.preload(struct, preloads)
   end
 
   defp storage do
