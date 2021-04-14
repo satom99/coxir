@@ -13,4 +13,6 @@ defmodule Coxir.Storage do
   @callback get(Model.t(), Snowflake.t()) :: Model.t() | nil
 
   @callback preload(Model.t(), Keyword.t()) :: Model.t()
+
+  @optional_callbacks [preload: 2]
 end
