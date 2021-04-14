@@ -17,7 +17,5 @@ defmodule Coxir.API do
 
   plug(Coxir.API.Limiter)
 
-  plug(Coxir.API.Modeler)
-
   plug(Tesla.Middleware.KeepRequest)
 end
