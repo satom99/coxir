@@ -78,14 +78,14 @@ defmodule Coxir.Storage.Default do
 
     matcher = List.to_tuple(matcher)
 
-    record =
-      model
-      |> get_table()
-      |> :ets.match_object(matcher)
-      |> List.first()
+    table = get_table(model)
 
-    if record do
-      from_record(model, record)
+    case :ets.match_object(table, matcher, 1) do
+      {[record], _continuation} ->
+        from_record(model, record)
+
+      _other ->
+        nil
     end
   end
 
