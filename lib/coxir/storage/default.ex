@@ -17,8 +17,13 @@ defmodule Coxir.Storage.Default do
   end
 
   def handle_call({:create_table, model}, _from, state) do
-    table = :ets.new(model, [:public])
-    :ets.insert(@table, {model, table})
+    table =
+      with nil <- lookup_table(model) do
+        table = :ets.new(model, [:public])
+        :ets.insert_new(@table, {model, table})
+        table
+      end
+
     {:reply, table, state}
   end
 
@@ -67,12 +72,18 @@ defmodule Coxir.Storage.Default do
   end
 
   defp get_table(model) do
+    with nil <- lookup_table(model) do
+      GenServer.call(__MODULE__, {:create_table, model})
+    end
+  end
+
+  defp lookup_table(model) do
     case :ets.lookup(@table, model) do
       [{^model, table}] ->
         table
 
       _none ->
-        GenServer.call(__MODULE__, {:create_table, model})
+        nil
     end
   end
 
