@@ -22,8 +22,8 @@ defmodule Coxir.Storage do
     storage().child_spec(term)
   end
 
-  def put(model) do
-    storage().put(model)
+  def put(struct) do
+    storage().put(struct)
   end
 
   def all(model) do
