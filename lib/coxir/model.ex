@@ -8,6 +8,8 @@ defmodule Coxir.Model do
 
   @type object :: struct
 
+  @callback fetch(Snowflake.t()) :: object
+
   @callback fetch(Snowflake.t(), Keyword.t()) :: object
 
   defmacro __using__(_options) do
