@@ -14,7 +14,7 @@ defmodule Coxir.Model do
     quote location: :keep do
       use Ecto.Schema
 
-      alias Coxir.Model.Snowflake
+      alias Coxir.Model.{Snowflake, Loader}
       alias Coxir.{User, Guild, Channel, Message}
       alias Coxir.API
 

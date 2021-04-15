@@ -12,7 +12,8 @@ defmodule Coxir.User do
     has_many(:guilds, Guild, foreign_key: :owner_id)
   end
 
-  def fetch(snowflake, _options) do
-    %User{id: snowflake}
+  def fetch(snowflake, options) do
+    response = API.get("users/#{snowflake}", options)
+    Loader.cast(User, response)
   end
 end
