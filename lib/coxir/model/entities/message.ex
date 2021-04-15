@@ -9,7 +9,7 @@ defmodule Coxir.Message do
     field(:timestamp, :utc_datetime)
     field(:edited_timestamp, :utc_datetime)
 
-    belongs_to(:channel, Channel)
+    belongs_to(:channel, Channel, primary_key: true)
     belongs_to(:guild, Guild)
     belongs_to(:author, User)
   end
