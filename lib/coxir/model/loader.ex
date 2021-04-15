@@ -8,20 +8,20 @@ defmodule Coxir.Model.Loader do
   def preload(%model{} = struct, association, options) do
     reflection = model.__schema__(:association, association)
     force = Keyword.get(options, :force, false)
-    process(reflection, struct, force)
+    preloader(reflection, struct, force)
   end
 
-  defp process(%{field: field} = reflection, struct, false) do
+  defp preloader(%{field: field} = reflection, struct, false) do
     case Map.fetch!(struct, field) do
       %NotLoaded{} ->
-        process(reflection, struct, true)
+        preloader(reflection, struct, true)
 
       _other ->
         struct
     end
   end
 
-  defp process(%type{} = reflection, struct, true) when type in [BelongsTo, Has] do
+  defp preloader(%type{} = reflection, struct, true) when type in [BelongsTo, Has] do
     %{owner_key: owner_key, related_key: related_key} = reflection
     %{cardinality: cardinality, related: related} = reflection
     %{field: field} = reflection
