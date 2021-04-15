@@ -1,6 +1,6 @@
 defmodule Coxir.API.Helper do
   @moduledoc """
-  Work in progress.
+  Common helper functions for `Coxir.API` middlewares.
   """
   alias Coxir.Token
 
