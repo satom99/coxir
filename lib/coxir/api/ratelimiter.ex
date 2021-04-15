@@ -46,15 +46,17 @@ defmodule Coxir.API.RateLimiter do
     reset = if reset, do: String.to_integer(reset) * 1000
     retry = if retry, do: String.to_integer(retry) * 1000
 
-    remaining = if remaining, do: remaining, else: 0
-    reset = if reset, do: reset, else: time_now() + retry
+    if reset || retry do
+      remaining = if remaining, do: remaining, else: 0
+      reset = if reset, do: reset, else: time_now() + retry
 
-    bucket = if global, do: :global, else: bucket
+      bucket = if global, do: :global, else: bucket
 
-    remote = unix_from_date(date)
-    latency = abs(time_now() - remote)
+      remote = unix_from_date(date)
+      latency = abs(time_now() - remote)
 
-    Limiter.put(bucket, remaining, reset + latency)
+      Limiter.put(bucket, remaining, reset + latency)
+    end
   end
 
   defp unix_from_date(header) do
