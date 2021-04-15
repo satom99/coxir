@@ -12,7 +12,7 @@ defmodule Coxir.User do
     has_many(:guilds, Guild, foreign_key: :owner_id)
   end
 
-  def fetch(snowflake) do
+  def fetch(snowflake, _options) do
     %User{id: snowflake}
   end
 end

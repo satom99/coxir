@@ -14,7 +14,7 @@ defmodule Coxir.Message do
     belongs_to(:author, User)
   end
 
-  def fetch(snowflake) do
+  def fetch(snowflake, _options) do
     %Message{id: snowflake}
   end
 end
