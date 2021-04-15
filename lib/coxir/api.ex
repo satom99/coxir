@@ -14,7 +14,7 @@ defmodule Coxir.API do
 
   plug(Tesla.Middleware.Headers, [{"User-Agent", "coxir"}])
 
-  plug(Coxir.API.Token)
+  plug(Coxir.API.Authorization)
 
   plug(Coxir.API.Limiter)
 

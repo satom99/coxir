@@ -1,4 +1,4 @@
-defmodule Coxir.API.Auhtorization do
+defmodule Coxir.API.Authorization do
   @moduledoc """
   Introduces the `Authorization` request header.
   """
