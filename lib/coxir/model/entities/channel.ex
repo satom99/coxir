@@ -13,6 +13,7 @@ defmodule Coxir.Channel do
     field(:icon, :string)
 
     belongs_to(:owner, User)
+    belongs_to(:guild, Guild)
     belongs_to(:parent, Channel)
   end
 
