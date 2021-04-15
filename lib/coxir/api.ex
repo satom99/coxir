@@ -17,4 +17,13 @@ defmodule Coxir.API do
   plug(Coxir.API.RateLimiter)
 
   plug(Tesla.Middleware.KeepRequest)
+
+  def execute(method, path, body \\ nil, options \\ []) do
+    response = request!(method: method, url: path, body: body, opts: options)
+    response.body
+  end
+
+  def get(path, options) do
+    execute(:get, path, nil, options)
+  end
 end
