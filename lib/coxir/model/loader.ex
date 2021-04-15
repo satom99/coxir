@@ -8,12 +8,12 @@ defmodule Coxir.Model.Loader do
   alias Coxir.{Storage, Model}
 
   @spec load(Model.name(), map) :: Model.object()
-  def load(model, params) do
+  def load(model, object) do
     fields = model.__schema__(:fields)
 
     model
     |> struct()
-    |> cast(params, fields)
+    |> cast(object, fields)
     |> apply_changes()
     |> Storage.put()
   end
