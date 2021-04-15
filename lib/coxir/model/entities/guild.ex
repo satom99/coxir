@@ -9,4 +9,8 @@ defmodule Coxir.Guild do
 
     belongs_to(:owner, User)
   end
+
+  def fetch(snowflake) do
+    %Guild{id: snowflake}
+  end
 end

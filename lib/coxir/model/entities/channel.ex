@@ -15,4 +15,8 @@ defmodule Coxir.Channel do
     belongs_to(:owner, User)
     belongs_to(:parent, Channel)
   end
+
+  def fetch(snowflake) do
+    %Channel{id: snowflake}
+  end
 end
