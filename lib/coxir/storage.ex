@@ -18,6 +18,8 @@ defmodule Coxir.Storage do
 
   @callback delete(Model.object()) :: Model.object()
 
+  @callback delete_by(Model.name(), Keyword.t()) :: :ok
+
   defmacro __using__(_options) do
     quote location: :keep do
       @behaviour Coxir.Storage
@@ -52,6 +54,10 @@ defmodule Coxir.Storage do
 
   def delete(struct) do
     storage().delete(struct)
+  end
+
+  def delete_by(model, clauses) do
+    storage().delete_by(model, clauses)
   end
 
   defp storage do

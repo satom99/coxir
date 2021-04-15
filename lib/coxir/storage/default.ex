@@ -94,6 +94,13 @@ defmodule Coxir.Storage.Default do
     struct
   end
 
+  def delete_by(model, clauses) do
+    matcher = clauses_pattern(model, clauses)
+    table = get_table(model)
+    :ets.match_delete(table, matcher)
+    :ok
+  end
+
   defp to_record(struct) do
     struct
     |> get_values()
