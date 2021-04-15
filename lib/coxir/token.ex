@@ -6,9 +6,9 @@ defmodule Coxir.Token do
 
   @type t :: String.t()
 
-  @spec get_user(t) :: Snowflake.t()
+  @spec get_snowflake(t) :: Snowflake.t()
 
-  def get_user(token) do
+  def get_snowflake(token) do
     {:ok, snowflake} =
       token
       |> String.split(".")
