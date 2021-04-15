@@ -30,7 +30,6 @@ defmodule Coxir.Model.Snowflake do
     :error
   end
 
-  @spec load(any) :: :error | {:ok, non_neg_integer}
   def load(term) do
     cast(term)
   end
