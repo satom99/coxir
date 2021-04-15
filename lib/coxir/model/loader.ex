@@ -5,8 +5,9 @@ defmodule Coxir.Model.Loader do
   import Ecto.Changeset
 
   alias Ecto.Association.{NotLoaded, BelongsTo, Has}
-  alias Coxir.Storage
+  alias Coxir.{Storage, Model}
 
+  @spec load(Model.name(), map) :: Model.object()
   def load(model, params) do
     fields = model.__schema__(:fields)
 
@@ -17,6 +18,7 @@ defmodule Coxir.Model.Loader do
     |> Storage.put()
   end
 
+  @spec preload(Model.object(), atom, Keyword.t()) :: Model.object()
   def preload(%model{} = struct, association, options) do
     reflection = model.__schema__(:association, association)
     force = Keyword.get(options, :force, false)
