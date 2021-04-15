@@ -6,8 +6,6 @@ defmodule Coxir.API.Limiter do
 
   alias Coxir.Limiter
 
-  alias Tesla.Middleware.Retry
-
   @behaviour Tesla.Middleware
 
   @major_params ["guilds", "channels", "webhooks"]
@@ -54,18 +52,7 @@ defmodule Coxir.API.Limiter do
   end
 
   defp run_request(env, next) do
-    options = [should_retry: &should_retry/1]
-    Retry.call(env, next, options)
-  end
-
-  defp should_retry(response) do
-    case response do
-      {:ok, %{status: 429}} ->
-        true
-
-      _other ->
-        false
-    end
+    Tesla.run(env, next)
   end
 
   defp unix_from_date(header) do
