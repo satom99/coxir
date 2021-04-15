@@ -61,8 +61,6 @@ defmodule Coxir.API.Limiter do
   defp should_retry(response) do
     case response do
       {:ok, %{status: 429}} ->
-        IO.inspect(:should_retry)
-
         true
 
       _other ->
