@@ -1,4 +1,4 @@
-defmodule Coxir.Consumer do
+defmodule Coxir.Gateway.Consumer do
   @moduledoc """
   Work in progress.
   """
