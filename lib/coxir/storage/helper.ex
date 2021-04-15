@@ -16,17 +16,30 @@ defmodule Coxir.Storage.Helper do
     |> apply_changes
   end
 
+  @spec get_key(Model.object()) :: term
+  def get_key(%model{} = struct) do
+    primary = model.__schema__(:primary_key)
+
+    case take_fields(struct, primary) do
+      [single] -> single
+      multiple -> List.to_tuple(multiple)
+    end
+  end
+
   @spec get_fields(Model.name()) :: list(atom)
   def get_fields(model) do
-    fields = model.__schema__(:fields)
-    primary = model.__schema__(:primary_key)
-    primary ++ (fields -- primary)
+    model.__schema__(:fields)
   end
 
   @spec get_values(Model.object()) :: list(term)
   def get_values(%model{} = struct) do
+    fields = get_fields(model)
+    take_fields(struct, fields)
+  end
+
+  defp take_fields(struct, fields) do
     Enum.map(
-      get_fields(model),
+      fields,
       fn name ->
         Map.fetch!(struct, name)
       end
