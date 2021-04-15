@@ -22,6 +22,10 @@ defmodule Coxir.Model do
 
       @primary_key {:id, Snowflake, []}
       @foreign_key_type Snowflake
+
+      def fetch(snowflake) do
+        fetch(snowflake, [])
+      end
     end
   end
 end
