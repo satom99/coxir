@@ -12,47 +12,49 @@ defmodule Coxir.API.Limiter do
   @regex ~r|/?([\w-]+)/(?:\d+)|i
 
   @header_date "date"
-  @header_global "x-ratelimit-global"
   @header_remaining "x-ratelimit-remaining"
   @header_reset "x-ratelimit-reset"
+  @header_global "x-ratelimit-global"
+  @header_retry "retry-after"
 
-  def call(env, next, options) do
-    bucket = bucket_name(env)
+  def call(request, next, options) do
+    bucket = bucket_name(request)
 
-    with :ok <- Limiter.hit(:global),
-         :ok <- Limiter.hit(bucket) do
-      continue_call(bucket, env, next)
-    else
-      {:error, timeout} ->
-        Process.sleep(timeout)
-        call(env, next, options)
-    end
-  end
+    :ok = wait_hit(:global)
+    :ok = wait_hit(bucket)
 
-  defp continue_call(bucket, env, next) do
-    with {:ok, response} <- run_request(env, next) do
-      date = Tesla.get_header(response, @header_date)
-      global = Tesla.get_header(response, @header_global)
-      remaining = Tesla.get_header(response, @header_remaining)
-      reset = Tesla.get_header(response, @header_reset)
+    with {:ok, %{status: status} = response} <- Tesla.run(request, next) do
+      update_bucket(bucket, response)
 
-      if remaining && reset do
-        remote = unix_from_date(date)
-        latency = abs(remote - time_now())
-
-        remaining = String.to_integer(remaining)
-        reset = String.to_integer(reset) * 1000
-
-        bucket = if global, do: :global, else: bucket
-        Limiter.put(bucket, remaining, reset + latency)
+      if status == 429 do
+        IO.inspect :status429
+        call(request, next, options)
+      else
+        {:ok, response}
       end
-
-      {:ok, response}
     end
   end
 
-  defp run_request(env, next) do
-    Tesla.run(env, next)
+  defp update_bucket(bucket, response) do
+    global = Tesla.get_header(response, @header_global)
+    remaining = Tesla.get_header(response, @header_remaining)
+    reset = Tesla.get_header(response, @header_reset)
+    retry = Tesla.get_header(response, @header_retry)
+    date = Tesla.get_header(response, @header_date)
+
+    remaining = if remaining, do: String.to_integer(remaining)
+    reset = if reset, do: String.to_integer(reset) * 1000
+    retry = if retry, do: String.to_integer(retry) * 1000
+
+    remaining = if remaining, do: remaining, else: 0
+    reset = if reset, do: reset, else: time_now() + retry
+
+    bucket = if global, do: :global, else: bucket
+
+    remote = unix_from_date(date)
+    latency = abs(time_now() - remote)
+
+    Limiter.put(bucket, remaining, reset + latency)
   end
 
   defp unix_from_date(header) do
