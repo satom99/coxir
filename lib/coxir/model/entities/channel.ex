@@ -16,8 +16,4 @@ defmodule Coxir.Channel do
     belongs_to(:guild, Guild)
     belongs_to(:parent, Channel)
   end
-
-  def fetch(snowflake, _options) do
-    %Channel{id: snowflake}
-  end
 end
