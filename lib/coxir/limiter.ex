@@ -2,7 +2,7 @@ defmodule Coxir.Limiter do
   @moduledoc """
   Work in progress.
   """
-  @type bucket :: String.t()
+  @type bucket :: atom | String.t()
 
   @type limit :: integer
 

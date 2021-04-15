@@ -3,9 +3,9 @@ defmodule Coxir.API.RateLimiter do
   Responsible for handling ratelimits.
   """
   import Coxir.Limiter.Helper
+  import Coxir.API.Helper
 
   alias Coxir.{Limiter, Token}
-  alias Coxir.API.Authorization
 
   @behaviour Tesla.Middleware
 
@@ -69,8 +69,10 @@ defmodule Coxir.API.RateLimiter do
   end
 
   defp get_bucket(%{method: method, url: url} = request) do
-    token = Authorization.get_token(request)
-    snowflake = Token.get_snowflake(token)
+    snowflake =
+      request
+      |> get_token()
+      |> Token.get_snowflake()
 
     bucket =
       case Regex.run(@regex, url) do

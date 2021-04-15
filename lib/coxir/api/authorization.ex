@@ -4,16 +4,13 @@ defmodule Coxir.API.Authorization do
   """
   @behaviour Tesla.Middleware
 
+  import Coxir.API.Helper
+
   alias Tesla.Middleware.Headers
 
   def call(request, next, _options) do
     token = get_token(request)
     headers = [{"Authorization", "Bot #{token}"}]
     Headers.call(request, next, headers)
-  end
-
-  def get_token(%{opts: opts}) do
-    config = Application.get_env(:coxir, :token)
-    Keyword.get(opts, :token, config)
   end
 end
