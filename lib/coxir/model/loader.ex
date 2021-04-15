@@ -7,7 +7,7 @@ defmodule Coxir.Model.Loader do
   alias Ecto.Association.{NotLoaded, BelongsTo, Has}
   alias Coxir.Storage
 
-  def cast(model, params) do
+  def load(model, params) do
     fields = model.__schema__(:fields)
 
     model

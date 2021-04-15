@@ -13,7 +13,7 @@ defmodule Coxir.User do
   end
 
   def fetch(snowflake, options) do
-    response = API.get("users/#{snowflake}", options)
-    Loader.cast(User, response)
+    object = API.get("users/#{snowflake}", options)
+    Loader.load(User, object)
   end
 end
