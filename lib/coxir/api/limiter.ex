@@ -4,7 +4,8 @@ defmodule Coxir.API.Limiter do
   """
   import Coxir.Limiter.Helper
 
-  alias Coxir.Limiter
+  alias Coxir.{Limiter, Token}
+  alias Coxir.API.Authorization
 
   @behaviour Tesla.Middleware
 
@@ -18,7 +19,7 @@ defmodule Coxir.API.Limiter do
   @header_date "date"
 
   def call(request, next, options) do
-    bucket = bucket_name(request)
+    bucket = get_bucket(request)
 
     :ok = wait_hit(:global)
     :ok = wait_hit(bucket)
@@ -65,17 +66,23 @@ defmodule Coxir.API.Limiter do
     |> :erlang.*(1000)
   end
 
-  defp bucket_name(%{method: method, url: url}) do
-    case Regex.run(@regex, url) do
-      [route, param] when param in @major_params ->
-        if method == :delete and String.contains?(url, "messages") do
-          "delete:" <> route
-        else
-          route
-        end
+  defp get_bucket(%{method: method, url: url} = request) do
+    token = Authorization.get_token(request)
+    snowflake = Token.get_snowflake(token)
 
-      _other ->
-        url
-    end
+    bucket =
+      case Regex.run(@regex, url) do
+        [route, param] when param in @major_params ->
+          if method == :delete and String.contains?(url, "messages") do
+            "delete:" <> route
+          else
+            route
+          end
+
+        _other ->
+          url
+      end
+
+    "#{snowflake}:#{bucket}"
   end
 end
