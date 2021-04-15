@@ -1,4 +1,4 @@
-defmodule Coxir.API.Limiter do
+defmodule Coxir.API.RateLimiter do
   @moduledoc """
   Responsible for handling ratelimits.
   """

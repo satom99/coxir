@@ -16,7 +16,7 @@ defmodule Coxir.API do
 
   plug(Coxir.API.Authorization)
 
-  plug(Coxir.API.Limiter)
+  plug(Coxir.API.RateLimiter)
 
   plug(Tesla.Middleware.KeepRequest)
 end
