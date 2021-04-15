@@ -85,7 +85,7 @@ defmodule Coxir.Limiter.Default do
     else
       case :ets.lookup(@table, bucket) do
         [{^bucket, _limit, reset}] ->
-          timeout = reset - time_now()
+          timeout = max(reset - time_now(), 0)
           {:error, timeout}
 
         _none ->
