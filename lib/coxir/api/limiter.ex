@@ -27,7 +27,6 @@ defmodule Coxir.API.Limiter do
       update_bucket(bucket, response)
 
       if status == 429 do
-        IO.inspect :status429
         call(request, next, options)
       else
         {:ok, response}
