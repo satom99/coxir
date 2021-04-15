@@ -12,7 +12,7 @@ defmodule Coxir.Storage.Default do
   end
 
   def init(state) do
-    :ets.new(@table, [:named_table, :public, {:read_concurrency, true}])
+    :ets.new(@table, [{:read_concurrency, true}, :named_table, :public])
     {:ok, state}
   end
 
@@ -27,13 +27,14 @@ defmodule Coxir.Storage.Default do
     {:reply, table, state}
   end
 
-  def put(%model{id: primary} = struct) do
+  def put(%model{} = struct) do
     table = get_table(model)
+    key = get_key(struct)
 
     struct =
-      case :ets.lookup(table, primary) do
-        [stored] ->
-          stored = from_record(model, stored)
+      case :ets.lookup(table, key) do
+        [record] ->
+          stored = from_record(model, record)
           merge(stored, struct)
 
         _none ->
@@ -48,25 +49,25 @@ defmodule Coxir.Storage.Default do
 
   def all(model) do
     model
-    |> get_table
+    |> get_table()
     |> :ets.tab2list()
     |> Enum.map(&from_record(model, &1))
   end
 
   def select(model, clauses) do
-    matcher = clauses_pattern(model, clauses)
+    pattern = get_pattern(model, clauses)
 
     model
     |> get_table()
-    |> :ets.match_object(matcher)
+    |> :ets.match_object(pattern)
     |> Enum.map(&from_record(model, &1))
   end
 
-  def get(model, primary) do
+  def get(model, key) do
     record =
       model
-      |> get_table
-      |> :ets.lookup(primary)
+      |> get_table()
+      |> :ets.lookup(key)
       |> List.first()
 
     if record do
@@ -75,11 +76,10 @@ defmodule Coxir.Storage.Default do
   end
 
   def get_by(model, clauses) do
-    matcher = clauses_pattern(model, clauses)
-
+    pattern = get_pattern(model, clauses)
     table = get_table(model)
 
-    case :ets.match_object(table, matcher, 1) do
+    case :ets.match_object(table, pattern, 1) do
       {[record], _continuation} ->
         from_record(model, record)
 
@@ -88,33 +88,27 @@ defmodule Coxir.Storage.Default do
     end
   end
 
-  def delete(%model{id: primary} = struct) do
-    table = get_table(model)
-    :ets.delete(table, primary)
+  def delete(%model{} = struct) do
+    key = get_key(struct)
+
+    model
+    |> get_table()
+    |> :ets.delete(key)
+
     struct
   end
 
   def delete_by(model, clauses) do
-    matcher = clauses_pattern(model, clauses)
-    table = get_table(model)
-    :ets.match_delete(table, matcher)
+    pattern = get_pattern(model, clauses)
+
+    model
+    |> get_table()
+    |> :ets.match_delete(pattern)
+
     :ok
   end
 
-  defp to_record(struct) do
-    struct
-    |> get_values()
-    |> List.to_tuple()
-  end
-
-  defp from_record(model, record) do
-    fields = get_fields(model)
-    values = Tuple.to_list(record)
-    params = Enum.zip(fields, values)
-    struct(model, params)
-  end
-
-  defp clauses_pattern(model, clauses) do
+  defp get_pattern(model, clauses) do
     fields = get_fields(model)
 
     pattern =
@@ -125,7 +119,20 @@ defmodule Coxir.Storage.Default do
         end
       )
 
-    List.to_tuple(pattern)
+    List.to_tuple([:_ | pattern])
+  end
+
+  defp to_record(struct) do
+    key = get_key(struct)
+    values = get_values(struct)
+    List.to_tuple([key | values])
+  end
+
+  defp from_record(model, record) do
+    [_key | values] = Tuple.to_list(record)
+    fields = get_fields(model)
+    params = Enum.zip(fields, values)
+    struct(model, params)
   end
 
   defp get_table(model) do
