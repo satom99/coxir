@@ -2,8 +2,19 @@ defmodule Coxir.Model.Loader do
   @moduledoc """
   Work in progress.
   """
+  import Ecto.Changeset
+
   alias Ecto.Association.{NotLoaded, BelongsTo, Has}
   alias Coxir.Storage
+
+  def cast(model, params) do
+    fields = model.__schema__(:fields)
+
+    model
+    |> struct()
+    |> cast(params, fields)
+    |> apply_changes()
+  end
 
   def preload(%model{} = struct, association, options) do
     reflection = model.__schema__(:association, association)
