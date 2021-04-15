@@ -14,6 +14,7 @@ defmodule Coxir.Model.Loader do
     |> struct()
     |> cast(params, fields)
     |> apply_changes()
+    |> Storage.put()
   end
 
   def preload(%model{} = struct, association, options) do
