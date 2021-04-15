@@ -53,6 +53,15 @@ defmodule Coxir.Storage.Default do
     |> Enum.map(&from_record(model, &1))
   end
 
+  def select(model, clauses) do
+    matcher = clauses_pattern(model, clauses)
+
+    model
+    |> get_table()
+    |> :ets.match_object(matcher)
+    |> Enum.map(&from_record(model, &1))
+  end
+
   def get(model, primary) do
     record =
       model
@@ -77,15 +86,6 @@ defmodule Coxir.Storage.Default do
       _other ->
         nil
     end
-  end
-
-  def select(model, clauses) do
-    matcher = clauses_pattern(model, clauses)
-
-    model
-    |> get_table()
-    |> :ets.match_object(matcher)
-    |> Enum.map(&from_record(model, &1))
   end
 
   def delete(%model{id: primary} = struct) do

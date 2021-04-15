@@ -10,11 +10,11 @@ defmodule Coxir.Storage do
 
   @callback all(Model.name()) :: list(Model.object())
 
+  @callback select(Model.name(), Keyword.t()) :: list(Model.object())
+
   @callback get(Model.name(), Snowflake.t()) :: Model.object() | nil
 
   @callback get_by(Model.name(), Keyword.t()) :: Model.object() | nil
-
-  @callback select(Model.name(), Keyword.t()) :: list(Model.object())
 
   @callback delete(Model.object()) :: Model.object()
 
