@@ -11,11 +11,11 @@ defmodule Coxir.API.Limiter do
   @major_params ["guilds", "channels", "webhooks"]
   @regex ~r|/?([\w-]+)/(?:\d+)|i
 
-  @header_date "date"
   @header_remaining "x-ratelimit-remaining"
   @header_reset "x-ratelimit-reset"
   @header_global "x-ratelimit-global"
   @header_retry "retry-after"
+  @header_date "date"
 
   def call(request, next, options) do
     bucket = bucket_name(request)
