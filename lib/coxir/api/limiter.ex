@@ -4,6 +4,8 @@ defmodule Coxir.API.Limiter do
   """
   alias Coxir.Limiter
 
+  alias Tesla.Middleware.Retry
+
   @behaviour Tesla.Middleware
 
   @major_params ["guilds", "channels", "webhooks"]
@@ -13,18 +15,21 @@ defmodule Coxir.API.Limiter do
   @header_remaining "x-ratelimit-remaining"
   @header_reset "x-ratelimit-reset"
 
-  def call(env, next, _options) do
+  def call(env, next, options) do
     bucket = bucket_name(env)
 
-    with {:error, timeout} <- Limiter.hit(:global) do
-      Process.sleep(timeout)
+    with :ok <- Limiter.hit(:global),
+         :ok <- Limiter.hit(bucket) do
+      continue_call(bucket, env, next)
+    else
+      {:error, timeout} ->
+        Process.sleep(timeout)
+        call(env, next, options)
     end
+  end
 
-    with {:error, timeout} <- Limiter.hit(bucket) do
-      Process.sleep(timeout)
-    end
-
-    with {:ok, response} <- Tesla.run(env, next) do
+  defp continue_call(bucket, env, next) do
+    with {:ok, response} <- run_request(env, next) do
       global = Tesla.get_header(response, @header_global)
       remaining = Tesla.get_header(response, @header_remaining)
       reset = Tesla.get_header(response, @header_reset)
@@ -37,6 +42,23 @@ defmodule Coxir.API.Limiter do
       end
 
       {:ok, response}
+    end
+  end
+
+  defp run_request(env, next) do
+    options = [should_retry: &should_retry/1]
+    Retry.call(env, next, options)
+  end
+
+  defp should_retry(response) do
+    case response do
+      {:ok, %{status: 429}} ->
+        IO.inspect(:should_retry)
+
+        true
+
+      _other ->
+        false
     end
   end
 
