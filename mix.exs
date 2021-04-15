@@ -39,15 +39,25 @@ defmodule Coxir.MixProject do
           Coxir.Channel,
           Coxir.Message
         ],
-        API: ~r/^Coxir.API.?/,
+        Model: ~r/Coxir.Model.?/,
+        Storage: ~r/^Coxir.Storage.?/,
+        Limiter: ~r/^Coxir.Limiter.?/,
         Gateway: [
           ~r/^Coxir.Gateway.?/,
           Coxir.Consumer,
           Coxir.Sharder
         ],
-        Model: ~r/Coxir.Model.?/,
-        Storage: ~r/^Coxir.Storage.?/,
-        Limiter: ~r/^Coxir.Limiter.?/
+        API: ~r/^Coxir.API.?/,
+        Helpers: [
+          Coxir.Token
+        ]
+      ],
+      nest_modules_by_prefix: [
+        Coxir.Model,
+        Coxir.Storage,
+        Coxir.Limiter,
+        Coxir.Gateway,
+        Coxir.API
       ]
     ]
   end
