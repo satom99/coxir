@@ -11,9 +11,13 @@ defmodule Coxir.Storage.Helper do
     fields = get_fields(model)
     params = Map.take(overwrite, fields)
 
+    assocs = get_associations(model)
+    assocs = Map.take(overwrite, assocs)
+
     base
     |> change(params)
     |> apply_changes
+    |> Map.merge(assocs)
   end
 
   @spec get_key(Model.object()) :: term
@@ -35,6 +39,10 @@ defmodule Coxir.Storage.Helper do
   def get_values(%model{} = struct) do
     fields = get_fields(model)
     take_fields(struct, fields)
+  end
+
+  defp get_associations(model) do
+    model.__schema__(:associations)
   end
 
   defp take_fields(struct, fields) do
