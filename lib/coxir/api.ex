@@ -4,6 +4,18 @@ defmodule Coxir.API do
   """
   use Tesla, only: [], docs: false
 
+  @type method :: :get
+
+  @type path :: binary
+
+  @type options :: keyword
+
+  @type body :: nil | map
+
+  @type status :: non_neg_integer
+
+  @type result :: :ok | {:ok, body} | {:error, status}
+
   adapter(Tesla.Adapter.Gun)
 
   plug(Tesla.Middleware.JSON)
@@ -18,12 +30,21 @@ defmodule Coxir.API do
 
   plug(Tesla.Middleware.KeepRequest)
 
-  def execute(method, path, body \\ nil, options \\ []) do
-    response = request!(method: method, url: path, body: body, opts: options)
-    response.body
+  @spec execute(method, path, options, body) :: result
+  def execute(method, path, options \\ [], body \\ nil) do
+    case request!(method: method, url: path, body: body, opts: options) do
+      %{status: 204} ->
+        :ok
+
+      %{status: status, body: body} when status in [200, 201, 304] ->
+        {:ok, body}
+
+      %{status: status} ->
+        {:error, status}
+    end
   end
 
   def get(path, options) do
-    execute(:get, path, nil, options)
+    execute(:get, path, options)
   end
 end
