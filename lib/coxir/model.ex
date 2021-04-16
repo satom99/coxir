@@ -8,7 +8,7 @@ defmodule Coxir.Model do
 
   @type object :: struct
 
-  @callback fetch(Storage.key(), Keyword.t()) :: object :: nil
+  @callback fetch(Storage.key(), keyword) :: object :: nil
 
   defmacro __using__(_options) do
     quote location: :keep do

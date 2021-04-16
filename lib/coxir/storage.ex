@@ -12,15 +12,15 @@ defmodule Coxir.Storage do
 
   @callback all(Model.name()) :: list(Model.object())
 
-  @callback select(Model.name(), Keyword.t()) :: list(Model.object())
+  @callback select(Model.name(), keyword) :: list(Model.object())
 
   @callback get(Model.name(), key) :: Model.object() | nil
 
-  @callback get_by(Model.name(), Keyword.t()) :: Model.object() | nil
+  @callback get_by(Model.name(), keyword) :: Model.object() | nil
 
   @callback delete(Model.object()) :: Model.object()
 
-  @callback delete_by(Model.name(), Keyword.t()) :: :ok
+  @callback delete_by(Model.name(), keyword) :: :ok
 
   defmacro __using__(_options) do
     quote location: :keep do

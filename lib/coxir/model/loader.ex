@@ -18,7 +18,7 @@ defmodule Coxir.Model.Loader do
     |> Storage.put()
   end
 
-  @spec preload(Model.object(), atom, Keyword.t()) :: Model.object()
+  @spec preload(Model.object(), atom, keyword) :: Model.object()
   def preload(%model{} = struct, association, options) do
     reflection = model.__schema__(:association, association)
     force = Keyword.get(options, :force, false)
