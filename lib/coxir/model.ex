@@ -2,13 +2,13 @@ defmodule Coxir.Model do
   @moduledoc """
   Work in progress.
   """
-  alias Coxir.Storage
+  alias Coxir.{Storage, API}
 
   @type name :: module
 
   @type object :: struct
 
-  @callback fetch(Storage.key(), keyword) :: object :: nil
+  @callback fetch(Storage.key(), keyword) :: {:ok, object} | API.result()
 
   defmacro __using__(_options) do
     quote location: :keep do
