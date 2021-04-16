@@ -16,4 +16,11 @@ defmodule Coxir.Channel do
     belongs_to(:guild, Guild)
     belongs_to(:parent, Channel)
   end
+
+  def fetch(id, options) do
+    with {:ok, object} <- API.get("channels/#{id}", options) do
+      struct = Loader.load(Channel, object)
+      {:ok, struct}
+    end
+  end
 end
