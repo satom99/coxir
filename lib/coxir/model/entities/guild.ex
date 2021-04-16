@@ -9,4 +9,11 @@ defmodule Coxir.Guild do
 
     belongs_to(:owner, User)
   end
+
+  def fetch(id, options) do
+    with {:ok, object} <- API.get("guilds/#{id}", options) do
+      struct = Loader.load(Guild, object)
+      {:ok, struct}
+    end
+  end
 end
