@@ -4,6 +4,8 @@ defmodule Coxir.Storage do
   """
   alias Coxir.{Model, Snowflake}
 
+  @type key :: Snowflake.t() | tuple
+
   @callback child_spec(term) :: Supervisor.child_spec()
 
   @callback put(Model.object()) :: Model.object()
@@ -12,7 +14,7 @@ defmodule Coxir.Storage do
 
   @callback select(Model.name(), Keyword.t()) :: list(Model.object())
 
-  @callback get(Model.name(), Snowflake.t()) :: Model.object() | nil
+  @callback get(Model.name(), key) :: Model.object() | nil
 
   @callback get_by(Model.name(), Keyword.t()) :: Model.object() | nil
 
