@@ -16,9 +16,9 @@ defmodule Coxir.Model do
 
       use Ecto.Schema
 
-      alias Coxir.Model.{Snowflake, Loader}
+      alias Coxir.Model.Snowflake
       alias Coxir.{User, Guild, Channel, Message}
-      alias Coxir.API
+      alias Coxir.{API, Loader}
 
       @primary_key {:id, Snowflake, []}
       @foreign_key_type Snowflake
