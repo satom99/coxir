@@ -2,12 +2,12 @@ defmodule Coxir.API.RateLimiter do
   @moduledoc """
   Responsible for handling ratelimits.
   """
+  @behaviour Tesla.Middleware
+
   import Coxir.Limiter.Helper
   import Coxir.API.Helper
 
   alias Coxir.{Limiter, Token}
-
-  @behaviour Tesla.Middleware
 
   @major_params ["guilds", "channels", "webhooks"]
   @regex ~r|/?([\w-]+)/(?:\d+)|i
