@@ -13,4 +13,11 @@ defmodule Coxir.Message do
     belongs_to(:guild, Guild)
     belongs_to(:author, User)
   end
+
+  def fetch({id, channel_id}, options) do
+    with {:ok, object} <- API.get("channels/#{channel_id}/messages/#{id}", options) do
+      struct = Loader.load(Message, object)
+      {:ok, struct}
+    end
+  end
 end
