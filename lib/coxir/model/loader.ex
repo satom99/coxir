@@ -32,8 +32,15 @@ defmodule Coxir.Model.Loader do
     |> Storage.put()
   end
 
-  defp associer(%{data: struct} = changeset, [name | associations]) do
-    struct = preload(struct, name, force: true)
+  defp associer(%{data: struct, params: params} = changeset, [name | associations]) do
+    param = to_string(name)
+
+    struct =
+      if Map.has_key?(params, param) do
+        preload(struct, name, force: true)
+      else
+        struct
+      end
 
     changeset
     |> Map.put(:data, struct)
