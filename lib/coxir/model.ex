@@ -2,8 +2,6 @@ defmodule Coxir.Model do
   @moduledoc """
   Work in progress.
   """
-  alias Coxir.Model.Snowflake
-
   @type name :: module
 
   @type object :: struct
