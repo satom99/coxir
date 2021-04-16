@@ -13,7 +13,9 @@ defmodule Coxir.User do
   end
 
   def fetch(id, options) do
-    object = API.get("users/#{id}", options)
-    Loader.load(User, object)
+    with {:ok, object} <- API.get("users/#{id}", options) do
+      struct = Loader.load(User, object)
+      {:ok, struct}
+    end
   end
 end
