@@ -12,6 +12,8 @@ defmodule Coxir.Model do
 
   defmacro __using__(_options) do
     quote location: :keep do
+      @behaviour Coxir.Model
+
       use Ecto.Schema
 
       alias Coxir.Model.{Snowflake, Loader}
