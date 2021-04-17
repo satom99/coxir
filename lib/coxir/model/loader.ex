@@ -7,7 +7,11 @@ defmodule Coxir.Model.Loader do
   alias Ecto.Association.{NotLoaded, BelongsTo, Has}
   alias Coxir.{Storage, Model}
 
-  @spec load(Model.name(), map) :: Model.object()
+  @spec load(Model.name(), map | list(map)) :: Model.object()
+  def load(model, objects) when is_list(objects) do
+    Enum.map(objects, &load(model, &1))
+  end
+
   def load(model, object) do
     model
     |> struct()
