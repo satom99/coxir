@@ -111,9 +111,12 @@ defmodule Coxir.Model.Loader do
 
     result = storage || fetch
 
-    with nil when cardinality == :many <- result do
-      []
-    end
+    resolved =
+      with nil when cardinality == :many <- result do
+        []
+      end
+
+    Map.put(struct, field, resolved)
   end
 
   defp default_options(options) do
