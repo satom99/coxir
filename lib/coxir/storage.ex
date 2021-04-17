@@ -2,31 +2,29 @@ defmodule Coxir.Storage do
   @moduledoc """
   Work in progress.
   """
-  alias Coxir.{Model, Snowflake}
-
-  @type key :: Snowflake.t() | tuple
+  alias Coxir.Model
 
   @callback child_spec(term) :: Supervisor.child_spec()
 
-  @callback put(Model.object()) :: Model.object()
+  @callback put(Model.instance()) :: Model.instance()
 
-  @callback all(Model.name()) :: list(Model.object())
+  @callback all(Model.model()) :: list(Model.instance())
 
-  @callback select(Model.name(), keyword) :: list(Model.object())
+  @callback all_by(Model.model(), keyword) :: list(Model.instance())
 
-  @callback get(Model.name(), key) :: Model.object() | nil
+  @callback get(Model.model(), Model.key()) :: Model.instance() | nil
 
-  @callback get_by(Model.name(), keyword) :: Model.object() | nil
+  @callback get_by(Model.model(), keyword) :: Model.instance() | nil
 
-  @callback delete(Model.object()) :: Model.object()
+  @callback delete(Model.model(), Model.key()) :: :ok
 
-  @callback delete_by(Model.name(), keyword) :: :ok
+  @callback delete_by(Model.model(), keyword) :: :ok
 
   defmacro __using__(_options) do
     quote location: :keep do
       @behaviour Coxir.Storage
 
-      import Coxir.Storage.Helper
+      import Coxir.Model.Helper
     end
   end
 
@@ -42,20 +40,20 @@ defmodule Coxir.Storage do
     storage().all(model)
   end
 
-  def select(model, clauses) do
-    storage().select(model, clauses)
+  def all_by(model, clauses) do
+    storage().all_by(model, clauses)
   end
 
-  def get(model, primary) do
-    storage().get(model, primary)
+  def get(model, key) do
+    storage().get(model, key)
   end
 
   def get_by(model, clauses) do
     storage().get_by(model, clauses)
   end
 
-  def delete(struct) do
-    storage().delete(struct)
+  def delete(model, key) do
+    storage().delete(model, key)
   end
 
   def delete_by(model, clauses) do

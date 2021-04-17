@@ -1,12 +1,12 @@
-defmodule Coxir.Storage.Helper do
+defmodule Coxir.Model.Helper do
   @moduledoc """
-  Common helper functions for `Coxir.Storage` implementations.
+  Work in progress.
   """
   import Ecto.Changeset
 
   alias Coxir.Model
 
-  @spec merge(Model.object(), Model.object()) :: Model.object()
+  @spec merge(Model.instance(), Model.instance()) :: Model.instance()
   def merge(%model{} = base, %model{} = overwrite) do
     fields = get_fields(model)
     params = Map.take(overwrite, fields)
@@ -16,13 +16,13 @@ defmodule Coxir.Storage.Helper do
 
     base
     |> change(params)
-    |> apply_changes
+    |> apply_changes()
     |> Map.merge(assocs)
   end
 
-  @spec get_key(Model.object()) :: term
+  @spec get_key(Model.instance()) :: Model.key()
   def get_key(%model{} = struct) do
-    primary = model.__schema__(:primary_key)
+    primary = get_primary(model)
 
     case take_fields(struct, primary) do
       [single] -> single
@@ -30,19 +30,30 @@ defmodule Coxir.Storage.Helper do
     end
   end
 
-  @spec get_fields(Model.name()) :: list(atom)
+  @spec get_primary(Model.model()) :: list(atom)
+  def get_primary(model) do
+    model.__schema__(:primary_key)
+  end
+
+  @spec get_fields(Model.model()) :: list(atom)
   def get_fields(model) do
     model.__schema__(:fields)
   end
 
-  @spec get_values(Model.object()) :: list(term)
+  @spec get_associations(Model.model()) :: list(atom)
+  def get_associations(model) do
+    model.__schema__(:associations)
+  end
+
+  @spec get_association(Model.model(), atom) :: struct
+  def get_association(model, name) do
+    model.__schema__(:association, name)
+  end
+
+  @spec get_values(Model.instance()) :: list
   def get_values(%model{} = struct) do
     fields = get_fields(model)
     take_fields(struct, fields)
-  end
-
-  defp get_associations(model) do
-    model.__schema__(:associations)
   end
 
   defp take_fields(struct, fields) do

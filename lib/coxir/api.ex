@@ -4,15 +4,15 @@ defmodule Coxir.API do
   """
   use Tesla, only: [], docs: false
 
-  @type method :: :get
+  @type method :: Tesla.Env.method()
 
-  @type path :: binary
+  @type path :: Tesla.Env.url()
 
-  @type options :: keyword
+  @type options :: Tesla.Env.opts()
 
-  @type body :: nil | map
+  @type body :: Tesla.Env.body()
 
-  @type status :: non_neg_integer
+  @type status :: Tesla.Env.status()
 
   @type result :: :ok | {:ok, body} | {:error, status}
 
@@ -22,17 +22,13 @@ defmodule Coxir.API do
 
   plug(Tesla.Middleware.BaseUrl, "https://discord.com/api")
 
-  plug(Tesla.Middleware.Headers, [{"User-Agent", "coxir"}])
-
-  plug(Coxir.API.Authorization)
+  plug(Coxir.API.Headers)
 
   plug(Coxir.API.RateLimiter)
 
-  plug(Tesla.Middleware.KeepRequest)
-
-  @spec execute(method, path, options, body) :: result
-  def execute(method, path, options \\ [], body \\ nil) do
-    case request!(method: method, url: path, body: body, opts: options) do
+  @spec perform(method, path, options, body) :: result
+  def perform(method, path, options \\ [], body \\ nil) do
+    case request!(method: method, url: path, opts: options, body: body) do
       %{status: 204} ->
         :ok
 
@@ -45,6 +41,6 @@ defmodule Coxir.API do
   end
 
   def get(path, options) do
-    execute(:get, path, options)
+    perform(:get, path, options)
   end
 end

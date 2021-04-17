@@ -2,11 +2,11 @@ defmodule Coxir.Limiter do
   @moduledoc """
   Work in progress.
   """
-  @type bucket :: atom | String.t()
+  @type bucket :: :global | String.t()
 
-  @type limit :: integer
+  @type limit :: non_neg_integer
 
-  @type reset :: integer
+  @type reset :: non_neg_integer
 
   @callback child_spec(term) :: Supervisor.child_spec()
 

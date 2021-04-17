@@ -15,9 +15,12 @@ defmodule Coxir.Message do
   end
 
   def fetch({id, channel_id}, options) do
-    with {:ok, object} <- API.get("channels/#{channel_id}/messages/#{id}", options) do
-      struct = Loader.load(Message, object)
-      {:ok, struct}
+    case API.get("channels/#{channel_id}/messages/#{id}", options) do
+      {:ok, object} ->
+        Loader.load(Message, object)
+
+      _other ->
+        nil
     end
   end
 end

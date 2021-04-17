@@ -11,9 +11,12 @@ defmodule Coxir.Guild do
   end
 
   def fetch(id, options) do
-    with {:ok, object} <- API.get("guilds/#{id}", options) do
-      struct = Loader.load(Guild, object)
-      {:ok, struct}
+    case API.get("guilds/#{id}", options) do
+      {:ok, object} ->
+        Loader.load(Guild, object)
+
+      _other ->
+        nil
     end
   end
 end

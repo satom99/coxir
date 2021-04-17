@@ -3,31 +3,28 @@ defmodule Coxir.Model.Loader do
   Work in progress.
   """
   import Ecto.Changeset
+  import Coxir.Model.Helper
 
   alias Ecto.Association.{NotLoaded, BelongsTo, Has}
-  alias Coxir.{Storage, Model}
+  alias Coxir.{Model, Storage}
 
-  @spec load(Model.name(), map | list(map)) :: Model.object()
-  def load(model, objects) when is_list(objects) do
-    Enum.map(objects, &load(model, &1))
-  end
-
+  @spec load(Model.model(), map) :: Model.object()
   def load(model, object) do
     model
     |> struct()
     |> loader(object)
   end
 
-  @spec preload(Model.object(), atom, keyword) :: Model.object()
+  @spec preload(Model.instance(), atom, keyword) :: Model.instance()
   def preload(%model{} = struct, association, options) do
-    reflection = model.__schema__(:association, association)
-    force = Keyword.get(options, :force, false)
-    preloader(reflection, struct, force)
+    reflection = get_association(model, association)
+    options = default_options(options)
+    preloader(reflection, struct, options)
   end
 
   defp loader(%model{} = struct, object) do
-    fields = model.__schema__(:fields)
-    associations = model.__schema__(:associations)
+    fields = get_fields(model)
+    associations = get_associations(model)
 
     struct
     |> cast(object, fields)
@@ -36,19 +33,19 @@ defmodule Coxir.Model.Loader do
     |> Storage.put()
   end
 
-  defp associer(%{data: struct, params: params} = changeset, [name | associations]) do
-    param = to_string(name)
+  defp associer(%{data: struct, params: params} = changeset, [association | associations]) do
+    param = to_string(association)
 
     struct =
       if Map.has_key?(params, param) do
-        preload(struct, name, force: true)
+        void_association(struct, association)
       else
         struct
       end
 
     changeset
     |> Map.put(:data, struct)
-    |> cast_assoc(name, with: &associer/2)
+    |> cast_assoc(association, with: &associer/2)
     |> associer(associations)
   end
 
@@ -59,20 +56,33 @@ defmodule Coxir.Model.Loader do
   defp associer(%_model{} = struct, object) do
     struct
     |> loader(object)
-    |> change
+    |> change()
   end
 
-  defp preloader(%{field: field} = reflection, struct, false) do
+  defp void_association(%model{} = struct, name) do
+    value =
+      case get_association(model, name) do
+        %{cardinality: :one} -> nil
+        %{cardinality: :many} -> []
+      end
+
+    Map.put(struct, name, value)
+  end
+
+  defp preloader(%{field: field} = reflection, struct, %{force: false} = options) do
     case Map.fetch!(struct, field) do
       %NotLoaded{} ->
-        preloader(reflection, struct, true)
+        options = %{options | force: true}
+        preloader(reflection, struct, options)
 
       _other ->
         struct
     end
   end
 
-  defp preloader(%type{} = reflection, struct, true) when type in [BelongsTo, Has] do
+  defp preloader(%type{} = reflection, %model{} = struct, options)
+       when type in [Has, BelongsTo] do
+    %{storage: storage?, fetch: fetch?} = options
     %{owner_key: owner_key, related_key: related_key} = reflection
     %{cardinality: cardinality, related: related} = reflection
     %{field: field} = reflection
@@ -81,14 +91,36 @@ defmodule Coxir.Model.Loader do
 
     clauses = [{related_key, owner_value}]
 
-    function =
-      case cardinality do
-        :one -> :get_by
-        :many -> :select
+    storage =
+      if storage? do
+        case cardinality do
+          :one -> Storage.get(related, owner_value)
+          :many -> Storage.all_by(related, clauses)
+        end
       end
 
-    resolved = apply(Storage, function, [related, clauses])
+    options = Keyword.new(options)
 
-    Map.put(struct, field, resolved)
+    fetch =
+      if is_nil(storage) and fetch? do
+        case cardinality do
+          :one -> related.fetch(owner_value, options)
+          :many -> model.fetch_association(struct, field, options)
+        end
+      end
+
+    result = storage || fetch
+
+    with nil when cardinality == :many <- result do
+      []
+    end
+  end
+
+  defp default_options(options) do
+    options
+    |> Map.new()
+    |> Map.put_new(:force, false)
+    |> Map.put_new(:storage, true)
+    |> Map.put_new(:fetch, true)
   end
 end

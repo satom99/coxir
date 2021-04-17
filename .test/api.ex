@@ -1,0 +1,9 @@
+Coxir.API.get("users/@me", token: "MTYzODAxMjk0MDAyMzIzNDU4.Vvh11w.415BN48HUxWIlUuRN2JczW_ixpo")
+
+Coxir.User.fetch(105024590090092544, token: "MTYzODAxMjk0MDAyMzIzNDU4.Vvh11w.415BN48HUxWIlUuRN2JczW_ixpo")
+
+Coxir.User.fetch(1, token: "MTYzODAxMjk0MDAyMzIzNDU4.Vvh11w.415BN48HUxWIlUuRN2JczW_ixpo")
+
+Coxir.Message.fetch({832222169710067722, 831655754222141450}, token: "MTYzODAxMjk0MDAyMzIzNDU4.Vvh11w.415BN48HUxWIlUuRN2JczW_ixpo")
+
+Coxir.User.get(105024590090092544, token: "MTYzODAxMjk0MDAyMzIzNDU4.Vvh11w.415BN48HUxWIlUuRN2JczW_ixpo")

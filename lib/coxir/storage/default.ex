@@ -1,18 +1,19 @@
 defmodule Coxir.Storage.Default do
   @moduledoc """
-  Stores models in ets.
+  Stores models in ETS.
   """
   use Coxir.Storage
   use GenServer
 
+  @server __MODULE__
   @table __MODULE__
 
   def start_link(state) do
-    GenServer.start_link(__MODULE__, state, name: __MODULE__)
+    GenServer.start_link(__MODULE__, state, name: @server)
   end
 
   def init(state) do
-    :ets.new(@table, [{:read_concurrency, true}, :named_table, :public])
+    :ets.new(@table, [:named_table, :public, {:read_concurrency, true}])
     {:ok, state}
   end
 
@@ -54,7 +55,7 @@ defmodule Coxir.Storage.Default do
     |> Enum.map(&from_record(model, &1))
   end
 
-  def select(model, clauses) do
+  def all_by(model, clauses) do
     pattern = get_pattern(model, clauses)
 
     model
@@ -76,8 +77,8 @@ defmodule Coxir.Storage.Default do
   end
 
   def get_by(model, clauses) do
-    pattern = get_pattern(model, clauses)
     table = get_table(model)
+    pattern = get_pattern(model, clauses)
 
     case :ets.match_object(table, pattern, 1) do
       {[record], _continuation} ->
@@ -88,14 +89,12 @@ defmodule Coxir.Storage.Default do
     end
   end
 
-  def delete(%model{} = struct) do
-    key = get_key(struct)
-
+  def delete(model, key) do
     model
     |> get_table()
     |> :ets.delete(key)
 
-    struct
+    :ok
   end
 
   def delete_by(model, clauses) do
@@ -125,7 +124,7 @@ defmodule Coxir.Storage.Default do
   defp to_record(struct) do
     key = get_key(struct)
     values = get_values(struct)
-    List.to_tuple([key | values])
+    List.to_tuple([key, values])
   end
 
   defp from_record(model, record) do
@@ -137,13 +136,13 @@ defmodule Coxir.Storage.Default do
 
   defp get_table(model) do
     with nil <- lookup_table(model) do
-      GenServer.call(__MODULE__, {:create_table, model})
+      GenServer.call(@server, {:create_table, model})
     end
   end
 
   defp lookup_table(model) do
     case :ets.lookup(@table, model) do
-      [{^model, table}] ->
+      [{_model, table}] ->
         table
 
       _none ->

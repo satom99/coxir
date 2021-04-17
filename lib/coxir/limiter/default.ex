@@ -1,6 +1,6 @@
 defmodule Coxir.Limiter.Default do
   @moduledoc """
-  Stores bucket information in ets.
+  Stores bucket information in ETS.
   """
   use Coxir.Limiter
   use GenServer

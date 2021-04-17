@@ -18,9 +18,12 @@ defmodule Coxir.Channel do
   end
 
   def fetch(id, options) do
-    with {:ok, object} <- API.get("channels/#{id}", options) do
-      struct = Loader.load(Channel, object)
-      {:ok, struct}
+    case API.get("channels/#{id}", options) do
+      {:ok, object} ->
+        Loader.load(Channel, object)
+
+      _other ->
+        nil
     end
   end
 end

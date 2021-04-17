@@ -7,15 +7,17 @@ defmodule Coxir.User do
   embedded_schema do
     field(:username, :string)
     field(:discriminator, :string)
-    field(:avatar, :string)
 
     has_many(:guilds, Guild, foreign_key: :owner_id)
   end
 
   def fetch(id, options) do
-    with {:ok, object} <- API.get("users/#{id}", options) do
-      struct = Loader.load(User, object)
-      {:ok, struct}
+    case API.get("users/#{id}", options) do
+      {:ok, object} ->
+        Loader.load(User, object)
+
+      _other ->
+        nil
     end
   end
 end

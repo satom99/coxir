@@ -5,8 +5,8 @@ defmodule Coxir.API.Helper do
   alias Coxir.Token
 
   @spec get_token(Tesla.Env.t()) :: Token.t()
-  def get_token(%{opts: opts}) do
+  def get_token(%{opts: options}) do
     config = Application.get_env(:coxir, :token)
-    Keyword.get(opts, :token, config)
+    Keyword.get(options, :token, config)
   end
 end
