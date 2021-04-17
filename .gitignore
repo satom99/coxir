@@ -28,3 +28,4 @@ coxir-*.tar
 # Custom ignored files
 .elixir_ls
 .DS_Store
+.test
