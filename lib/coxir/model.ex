@@ -10,7 +10,7 @@ defmodule Coxir.Model do
 
   @type key :: Snowflake.t() | tuple
 
-  @callback fetch(Storage.key(), keyword) :: instance | nil
+  @callback fetch(key, keyword) :: instance | nil
 
   @callback fetch_association(instance, atom, keyword) :: instance | nil | list(instance) | list
 
