@@ -4,6 +4,7 @@ defmodule Coxir.Gateway.Session do
   """
   use GenServer
 
+  alias Coxir.Gateway.Payload.Hello
   alias __MODULE__
 
   defstruct [
@@ -12,7 +13,10 @@ defmodule Coxir.Gateway.Session do
     {:host, 'gateway.discord.gg'},
     :gun_pid,
     :stream_ref,
-    :zlib_context
+    :zlib_context,
+    :heartbeat_ref,
+    {:heartbeat_ack, true},
+    :sequence
   ]
 
   @query "/?v=8&encoding=etf&compress=zlib-stream"
@@ -57,8 +61,30 @@ defmodule Coxir.Gateway.Session do
     {:stop, :close, state}
   end
 
-  def handle_payload({10, _data, _sequence, _event}, state) do
+  def handle_payload({10, data, _sequence, _event}, state) do
+    %Hello{heartbeat_interval: heartbeat_interval} = Hello.cast(data)
+
+    heartbeat_ref = :timer.send_interval(heartbeat_interval, self(), :heartbeat)
+
+    state = %{state | heartbeat_ref: heartbeat_ref}
     {:noreply, state, @identify}
+  end
+
+  def handle_payload({11, _data, _sequence, _event}, state) do
+    state = %{state | heartbeat_ack: true}
+    {:noreply, state}
+  end
+
+  def handle_info(:heartbeat, %Session{sequence: sequence, heartbeat_ack: true} = state) do
+    heartbeat = {1, sequence}
+    send_payload(heartbeat, state)
+
+    state = %{state | heartbeat_ack: false}
+    {:noreply, state}
+  end
+
+  def handle_info(:heartbeat, %Session{heartbeat_ack: false} = state) do
+    {:stop, :zombie, state}
   end
 
   def handle_info(
@@ -98,5 +124,13 @@ defmodule Coxir.Gateway.Session do
         %Session{gun_pid: gun_pid} = state
       ) do
     {:stop, :gun_down, state}
+  end
+
+  defp send_payload({opcode, data}, %Session{gun_pid: gun_pid}) do
+    frame = %{"op" => opcode, "d" => data}
+    binary = :erlang.term_to_binary(frame)
+    message = {:binary, binary}
+
+    :ok = :gun.ws_send(gun_pid, message)
   end
 end
