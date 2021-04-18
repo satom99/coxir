@@ -53,8 +53,8 @@ defmodule Coxir.Gateway.Session do
     handle_payload(payload, state)
   end
 
-  def handle_frame({:close, _status, reason}, state) do
-    {:stop, reason, state}
+  def handle_frame({:close, _status, _reason}, state) do
+    {:stop, :close, state}
   end
 
   def handle_payload({10, _data, _sequence, _event}, state) do
@@ -80,23 +80,23 @@ defmodule Coxir.Gateway.Session do
   end
 
   def handle_info(
-        {:gun_response, gun_pid, stream_ref, _is_fin, status, _headers},
+        {:gun_response, gun_pid, stream_ref, _is_fin, _status, _headers},
         %Session{gun_pid: gun_pid, stream_ref: stream_ref} = state
       ) do
-    {:stop, status, state}
+    {:stop, :gun_response, state}
   end
 
   def handle_info(
-        {:gun_error, gun_pid, stream_ref, reason},
+        {:gun_error, gun_pid, stream_ref, _reason},
         %Session{gun_pid: gun_pid, stream_ref: stream_ref} = state
       ) do
-    {:stop, reason, state}
+    {:stop, :gun_error, state}
   end
 
   def handle_info(
-        {:gun_down, gun_pid, _protocol, reason, _killed, _unprocessed},
+        {:gun_down, gun_pid, _protocol, _reason, _killed, _unprocessed},
         %Session{gun_pid: gun_pid} = state
       ) do
-    {:stop, reason, state}
+    {:stop, :gun_down, state}
   end
 end
