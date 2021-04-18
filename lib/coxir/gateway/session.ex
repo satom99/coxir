@@ -4,7 +4,7 @@ defmodule Coxir.Gateway.Session do
   """
   use GenServer
 
-  alias Coxir.Gateway.Payload.Hello
+  alias Coxir.Gateway.Payload.{Hello, Ready}
   alias __MODULE__
 
   defstruct [
@@ -16,7 +16,8 @@ defmodule Coxir.Gateway.Session do
     :zlib_context,
     :heartbeat_ref,
     {:heartbeat_ack, true},
-    :sequence
+    :sequence,
+    :session_id
   ]
 
   @query "/?v=8&encoding=etf&compress=zlib-stream"
@@ -42,7 +43,23 @@ defmodule Coxir.Gateway.Session do
     {:noreply, state}
   end
 
-  def handle_continue(:identify, %Session{token: _token} = state) do
+  def handle_continue(:identify, %Session{token: token} = state) do
+    {os, name} = :os.type()
+
+    identify = %{
+      "token" => token,
+      "compress" => true,
+      "properties" => %{
+        "$os" => "#{os} #{name}",
+        "$browser" => "coxir",
+        "$device" => "coxir"
+      },
+      "intents" => 7
+    }
+
+    payload = {2, identify}
+    send_payload(payload, state)
+
     {:noreply, state}
   end
 
@@ -72,6 +89,13 @@ defmodule Coxir.Gateway.Session do
 
   def handle_payload({11, _data, _sequence, _event}, state) do
     state = %{state | heartbeat_ack: true}
+    {:noreply, state}
+  end
+
+  def handle_payload({0, data, _sequence, _event}, state) do
+    %Ready{session_id: session_id} = Ready.cast(data)
+
+    state = %{state | session_id: session_id}
     {:noreply, state}
   end
 
