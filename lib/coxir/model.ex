@@ -12,7 +12,7 @@ defmodule Coxir.Model do
 
   @callback fetch(key, keyword) :: instance | nil
 
-  @callback fetch_association(instance, atom, keyword) :: instance | nil | list(instance) | list
+  @callback fetch_association(instance, atom, keyword) :: list(instance)
 
   @optional_callbacks [fetch_association: 3]
 
