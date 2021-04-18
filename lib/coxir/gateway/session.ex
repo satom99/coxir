@@ -49,7 +49,8 @@ defmodule Coxir.Gateway.Session do
       |> :erlang.iolist_to_binary()
       |> :erlang.binary_to_term()
 
-    handle_payload({op, data, sequence, event}, state)
+    payload = {op, data, sequence, event}
+    handle_payload(payload, state)
   end
 
   def handle_frame({:close, _status, reason}, state) do
