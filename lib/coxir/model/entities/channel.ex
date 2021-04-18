@@ -20,7 +20,7 @@ defmodule Coxir.Channel do
     field(:video_quality_mode, :integer)
 
     belongs_to(:guild, Guild)
-    has_one(:last_message, Message)
+    belongs_to(:last_message, Message)
     belongs_to(:owner, User)
     belongs_to(:parent, Channel)
   end

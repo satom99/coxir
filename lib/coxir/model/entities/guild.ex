@@ -35,11 +35,11 @@ defmodule Coxir.Guild do
     field(:max_video_channel_users, :integer)
 
     belongs_to(:owner, User)
-    has_one(:afk_channel, Channel)
-    has_one(:widget_channel, Channel)
-    has_one(:system_channel, Channel)
-    has_one(:rules_channel, Channel)
-    has_one(:public_updates_channel, Channel)
+    belongs_to(:afk_channel, Channel)
+    belongs_to(:widget_channel, Channel)
+    belongs_to(:system_channel, Channel)
+    belongs_to(:rules_channel, Channel)
+    belongs_to(:public_updates_channel, Channel)
   end
 
   def fetch(id, options) do
