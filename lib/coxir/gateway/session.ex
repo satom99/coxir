@@ -43,19 +43,21 @@ defmodule Coxir.Gateway.Session do
   end
 
   def handle_frame({:binary, frame}, %Session{zlib_context: zlib_context} = state) do
-    payload =
+    %{op: op, d: data, s: sequence, t: event} =
       zlib_context
       |> :zlib.inflate(frame)
       |> :erlang.iolist_to_binary()
       |> :erlang.binary_to_term()
 
-    IO.inspect(payload)
-
-    {:noreply, state}
+    handle_payload({op, data, sequence, event}, state)
   end
 
   def handle_frame({:close, _status, reason}, state) do
     {:stop, reason, state}
+  end
+
+  def handle_payload({10, _data, _sequence, _event}, state) do
+    {:noreply, state, @identify}
   end
 
   def handle_info(
