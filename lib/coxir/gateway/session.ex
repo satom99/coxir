@@ -73,6 +73,13 @@ defmodule Coxir.Gateway.Session do
   end
 
   def handle_info(
+        {:gun_ws, gun_pid, stream_ref, frame},
+        %Session{gun_pid: gun_pid, stream_ref: stream_ref} = state
+      ) do
+    handle_frame(frame, state)
+  end
+
+  def handle_info(
         {:gun_response, gun_pid, stream_ref, _is_fin, status, _headers},
         %Session{gun_pid: gun_pid, stream_ref: stream_ref} = state
       ) do
@@ -91,12 +98,5 @@ defmodule Coxir.Gateway.Session do
         %Session{gun_pid: gun_pid} = state
       ) do
     {:stop, reason, state}
-  end
-
-  def handle_info(
-        {:gun_ws, gun_pid, stream_ref, frame},
-        %Session{gun_pid: gun_pid, stream_ref: stream_ref} = state
-      ) do
-    handle_frame(frame, state)
   end
 end
