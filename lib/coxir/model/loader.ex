@@ -109,7 +109,7 @@ defmodule Coxir.Model.Loader do
       if is_nil(storage) and fetch? do
         case cardinality do
           :one -> related.fetch(owner_value, options)
-          :many -> model.fetch_association(struct, field, options)
+          :many -> model.fetch_many(struct, field, options)
         end
       end
 

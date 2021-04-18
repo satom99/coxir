@@ -12,9 +12,9 @@ defmodule Coxir.Model do
 
   @callback fetch(key, keyword) :: instance | nil
 
-  @callback fetch_association(instance, atom, keyword) :: list(instance)
+  @callback fetch_many(instance, atom, keyword) :: list(instance)
 
-  @optional_callbacks [fetch_association: 3]
+  @optional_callbacks [fetch_many: 3]
 
   defmacro __using__(_options) do
     quote location: :keep do
