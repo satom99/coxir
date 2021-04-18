@@ -66,7 +66,7 @@ defmodule Coxir.Gateway.Session do
     :zlib.inflateInit(zlib_context)
 
     state = %{state | zlib_context: zlib_context}
-    {:noreply, state, @identify}
+    {:noreply, state}
   end
 
   def handle_info(
