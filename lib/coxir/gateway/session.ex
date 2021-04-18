@@ -35,7 +35,7 @@ defmodule Coxir.Gateway.Session do
 
   def handle_continue(:connect, %Session{host: host} = state) do
     {:ok, gun_pid} = :gun.open(host, 443, %{protocols: [:http]})
-    {:ok, _protocol} = :gun.await_up(gun_pid, @timeout)
+    {:ok, :http} = :gun.await_up(gun_pid, @timeout)
     stream_ref = :gun.ws_upgrade(gun_pid, @query)
 
     state = %{state | gun_pid: gun_pid, stream_ref: stream_ref}
