@@ -24,6 +24,7 @@ defmodule Coxir.Gateway.Intents do
 
   @names @intents
          |> Keyword.keys()
+         |> Enum.reverse()
          |> Enum.reduce(fn name, type ->
            {:|, [], [name, type]}
          end)
