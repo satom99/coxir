@@ -30,6 +30,7 @@ defmodule Coxir.Gateway.Intents do
 
   @type intent :: unquote(@names)
 
+  @spec get_value(list(intent)) :: non_neg_integer
   def get_value(intents) do
     Enum.reduce(
       intents,
