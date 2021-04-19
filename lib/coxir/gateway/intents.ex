@@ -4,7 +4,7 @@ defmodule Coxir.Gateway.Intents do
   """
   import Bitwise
 
-  @intents [
+  @values [
     guilds: 1 <<< 0,
     guild_members: 1 <<< 1,
     guild_bans: 1 <<< 2,
@@ -21,15 +21,15 @@ defmodule Coxir.Gateway.Intents do
     direct_message_reactions: 1 <<< 13,
     direct_message_typing: 1 <<< 14
   ]
+  @intents Keyword.keys(@values)
 
-  @names @intents
-         |> Keyword.keys()
-         |> Enum.reverse()
-         |> Enum.reduce(fn name, type ->
-           {:|, [], [name, type]}
-         end)
+  @typespec @intents
+            |> Enum.reverse()
+            |> Enum.reduce(fn name, type ->
+              {:|, [], [name, type]}
+            end)
 
-  @type intent :: unquote(@names)
+  @type intent :: unquote(@typespec)
 
   @spec get_value(list(intent)) :: non_neg_integer
   def get_value(intents) do
@@ -37,7 +37,7 @@ defmodule Coxir.Gateway.Intents do
       intents,
       0,
       fn intent, value ->
-        Keyword.fetch!(@intents, intent) ||| value
+        Keyword.fetch!(@values, intent) ||| value
       end
     )
   end
