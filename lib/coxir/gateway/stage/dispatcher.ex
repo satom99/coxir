@@ -1,4 +1,4 @@
-defmodule Coxir.Gateway.Transformer do
+defmodule Coxir.Gateway.Dispatcher do
   @moduledoc """
   Work in progress.
   """
