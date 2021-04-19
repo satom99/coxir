@@ -25,6 +25,7 @@ defmodule Coxir.MixProject do
       {:jason, "~> 1.2"},
       {:gun, "~> 1.3"},
       {:tesla, "~> 1.4"},
+      {:gen_stage, "~> 1.1"},
       {:ex_doc, "~> 0.24.2", only: :dev}
     ]
   end
