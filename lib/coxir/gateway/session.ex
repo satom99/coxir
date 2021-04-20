@@ -89,6 +89,11 @@ defmodule Coxir.Gateway.Session do
     {:noreply, state, @identify}
   end
 
+  def handle_payload({11, _data, _sequence, _event}, state) do
+    state = %{state | heartbeat_ack: true}
+    {:noreply, state}
+  end
+
   def handle_payload({0, data, sequence, :READY}, state) do
     %Ready{session_id: session_id} = Ready.cast(data)
     state = %{state | sequence: sequence, session_id: session_id}
@@ -98,11 +103,6 @@ defmodule Coxir.Gateway.Session do
   def handle_payload({0, data, sequence, event}, %Session{producer: producer} = state) do
     Producer.notify(producer, {event, data})
     state = %{state | sequence: sequence}
-    {:noreply, state}
-  end
-
-  def handle_payload({11, _data, _sequence, _event}, state) do
-    state = %{state | heartbeat_ack: true}
     {:noreply, state}
   end
 
