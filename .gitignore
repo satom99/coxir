@@ -26,6 +26,7 @@ coxir-*.tar
 /tmp
 
 # Custom ignored files
+.tool-versions
 .elixir_ls
 .DS_Store
 .test
