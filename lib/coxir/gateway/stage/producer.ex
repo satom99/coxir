@@ -30,9 +30,9 @@ defmodule Coxir.Gateway.Producer do
 
   defp dispatch(demand, queue, events \\ [])
 
-  defp dispatch(queue, 0 = demand, events) do
+  defp dispatch(queue, 0, events) do
     events = Enum.reverse(events)
-    {:noreply, events, {queue, demand}}
+    {:noreply, events, {queue, 0}}
   end
 
   defp dispatch(queue, demand, events) do
@@ -42,7 +42,8 @@ defmodule Coxir.Gateway.Producer do
         dispatch(queue, demand - 1, events)
 
       _other ->
-        dispatch(queue, 0, events)
+        events = Enum.reverse(events)
+        {:noreply, events, {queue, demand}}
     end
   end
 end
