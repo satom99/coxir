@@ -33,6 +33,11 @@ defmodule Coxir.Gateway.Dispatcher do
     {:MESSAGE_CREATE, message}
   end
 
+  defp handle_event(:MESSAGE_UPDATE, object) do
+    message = Loader.load(Message, object)
+    {:MESSAGE_UPDATE, message}
+  end
+
   defp handle_event(name, object) do
     {name, object}
   end
