@@ -5,7 +5,7 @@ defmodule Coxir.Gateway.Dispatcher do
   use GenStage
 
   alias Coxir.Model.Loader
-  alias Coxir.Message
+  alias Coxir.{Guild, Channel, Message}
 
   def start_link(producer) do
     GenStage.start_link(__MODULE__, producer)
@@ -26,6 +26,26 @@ defmodule Coxir.Gateway.Dispatcher do
       )
 
     {:noreply, events, state}
+  end
+
+  defp handle_event(:GUILD_CREATE, object) do
+    guild = Loader.load(Guild, object)
+    {:GUILD_CREATE, guild}
+  end
+
+  defp handle_event(:GUILD_UPDATE, object) do
+    guild = Loader.load(Guild, object)
+    {:GUILD_UPDATE, guild}
+  end
+
+  defp handle_event(:CHANNEL_CREATE, object) do
+    channel = Loader.load(Channel, object)
+    {:CHANNEL_CREATE, channel}
+  end
+
+  defp handle_event(:CHANNEL_UPDATE, object) do
+    channel = Loader.load(Channel, object)
+    {:CHANNEL_UPDATE, channel}
   end
 
   defp handle_event(:MESSAGE_CREATE, object) do
