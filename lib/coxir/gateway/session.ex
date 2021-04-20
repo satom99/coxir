@@ -11,6 +11,7 @@ defmodule Coxir.Gateway.Session do
   defstruct [
     :token,
     :shard,
+    :intents,
     {:host, 'gateway.discord.gg'},
     :gun_pid,
     :stream_ref,
@@ -45,7 +46,7 @@ defmodule Coxir.Gateway.Session do
     {:noreply, state}
   end
 
-  def handle_continue(:identify, %Session{token: token} = state) do
+  def handle_continue(:identify, %Session{token: token, intents: intents} = state) do
     {os, name} = :os.type()
 
     identify = %{
@@ -56,7 +57,7 @@ defmodule Coxir.Gateway.Session do
         "$browser" => "coxir",
         "$device" => "coxir"
       },
-      "intents" => 7
+      "intents" => intents
     }
 
     payload = {2, identify}
