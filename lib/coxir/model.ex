@@ -14,7 +14,7 @@ defmodule Coxir.Model do
 
   @callback fetch_many(instance, atom, keyword) :: list(instance)
 
-  @optional_callbacks [fetch_many: 3]
+  @optional_callbacks [fetch: 2, fetch_many: 3]
 
   defmacro __using__(_options) do
     quote location: :keep do
