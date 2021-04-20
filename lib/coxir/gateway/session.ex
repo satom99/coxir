@@ -5,6 +5,7 @@ defmodule Coxir.Gateway.Session do
   use GenServer
 
   alias Coxir.Gateway.Payload.{Hello, Ready}
+  alias Coxir.Gateway.Producer
   alias __MODULE__
 
   defstruct [
@@ -17,7 +18,8 @@ defmodule Coxir.Gateway.Session do
     :heartbeat_ref,
     {:heartbeat_ack, true},
     :sequence,
-    :session_id
+    :session_id,
+    :producer
   ]
 
   @query "/?v=8&encoding=etf&compress=zlib-stream"
@@ -92,10 +94,15 @@ defmodule Coxir.Gateway.Session do
     {:noreply, state}
   end
 
-  def handle_payload({0, data, _sequence, _event}, state) do
+  def handle_payload({0, data, sequence, :READY}, state) do
     %Ready{session_id: session_id} = Ready.cast(data)
+    state = %{state | sequence: sequence, session_id: session_id}
+    {:noreply, state}
+  end
 
-    state = %{state | session_id: session_id}
+  def handle_payload({0, data, sequence, event}, %Session{producer: producer} = state) do
+    Producer.notify(producer, {event, data})
+    state = %{state | sequence: sequence}
     {:noreply, state}
   end
 
