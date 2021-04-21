@@ -23,7 +23,8 @@ defmodule Coxir.Gateway.Payload do
     :operation,
     :data,
     :sequence,
-    :event
+    :event,
+    :session
   ]
 
   defmacro __using__(_options) do
@@ -49,7 +50,7 @@ defmodule Coxir.Gateway.Payload do
 
   def cast(%{"op" => opcode, "d" => data, "s" => sequence, "t" => event}) do
     operation = Map.fetch!(@operations, opcode)
-    %Payload{operation: operation, data: data, sequence: sequence, event: event}
+    %Payload{operation: operation, data: data, sequence: sequence, event: event, session: self()}
   end
 
   def extract(%Payload{operation: operation, data: data}) do
