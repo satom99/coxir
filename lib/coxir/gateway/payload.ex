@@ -37,6 +37,8 @@ defmodule Coxir.Gateway.Payload do
 
       @primary_key false
 
+      @type t :: %__MODULE__{}
+
       def cast(object) do
         fields = __schema__(:fields)
 

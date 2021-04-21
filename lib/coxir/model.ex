@@ -28,6 +28,8 @@ defmodule Coxir.Model do
 
       @primary_key {:id, Snowflake, []}
       @foreign_key_type Snowflake
+
+      @type t :: %__MODULE__{}
     end
   end
 end
