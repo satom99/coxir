@@ -33,6 +33,10 @@ defmodule Coxir.Gateway.Dispatcher do
     {:READY, ready}
   end
 
+  defp handle_payload(%Payload{event: "RESUMED"}) do
+    :RESUMED
+  end
+
   defp handle_payload(%Payload{event: "GUILD_CREATE", data: object}) do
     guild = Loader.load(Guild, object)
     {:GUILD_CREATE, guild}
