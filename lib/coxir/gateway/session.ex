@@ -56,7 +56,7 @@ defmodule Coxir.Gateway.Session do
           state
       ) do
     :ok = :gun.close(gun_pid)
-    :ok = :zlib.close(zlib_context)
+    :ok = :zlib.inflateReset(zlib_context)
     :timer.cancel(heartbeat_ref)
 
     {:noreply, state, @connect}
