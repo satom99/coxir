@@ -15,7 +15,7 @@ defmodule Coxir.Model.Helper do
     assocs = Map.take(overwrite, assocs)
 
     base
-    |> change(params)
+    |> cast(params, fields)
     |> apply_changes()
     |> Map.merge(assocs)
   end
