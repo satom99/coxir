@@ -49,9 +49,11 @@ defmodule Coxir.Gateway.Session do
 
   def handle_continue(
         :reconnect,
-        %Session{gun_pid: gun_pid, heartbeat_ref: heartbeat_ref} = state
+        %Session{gun_pid: gun_pid, zlib_context: zlib_context, heartbeat_ref: heartbeat_ref} =
+          state
       ) do
     :ok = :gun.close(gun_pid)
+    :ok = :zlib.inflateReset(zlib_context)
     :timer.cancel(heartbeat_ref)
     {:noreply, state, @connect}
   end
