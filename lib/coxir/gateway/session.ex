@@ -52,11 +52,9 @@ defmodule Coxir.Gateway.Session do
 
   def handle_continue(
         :reconnect,
-        %Session{gun_pid: gun_pid, zlib_context: zlib_context, heartbeat_ref: heartbeat_ref} =
-          state
+        %Session{gun_pid: gun_pid, heartbeat_ref: heartbeat_ref} = state
       ) do
     :ok = :gun.close(gun_pid)
-    :ok = :zlib.inflateReset(zlib_context)
     :timer.cancel(heartbeat_ref)
 
     {:noreply, state, @connect}
@@ -164,10 +162,17 @@ defmodule Coxir.Gateway.Session do
 
   def handle_info(
         {:gun_upgrade, gun_pid, stream_ref, ["websocket"], _headers},
-        %Session{gun_pid: gun_pid, stream_ref: stream_ref} = state
+        %Session{gun_pid: gun_pid, stream_ref: stream_ref, zlib_context: zlib_context} = state
       ) do
-    zlib_context = :zlib.open()
-    :zlib.inflateInit(zlib_context)
+    zlib_context =
+      if is_nil(zlib_context) do
+        zlib_context = :zlib.open()
+        :zlib.inflateInit(zlib_context)
+        zlib_context
+      else
+        :zlib.inflateReset(zlib_context)
+        zlib_context
+      end
 
     state = %{state | zlib_context: zlib_context}
     {:noreply, state}
