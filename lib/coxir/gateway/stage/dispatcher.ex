@@ -10,6 +10,16 @@ defmodule Coxir.Gateway.Dispatcher do
   alias Coxir.Model.Loader
   alias Coxir.{Guild, Channel, Message}
 
+  @type event ::
+          {:READY, Ready.t()}
+          | :RESUMED
+          | {:GUILD_CREATE, Guild.t()}
+          | {:GUILD_UPDATE, Guild.t()}
+          | {:CHANNEL_CREATE, Channel.t()}
+          | {:CHANNEL_UPDATE, Channel.t()}
+          | {:MESSAGE_CREATE, Message.t()}
+          | {:MESSAGE_UPDATE, Message.t()}
+
   def start_link(producer) do
     GenStage.start_link(__MODULE__, producer)
   end
