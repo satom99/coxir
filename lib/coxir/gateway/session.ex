@@ -191,7 +191,7 @@ defmodule Coxir.Gateway.Session do
         {:gun_error, gun_pid, stream_ref, _reason},
         %Session{gun_pid: gun_pid, stream_ref: stream_ref} = state
       ) do
-    {:stop, :gun_error, state}
+    {:noreply, state, @reconnect}
   end
 
   def handle_info(
