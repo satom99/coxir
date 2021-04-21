@@ -5,7 +5,7 @@ defmodule Coxir.Gateway.Session do
   use GenServer
 
   alias Coxir.Gateway.{Payload, Producer}
-  alias Coxir.Gateway.Payload.{Hello, Identify}
+  alias Coxir.Gateway.Payload.{Hello, Identify, Resume}
   alias __MODULE__
 
   defstruct [
@@ -55,10 +55,14 @@ defmodule Coxir.Gateway.Session do
     :ok = :gun.close(gun_pid)
     :ok = :zlib.inflateReset(zlib_context)
     :timer.cancel(heartbeat_ref)
+
     {:noreply, state, @connect}
   end
 
-  def handle_continue(:identify, %Session{token: token, shard: shard, intents: intents} = state) do
+  def handle_continue(
+        :identify,
+        %Session{session_id: nil, token: token, shard: shard, intents: intents} = state
+      ) do
     identify = %Identify{
       token: token,
       shard: shard,
@@ -70,8 +74,22 @@ defmodule Coxir.Gateway.Session do
       }
     }
 
-    payload = %Payload{operation: :IDENTIFY, data: identify}
-    send_payload(payload, state)
+    send_payload(:IDENTIFY, identify, state)
+
+    {:noreply, state}
+  end
+
+  def handle_continue(
+        :identify,
+        %Session{session_id: session_id, token: token, sequence: sequence} = state
+      ) do
+    resume = %Resume{
+      token: token,
+      session_id: session_id,
+      sequence: sequence
+    }
+
+    send_payload(:RESUME, resume, state)
 
     {:noreply, state}
   end
@@ -114,9 +132,7 @@ defmodule Coxir.Gateway.Session do
   end
 
   def handle_info(:heartbeat, %Session{sequence: sequence, heartbeat_ack: true} = state) do
-    payload = %Payload{operation: :HEARTBEAT, data: sequence}
-    send_payload(payload, state)
-
+    send_payload(:HEARTBEAT, sequence, state)
     state = %{state | heartbeat_ack: false}
     {:noreply, state}
   end
@@ -164,7 +180,8 @@ defmodule Coxir.Gateway.Session do
     {:noreply, state, @reconnect}
   end
 
-  defp send_payload(%Payload{} = payload, %Session{gun_pid: gun_pid}) do
+  defp send_payload(operation, data, %Session{gun_pid: gun_pid}) do
+    payload = %Payload{operation: operation, data: data}
     object = Payload.extract(payload)
     binary = Jason.encode!(object)
     message = {:binary, binary}
