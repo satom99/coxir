@@ -2,6 +2,7 @@ defmodule Coxir.Model.Loader do
   @moduledoc """
   Work in progress.
   """
+  import Ecto
   import Ecto.Changeset
   import Coxir.Model.Helper
 
@@ -31,8 +32,13 @@ defmodule Coxir.Model.Loader do
     fields = get_fields(model)
     associations = get_associations(model)
 
-    struct
-    |> cast(object, fields)
+    casted =
+      struct
+      |> cast(object, fields)
+      |> apply_changes()
+
+    casted
+    |> cast(object, [])
     |> associer(associations)
     |> apply_changes()
     |> Storage.put()
@@ -41,17 +47,23 @@ defmodule Coxir.Model.Loader do
   defp associer(%{data: struct, params: params} = changeset, [association | associations]) do
     param = to_string(association)
 
-    struct =
+    changeset =
       if Map.has_key?(params, param) do
-        void_association(struct, association)
+        struct = void_association(struct, association)
+        assoc = build_assoc(struct, association)
+
+        handler = fn _struct, object ->
+          associer(assoc, object)
+        end
+
+        changeset
+        |> Map.put(:data, struct)
+        |> cast_assoc(association, with: handler)
       else
-        struct
+        changeset
       end
 
-    changeset
-    |> Map.put(:data, struct)
-    |> cast_assoc(association, with: &associer/2)
-    |> associer(associations)
+    associer(changeset, associations)
   end
 
   defp associer(changeset, []) do
