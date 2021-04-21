@@ -30,6 +30,9 @@ defmodule Coxir.Gateway.Session do
   @reconnect {:continue, :reconnect}
   @identify {:continue, :identify}
 
+  @close_session [4007, 4009]
+  @close_raise [4010, 4011, 4014]
+
   def start_link(state) do
     GenServer.start_link(__MODULE__, state)
   end
@@ -102,8 +105,17 @@ defmodule Coxir.Gateway.Session do
     |> handle_payload(state)
   end
 
+  def handle_frame({:close, status, _reason}, state) when status in @close_session do
+    state = %{state | session_id: nil}
+    {:noreply, state, @reconnect}
+  end
+
+  def handle_frame({:close, status, reason}, _state) when status in @close_raise do
+    raise(reason)
+  end
+
   def handle_frame({:close, _status, _reason}, state) do
-    {:stop, :close, state}
+    {:noreply, state, @reconnect}
   end
 
   def handle_payload(%Payload{operation: :HELLO, data: data}, state) do
