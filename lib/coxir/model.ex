@@ -22,7 +22,8 @@ defmodule Coxir.Model do
 
       alias Coxir.API
       alias Coxir.Model.{Snowflake, Loader}
-      alias Coxir.{User, Guild, Role, Channel, Message}
+      alias Coxir.{User, Channel, Message}
+      alias Coxir.{Guild, Role, Member}
 
       @behaviour Coxir.Model
 

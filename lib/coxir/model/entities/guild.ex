@@ -42,6 +42,7 @@ defmodule Coxir.Guild do
     belongs_to(:public_updates_channel, Channel)
 
     has_many(:roles, Role)
+    has_many(:members, Member)
   end
 
   def fetch(id, options) do
