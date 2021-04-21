@@ -34,6 +34,8 @@ defmodule Coxir.Gateway.Payload do
 
       @derive Jason.Encoder
 
+      @primary_key false
+
       def cast(object) do
         fields = __schema__(:fields)
 
