@@ -4,12 +4,12 @@ defmodule Coxir.Gateway.Consumer do
   """
   use ConsumerSupervisor
 
+  alias __MODULE__
+
   defstruct [
     :dispatchers,
     :module
   ]
-
-  alias __MODULE__
 
   def start_link(state) do
     ConsumerSupervisor.start_link(__MODULE__, state)
