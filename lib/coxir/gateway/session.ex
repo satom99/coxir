@@ -191,8 +191,8 @@ defmodule Coxir.Gateway.Session do
 
   defp send_command(operation, data, %Session{gun_pid: gun_pid}) do
     payload = %Payload{operation: operation, data: data}
-    object = Payload.extract(payload)
-    binary = Jason.encode!(object)
+    command = Payload.extract(payload)
+    binary = Jason.encode!(command)
     message = {:binary, binary}
 
     :ok = :gun.ws_send(gun_pid, message)
