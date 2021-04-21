@@ -74,7 +74,7 @@ defmodule Coxir.Gateway.Session do
       }
     }
 
-    send_payload(:IDENTIFY, identify, state)
+    send_command(:IDENTIFY, identify, state)
 
     {:noreply, state}
   end
@@ -89,7 +89,7 @@ defmodule Coxir.Gateway.Session do
       sequence: sequence
     }
 
-    send_payload(:RESUME, resume, state)
+    send_command(:RESUME, resume, state)
 
     {:noreply, state}
   end
@@ -141,7 +141,7 @@ defmodule Coxir.Gateway.Session do
   end
 
   def handle_info(:heartbeat, %Session{sequence: sequence, heartbeat_ack: true} = state) do
-    send_payload(:HEARTBEAT, sequence, state)
+    send_command(:HEARTBEAT, sequence, state)
     state = %{state | heartbeat_ack: false}
     {:noreply, state}
   end
@@ -189,7 +189,7 @@ defmodule Coxir.Gateway.Session do
     {:noreply, state, @reconnect}
   end
 
-  defp send_payload(operation, data, %Session{gun_pid: gun_pid}) do
+  defp send_command(operation, data, %Session{gun_pid: gun_pid}) do
     payload = %Payload{operation: operation, data: data}
     object = Payload.extract(payload)
     binary = Jason.encode!(object)
