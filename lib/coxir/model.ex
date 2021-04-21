@@ -12,7 +12,7 @@ defmodule Coxir.Model do
 
   @callback fetch(key, keyword) :: instance | nil
 
-  @callback fetch_many(instance, atom, keyword) :: list(instance)
+  @callback fetch_many(key, atom, keyword) :: list(instance)
 
   @optional_callbacks [fetch: 2, fetch_many: 3]
 
