@@ -4,29 +4,30 @@ defmodule Coxir.Gateway.Session do
   """
   use GenServer
 
-  alias Coxir.Gateway.Payload.{Hello, Ready}
-  alias Coxir.Gateway.Producer
+  alias Coxir.Gateway.{Payload, Producer}
+  alias Coxir.Gateway.Payload.{Hello, Identify}
   alias __MODULE__
 
   defstruct [
     :token,
     :shard,
     :intents,
-    {:host, 'gateway.discord.gg'},
+    :gateway,
+    :producer,
     :gun_pid,
     :stream_ref,
     :zlib_context,
     :heartbeat_ref,
-    {:heartbeat_ack, true},
+    :heartbeat_ack,
     :sequence,
-    :session_id,
-    :producer
+    :session_id
   ]
 
-  @query "/?v=8&encoding=etf&compress=zlib-stream"
+  @query "/?v=8&encoding=json&compress=zlib-stream"
   @timeout 10_000
 
   @connect {:continue, :connect}
+  @reconnect {:continue, :reconnect}
   @identify {:continue, :identify}
 
   def start_link(state) do
@@ -37,8 +38,8 @@ defmodule Coxir.Gateway.Session do
     {:ok, state, @connect}
   end
 
-  def handle_continue(:connect, %Session{host: host} = state) do
-    {:ok, gun_pid} = :gun.open(host, 443, %{protocols: [:http]})
+  def handle_continue(:connect, %Session{gateway: gateway} = state) do
+    {:ok, gun_pid} = :gun.open(gateway, 443, %{protocols: [:http]})
     {:ok, :http} = :gun.await_up(gun_pid, @timeout)
     stream_ref = :gun.ws_upgrade(gun_pid, @query)
 
@@ -46,77 +47,80 @@ defmodule Coxir.Gateway.Session do
     {:noreply, state}
   end
 
-  def handle_continue(:identify, %Session{token: token, intents: intents} = state) do
-    {os, name} = :os.type()
+  def handle_continue(
+        :reconnect,
+        %Session{gun_pid: gun_pid, heartbeat_ref: heartbeat_ref} = state
+      ) do
+    :ok = :gun.close(gun_pid)
+    :timer.cancel(heartbeat_ref)
+    {:noreply, state, @connect}
+  end
 
-    identify = %{
-      "token" => token,
-      "compress" => true,
-      "properties" => %{
-        "$os" => "#{os} #{name}",
-        "$browser" => "coxir",
-        "$device" => "coxir"
-      },
-      "intents" => intents
+  def handle_continue(:identify, %Session{token: token, shard: shard, intents: intents} = state) do
+    identify = %Identify{
+      token: token,
+      shard: shard,
+      intents: intents,
+      compress: true,
+      properties: %{
+        :"$browser" => "coxir",
+        :"$device" => "coxir"
+      }
     }
 
-    payload = {2, identify}
+    payload = %Payload{operation: :IDENTIFY, data: identify}
     send_payload(payload, state)
 
     {:noreply, state}
   end
 
   def handle_frame({:binary, frame}, %Session{zlib_context: zlib_context} = state) do
-    %{op: op, d: data, s: sequence, t: event} =
-      zlib_context
-      |> :zlib.inflate(frame)
-      |> :erlang.iolist_to_binary()
-      |> :erlang.binary_to_term()
-
-    payload = {op, data, sequence, event}
-    handle_payload(payload, state)
+    zlib_context
+    |> :zlib.inflate(frame)
+    |> Jason.decode!()
+    |> Payload.cast()
+    |> handle_payload(state)
   end
 
   def handle_frame({:close, _status, _reason}, state) do
     {:stop, :close, state}
   end
 
-  def handle_payload({10, data, _sequence, _event}, state) do
+  def handle_payload(%Payload{operation: :HELLO, data: data}, state) do
     %Hello{heartbeat_interval: heartbeat_interval} = Hello.cast(data)
 
     heartbeat_ref = :timer.send_interval(heartbeat_interval, self(), :heartbeat)
 
-    state = %{state | heartbeat_ref: heartbeat_ref}
+    state = %{state | heartbeat_ref: heartbeat_ref, heartbeat_ack: true}
     {:noreply, state, @identify}
   end
 
-  def handle_payload({11, _data, _sequence, _event}, state) do
+  def handle_payload(
+        %Payload{operation: :DISPATCH, data: data, sequence: sequence} = payload,
+        %Session{producer: producer, session_id: session_id} = state
+      ) do
+    Producer.notify(producer, payload)
+
+    session_id = Map.get(data, "session_id", session_id)
+    state = %{state | session_id: session_id, sequence: sequence}
+    {:noreply, state}
+  end
+
+  def handle_payload(%Payload{operation: :HEARTBEAT_ACK}, state) do
     state = %{state | heartbeat_ack: true}
     {:noreply, state}
   end
 
-  def handle_payload({0, data, sequence, :READY}, state) do
-    %Ready{session_id: session_id} = Ready.cast(data)
-    state = %{state | sequence: sequence, session_id: session_id}
-    {:noreply, state}
-  end
-
-  def handle_payload({0, data, sequence, event}, %Session{producer: producer} = state) do
-    Producer.notify(producer, {event, data})
-    state = %{state | sequence: sequence}
-    {:noreply, state}
-  end
-
   def handle_info(:heartbeat, %Session{sequence: sequence, heartbeat_ack: true} = state) do
-    heartbeat = {1, sequence}
-    send_payload(heartbeat, state)
+    payload = %Payload{operation: :HEARTBEAT, data: sequence}
+    send_payload(payload, state)
 
     state = %{state | heartbeat_ack: false}
     {:noreply, state}
   end
 
   def handle_info(:heartbeat, %Session{heartbeat_ack: false} = state) do
-    {:stop, :zombie, state}
+    {:noreply, state, @reconnect}
   end
 
   def handle_info(
@@ -155,12 +159,12 @@ defmodule Coxir.Gateway.Session do
         {:gun_down, gun_pid, _protocol, _reason, _killed, _unprocessed},
         %Session{gun_pid: gun_pid} = state
       ) do
-    {:stop, :gun_down, state}
+    {:noreply, state, @reconnect}
   end
 
-  defp send_payload({opcode, data}, %Session{gun_pid: gun_pid}) do
-    frame = %{"op" => opcode, "d" => data}
-    binary = :erlang.term_to_binary(frame)
+  defp send_payload(%Payload{} = payload, %Session{gun_pid: gun_pid}) do
+    object = Payload.extract(payload)
+    binary = Jason.encode!(object)
     message = {:binary, binary}
 
     :ok = :gun.ws_send(gun_pid, message)

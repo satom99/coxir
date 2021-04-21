@@ -4,6 +4,9 @@ defmodule Coxir.Gateway.Dispatcher do
   """
   use GenStage
 
+  alias Coxir.Gateway.Payload
+  alias Coxir.Gateway.Payload.Ready
+
   alias Coxir.Model.Loader
   alias Coxir.{Guild, Channel, Message}
 
@@ -15,62 +18,47 @@ defmodule Coxir.Gateway.Dispatcher do
     {:producer_consumer, nil, subscribe_to: [producer]}
   end
 
-  def handle_events(events, _from, state) do
-    events =
-      Enum.map(
-        events,
-        fn {name, object} ->
-          object = sanitize(object)
-          handle_event(name, object)
-        end
-      )
-
+  def handle_events(payloads, _from, state) do
+    events = Enum.map(payloads, &handle_payload/1)
     {:noreply, events, state}
   end
 
-  defp handle_event(:GUILD_CREATE, object) do
+  defp handle_payload(%Payload{event: "READY", data: object}) do
+    ready = Ready.cast(object)
+    {:READY, ready}
+  end
+
+  defp handle_payload(%Payload{event: "GUILD_CREATE", data: object}) do
     guild = Loader.load(Guild, object)
     {:GUILD_CREATE, guild}
   end
 
-  defp handle_event(:GUILD_UPDATE, object) do
+  defp handle_payload(%Payload{event: "GUILD_UPDATE", data: object}) do
     guild = Loader.load(Guild, object)
     {:GUILD_UPDATE, guild}
   end
 
-  defp handle_event(:CHANNEL_CREATE, object) do
+  defp handle_payload(%Payload{event: "CHANNEL_CREATE", data: object}) do
     channel = Loader.load(Channel, object)
     {:CHANNEL_CREATE, channel}
   end
 
-  defp handle_event(:CHANNEL_UPDATE, object) do
+  defp handle_payload(%Payload{event: "CHANNEL_UPDATE", data: object}) do
     channel = Loader.load(Channel, object)
     {:CHANNEL_UPDATE, channel}
   end
 
-  defp handle_event(:MESSAGE_CREATE, object) do
+  defp handle_payload(%Payload{event: "MESSAGE_CREATE", data: object}) do
     message = Loader.load(Message, object)
     {:MESSAGE_CREATE, message}
   end
 
-  defp handle_event(:MESSAGE_UPDATE, object) do
+  defp handle_payload(%Payload{event: "MESSAGE_UPDATE", data: object}) do
     message = Loader.load(Message, object)
     {:MESSAGE_UPDATE, message}
   end
 
-  defp handle_event(name, object) do
-    {name, object}
-  end
-
-  defp sanitize(object) when is_map(object) do
-    Map.new(object, &sanitize/1)
-  end
-
-  defp sanitize({key, value}) do
-    {to_string(key), sanitize(value)}
-  end
-
-  defp sanitize(term) do
-    term
+  defp handle_payload(%Payload{}) do
+    :noop
   end
 end
