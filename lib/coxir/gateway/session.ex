@@ -115,6 +115,11 @@ defmodule Coxir.Gateway.Session do
     {:noreply, state, @identify}
   end
 
+  def handle_payload(%Payload{operation: :INVALID_SESSION}, state) do
+    state = %{state | session_id: nil}
+    {:noreply, state, @identify}
+  end
+
   def handle_payload(
         %Payload{operation: :DISPATCH, data: data, sequence: sequence} = payload,
         %Session{producer: producer, session_id: session_id} = state
