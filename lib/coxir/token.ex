@@ -11,7 +11,7 @@ defmodule Coxir.Token do
     {:ok, snowflake} =
       token
       |> String.split(".")
-      |> Kernel.hd()
+      |> List.first()
       |> Base.decode64!()
       |> Snowflake.cast()
 
