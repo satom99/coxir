@@ -11,6 +11,24 @@ defmodule Coxir.Gateway do
     intents: :non_privileged
   ]
 
+  defmacro __using__(config) do
+    quote do
+      @behaviour Coxir.Gateway.Handler
+
+      def start_link do
+        Coxir.Gateway.start_link(__MODULE__, unquote(config))
+      end
+
+      def child_spec(_arg) do
+        %{
+          id: __MODULE__,
+          start: {__MODULE__, :start_link, []},
+          restart: :permanent
+        }
+      end
+    end
+  end
+
   def start_link(module, config) do
     children = []
     options = [strategy: :rest_for_one]
