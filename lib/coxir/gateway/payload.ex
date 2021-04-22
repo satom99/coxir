@@ -55,7 +55,7 @@ defmodule Coxir.Gateway.Payload do
     %Payload{operation: operation, data: data, sequence: sequence, event: event, session: self()}
   end
 
-  def extract(%Payload{operation: operation, data: data}) do
+  def to_command(%Payload{operation: operation, data: data}) do
     opcode = Map.fetch!(@codes, operation)
     %{"op" => opcode, "d" => data}
   end
