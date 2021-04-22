@@ -8,6 +8,7 @@ defmodule Coxir.Member do
 
   embedded_schema do
     field(:nick, :string)
+    field(:roles, {:array, Snowflake})
     field(:joined_at, :utc_datetime)
     field(:premium_since, :utc_datetime)
     field(:deaf, :boolean)
