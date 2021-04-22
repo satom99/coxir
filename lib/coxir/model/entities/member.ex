@@ -19,4 +19,18 @@ defmodule Coxir.Member do
     belongs_to(:user, User, primary_key: true)
     belongs_to(:guild, Guild, primary_key: true)
   end
+
+  def preload(%Member{guild_id: guild_id, roles: roles} = member, :roles, options) do
+    roles =
+      roles
+      |> Stream.map(&{&1, guild_id})
+      |> Stream.map(&Role.get(&1, options))
+      |> Enum.to_list()
+
+    %{member | roles: roles}
+  end
+
+  def preload(member, association, options) do
+    super(member, association, options)
+  end
 end
