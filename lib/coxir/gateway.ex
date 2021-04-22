@@ -42,6 +42,8 @@ defmodule Coxir.Gateway do
 
       sharder_spec = get_sharder_spec(producer, module, config)
       {:ok, _sharder} = Supervisor.start_child(supervisor, sharder_spec)
+
+      {:ok, supervisor}
     end
   end
 
