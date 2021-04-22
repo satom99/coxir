@@ -7,7 +7,7 @@ defmodule Coxir.Gateway.Consumer do
   alias __MODULE__
 
   defstruct [
-    :dispatchers,
+    :dispatcher,
     :module
   ]
 
@@ -15,12 +15,12 @@ defmodule Coxir.Gateway.Consumer do
     ConsumerSupervisor.start_link(__MODULE__, state)
   end
 
-  def init(%Consumer{dispatchers: dispatchers, module: module}) do
     children = [module]
+  def init(%Consumer{dispatcher: dispatcher, module: module}) do
 
     options = [
       strategy: :one_for_one,
-      subscribe_to: dispatchers
+      subscribe_to: [dispatcher]
     ]
 
     ConsumerSupervisor.init(children, options)
