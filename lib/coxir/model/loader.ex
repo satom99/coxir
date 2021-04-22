@@ -15,7 +15,7 @@ defmodule Coxir.Model.Loader do
     fetch: true
   }
 
-  @type options :: Enum.t()
+  @type options :: keyword
 
   @spec load(Model.model(), list(map)) :: list(Model.instance())
   @spec load(Model.model(), map) :: Model.instance()
