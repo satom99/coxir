@@ -12,9 +12,11 @@ defmodule Coxir.Model do
 
   @callback fetch(key, keyword) :: instance | nil
 
+  @callback preload(instance, atom, keyword) :: instance
+
   @callback fetch_many(key, atom, keyword) :: list(instance)
 
-  @optional_callbacks [fetch: 2, fetch_many: 3]
+  @optional_callbacks [fetch: 2, preload: 3, fetch_many: 3]
 
   defmacro __using__(_options) do
     quote location: :keep do
@@ -35,6 +37,12 @@ defmodule Coxir.Model do
       def get(key, options \\ []) do
         Loader.get(__MODULE__, key, options)
       end
+
+      def preload(struct, association, options \\ []) do
+        Loader.preload(struct, association, options)
+      end
+
+      defoverridable(preload: 3)
     end
   end
 end
