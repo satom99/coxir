@@ -8,7 +8,7 @@ defmodule Coxir.Gateway.Handler do
 
   def get_spec(handler) do
     %{
-      id: handler,
+      id: __MODULE__,
       start: {__MODULE__, :start_handler, [handler]},
       restart: :temporary
     }
