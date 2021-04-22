@@ -21,6 +21,13 @@ defmodule Coxir.Model.Loader do
     |> loader(object)
   end
 
+  @spec get(Model.model(), Model.key(), keyword) :: Model.instance() | nil
+  def get(model, key, options) do
+    with nil <- Storage.get(model, key) do
+      model.fetch(key, options)
+    end
+  end
+
   @spec preload(Model.instance(), atom, keyword) :: Model.instance()
   def preload(%model{} = struct, association, options) do
     reflection = get_association(model, association)
