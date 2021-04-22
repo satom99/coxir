@@ -4,12 +4,20 @@ defmodule Coxir.Gateway.Sharder.Default do
   """
   use Supervisor
 
+  alias Coxir.Gateway.{Sharder, Session}
+
   def start_link(options) do
     Supervisor.start_link(__MODULE__, options)
   end
 
-  def init(_options) do
-    children = []
+  def init(%Sharder{shard_count: shard_count, session_options: session_options}) do
+    children =
+      for index <- 1..shard_count do
+        shard = [index - 1, shard_count]
+        options = %{session_options | shard: shard}
+        session_spec = Session.child_spec(options)
+        %{session_spec | id: index - 1}
+      end
 
     options = [
       strategy: :one_for_one
