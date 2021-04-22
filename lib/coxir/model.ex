@@ -31,6 +31,10 @@ defmodule Coxir.Model do
       @foreign_key_type Snowflake
 
       @type t :: %__MODULE__{}
+
+      def get(key, options \\ []) do
+        Loader.get(__MODULE__, key, options)
+      end
     end
   end
 end
