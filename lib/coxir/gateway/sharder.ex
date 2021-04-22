@@ -9,5 +9,7 @@ defmodule Coxir.Gateway.Sharder do
 
   @type t :: module
 
-  @callback child_spec(term) :: Supervisor.child_spec()
+  @type options :: %__MODULE__{}
+
+  @callback child_spec(options) :: Supervisor.child_spec()
 end
