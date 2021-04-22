@@ -23,6 +23,9 @@ defmodule Coxir.Gateway.Intents do
   ]
   @intents Keyword.keys(@values)
 
+  @privileged [:guild_members, :guild_presences]
+  @non_privileged @intents -- @privileged
+
   @typespec @intents
             |> Enum.reverse()
             |> Enum.reduce(fn name, type ->
@@ -31,8 +34,12 @@ defmodule Coxir.Gateway.Intents do
 
   @type intent :: unquote(@typespec)
 
-  @spec get_value(list(intent)) :: non_neg_integer
-  def get_value(intents) do
+  @spec get_value(:non_privileged | list(intent)) :: non_neg_integer
+  def get_value(:non_privileged) do
+    get_value(@non_privileged)
+  end
+
+  def get_value(intents) when is_list(intents) do
     Enum.reduce(
       intents,
       0,
