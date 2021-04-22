@@ -2,7 +2,7 @@ defmodule Coxir.Model do
   @moduledoc """
   Work in progress.
   """
-  alias Coxir.Model.Snowflake
+  alias Coxir.Model.{Snowflake, Loader}
 
   @type model :: module
 
@@ -10,11 +10,13 @@ defmodule Coxir.Model do
 
   @type key :: Snowflake.t() | tuple
 
-  @callback fetch(key, keyword) :: instance | nil
+  @callback get(key, Loader.options()) :: instance | nil
 
-  @callback preload(instance, atom, keyword) :: instance
+  @callback fetch(key, Loader.options()) :: instance | nil
 
-  @callback fetch_many(key, atom, keyword) :: list(instance)
+  @callback preload(instance, atom, Loader.options()) :: instance
+
+  @callback fetch_many(key, atom, Loader.options()) :: list(instance)
 
   @optional_callbacks [fetch: 2, preload: 3, fetch_many: 3]
 

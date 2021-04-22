@@ -9,6 +9,14 @@ defmodule Coxir.Model.Loader do
   alias Ecto.Association.{NotLoaded, BelongsTo, Has}
   alias Coxir.{Model, Storage}
 
+  @default_options %{
+    force: false,
+    storage: true,
+    fetch: true
+  }
+
+  @type options :: Enum.t()
+
   @spec load(Model.model(), list(map)) :: list(Model.instance())
   @spec load(Model.model(), map) :: Model.instance()
   def load(model, objects) when is_list(objects) do
@@ -21,17 +29,17 @@ defmodule Coxir.Model.Loader do
     |> loader(object)
   end
 
-  @spec get(Model.model(), Model.key(), keyword) :: Model.instance() | nil
+  @spec get(Model.model(), Model.key(), options) :: Model.instance() | nil
   def get(model, key, options) do
     with nil <- Storage.get(model, key) do
       model.fetch(key, options)
     end
   end
 
-  @spec preload(Model.instance(), atom, keyword) :: Model.instance()
+  @spec preload(Model.instance(), atom, options) :: Model.instance()
   def preload(%model{} = struct, association, options) do
     reflection = get_association(model, association)
-    options = default_options(options)
+    options = Enum.into(options, @default_options)
     preloader(reflection, struct, options)
   end
 
@@ -141,13 +149,5 @@ defmodule Coxir.Model.Loader do
       end
 
     Map.put(struct, field, resolved)
-  end
-
-  defp default_options(options) do
-    options
-    |> Map.new()
-    |> Map.put_new(:force, false)
-    |> Map.put_new(:storage, true)
-    |> Map.put_new(:fetch, true)
   end
 end
