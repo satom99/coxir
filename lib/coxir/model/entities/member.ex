@@ -21,7 +21,12 @@ defmodule Coxir.Member do
   end
 
   def preload(%Member{guild_id: guild_id, roles: roles} = member, :roles, options) do
-    roles = Enum.map(roles, &Role.get({&1, guild_id}, options))
+    roles =
+      roles
+      |> Stream.map(&{&1, guild_id})
+      |> Stream.map(&Role.get(&1, options))
+      |> Enum.to_list()
+
     %{member | roles: roles}
   end
 
