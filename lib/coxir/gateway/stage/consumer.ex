@@ -8,16 +8,16 @@ defmodule Coxir.Gateway.Consumer do
 
   defstruct [
     :dispatcher,
-    :module
+    :handler
   ]
 
   def start_link(state) do
     ConsumerSupervisor.start_link(__MODULE__, state)
   end
 
-  def init(%Consumer{dispatcher: dispatcher, module: module}) do
+  def init(%Consumer{dispatcher: dispatcher, handler: handler}) do
     children = [
-      get_handler_spec(module)
+      get_handler_spec(handler)
     ]
 
     options = [
@@ -28,16 +28,16 @@ defmodule Coxir.Gateway.Consumer do
     ConsumerSupervisor.init(children, options)
   end
 
-  def start_handler(module, event) do
+  def start_handler(handler, event) do
     Task.start_link(fn ->
-      module.handle_event(event)
+      handler.handle_event(event)
     end)
   end
 
-  defp get_handler_spec(module) do
+  defp get_handler_spec(handler) do
     %{
       id: Consumer,
-      start: {Consumer, :start_handler, [module]},
+      start: {Consumer, :start_handler, [handler]},
       restart: :temporary
     }
   end

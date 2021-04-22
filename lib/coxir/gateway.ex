@@ -19,7 +19,7 @@ defmodule Coxir.Gateway do
       {:ok, producer} = Supervisor.start_child(supervisor, Producer)
       {:ok, dispatcher} = Supervisor.start_child(supervisor, {Dispatcher, producer})
 
-      consumer_options = %Consumer{module: module, dispatcher: dispatcher}
+      consumer_options = %Consumer{handler: module, dispatcher: dispatcher}
       {:ok, _consumer} = Supervisor.start_child(supervisor, {Consumer, consumer_options})
 
       sharder_spec = get_sharder_spec(producer, module, config)
