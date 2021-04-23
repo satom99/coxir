@@ -9,12 +9,31 @@ jobs:
   validation:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: erlef/setup-beam@v1
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Elixir
+        uses: erlef/setup-beam@v1
+        id: elixir
         with:
           otp-version: "23.0"
           elixir-version: "1.11.4"
-      - run: mix format --check-formatted
-      - run: mix deps.get
-      - run: mix compile
-      - run: mix test
+      - name: Formatter
+        run: mix format --check-formatted
+      - name: Retrieve cached dependencies
+        uses: actions/cache@v2
+        id: cache
+        with:
+          path: deps
+          key: ${{ runner.os }}-${{ steps.elixir.outputs.elixir-version }}-${{ steps.elixir.outputs.otp-version }}-${{ hashFiles('mix.lock') }}
+      - name: Retrieve cached build
+        uses: actions/cache@v2
+        with:
+          path: _build
+          key: ${{ runner.os }}-${{ steps.elixir.outputs.elixir-version }}-${{ steps.elixir.outputs.otp-version }}-build
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: mix deps.get
+      - name: Compile
+        run: mix compile
+      - name: Run tests
+        run: mix test
