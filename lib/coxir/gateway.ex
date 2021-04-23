@@ -2,11 +2,13 @@ defmodule Coxir.Gateway do
   @moduledoc """
   Work in progress.
   """
+  import Supervisor, only: [start_child: 2]
+
   alias Coxir.API
   alias Coxir.Gateway.{Producer, Dispatcher, Consumer}
   alias Coxir.Gateway.{Intents, Session, Sharder}
 
-  @default_options [
+  @default_config [
     sharder: Coxir.Gateway.Sharder.Default,
     intents: :non_privileged
   ]
@@ -15,16 +17,17 @@ defmodule Coxir.Gateway do
     quote do
       @behaviour Coxir.Gateway.Handler
 
-      def start_link do
+      def start_link(specific \\ []) do
         unquote(config)
+        |> Keyword.merge(specific)
         |> Keyword.put_new(:handler, __MODULE__)
         |> Coxir.Gateway.start_link()
       end
 
-      def child_spec(_arg) do
+      def child_spec(specific) do
         %{
           id: __MODULE__,
-          start: {__MODULE__, :start_link, []},
+          start: {__MODULE__, :start_link, [specific]},
           restart: :permanent
         }
       end
@@ -37,27 +40,25 @@ defmodule Coxir.Gateway do
     handler = Keyword.fetch!(config, :handler)
 
     with {:ok, supervisor} <- Supervisor.start_link(children, options) do
-      {:ok, producer} = Supervisor.start_child(supervisor, Producer)
-      {:ok, dispatcher} = Supervisor.start_child(supervisor, {Dispatcher, producer})
+      {:ok, producer} = start_child(supervisor, Producer)
+      {:ok, dispatcher} = start_child(supervisor, {Dispatcher, producer})
 
       consumer_options = %Consumer{handler: handler, dispatcher: dispatcher}
-      {:ok, _consumer} = Supervisor.start_child(supervisor, {Consumer, consumer_options})
+      {:ok, _consumer} = start_child(supervisor, {Consumer, consumer_options})
 
-      sharder_spec = get_sharder_spec(producer, handler, config)
-      {:ok, _sharder} = Supervisor.start_child(supervisor, sharder_spec)
+      sharder_spec = get_sharder_spec(producer, config)
+      {:ok, _sharder} = start_child(supervisor, sharder_spec)
 
       {:ok, supervisor}
     end
   end
 
-  defp get_sharder_spec(producer, handler, config) do
+  defp get_sharder_spec(producer, config) do
     global = Application.get_all_env(:coxir)
-    specific = Keyword.get(global, handler, [])
 
     config =
-      @default_options
+      @default_config
       |> Keyword.merge(global)
-      |> Keyword.merge(specific)
       |> Keyword.merge(config)
 
     token = Keyword.fetch!(config, :token)
