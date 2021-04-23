@@ -20,6 +20,17 @@ defmodule Coxir.Member do
     belongs_to(:guild, Guild, primary_key: true)
   end
 
+  def preload(%Member{roles: [%Role{} | _rest] = roles} = member, :roles, options) do
+    if options[:force] do
+      roles = Enum.map(roles, & &1.id)
+      member = %{member | roles: roles}
+      options = Keyword.put(options, :force, false)
+      preload(member, :roles, options)
+    else
+      member
+    end
+  end
+
   def preload(%Member{guild_id: guild_id, roles: roles} = member, :roles, options) do
     roles =
       roles
