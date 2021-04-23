@@ -29,7 +29,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: _build
-          key: ${{ runner.os }}-${{ steps.elixir.outputs.elixir-version }}-${{ steps.elixir.outputs.otp-version }}-build
+          key: ${{ runner.os }}-${{ steps.elixir.outputs.elixir-version }}-${{ steps.elixir.outputs.otp-version }}-build-${{ MIX_ENV }}
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: mix deps.get
