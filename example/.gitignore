@@ -24,3 +24,6 @@ example-*.tar
 
 # Temporary files for e.g. tests
 /tmp
+
+# Custom ignored files
+mix.lock
