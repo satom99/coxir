@@ -67,7 +67,7 @@ defmodule Coxir.Model.Loader do
         struct = void_association(struct, association)
         assoc = build_assoc(struct, association)
 
-        handler = fn _struct, object ->
+        caster = fn _struct, object ->
           assoc
           |> loader(object)
           |> change()
@@ -75,7 +75,7 @@ defmodule Coxir.Model.Loader do
 
         changeset
         |> Map.put(:data, struct)
-        |> cast_assoc(association, with: handler)
+        |> cast_assoc(association, with: caster)
       else
         changeset
       end
