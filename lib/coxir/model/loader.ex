@@ -36,7 +36,17 @@ defmodule Coxir.Model.Loader do
     end
   end
 
-  @spec preload(Model.instance(), atom, options) :: Model.instance()
+  @spec preload(Model.instance(), atom | list(atom), options) :: Model.instance()
+  def preload(struct, associations, options) when is_list(associations) do
+    Enum.reduce(
+      associations,
+      struct,
+      fn association, struct ->
+        preload(struct, association, options)
+      end
+    )
+  end
+
   def preload(%model{} = struct, association, options) do
     reflection = get_association(model, association)
     options = Enum.into(options, @default_options)
