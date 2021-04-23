@@ -24,7 +24,6 @@ defmodule Coxir.Member do
     if options[:force] do
       roles = Enum.map(roles, & &1.id)
       member = %{member | roles: roles}
-      options = Keyword.put(options, :force, false)
       preload(member, :roles, options)
     else
       member
