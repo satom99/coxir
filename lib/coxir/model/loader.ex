@@ -48,6 +48,7 @@ defmodule Coxir.Model.Loader do
       end
     )
   end
+
   def preload(%model{} = struct, associations, options) when is_list(associations) do
     Enum.reduce(
       associations,
