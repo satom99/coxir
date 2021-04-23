@@ -16,7 +16,9 @@ defmodule Coxir.Gateway do
       @behaviour Coxir.Gateway.Handler
 
       def start_link do
-        Coxir.Gateway.start_link(__MODULE__, unquote(config))
+        unquote(config)
+        |> Keyword.put_new(:handler, __MODULE__)
+        |> Coxir.Gateway.start_link()
       end
 
       def child_spec(_arg) do
@@ -29,9 +31,10 @@ defmodule Coxir.Gateway do
     end
   end
 
-  def start_link(handler, config) do
+  def start_link(config) do
     children = []
     options = [strategy: :rest_for_one]
+    handler = Keyword.fetch!(config, :handler)
 
     with {:ok, supervisor} <- Supervisor.start_link(children, options) do
       {:ok, producer} = Supervisor.start_child(supervisor, Producer)
