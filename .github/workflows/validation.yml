@@ -23,7 +23,9 @@ jobs:
         uses: actions/cache@v2
         id: cache
         with:
-          path: deps
+          path: |
+            deps
+            _build
           key: ${{ runner.os }}-${{ steps.elixir.outputs.elixir-version }}-${{ steps.elixir.outputs.otp-version }}-${{ hashFiles('mix.lock') }}
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
