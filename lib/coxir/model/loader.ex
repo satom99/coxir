@@ -15,6 +15,8 @@ defmodule Coxir.Model.Loader do
     fetch: true
   }
 
+  @type preloads :: atom | list(atom) | [{atom, preloads}]
+
   @type options :: keyword
 
   @spec load(Model.model(), list(map)) :: list(Model.instance())
@@ -36,13 +38,34 @@ defmodule Coxir.Model.Loader do
     end
   end
 
-  @spec preload(Model.instance(), atom | list(atom), options) :: Model.instance()
+  @spec preload(list(Model.instance()), preloads, options) :: list(Model.instance())
+  @spec preload(Model.instance(), preloads, options) :: Model.instance()
+  def preload(structs, preloads, options) when is_list(structs) do
+    Enum.map(
+      structs,
+      fn %model{} = struct ->
+        model.preload(struct, preloads, options)
+      end
+    )
+  end
   def preload(%model{} = struct, associations, options) when is_list(associations) do
     Enum.reduce(
       associations,
       struct,
       fn association, struct ->
         model.preload(struct, association, options)
+      end
+    )
+  end
+
+  def preload(%model{} = struct, {association, nested}, options) do
+    struct = model.preload(struct, association, options)
+
+    Map.update!(
+      struct,
+      association,
+      fn %model{} = struct ->
+        model.preload(struct, nested, options)
       end
     )
   end
