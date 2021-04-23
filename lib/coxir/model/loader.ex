@@ -68,7 +68,9 @@ defmodule Coxir.Model.Loader do
         assoc = build_assoc(struct, association)
 
         handler = fn _struct, object ->
-          associer(assoc, object)
+          assoc
+          |> loader(object)
+          |> change()
         end
 
         changeset
@@ -83,12 +85,6 @@ defmodule Coxir.Model.Loader do
 
   defp associer(changeset, []) do
     changeset
-  end
-
-  defp associer(%_model{} = struct, object) do
-    struct
-    |> loader(object)
-    |> change()
   end
 
   defp void_association(%model{} = struct, name) do
