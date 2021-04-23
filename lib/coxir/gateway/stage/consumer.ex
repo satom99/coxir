@@ -18,7 +18,7 @@ defmodule Coxir.Gateway.Consumer do
 
   def init(%Consumer{dispatcher: dispatcher, handler: handler}) do
     children = [
-      Handler.get_spec(handler)
+      {Handler, handler}
     ]
 
     options = [

@@ -6,7 +6,7 @@ defmodule Coxir.Gateway.Handler do
 
   @callback handle_event(Dispatcher.event()) :: any
 
-  def get_spec(handler) do
+  def child_spec(handler) do
     %{
       id: __MODULE__,
       start: {__MODULE__, :start_handler, [handler]},
