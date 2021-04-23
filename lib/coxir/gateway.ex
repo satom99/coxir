@@ -17,17 +17,20 @@ defmodule Coxir.Gateway do
     quote do
       @behaviour Coxir.Gateway.Handler
 
-      def start_link(specific \\ []) do
+      def start_link(runtime \\ []) do
+        specific = Application.get_env(:coxir, __MODULE__, [])
+
         unquote(config)
         |> Keyword.merge(specific)
+        |> Keyword.merge(runtime)
         |> Keyword.put_new(:handler, __MODULE__)
         |> Coxir.Gateway.start_link()
       end
 
-      def child_spec(specific) do
+      def child_spec(runtime) do
         %{
           id: __MODULE__,
-          start: {__MODULE__, :start_link, [specific]},
+          start: {__MODULE__, :start_link, [runtime]},
           restart: :permanent
         }
       end
