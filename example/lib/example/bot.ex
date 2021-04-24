@@ -9,7 +9,7 @@ defmodule Example.Bot do
     Logger.info("Bot up and running.")
   end
 
-  def handle_event(:RESUME) do
+  def handle_event(:RESUMED) do
     Logger.info("Bot back up and running.")
   end
 
