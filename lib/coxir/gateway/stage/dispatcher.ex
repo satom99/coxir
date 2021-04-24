@@ -19,6 +19,7 @@ defmodule Coxir.Gateway.Dispatcher do
           | {:GUILD_CREATE, Guild.t()}
           | {:GUILD_UPDATE, Guild.t()}
           | {:GUILD_MEMBER_ADD, Member.t()}
+          | {:GUILD_MEMBER_UPDATE, Member.t()}
           | {:MESSAGE_CREATE, Message.t()}
           | {:MESSAGE_UPDATE, Message.t()}
 
@@ -72,6 +73,11 @@ defmodule Coxir.Gateway.Dispatcher do
   defp handle_payload(%Payload{event: "GUILD_MEMBER_ADD", data: object}) do
     member = Loader.load(Member, object)
     {:GUILD_MEMBER_ADD, member}
+  end
+
+  defp handle_payload(%Payload{event: "GUILD_MEMBER_UPDATE", data: object}) do
+    member = Loader.load(Member, object)
+    {:GUILD_MEMBER_UPDATE, member}
   end
 
   defp handle_payload(%Payload{event: "MESSAGE_CREATE", data: object}) do
