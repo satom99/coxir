@@ -14,7 +14,9 @@ defmodule Example.Bot do
   end
 
   def handle_event({:MESSAGE_CREATE, message}) do
-    %Message{content: content, author: author, channel: channel} = Message.preload(message, [:author, channel: :guild])
+    message = Message.preload(message, [:author, channel: :guild])
+
+    %Message{content: content, author: author, channel: channel} = message
 
     %User{username: username, discriminator: discriminator} = author
 
