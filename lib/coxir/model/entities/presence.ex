@@ -28,4 +28,8 @@ defmodule Coxir.Presence do
     member = Member.get({user_id, guild_id}, options)
     %{presence | member: member}
   end
+
+  def preload(presence, association, options) do
+    super(presence, association, options)
+  end
 end
