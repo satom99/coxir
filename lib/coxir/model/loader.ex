@@ -33,9 +33,8 @@ defmodule Coxir.Model.Loader do
 
   @spec get(Model.model(), Model.key(), options) :: Model.instance() | nil
   def get(model, key, options) do
-    with nil <- Storage.get(model, key) do
-      model.fetch(key, options)
-    end
+    options = Enum.into(options, @default_options)
+    getter(model, key, options)
   end
 
   @spec preload(list(Model.instance()), preloads, options) :: list(Model.instance())
@@ -129,6 +128,22 @@ defmodule Coxir.Model.Loader do
       end
 
     Map.put(struct, name, value)
+  end
+
+  defp getter(model, key, %{storage: true} = options) do
+    with nil <- Storage.get(model, key) do
+      options = %{options | storage: false}
+      getter(model, key, options)
+    end
+  end
+
+  defp getter(model, key, %{fetch: true} = options) do
+    options = Keyword.new(options)
+    model.fetch(key, options)
+  end
+
+  defp getter(_model, _key, _options) do
+    nil
   end
 
   defp preloader(%{field: field} = reflection, struct, %{force: false} = options) do
