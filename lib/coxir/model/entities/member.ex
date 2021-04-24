@@ -20,6 +20,17 @@ defmodule Coxir.Member do
     belongs_to(:guild, Guild, primary_key: true)
   end
 
+  def fetch({user_id, guild_id}, options) do
+    case API.get("guilds/#{guild_id}/members/#{user_id}", options) do
+      {:ok, object} ->
+        object = Map.put(object, "guild_id", guild_id)
+        Loader.load(Member, object)
+
+      _other ->
+        nil
+    end
+  end
+
   def preload(%Member{roles: [%Role{} | _rest] = roles} = member, :roles, options) do
     if options[:force] do
       roles = Enum.map(roles, & &1.id)
