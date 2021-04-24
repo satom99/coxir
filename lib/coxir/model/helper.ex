@@ -37,7 +37,7 @@ defmodule Coxir.Model.Helper do
 
   @spec get_fields(Model.model()) :: list(atom)
   def get_fields(model) do
-    model.__schema__(:fields)
+    model.__schema__(:fields) -- model.__schema__(:embeds)
   end
 
   @spec get_associations(Model.model()) :: list(atom)
