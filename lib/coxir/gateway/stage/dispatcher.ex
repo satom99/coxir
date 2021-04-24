@@ -8,7 +8,8 @@ defmodule Coxir.Gateway.Dispatcher do
   alias Coxir.Gateway.Payload.Ready
 
   alias Coxir.Model.Loader
-  alias Coxir.{Guild, Channel, Message}
+  alias Coxir.{Channel, Message}
+  alias Coxir.{Guild, Member}
 
   @type event ::
           {:READY, Ready.t()}
@@ -17,6 +18,7 @@ defmodule Coxir.Gateway.Dispatcher do
           | {:CHANNEL_UPDATE, Channel.t()}
           | {:GUILD_CREATE, Guild.t()}
           | {:GUILD_UPDATE, Guild.t()}
+          | {:GUILD_MEMBER_ADD, Member.t()}
           | {:MESSAGE_CREATE, Message.t()}
           | {:MESSAGE_UPDATE, Message.t()}
 
@@ -65,6 +67,11 @@ defmodule Coxir.Gateway.Dispatcher do
   defp handle_payload(%Payload{event: "GUILD_UPDATE", data: object}) do
     guild = Loader.load(Guild, object)
     {:GUILD_UPDATE, guild}
+  end
+
+  defp handle_payload(%Payload{event: "GUILD_MEMBER_ADD", data: object}) do
+    member = Loader.load(Member, object)
+    {:GUILD_MEMBER_ADD, member}
   end
 
   defp handle_payload(%Payload{event: "MESSAGE_CREATE", data: object}) do
