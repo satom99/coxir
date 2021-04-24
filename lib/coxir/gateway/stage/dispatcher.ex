@@ -47,16 +47,6 @@ defmodule Coxir.Gateway.Dispatcher do
     :RESUMED
   end
 
-  defp handle_payload(%Payload{event: "GUILD_CREATE", data: object}) do
-    guild = Loader.load(Guild, object)
-    {:GUILD_CREATE, guild}
-  end
-
-  defp handle_payload(%Payload{event: "GUILD_UPDATE", data: object}) do
-    guild = Loader.load(Guild, object)
-    {:GUILD_UPDATE, guild}
-  end
-
   defp handle_payload(%Payload{event: "CHANNEL_CREATE", data: object}) do
     channel = Loader.load(Channel, object)
     {:CHANNEL_CREATE, channel}
@@ -65,6 +55,16 @@ defmodule Coxir.Gateway.Dispatcher do
   defp handle_payload(%Payload{event: "CHANNEL_UPDATE", data: object}) do
     channel = Loader.load(Channel, object)
     {:CHANNEL_UPDATE, channel}
+  end
+
+  defp handle_payload(%Payload{event: "GUILD_CREATE", data: object}) do
+    guild = Loader.load(Guild, object)
+    {:GUILD_CREATE, guild}
+  end
+
+  defp handle_payload(%Payload{event: "GUILD_UPDATE", data: object}) do
+    guild = Loader.load(Guild, object)
+    {:GUILD_UPDATE, guild}
   end
 
   defp handle_payload(%Payload{event: "MESSAGE_CREATE", data: object}) do
