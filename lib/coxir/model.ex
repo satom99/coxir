@@ -40,11 +40,15 @@ defmodule Coxir.Model do
         Loader.get(__MODULE__, key, options)
       end
 
+      def fetch(_key, _options) do
+        nil
+      end
+
       def preload(struct, association, options \\ []) do
         Loader.preload(struct, association, options)
       end
 
-      defoverridable(preload: 3)
+      defoverridable(fetch: 2, preload: 3)
     end
   end
 end
