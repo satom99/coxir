@@ -9,7 +9,7 @@ defmodule Coxir.Gateway.Dispatcher do
 
   alias Coxir.Model.Loader
   alias Coxir.{Channel, Message}
-  alias Coxir.{Guild, Role, Member}
+  alias Coxir.{Guild, Role, Member, Presence}
 
   @type event ::
           {:READY, Ready.t()}
@@ -24,6 +24,7 @@ defmodule Coxir.Gateway.Dispatcher do
           | {:GUILD_ROLE_UPDATE, Role.t()}
           | {:MESSAGE_CREATE, Message.t()}
           | {:MESSAGE_UPDATE, Message.t()}
+          | {:PRESENCE_UPDATE, Presence.t()}
 
   def start_link(producer) do
     GenStage.start_link(__MODULE__, producer)
@@ -106,6 +107,11 @@ defmodule Coxir.Gateway.Dispatcher do
   defp handle_payload(%Payload{event: "MESSAGE_UPDATE", data: object}) do
     message = Loader.load(Message, object)
     {:MESSAGE_UPDATE, message}
+  end
+
+  defp handle_payload(%Payload{event: "PRESENCE_UPDATE", data: object}) do
+    presence = Loader.load(Presence, object)
+    {:PRESENCE_UPDATE, presence}
   end
 
   defp handle_payload(%Payload{}) do
