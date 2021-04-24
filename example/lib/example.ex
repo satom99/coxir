@@ -7,10 +7,12 @@ defmodule Example do
     children = [
       Bot
     ]
+
     options = [
       strategy: :one_for_one,
       name: __MODULE__
     ]
+
     Supervisor.start_link(children, options)
   end
 end
