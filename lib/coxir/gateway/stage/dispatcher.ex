@@ -13,10 +13,10 @@ defmodule Coxir.Gateway.Dispatcher do
   @type event ::
           {:READY, Ready.t()}
           | :RESUMED
-          | {:GUILD_CREATE, Guild.t()}
-          | {:GUILD_UPDATE, Guild.t()}
           | {:CHANNEL_CREATE, Channel.t()}
           | {:CHANNEL_UPDATE, Channel.t()}
+          | {:GUILD_CREATE, Guild.t()}
+          | {:GUILD_UPDATE, Guild.t()}
           | {:MESSAGE_CREATE, Message.t()}
           | {:MESSAGE_UPDATE, Message.t()}
 
