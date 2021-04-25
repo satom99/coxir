@@ -14,9 +14,9 @@ defmodule Coxir.Model do
 
   @callback fetch_many(key, atom, Loader.options()) :: list(instance)
 
-  @callback patch(instance, Enum.t(), Loader.options()) :: instance
+  @callback patch(key, Enum.t(), Loader.options()) :: instance
 
-  @callback drop(instance, Loader.options()) :: instance
+  @callback drop(key, Loader.options()) :: instance
 
   @callback get(key, Loader.options()) :: instance | nil
 
@@ -51,10 +51,10 @@ defmodule Coxir.Model do
       def fetch_many(key, association, options)
 
       @doc false
-      def patch(struct, params, options)
+      def patch(key, params, options)
 
       @doc false
-      def drop(struct, options)
+      def drop(key, options)
 
       def get(key, options \\ []) do
         Loader.get(__MODULE__, key, options)
