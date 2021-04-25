@@ -44,6 +44,18 @@ defmodule Coxir.Model do
 
       @type t :: %__MODULE__{}
 
+      @doc false
+      def fetch(struct, options)
+
+      @doc false
+      def fetch_many(struct, association, options)
+
+      @doc false
+      def patch(struct, params, options)
+
+      @doc false
+      def drop(struct, options)
+
       def get(key, options \\ []) do
         Loader.get(__MODULE__, key, options)
       end
