@@ -10,11 +10,7 @@ defmodule Coxir.Model do
 
   @type key :: Snowflake.t() | tuple
 
-  @callback get(key, Loader.options()) :: instance | nil
-
   @callback fetch(key, Loader.options()) :: instance | nil
-
-  @callback preload(instance, atom, Loader.options()) :: instance
 
   @callback fetch_many(key, atom, Loader.options()) :: list(instance)
 
@@ -22,7 +18,11 @@ defmodule Coxir.Model do
 
   @callback drop(instance, Loader.options()) :: instance
 
-  @optional_callbacks [fetch: 2, preload: 3, fetch_many: 3, patch: 3, drop: 2]
+  @callback get(key, Loader.options()) :: instance | nil
+
+  @callback preload(instance, atom, Loader.options()) :: instance
+
+  @optional_callbacks [fetch: 2, fetch_many: 3, patch: 3, drop: 2, preload: 3]
 
   defmacro __using__(_options) do
     quote location: :keep do
