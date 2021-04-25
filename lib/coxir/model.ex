@@ -18,7 +18,11 @@ defmodule Coxir.Model do
 
   @callback fetch_many(key, atom, Loader.options()) :: list(instance)
 
-  @optional_callbacks [fetch: 2, preload: 3, fetch_many: 3]
+  @callback patch(instance, Enum.t(), Loader.options()) :: instance
+
+  @callback drop(instance, Loader.options()) :: instance
+
+  @optional_callbacks [fetch: 2, preload: 3, fetch_many: 3, patch: 3, drop: 2]
 
   defmacro __using__(_options) do
     quote location: :keep do
