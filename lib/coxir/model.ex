@@ -45,10 +45,10 @@ defmodule Coxir.Model do
       @type t :: %__MODULE__{}
 
       @doc false
-      def fetch(struct, options)
+      def fetch(key, options)
 
       @doc false
-      def fetch_many(struct, association, options)
+      def fetch_many(key, association, options)
 
       @doc false
       def patch(struct, params, options)
