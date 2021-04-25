@@ -22,6 +22,10 @@ defmodule Coxir.Model do
 
   @callback preload(instance, atom, Loader.options()) :: instance
 
+  @callback update(instance, Enum.t(), Loader.options()) :: instance
+
+  @callback delete(instance, Enum.t()) :: instance
+
   @optional_callbacks [fetch: 2, fetch_many: 3, patch: 3, drop: 2, preload: 3]
 
   defmacro __using__(_options) do
@@ -46,6 +50,14 @@ defmodule Coxir.Model do
 
       def preload(struct, association, options \\ []) do
         Loader.preload(struct, association, options)
+      end
+
+      def update(struct, params, options \\ []) do
+        Loader.update(struct, params, options)
+      end
+
+      def delete(struct, options \\ []) do
+        Loader.delete(struct, options)
       end
 
       defoverridable(preload: 3)
