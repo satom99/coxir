@@ -15,4 +15,10 @@ defmodule Coxir.Role do
 
     belongs_to(:guild, Guild, primary_key: true)
   end
+
+  def fetch({id, guild_id}, options) do
+    guild_id
+    |> Guild.fetch_many(:roles, options)
+    |> Enum.find(& &1.id == id)
+  end
 end
