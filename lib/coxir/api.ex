@@ -18,6 +18,8 @@ defmodule Coxir.API do
 
   adapter(Tesla.Adapter.Gun)
 
+  plug(Tesla.Middleware.Retry)
+
   plug(Tesla.Middleware.JSON)
 
   plug(Tesla.Middleware.BaseUrl, "https://discord.com/api")
