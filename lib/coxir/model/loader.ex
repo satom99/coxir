@@ -76,6 +76,20 @@ defmodule Coxir.Model.Loader do
     preloader(reflection, struct, options)
   end
 
+  @spec update(Model.instance(), Enum.t(), options) :: Model.instance()
+  def update(%model{} = struct, params, options) do
+    struct
+    |> model.patch(params, options)
+    |> Storage.put()
+  end
+
+  @spec delete(Model.instance(), options) :: Model.instance()
+  def delete(%model{} = struct, options) do
+    key = get_key(struct)
+    Storage.delete(model, key)
+    model.drop(struct, options)
+  end
+
   defp loader(%model{} = struct, object) do
     fields = get_fields(model)
     associations = get_associations(model)
