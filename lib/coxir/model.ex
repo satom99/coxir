@@ -15,6 +15,8 @@ defmodule Coxir.Model do
 
   @callback fetch_many(key, atom, Loader.options()) :: API.result()
 
+  @callback insert(Enum.t(), Loader.options()) :: API.result()
+
   @callback patch(key, Enum.t(), Loader.options()) :: API.result()
 
   @callback drop(key, Loader.options()) :: API.result()
@@ -23,11 +25,13 @@ defmodule Coxir.Model do
 
   @callback preload(instance, atom, Loader.options()) :: instance
 
+  @callback create(Enum.t(), Loader.options()) :: {:ok, instance} | API.result()
+
   @callback update(instance, Enum.t(), Loader.options()) :: {:ok, instance} | API.result()
 
   @callback delete(instance, Loader.options()) :: {:ok, instance} | API.result()
 
-  @optional_callbacks [fetch: 2, fetch_many: 3, patch: 3, drop: 2, preload: 3]
+  @optional_callbacks [fetch: 2, fetch_many: 3, insert: 2, patch: 3, drop: 2, preload: 3]
 
   defmacro __using__(_options) do
     quote location: :keep do
@@ -52,6 +56,9 @@ defmodule Coxir.Model do
       def fetch_many(key, association, options)
 
       @doc false
+      def insert(params, options)
+
+      @doc false
       def patch(key, params, options)
 
       @doc false
@@ -63,6 +70,10 @@ defmodule Coxir.Model do
 
       def preload(struct, association, options \\ []) do
         Loader.preload(struct, association, options)
+      end
+
+      def create(params, options \\ []) do
+        Loader.create(__MODULE__, params, options)
       end
 
       def update(struct, params, options \\ []) do

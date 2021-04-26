@@ -78,6 +78,14 @@ defmodule Coxir.Model.Loader do
     preloader(reflection, struct, options)
   end
 
+  @spec create(Model.model(), Enum.t(), options) :: {:ok, Model.instance()} | API.result()
+  def create(model, params, options) do
+    with {:ok, object} <- model.insert(params, options) do
+      struct = load(model, object)
+      {:ok, struct}
+    end
+  end
+
   @spec update(Model.instance(), Enum.t(), options) :: {:ok, Model.instance()} | API.result()
   def update(%model{} = struct, params, options) do
     key = get_key(struct)
