@@ -81,7 +81,6 @@ defmodule Coxir.Model.Loader do
     struct
     |> get_key()
     |> model.patch(params, options)
-    |> Storage.put()
   end
 
   @spec delete(Model.instance(), options) :: Model.instance()
