@@ -4,6 +4,8 @@ defmodule Coxir.API do
   """
   use Tesla, only: [], docs: false
 
+  alias Coxir.API.Error
+
   @type method :: Tesla.Env.method()
 
   @type path :: Tesla.Env.url()
@@ -14,7 +16,7 @@ defmodule Coxir.API do
 
   @type status :: Tesla.Env.status()
 
-  @type result :: :ok | {:ok, body} | {:error, status}
+  @type result :: :ok | {:ok, body} | {:error, status, Error.t()}
 
   adapter(Tesla.Adapter.Gun)
 
@@ -30,6 +32,8 @@ defmodule Coxir.API do
 
   @spec perform(method, path, options, body) :: result
   def perform(method, path, options \\ [], body \\ nil) do
+    options = Keyword.new(options)
+
     case request!(method: method, url: path, opts: options, body: body) do
       %{status: 204} ->
         :ok
@@ -37,8 +41,9 @@ defmodule Coxir.API do
       %{status: status, body: body} when status in [200, 201, 304] ->
         {:ok, body}
 
-      %{status: status} ->
-        {:error, status}
+      %{status: status, body: body} ->
+        error = Error.cast(body)
+        {:error, status, error}
     end
   end
 
