@@ -79,6 +79,7 @@ defmodule Coxir.Model.Loader do
   @spec update(Model.instance(), Enum.t(), options) :: Model.instance()
   def update(%model{} = struct, params, options) do
     struct
+    |> get_key()
     |> model.patch(params, options)
     |> Storage.put()
   end
@@ -86,8 +87,8 @@ defmodule Coxir.Model.Loader do
   @spec delete(Model.instance(), options) :: Model.instance()
   def delete(%model{} = struct, options) do
     key = get_key(struct)
+    model.drop(key, options)
     Storage.delete(model, key)
-    model.drop(struct, options)
   end
 
   defp loader(%model{} = struct, object) do
