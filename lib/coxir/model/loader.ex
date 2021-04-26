@@ -25,6 +25,10 @@ defmodule Coxir.Model.Loader do
     Enum.map(objects, &load(model, &1))
   end
 
+  def load(model, %model{} = struct) do
+    struct
+  end
+
   def load(model, object) do
     model
     |> struct()
