@@ -87,8 +87,9 @@ defmodule Coxir.Model.Loader do
   @spec delete(Model.instance(), options) :: Model.instance()
   def delete(%model{} = struct, options) do
     key = get_key(struct)
-    model.drop(key, options)
+    struct = model.drop(key, options)
     Storage.delete(model, key)
+    struct
   end
 
   defp loader(%model{} = struct, object) do
