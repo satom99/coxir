@@ -7,7 +7,7 @@ defmodule Coxir.Model.Loader do
   import Coxir.Model.Helper
 
   alias Ecto.Association.{NotLoaded, BelongsTo, Has}
-  alias Coxir.{Model, Storage}
+  alias Coxir.{Model, Storage, API}
 
   @default_options %{
     force: false,
@@ -15,9 +15,9 @@ defmodule Coxir.Model.Loader do
     fetch: true
   }
 
-  @type preloads :: atom | list(atom) | [{atom, preloads}]
+  @type options :: Enum.t()
 
-  @type options :: keyword
+  @type preloads :: atom | list(atom) | keyword
 
   @spec load(Model.model(), list(map)) :: list(Model.instance())
   @spec load(Model.model(), map) :: Model.instance()
@@ -59,15 +59,13 @@ defmodule Coxir.Model.Loader do
   end
 
   def preload(%model{} = struct, {association, nested}, options) do
-    struct = model.preload(struct, association, options)
+    updater = fn %model{} = struct ->
+      model.preload(struct, nested, options)
+    end
 
-    Map.update!(
-      struct,
-      association,
-      fn %model{} = struct ->
-        model.preload(struct, nested, options)
-      end
-    )
+    struct
+    |> model.preload(association, options)
+    |> Map.update!(association, updater)
   end
 
   def preload(%model{} = struct, association, options) do
@@ -76,22 +74,28 @@ defmodule Coxir.Model.Loader do
     preloader(reflection, struct, options)
   end
 
-  @spec update(Model.instance(), Enum.t(), options) :: Model.instance()
+  @spec update(Model.instance(), Enum.t(), options) :: {:ok, Model.instance()} | API.result()
   def update(%model{} = struct, params, options) do
-    struct
-    |> get_key()
-    |> model.patch(params, options)
+    key = get_key(struct)
+
+    with {:ok, object} <- model.patch(key, params, options) do
+      struct = load(model, object)
+      {:ok, struct}
+    end
   end
 
-  @spec delete(Model.instance(), options) :: Model.instance()
+  @spec delete(Model.instance(), options) :: {:ok, Model.instance()} | API.result()
   def delete(%model{} = struct, options) do
     key = get_key(struct)
-    struct = model.drop(key, options)
-    Storage.delete(model, key)
-    struct
+
+    with {:ok, object} <- model.drop(key, options) do
+      struct = load(model, object)
+      Storage.delete(model, key)
+      {:ok, struct}
+    end
   end
 
-  defp loader(%model{} = struct, object) do
+  defp loader(%model{} = struct, object) when is_map(object) do
     fields = get_fields(model)
     associations = get_associations(model)
 
@@ -102,17 +106,19 @@ defmodule Coxir.Model.Loader do
 
     casted
     |> cast(object, [])
-    |> associer(associations)
+    |> loader(associations)
     |> apply_changes()
     |> Storage.put()
   end
 
-  defp associer(%{data: struct, params: params} = changeset, [association | associations]) do
+  defp loader(%{data: struct, params: params} = changeset, [association | associations]) do
     param = to_string(association)
 
     changeset =
       if Map.has_key?(params, param) do
-        struct = void_association(struct, association)
+        struct = %{struct | association => nil}
+        changeset = %{changeset | data: struct}
+
         assoc = build_assoc(struct, association)
 
         caster = fn _struct, object ->
@@ -121,28 +127,16 @@ defmodule Coxir.Model.Loader do
           |> change()
         end
 
-        changeset
-        |> Map.put(:data, struct)
-        |> cast_assoc(association, with: caster)
+        cast_assoc(changeset, association, with: caster)
       else
         changeset
       end
 
-    associer(changeset, associations)
+    loader(changeset, associations)
   end
 
-  defp associer(changeset, []) do
+  defp loader(changeset, []) do
     changeset
-  end
-
-  defp void_association(%model{} = struct, name) do
-    value =
-      case get_association(model, name) do
-        %{cardinality: :one} -> nil
-        %{cardinality: :many} -> []
-      end
-
-    Map.put(struct, name, value)
   end
 
   defp getter(model, key, %{storage: true} = options) do
@@ -153,12 +147,21 @@ defmodule Coxir.Model.Loader do
   end
 
   defp getter(model, key, %{fetch: true} = options) do
-    options = Keyword.new(options)
-    model.fetch(key, options)
+    case model.fetch(key, options) do
+      {:ok, object} ->
+        load(model, object)
+
+      {:error, 404, _error} ->
+        nil
+    end
   end
 
   defp getter(_model, _key, _options) do
     nil
+  end
+
+  defp preloader(%type{}, _struct, _options) when type not in [Has, BelongsTo] do
+    raise "#{type} associations cannot be preloaded."
   end
 
   defp preloader(%{field: field} = reflection, struct, %{force: false} = options) do
@@ -172,42 +175,33 @@ defmodule Coxir.Model.Loader do
     end
   end
 
-  defp preloader(%type{} = reflection, %model{} = struct, options)
-       when type in [Has, BelongsTo] do
+  defp preloader(%{cardinality: :one} = reflection, struct, options) do
+    %{owner_key: owner_key, related: related, field: field} = reflection
+    owner_value = Map.fetch!(struct, owner_key)
+    resolved = related.get(owner_value, options)
+    %{struct | field => resolved}
+  end
+
+  defp preloader(%{cardinality: :many} = reflection, %model{} = struct, options) do
+    %{owner_key: owner_key, related_key: related_key, related: related, field: field} = reflection
     %{storage: storage?, fetch: fetch?} = options
-    %{owner_key: owner_key, related_key: related_key} = reflection
-    %{cardinality: cardinality, related: related} = reflection
-    %{field: field} = reflection
 
     owner_value = Map.fetch!(struct, owner_key)
 
-    clauses = [{related_key, owner_value}]
-
     storage =
       if storage? do
-        case cardinality do
-          :one -> Storage.get(related, owner_value)
-          :many -> Storage.all_by(related, clauses)
-        end
+        clauses = [{related_key, owner_value}]
+        Storage.all_by(related, clauses)
       end
-
-    options = Keyword.new(options)
 
     fetch =
       if is_nil(storage) and fetch? do
-        case cardinality do
-          :one -> related.fetch(owner_value, options)
-          :many -> model.fetch_many(owner_value, field, options)
-        end
+        {:ok, objects} = model.fetch_many(owner_value, field, options)
+        load(related, objects)
       end
 
-    result = storage || fetch
+    resolved = storage || fetch || []
 
-    resolved =
-      with nil when cardinality == :many <- result do
-        []
-      end
-
-    Map.put(struct, field, resolved)
+    %{struct | field => resolved}
   end
 end
