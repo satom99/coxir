@@ -62,7 +62,7 @@ defmodule Coxir.Guild do
         Loader.load(Role, objects)
 
       _other ->
-        nil
+        []
     end
   end
 end
