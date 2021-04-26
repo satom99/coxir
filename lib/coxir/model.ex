@@ -3,6 +3,7 @@ defmodule Coxir.Model do
   Work in progress.
   """
   alias Coxir.Model.{Snowflake, Loader}
+  alias Coxir.API
 
   @type model :: module
 
@@ -10,21 +11,21 @@ defmodule Coxir.Model do
 
   @type key :: Snowflake.t() | tuple
 
-  @callback fetch(key, Loader.options()) :: instance | nil
+  @callback fetch(key, Loader.options()) :: API.result()
 
-  @callback fetch_many(key, atom, Loader.options()) :: list(instance)
+  @callback fetch_many(key, atom, Loader.options()) :: API.result()
 
-  @callback patch(key, Enum.t(), Loader.options()) :: instance
+  @callback patch(key, Enum.t(), Loader.options()) :: API.result()
 
-  @callback drop(key, Loader.options()) :: instance
+  @callback drop(key, Loader.options()) :: API.result()
 
   @callback get(key, Loader.options()) :: instance | nil
 
   @callback preload(instance, atom, Loader.options()) :: instance
 
-  @callback update(instance, Enum.t(), Loader.options()) :: instance
+  @callback update(instance, Enum.t(), Loader.options()) :: {:ok, instance} | API.result()
 
-  @callback delete(instance, Enum.t()) :: instance
+  @callback delete(instance, Loader.options()) :: {:ok, instance} | API.result()
 
   @optional_callbacks [fetch: 2, fetch_many: 3, patch: 3, drop: 2, preload: 3]
 
