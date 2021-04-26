@@ -190,7 +190,7 @@ defmodule Coxir.Model.Loader do
   defp preloader(%{cardinality: :one} = reflection, struct, options) do
     %{owner_key: owner_key, related: related, field: field} = reflection
     owner_value = Map.fetch!(struct, owner_key)
-    resolved = related.get(owner_value, options)
+    resolved = get(related, owner_value, options)
     %{struct | field => resolved}
   end
 
