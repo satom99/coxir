@@ -26,12 +26,6 @@ defmodule Coxir.Channel do
   end
 
   def fetch(id, options) do
-    case API.get("channels/#{id}", options) do
-      {:ok, object} ->
-        Loader.load(Channel, object)
-
-      _other ->
-        nil
-    end
+    API.get("channels/#{id}", options)
   end
 end

@@ -21,13 +21,9 @@ defmodule Coxir.Member do
   end
 
   def fetch({user_id, guild_id}, options) do
-    case API.get("guilds/#{guild_id}/members/#{user_id}", options) do
-      {:ok, object} ->
-        object = Map.put(object, "guild_id", guild_id)
-        Loader.load(Member, object)
-
-      _other ->
-        nil
+    with {:ok, object} <- API.get("guilds/#{guild_id}/members/#{user_id}", options) do
+      object = Map.put(object, "guild_id", guild_id)
+      {:ok, object}
     end
   end
 

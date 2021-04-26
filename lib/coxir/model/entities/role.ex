@@ -17,8 +17,12 @@ defmodule Coxir.Role do
   end
 
   def fetch({id, guild_id}, options) do
-    guild_id
-    |> Guild.fetch_many(:roles, options)
-    |> Enum.find(&(&1.id == id))
+    with {:ok, objects} <- Guild.fetch_many(guild_id, :roles, options) do
+      if object = Enum.find(objects, &(&1["id"] == id)) do
+        {:ok, object}
+      else
+        {:error, 404, nil}
+      end
+    end
   end
 end

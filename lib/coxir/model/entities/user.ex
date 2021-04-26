@@ -20,12 +20,6 @@ defmodule Coxir.User do
   end
 
   def fetch(id, options) do
-    case API.get("users/#{id}", options) do
-      {:ok, object} ->
-        Loader.load(User, object)
-
-      _other ->
-        nil
-    end
+    API.get("users/#{id}", options)
   end
 end

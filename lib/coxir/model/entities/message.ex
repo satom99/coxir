@@ -22,12 +22,6 @@ defmodule Coxir.Message do
   end
 
   def fetch({id, channel_id}, options) do
-    case API.get("channels/#{channel_id}/messages/#{id}", options) do
-      {:ok, object} ->
-        Loader.load(Message, object)
-
-      _other ->
-        nil
-    end
+    API.get("channels/#{channel_id}/messages/#{id}", options)
   end
 end

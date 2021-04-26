@@ -46,23 +46,13 @@ defmodule Coxir.Guild do
   end
 
   def fetch(id, options) do
-    case API.get("guilds/#{id}", options) do
-      {:ok, object} ->
-        Loader.load(Guild, object)
-
-      _other ->
-        nil
-    end
+    API.get("guilds/#{id}", options)
   end
 
   def fetch_many(id, :roles, options) do
-    case API.get("guilds/#{id}/roles", options) do
-      {:ok, objects} ->
-        objects = Enum.map(objects, &Map.put(&1, "guild_id", id))
-        Loader.load(Role, objects)
-
-      _other ->
-        []
+    with {:ok, objects} <- API.get("guilds/#{id}/roles", options) do
+      objects = Enum.map(objects, &Map.put(&1, "guild_id", id))
+      {:ok, objects}
     end
   end
 end
