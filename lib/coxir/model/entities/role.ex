@@ -29,4 +29,11 @@ defmodule Coxir.Role do
       {:error, 404, nil}
     end
   end
+
+  def insert(%{guild_id: guild_id} = params, options) do
+    with {:ok, object} <- API.post("guilds/#{guild_id}/roles", params, options) do
+      object = Map.put(object, "guild_id", guild_id)
+      {:ok, object}
+    end
+  end
 end
