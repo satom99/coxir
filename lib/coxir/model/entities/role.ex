@@ -36,4 +36,8 @@ defmodule Coxir.Role do
       {:ok, object}
     end
   end
+
+  def patch({id, guild_id}, params, options) do
+    API.patch("guilds/#{guild_id}/roles/#{id}", params, options)
+  end
 end
