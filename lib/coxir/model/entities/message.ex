@@ -32,4 +32,10 @@ defmodule Coxir.Message do
   def patch({id, channel_id}, params, options) do
     API.patch("channels/#{channel_id}/messages/#{id}", params, options)
   end
+
+  @spec reply(t, Enum.t(), Loader.options()) :: Loader.result()
+  def reply(%Message{channel_id: channel_id}, params, options \\ []) do
+    channel = %Channel{id: channel_id}
+    Channel.send_message(channel, params, options)
+  end
 end
