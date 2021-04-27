@@ -23,7 +23,7 @@ defmodule Coxir.User do
     API.get("users/#{id}", options)
   end
 
-  @spec create_dm(t, Loader.options()) :: {:ok, Channel.t()} | API.result()
+  @spec create_dm(t, Loader.options()) :: Loader.result()
   def create_dm(%User{id: id}, options \\ []) do
     params = %{recipient_id: id}
     Channel.create(params, options)

@@ -56,7 +56,7 @@ defmodule Coxir.Guild do
     end
   end
 
-  @spec create_channel(t, Enum.t(), Loader.options()) :: {:ok, Channel.t()} | API.result()
+  @spec create_channel(t, Enum.t(), Loader.options()) :: Loader.result()
   def create_channel(%Guild{id: id}, params, options \\ []) do
     params
     |> Map.new()
