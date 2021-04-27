@@ -7,7 +7,8 @@ defmodule Coxir.MixProject do
       version: "0.1.0",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      docs: docs()
     ]
   end
 
@@ -27,6 +28,25 @@ defmodule Coxir.MixProject do
       {:tesla, "~> 1.4"},
       {:gen_stage, "~> 1.1"},
       {:ex_doc, "~> 0.24.2", only: :dev}
+    ]
+  end
+
+  defp docs do
+    [
+      groups_for_modules: [
+        Entities: [
+          Coxir.User,
+          Coxir.Channel,
+          Coxir.Webhook,
+          Coxir.Message,
+          Coxir.Guild,
+          Coxir.Integration,
+          Coxir.Role,
+          Coxir.Member,
+          Coxir.Presence
+        ],
+        Other: ~r/(.*?)/
+      ]
     ]
   end
 end
