@@ -34,18 +34,3 @@ jobs:
         run: mix compile
       - name: Run tests
         run: mix test
-  documentation:
-    needs: validation
-    runs-on: ubuntu-latest
-    on:
-      push:
-        branches:
-          - master
-    steps:
-      - name: Generate documentation
-        run: mix docs
-      - name: Publish documentation
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./doc
