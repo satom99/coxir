@@ -43,6 +43,7 @@ defmodule Coxir.Guild do
 
     has_many(:roles, Role)
     has_many(:members, Member)
+    has_many(:voice_states, VoiceState)
   end
 
   def fetch(id, options) do
