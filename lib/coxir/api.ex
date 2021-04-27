@@ -50,4 +50,8 @@ defmodule Coxir.API do
   def get(path, options) do
     perform(:get, path, options)
   end
+
+  def post(path, body, options) do
+    perform(:post, path, options, body)
+  end
 end
