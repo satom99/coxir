@@ -175,6 +175,10 @@ defmodule Coxir.Model.Loader do
     nil
   end
 
+  defp preloader(nil, _struct, _options) do
+    raise "Cannot preload unknown association."
+  end
+
   defp preloader(%type{}, _struct, _options) when type not in [Has, BelongsTo] do
     raise "#{type} associations cannot be preloaded."
   end
