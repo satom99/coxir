@@ -15,7 +15,7 @@ defmodule Coxir.Model do
 
   @callback fetch_many(key, atom, Loader.options()) :: API.result()
 
-  @callback insert(Enum.t(), Loader.options()) :: API.result()
+  @callback insert(map, Loader.options()) :: API.result()
 
   @callback patch(key, Enum.t(), Loader.options()) :: API.result()
 

@@ -36,10 +36,4 @@ defmodule Coxir.Channel do
   def insert(%{recipient_id: _recipient_id} = params, options) do
     API.post("users/@me/channels", params, options)
   end
-
-  def insert(params, options) when not is_map(params) do
-    params
-    |> Map.new()
-    |> insert(options)
-  end
 end

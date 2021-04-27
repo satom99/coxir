@@ -82,6 +82,7 @@ defmodule Coxir.Model.Loader do
 
   @spec create(Model.model(), Enum.t(), options) :: result
   def create(model, params, options) do
+    params = Map.new(params)
     with {:ok, object} <- model.insert(params, options) do
       struct = load(model, object)
       {:ok, struct}
