@@ -24,4 +24,8 @@ defmodule Coxir.Message do
   def fetch({id, channel_id}, options) do
     API.get("channels/#{channel_id}/messages/#{id}", options)
   end
+
+  def insert(%{channel_id: channel_id} = params, options) do
+    API.post("channels/#{channel_id}/messages", params, options)
+  end
 end
