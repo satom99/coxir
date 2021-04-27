@@ -19,6 +19,8 @@ defmodule Coxir.Model.Loader do
 
   @type preloads :: atom | list(atom) | [{atom, preloads}]
 
+  @type result :: {:ok, Model.instance()} | API.result()
+
   @spec load(Model.model(), list(map)) :: list(Model.instance())
   @spec load(Model.model(), map) :: Model.instance()
   def load(model, objects) when is_list(objects) do
@@ -78,7 +80,7 @@ defmodule Coxir.Model.Loader do
     preloader(reflection, struct, options)
   end
 
-  @spec create(Model.model(), Enum.t(), options) :: {:ok, Model.instance()} | API.result()
+  @spec create(Model.model(), Enum.t(), options) :: result
   def create(model, params, options) do
     with {:ok, object} <- model.insert(params, options) do
       struct = load(model, object)
@@ -86,7 +88,7 @@ defmodule Coxir.Model.Loader do
     end
   end
 
-  @spec update(Model.instance(), Enum.t(), options) :: {:ok, Model.instance()} | API.result()
+  @spec update(Model.instance(), Enum.t(), options) :: result
   def update(%model{} = struct, params, options) do
     key = get_key(struct)
 
@@ -96,7 +98,7 @@ defmodule Coxir.Model.Loader do
     end
   end
 
-  @spec delete(Model.instance(), options) :: {:ok, Model.instance()} | API.result()
+  @spec delete(Model.instance(), options) :: result
   def delete(%model{} = struct, options) do
     key = get_key(struct)
 
