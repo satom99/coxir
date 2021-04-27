@@ -54,4 +54,8 @@ defmodule Coxir.API do
   def post(path, body, options) do
     perform(:post, path, options, body)
   end
+
+  def patch(path, body, options) do
+    perform(:patch, path, options, body)
+  end
 end
