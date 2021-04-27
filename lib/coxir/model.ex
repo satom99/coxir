@@ -25,11 +25,11 @@ defmodule Coxir.Model do
 
   @callback preload(instance, atom, Loader.options()) :: instance
 
-  @callback create(Enum.t(), Loader.options()) :: {:ok, instance} | API.result()
+  @callback create(Enum.t(), Loader.options()) :: Loader.result()
 
-  @callback update(instance, Enum.t(), Loader.options()) :: {:ok, instance} | API.result()
+  @callback update(instance, Enum.t(), Loader.options()) :: Loader.result()
 
-  @callback delete(instance, Loader.options()) :: {:ok, instance} | API.result()
+  @callback delete(instance, Loader.options()) :: Loader.result()
 
   @optional_callbacks [fetch: 2, fetch_many: 3, insert: 2, patch: 3, drop: 2, preload: 3]
 
