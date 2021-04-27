@@ -63,4 +63,12 @@ defmodule Coxir.Guild do
     |> Map.put(:guild_id, id)
     |> Channel.create(options)
   end
+
+  @spec create_role(t, Enum.t(), Loader.options()) :: Loader.result()
+  def create_role(%Guild{id: id}, params, options \\ []) do
+    params
+    |> Map.new()
+    |> Map.put(:guild_id, id)
+    |> Role.create(options)
+  end
 end
