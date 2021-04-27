@@ -17,7 +17,7 @@ defmodule Coxir.Model do
 
   @callback insert(map, Loader.options()) :: API.result()
 
-  @callback patch(key, Enum.t(), Loader.options()) :: API.result()
+  @callback patch(key, map, Loader.options()) :: API.result()
 
   @callback drop(key, Loader.options()) :: API.result()
 

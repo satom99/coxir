@@ -93,6 +93,7 @@ defmodule Coxir.Model.Loader do
   @spec update(Model.instance(), Enum.t(), options) :: result
   def update(%model{} = struct, params, options) do
     key = get_key(struct)
+    params = Map.new(params)
 
     with {:ok, object} <- model.patch(key, params, options) do
       struct = load(model, object)
