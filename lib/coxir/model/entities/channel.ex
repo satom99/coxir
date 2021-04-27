@@ -28,4 +28,18 @@ defmodule Coxir.Channel do
   def fetch(id, options) do
     API.get("channels/#{id}", options)
   end
+
+  def insert(%{guild_id: guild_id} = params, options) do
+    API.post("guilds/#{guild_id}/channels", params, options)
+  end
+
+  def insert(%{recipient_id: _recipient_id} = params, options) do
+    API.post("users/@me/channels", params, options)
+  end
+
+  def insert(params, options) when not is_map(params) do
+    params
+    |> Map.new()
+    |> insert(options)
+  end
 end
