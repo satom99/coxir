@@ -36,6 +36,7 @@ jobs:
         run: mix test
   documentation:
     needs: validation
+    runs-on: ubuntu-latest
     on:
       push:
         branches:
@@ -46,4 +47,5 @@ jobs:
       - name: Publish documentation
         uses: peaceiris/actions-gh-pages@v3
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./doc
