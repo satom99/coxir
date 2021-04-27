@@ -26,7 +26,7 @@ jobs:
           path: |
             deps
             _build
-          key: ${{ runner.os }}-${{ steps.elixir.outputs.elixir-version }}-${{ steps.elixir.outputs.otp-version }}-${{ hashFiles('mix.lock') }}
+          key: ${{ runner.os }}-${{ steps.elixir.outputs.elixir-version }}-${{ steps.elixir.outputs.otp-version }}-${{ hashFiles('mix.lock') }}-${{ env.MIX_ENV }}
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: mix do deps.get, deps.compile
