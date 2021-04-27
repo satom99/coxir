@@ -28,4 +28,8 @@ defmodule Coxir.Message do
   def insert(%{channel_id: channel_id} = params, options) do
     API.post("channels/#{channel_id}/messages", params, options)
   end
+
+  def patch({id, channel_id}, params, options) do
+    API.patch("channels/#{channel_id}/messages/#{id}", params, options)
+  end
 end
