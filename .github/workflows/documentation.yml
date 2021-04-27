@@ -6,7 +6,7 @@ on:
       - master
 
 env:
-  MIX_ENV: test
+  MIX_ENV: dev
 
 jobs:
   documentation:
