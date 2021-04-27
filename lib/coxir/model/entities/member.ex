@@ -51,4 +51,7 @@ defmodule Coxir.Member do
   def preload(member, association, options) do
     super(member, association, options)
   end
+
+  @doc false
+  def create(params, options)
 end

@@ -23,6 +23,9 @@ defmodule Coxir.User do
     API.get("users/#{id}", options)
   end
 
+  @doc false
+  def create(params, options)
+
   @spec create_dm(t, Loader.options()) :: Loader.result()
   def create_dm(%User{id: id}, options \\ []) do
     params = %{recipient_id: id}
