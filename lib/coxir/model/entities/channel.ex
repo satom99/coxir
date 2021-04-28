@@ -41,6 +41,10 @@ defmodule Coxir.Channel do
     API.patch("channels/#{id}", params, options)
   end
 
+  def drop(id, options) do
+    API.delete("channels/#{id}", options)
+  end
+
   @spec send_message(t, binary | Enum.t(), Loader.options()) :: Loader.result()
   def send_message(channel, params, options \\ [])
 
