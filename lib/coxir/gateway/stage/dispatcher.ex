@@ -29,6 +29,7 @@ defmodule Coxir.Gateway.Dispatcher do
           | {:GUILD_ROLE_DELETE, Role.t()}
           | {:MESSAGE_CREATE, Message.t()}
           | {:MESSAGE_UPDATE, Message.t()}
+          | {:MESSAGE_DELETE, Message.t()}
           | {:PRESENCE_UPDATE, Presence.t()}
           | {:VOICE_STATE_UPDATE, VoiceState.t()}
 
@@ -144,6 +145,12 @@ defmodule Coxir.Gateway.Dispatcher do
   defp handle_payload(%Payload{event: "MESSAGE_UPDATE", data: object}) do
     message = Loader.load(Message, object)
     {:MESSAGE_UPDATE, message}
+  end
+
+  defp handle_payload(%Payload{event: "MESSAGE_DELETE", data: object}) do
+    message = Loader.load(Message, object)
+    Loader.unload(message)
+    {:MESSAGE_DELETE, message}
   end
 
   defp handle_payload(%Payload{event: "PRESENCE_UPDATE", data: object}) do
