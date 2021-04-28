@@ -37,6 +37,12 @@ defmodule Coxir.Model.Loader do
     |> loader(object)
   end
 
+  @spec unload(Model.instance()) :: :ok
+  def unload(%model{} = struct) do
+    key = get_key(struct)
+    Storage.delete(model, key)
+  end
+
   @spec get(Model.model(), Model.key(), options) :: Model.instance() | nil
   def get(model, key, options) do
     options = Enum.into(options, @default_options)
@@ -107,7 +113,7 @@ defmodule Coxir.Model.Loader do
 
     with {:ok, object} <- model.drop(key, options) do
       struct = load(model, object)
-      Storage.delete(model, key)
+      unload(struct)
       {:ok, struct}
     end
   end
