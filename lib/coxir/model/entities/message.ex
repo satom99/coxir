@@ -33,6 +33,10 @@ defmodule Coxir.Message do
     API.patch("channels/#{channel_id}/messages/#{id}", params, options)
   end
 
+  def drop({id, channel_id}, options) do
+    API.delete("channels/#{channel_id}/messages/#{id}", options)
+  end
+
   @spec reply(t, binary | Enum.t(), Loader.options()) :: Loader.result()
   def reply(%Message{channel_id: channel_id}, term, options \\ []) do
     channel = %Channel{id: channel_id}
