@@ -20,6 +20,7 @@ defmodule Coxir.Gateway.Dispatcher do
           | {:CHANNEL_DELETE, Channel.t()}
           | {:GUILD_CREATE, Guild.t()}
           | {:GUILD_UPDATE, Guild.t()}
+          | {:GUILD_DELETE, Guild.t()}
           | {:GUILD_MEMBER_ADD, Member.t()}
           | {:GUILD_MEMBER_UPDATE, Member.t()}
           | {:GUILD_ROLE_CREATE, Role.t()}
@@ -80,6 +81,16 @@ defmodule Coxir.Gateway.Dispatcher do
   defp handle_payload(%Payload{event: "GUILD_UPDATE", data: object}) do
     guild = Loader.load(Guild, object)
     {:GUILD_UPDATE, guild}
+  end
+
+  defp handle_payload(%Payload{event: "GUILD_DELETE", data: object}) do
+    guild = Loader.load(Guild, object)
+
+    if not Map.has_key?(object, "unavailable") do
+      Loader.unload(guild)
+    end
+
+    {:GUILD_DELETE, guild}
   end
 
   defp handle_payload(%Payload{event: "GUILD_MEMBER_ADD", data: object}) do
