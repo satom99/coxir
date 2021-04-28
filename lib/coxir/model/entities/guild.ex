@@ -61,6 +61,10 @@ defmodule Coxir.Guild do
     API.patch("guilds/#{id}", params, options)
   end
 
+  def drop(id, options) do
+    API.delete("guilds/#{id}", options)
+  end
+
   @spec create_channel(t, Enum.t(), Loader.options()) :: Loader.result()
   def create_channel(%Guild{id: id}, params, options \\ []) do
     params
