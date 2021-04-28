@@ -17,6 +17,7 @@ defmodule Coxir.Gateway.Dispatcher do
           | :RESUMED
           | {:CHANNEL_CREATE, Channel.t()}
           | {:CHANNEL_UPDATE, Channel.t()}
+          | {:CHANNEL_DELETE, Channel.t()}
           | {:GUILD_CREATE, Guild.t()}
           | {:GUILD_UPDATE, Guild.t()}
           | {:GUILD_MEMBER_ADD, Member.t()}
@@ -63,6 +64,12 @@ defmodule Coxir.Gateway.Dispatcher do
   defp handle_payload(%Payload{event: "CHANNEL_UPDATE", data: object}) do
     channel = Loader.load(Channel, object)
     {:CHANNEL_UPDATE, channel}
+  end
+
+  defp handle_payload(%Payload{event: "CHANNEL_DELETE", data: object}) do
+    channel = Loader.load(Channel, object)
+    Loader.unload(channel)
+    {:CHANNEL_DELETE, channel}
   end
 
   defp handle_payload(%Payload{event: "GUILD_CREATE", data: object}) do
