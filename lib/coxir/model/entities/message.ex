@@ -37,9 +37,9 @@ defmodule Coxir.Message do
     API.delete("channels/#{channel_id}/messages/#{id}", options)
   end
 
-  @spec reply(t, binary | Enum.t(), Loader.options()) :: Loader.result()
   def reply(%Message{channel_id: channel_id}, term, options \\ []) do
     channel = %Channel{id: channel_id}
     Channel.send_message(channel, term, options)
+  @spec reply(t, Enum.t(), Loader.options()) :: Loader.result()
   end
 end

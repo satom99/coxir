@@ -45,15 +45,8 @@ defmodule Coxir.Channel do
     API.delete("channels/#{id}", options)
   end
 
-  @spec send_message(t, binary | Enum.t(), Loader.options()) :: Loader.result()
-  def send_message(channel, params, options \\ [])
-
-  def send_message(channel, content, options) when is_binary(content) do
-    params = %{content: content}
-    send_message(channel, params, options)
-  end
-
-  def send_message(%Channel{id: id}, params, options) do
+  @spec send_message(t, Enum.t(), Loader.options()) :: Loader.result()
+  def send_message(%Channel{id: id}, params, options \\ []) do
     params
     |> Map.new()
     |> Map.put(:channel_id, id)
