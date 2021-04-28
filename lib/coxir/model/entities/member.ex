@@ -27,6 +27,13 @@ defmodule Coxir.Member do
     end
   end
 
+  def patch({user_id, guild_id}, params, options) do
+    with {:ok, object} <- API.patch("guilds/#{guild_id}/members/#{user_id}", params, options) do
+      object = Map.put(object, "guild_id", guild_id)
+      {:ok, object}
+    end
+  end
+
   def drop({user_id, guild_id}, options) do
     API.delete("guilds/#{guild_id}/members/#{user_id}", options)
   end
