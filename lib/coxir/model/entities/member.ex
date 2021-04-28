@@ -58,4 +58,9 @@ defmodule Coxir.Member do
 
   @doc false
   def create(params, options)
+
+  @spec kick(t, Loader.options()) :: Loader.result()
+  def kick(member, options \\ []) do
+    delete(member, options)
+  end
 end
