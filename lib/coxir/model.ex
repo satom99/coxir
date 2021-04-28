@@ -11,7 +11,7 @@ defmodule Coxir.Model do
 
   @type key :: Snowflake.t() | tuple
 
-  @callback fetch(key, Loader.options()) :: API.result()
+  @callback fetch(key, Loader.options()) :: API.result() | {:error, 404, nil}
 
   @callback fetch_many(key, atom, Loader.options()) :: API.result()
 
