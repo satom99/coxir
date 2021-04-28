@@ -37,9 +37,14 @@ defmodule Coxir.Message do
     API.delete("channels/#{channel_id}/messages/#{id}", options)
   end
 
-  def reply(%Message{channel_id: channel_id}, term, options \\ []) do
-    channel = %Channel{id: channel_id}
-    Channel.send_message(channel, term, options)
   @spec reply(t, Enum.t(), Loader.options()) :: Loader.result()
+  def reply(%Message{id: id, channel_id: channel_id}, params, options \\ []) do
+    reference = %{message_id: id}
+
+    params
+    |> Map.new()
+    |> Map.put(:channel_id, channel_id)
+    |> Map.put(:message_reference, reference)
+    |> create(options)
   end
 end
