@@ -27,6 +27,10 @@ defmodule Coxir.Member do
     end
   end
 
+  def drop({user_id, guild_id}, options) do
+    API.delete("guilds/#{guild_id}/members/#{user_id}", options)
+  end
+
   def preload(%Member{roles: [%Role{} | _rest] = roles} = member, :roles, options) do
     if options[:force] do
       roles = Enum.map(roles, & &1.id)
