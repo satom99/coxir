@@ -40,4 +40,8 @@ defmodule Coxir.Role do
   def patch({id, guild_id}, params, options) do
     API.patch("guilds/#{guild_id}/roles/#{id}", params, options)
   end
+
+  def drop({id, guild_id}, options) do
+    API.delete("guilds/#{guild_id}/roles/#{id}", options)
+  end
 end
