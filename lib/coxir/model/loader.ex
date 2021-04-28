@@ -111,8 +111,20 @@ defmodule Coxir.Model.Loader do
   def delete(%model{} = struct, options) do
     key = get_key(struct)
 
-    with {:ok, object} <- model.drop(key, options) do
-      struct = load(model, object)
+    result =
+      case model.drop(key, options) do
+        :ok ->
+          {:ok, struct}
+
+        {:ok, object} ->
+          struct = load(model, object)
+          {:ok, struct}
+
+        other ->
+          other
+      end
+
+    with {:ok, struct} <- result do
       unload(struct)
       {:ok, struct}
     end
