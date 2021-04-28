@@ -160,6 +160,11 @@ defmodule Coxir.Gateway.Dispatcher do
 
   defp handle_payload(%Payload{event: "VOICE_STATE_UPDATE", data: object}) do
     voice_state = Loader.load(VoiceState, object)
+
+    if is_nil(voice_state.channel_id) do
+      Loader.unload(voice_state)
+    end
+
     {:VOICE_STATE_UPDATE, voice_state}
   end
 
