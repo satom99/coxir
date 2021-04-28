@@ -22,7 +22,7 @@ defmodule Coxir.Guild do
     field(:system_channel_flags, :integer)
     field(:joined_at, :utc_datetime)
     field(:large, :boolean)
-    field(:unavailable, :boolean, default: false)
+    field(:unavailable, :boolean)
     field(:member_count, :integer)
     field(:max_presences, :integer)
     field(:max_members, :integer)
