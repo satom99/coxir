@@ -58,4 +58,8 @@ defmodule Coxir.API do
   def patch(path, body, options) do
     perform(:patch, path, options, body)
   end
+
+  def delete(path, options) do
+    perform(:delete, path, options)
+  end
 end
