@@ -51,7 +51,9 @@ defmodule Coxir.Model do
       @type t :: %__MODULE__{}
 
       @doc false
-      def fetch(key, options)
+      def fetch(_key, _options) do
+        {:error, 404, nil}
+      end
 
       @doc false
       def fetch_many(key, association, options)
@@ -85,7 +87,7 @@ defmodule Coxir.Model do
         Loader.delete(struct, options)
       end
 
-      defoverridable(preload: 3)
+      defoverridable(fetch: 2, preload: 3)
     end
   end
 end
