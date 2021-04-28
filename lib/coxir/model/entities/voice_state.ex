@@ -20,8 +20,8 @@ defmodule Coxir.VoiceState do
     embeds_one(:member, Member)
 
     belongs_to(:user, User, primary_key: true)
-    belongs_to(:channel, Channel, primary_key: true)
-    belongs_to(:guild, Guild)
+    belongs_to(:guild, Guild, primary_key: true)
+    belongs_to(:channel, Channel)
   end
 
   def preload(%VoiceState{member: %Member{}} = voice_state, :member, options) do
