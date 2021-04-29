@@ -10,15 +10,15 @@ defmodule Coxir.Model.Helper do
   def merge(%model{} = base, %model{} = overwrite) do
     fields = get_fields(model)
     embeds = get_embeds(model)
+    assocs = get_associations(model)
     params = Map.take(overwrite, fields)
 
-    assocs = get_associations(model)
-    assocs = Map.take(overwrite, assocs)
+    keep = Map.take(overwrite, embeds ++ assocs)
 
     base
     |> cast(params, fields -- embeds)
     |> apply_changes()
-    |> Map.merge(assocs)
+    |> Map.merge(keep)
   end
 
   @spec get_key(Model.instance()) :: Model.key()
