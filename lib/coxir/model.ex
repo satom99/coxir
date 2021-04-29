@@ -12,6 +12,16 @@ defmodule Coxir.Model do
 
   @type key :: Snowflake.t() | tuple
 
+  @callback fetch(key, keyword) :: API.result()
+
+  @callback fetch_many(key, atom, keyword) :: API.result()
+
+  @callback insert(map, keyword) :: API.result()
+
+  @callback patch(key, map, keyword) :: API.result()
+
+  @callback drop(key, keyword) :: API.result()
+
   @callback storable?() :: boolean
 
   @callback get(key, Loader.options()) :: instance | nil
@@ -25,16 +35,6 @@ defmodule Coxir.Model do
   @callback update(instance, Enum.t(), Loader.options()) :: Loader.result()
 
   @callback delete(instance, Loader.options()) :: Loader.result()
-
-  @callback fetch(key, keyword) :: API.result()
-
-  @callback fetch_many(key, atom, keyword) :: API.result()
-
-  @callback insert(map, keyword) :: API.result()
-
-  @callback patch(key, map, keyword) :: API.result()
-
-  @callback drop(key, keyword) :: API.result()
 
   @optional_callbacks [fetch: 2, fetch_many: 3, insert: 2, patch: 3, drop: 2, preload: 3]
 
@@ -94,18 +94,6 @@ defmodule Coxir.Model do
     delete = Module.defines?(model, {:drop, 2}) && nil
 
     quote location: :keep do
-      @doc unquote(get)
-      def get(key, options)
-
-      @doc unquote(create)
-      def create(params, options)
-
-      @doc unquote(update)
-      def update(struct, params, options)
-
-      @doc unquote(delete)
-      def delete(struct, options)
-
       @doc false
       def fetch(key, options)
 
@@ -120,6 +108,18 @@ defmodule Coxir.Model do
 
       @doc false
       def drop(key, options)
+
+      @doc unquote(get)
+      def get(key, options)
+
+      @doc unquote(create)
+      def create(params, options)
+
+      @doc unquote(update)
+      def update(struct, params, options)
+
+      @doc unquote(delete)
+      def delete(struct, options)
     end
   end
 end
