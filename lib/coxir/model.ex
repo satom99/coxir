@@ -94,11 +94,7 @@ defmodule Coxir.Model do
     patch? = Module.defines?(model, {:patch, 3})
     drop? = Module.defines?(model, {:drop, 2})
 
-    associations = Module.get_attribute(model, :etco_assocs, [])
-    has_associations? = length(associations) > 0
-
     get = (storable? or fetch?) && nil
-    preload = has_associations? && nil
     create = insert? && nil
     update = patch? && nil
     delete = drop? && nil
@@ -121,9 +117,6 @@ defmodule Coxir.Model do
 
       @doc unquote(get)
       def get(key, options)
-
-      @doc unquote(preload)
-      def preload(struct, association, options)
 
       @doc unquote(create)
       def create(params, options)
