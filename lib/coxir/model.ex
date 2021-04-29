@@ -51,9 +51,7 @@ defmodule Coxir.Model do
       @type t :: %__MODULE__{}
 
       @doc false
-      def fetch(_key, _options) do
-        {:error, 404, nil}
-      end
+      def fetch(key, options)
 
       @doc false
       def fetch_many(key, association, options)
