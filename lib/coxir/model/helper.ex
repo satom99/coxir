@@ -9,13 +9,14 @@ defmodule Coxir.Model.Helper do
   @spec merge(Model.instance(), Model.instance()) :: Model.instance()
   def merge(%model{} = base, %model{} = overwrite) do
     fields = get_fields(model)
+    embeds = get_embeds(model)
     params = Map.take(overwrite, fields)
 
     assocs = get_associations(model)
     assocs = Map.take(overwrite, assocs)
 
     base
-    |> cast(params, fields)
+    |> cast(params, fields -- embeds)
     |> apply_changes()
     |> Map.merge(assocs)
   end
