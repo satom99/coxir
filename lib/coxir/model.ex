@@ -2,6 +2,7 @@ defmodule Coxir.Model do
   @moduledoc """
   Work in progress.
   """
+  alias Macro.Env
   alias Coxir.API
   alias Coxir.Model.{Snowflake, Loader}
 
@@ -47,6 +48,7 @@ defmodule Coxir.Model do
       alias Coxir.{Guild, Integration, Role}
       alias Coxir.{Member, Presence, VoiceState}
 
+      @before_compile Coxir.Model
       @behaviour Coxir.Model
 
       @primary_key {:id, Snowflake, []}
@@ -54,23 +56,10 @@ defmodule Coxir.Model do
 
       @type t :: %__MODULE__{}
 
-      def storable?, do: true
-      @doc false
+      @storable true
 
       @doc false
-      def fetch(key, options)
-
-      @doc false
-      def fetch_many(key, association, options)
-
-      @doc false
-      def insert(params, options)
-
-      @doc false
-      def patch(key, params, options)
-
-      @doc false
-      def drop(key, options)
+      def storable?, do: @storable
 
       def get(key, options \\ []) do
         Loader.get(__MODULE__, key, options)
@@ -92,7 +81,43 @@ defmodule Coxir.Model do
         Loader.delete(struct, options)
       end
 
-      defoverridable(fetch: 2, preload: 3)
+      defoverridable(preload: 3)
+    end
+  end
+
+  defmacro __before_compile__(%Env{module: model}) do
+    get = Module.get_attribute(model, :storable, false) && nil
+    create = Module.defines?(model, {:insert, 2}) && nil
+    update = Module.defines?(model, {:patch, 3}) && nil
+    delete = Module.defines?(model, {:drop, 2}) && nil
+
+    quote location: :keep do
+      @doc unquote(get)
+      def get(key, options)
+
+      @doc unquote(create)
+      def create(params, options)
+
+      @doc unquote(update)
+      def update(struct, params, options)
+
+      @doc unquote(delete)
+      def delete(struct, options)
+
+      @doc false
+      def fetch(key, options)
+
+      @doc false
+      def fetch_many(key, association, options)
+
+      @doc false
+      def insert(params, options)
+
+      @doc false
+      def patch(key, params, options)
+
+      @doc false
+      def drop(key, options)
     end
   end
 end
