@@ -37,12 +37,11 @@ defmodule Coxir.Gateway do
     end
   end
 
-  def start_link(config) do
-    children = []
-    options = [strategy: :rest_for_one]
+  def start_link(config, options \\ []) do
     handler = Keyword.fetch!(config, :handler)
+    options = [{:strategy, :rest_for_one} | options]
 
-    with {:ok, supervisor} <- Supervisor.start_link(children, options) do
+    with {:ok, supervisor} <- Supervisor.start_link([], options) do
       {:ok, producer} = start_child(supervisor, Producer)
       {:ok, dispatcher} = start_child(supervisor, {Dispatcher, producer})
 
