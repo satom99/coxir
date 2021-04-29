@@ -9,7 +9,7 @@ defmodule Coxir.Presence do
   embedded_schema do
     field(:status, :string)
 
-    embeds_one(:member, Member)
+    field(:member, :any, virtual: true)
 
     belongs_to(:user, User, primary_key: true)
     belongs_to(:guild, Guild, primary_key: true)

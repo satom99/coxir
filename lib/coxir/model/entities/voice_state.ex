@@ -17,7 +17,7 @@ defmodule Coxir.VoiceState do
     field(:suppress, :boolean)
     field(:request_to_speak_timestamp, :utc_datetime)
 
-    embeds_one(:member, Member)
+    field(:member, :any, virtual: true)
 
     belongs_to(:user, User, primary_key: true)
     belongs_to(:guild, Guild, primary_key: true)
