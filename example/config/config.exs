@@ -1,3 +1,5 @@
 import Config
 
-config :coxir, :token, ""
+config :coxir,
+  token: "",
+  intents: :non_privileged
