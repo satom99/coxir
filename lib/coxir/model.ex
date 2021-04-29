@@ -38,7 +38,9 @@ defmodule Coxir.Model do
 
   @optional_callbacks [fetch: 2, fetch_many: 3, insert: 2, patch: 3, drop: 2, preload: 3]
 
-  defmacro __using__(_options) do
+  defmacro __using__(options \\ []) do
+    storable? = Keyword.get(options, :storable?, true)
+
     quote location: :keep do
       use Ecto.Schema
 
@@ -56,7 +58,7 @@ defmodule Coxir.Model do
 
       @type t :: %__MODULE__{}
 
-      @storable true
+      @storable unquote(storable?)
 
       @doc false
       def storable?, do: @storable
