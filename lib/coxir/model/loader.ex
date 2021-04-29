@@ -138,7 +138,7 @@ defmodule Coxir.Model.Loader do
 
     casted =
       struct
-      |> cast(object, fields)
+      |> cast(object, fields -- embeds)
       |> apply_changes()
 
     loaded =
