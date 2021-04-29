@@ -43,8 +43,8 @@ defmodule Coxir.API.RateLimiter do
     date = Tesla.get_header(response, @header_date)
 
     remaining = if remaining, do: String.to_integer(remaining)
-    reset = if reset, do: String.to_integer(reset) * 1000
-    retry = if retry, do: String.to_integer(retry) * 1000
+    reset = if reset, do: String.to_float(reset) * 1000
+    retry = if retry, do: String.to_float(retry) * 1000
 
     if reset || retry do
       remaining = if remaining, do: remaining, else: 0
