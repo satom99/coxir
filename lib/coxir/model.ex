@@ -53,12 +53,12 @@ defmodule Coxir.Model do
       @before_compile Coxir.Model
       @behaviour Coxir.Model
 
+      @storable unquote(storable?)
+
       @primary_key {:id, Snowflake, []}
       @foreign_key_type Snowflake
 
       @type t :: %__MODULE__{}
-
-      @storable unquote(storable?)
 
       @doc false
       def storable?, do: @storable
