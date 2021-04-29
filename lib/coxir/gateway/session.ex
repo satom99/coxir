@@ -23,7 +23,7 @@ defmodule Coxir.Gateway.Session do
     :session_id
   ]
 
-  @query "/?v=8&encoding=json&compress=zlib-stream"
+  @query "/?v=9&encoding=json&compress=zlib-stream"
   @timeout 10_000
 
   @connect {:continue, :connect}
