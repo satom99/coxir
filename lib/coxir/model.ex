@@ -2,8 +2,8 @@ defmodule Coxir.Model do
   @moduledoc """
   Work in progress.
   """
-  alias Coxir.Model.{Snowflake, Loader}
   alias Coxir.API
+  alias Coxir.Model.{Snowflake, Loader}
 
   @type model :: module
 
@@ -11,25 +11,29 @@ defmodule Coxir.Model do
 
   @type key :: Snowflake.t() | tuple
 
-  @callback fetch(key, Loader.options()) :: API.result() | {:error, 404, nil}
-
-  @callback fetch_many(key, atom, Loader.options()) :: API.result()
-
-  @callback insert(map, Loader.options()) :: API.result()
-
-  @callback patch(key, map, Loader.options()) :: API.result()
-
-  @callback drop(key, Loader.options()) :: API.result()
+  @callback storable?() :: boolean
 
   @callback get(key, Loader.options()) :: instance | nil
 
-  @callback preload(instance, atom, Loader.options()) :: instance
+  @callback preload(instance, Loader.preloads(), Loader.options()) :: instance
+
+  @callback preload(list(instance), Loader.preloads(), Loader.options()) :: list(instance)
 
   @callback create(Enum.t(), Loader.options()) :: Loader.result()
 
   @callback update(instance, Enum.t(), Loader.options()) :: Loader.result()
 
   @callback delete(instance, Loader.options()) :: Loader.result()
+
+  @callback fetch(key, keyword) :: API.result()
+
+  @callback fetch_many(key, atom, keyword) :: API.result()
+
+  @callback insert(map, keyword) :: API.result()
+
+  @callback patch(struct, map, keyword) :: API.result()
+
+  @callback drop(struct, keyword) :: API.result()
 
   @optional_callbacks [fetch: 2, fetch_many: 3, insert: 2, patch: 3, drop: 2, preload: 3]
 
@@ -49,6 +53,8 @@ defmodule Coxir.Model do
       @foreign_key_type Snowflake
 
       @type t :: %__MODULE__{}
+
+      def storable?, do: true
 
       @doc false
       def fetch(key, options)
