@@ -32,6 +32,7 @@ defmodule Coxir.Gateway.Dispatcher do
           | {:MESSAGE_DELETE, Message.t()}
           | {:PRESENCE_UPDATE, Presence.t()}
           | {:VOICE_STATE_UPDATE, VoiceState.t()}
+          | {:PAYLOAD, Payload.t()}
 
   def start_link(producer) do
     GenStage.start_link(__MODULE__, producer)
@@ -45,7 +46,6 @@ defmodule Coxir.Gateway.Dispatcher do
     events =
       payloads
       |> Stream.map(&handle_payload/1)
-      |> Stream.reject(&(&1 == :noop))
       |> Enum.to_list()
 
     {:noreply, events, state}
@@ -168,7 +168,7 @@ defmodule Coxir.Gateway.Dispatcher do
     {:VOICE_STATE_UPDATE, voice_state}
   end
 
-  defp handle_payload(%Payload{}) do
-    :noop
+  defp handle_payload(%Payload{} = payload) do
+    {:PAYLOAD, payload}
   end
 end
