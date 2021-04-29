@@ -32,9 +32,9 @@ defmodule Coxir.Model do
 
   @callback insert(map, keyword) :: API.result()
 
-  @callback patch(struct, map, keyword) :: API.result()
+  @callback patch(key, map, keyword) :: API.result()
 
-  @callback drop(struct, keyword) :: API.result()
+  @callback drop(key, keyword) :: API.result()
 
   @optional_callbacks [fetch: 2, fetch_many: 3, insert: 2, patch: 3, drop: 2, preload: 3]
 
