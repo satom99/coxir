@@ -3,14 +3,15 @@ defmodule Example.Bot do
 
   require Logger
 
+  alias Coxir.Gateway.Payload.Ready
   alias Coxir.{User, Guild, Channel, Message}
 
-  def handle_event({:READY, _ready}) do
-    Logger.info("Bot up and running.")
-  end
+  def handle_event({:READY, ready}) do
+    %Ready{shard: [shard, _shard_count], user: user} = ready
 
-  def handle_event(:RESUMED) do
-    Logger.info("Bot back up and running.")
+    %User{username: username, discriminator: discriminator} = user
+
+    Logger.info("Shard ##{shard} ready for user #{username}##{discriminator}.")
   end
 
   def handle_event({:MESSAGE_CREATE, message}) do
