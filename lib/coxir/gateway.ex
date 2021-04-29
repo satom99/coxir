@@ -24,7 +24,7 @@ defmodule Coxir.Gateway do
         |> Keyword.merge(specific)
         |> Keyword.merge(runtime)
         |> Keyword.put_new(:handler, __MODULE__)
-        |> Coxir.Gateway.start_link()
+        |> Coxir.Gateway.start_link(name: __MODULE__)
       end
 
       def child_spec(runtime) do
