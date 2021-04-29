@@ -95,6 +95,7 @@ defmodule Coxir.Model do
     drop? = Module.defines?(model, {:drop, 2})
 
     get = (storable? or fetch?) && nil
+    preload = (not is_nil(get)) && nil
     create = insert? && nil
     update = patch? && nil
     delete = drop? && nil
@@ -117,6 +118,9 @@ defmodule Coxir.Model do
 
       @doc unquote(get)
       def get(key, options)
+
+      @doc unquote(preload)
+      def preload(struct, association, options)
 
       @doc unquote(create)
       def create(params, options)
