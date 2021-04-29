@@ -27,7 +27,7 @@ defmodule Coxir.Gateway.Payload do
     :session
   ]
 
-  @type t :: %__MODULE__{}
+  @type t :: %Payload{}
 
   defmacro __using__(_options) do
     quote location: :keep do
