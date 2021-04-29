@@ -44,4 +44,10 @@ defmodule Coxir.VoiceState do
 
   @doc false
   def create(params, options)
+
+  @doc false
+  def update(struct, params, options)
+
+  @doc false
+  def delete(struct, options)
 end
