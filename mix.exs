@@ -40,11 +40,13 @@ defmodule Coxir.MixProject do
           Coxir.Channel,
           Coxir.Webhook,
           Coxir.Message,
+          Coxir.Message.Reference,
           Coxir.Guild,
           Coxir.Integration,
           Coxir.Role,
           Coxir.Member,
-          Coxir.Presence
+          Coxir.Presence,
+          Coxir.VoiceState
         ],
         Other: ~r/(.*?)/
       ]
