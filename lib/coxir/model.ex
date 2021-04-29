@@ -24,6 +24,8 @@ defmodule Coxir.Model do
 
   @callback storable?() :: boolean
 
+  @callback load(map) :: instance
+
   @callback get(key, Loader.options()) :: instance | nil
 
   @callback preload(instance, Loader.preloads(), Loader.options()) :: instance
@@ -62,6 +64,11 @@ defmodule Coxir.Model do
 
       @doc false
       def storable?, do: @storable
+
+      @doc false
+      def load(object) do
+        Loader.load(__MODULE__, object)
+      end
 
       def get(key, options \\ []) do
         Loader.get(__MODULE__, key, options)
