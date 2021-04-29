@@ -88,10 +88,16 @@ defmodule Coxir.Model do
   end
 
   defmacro __before_compile__(%Env{module: model}) do
-    get = Module.get_attribute(model, :storable, false) && nil
-    create = Module.defines?(model, {:insert, 2}) && nil
-    update = Module.defines?(model, {:patch, 3}) && nil
-    delete = Module.defines?(model, {:drop, 2}) && nil
+    storable? = Module.get_attribute(model, :storable)
+    fetch? = Module.defines?(model, {:fetch, 2})
+    insert? = Module.defines?(model, {:insert, 2})
+    patch? = Module.defines?(model, {:patch, 3})
+    drop? = Module.defines?(model, {:drop, 2})
+
+    get = (storable? or fetch?) && nil
+    create = insert? && nil
+    update = patch? && nil
+    delete = drop? && nil
 
     quote location: :keep do
       @doc false
