@@ -2,7 +2,7 @@ defmodule Coxir.Message.Reference do
   @moduledoc """
   Work in progress.
   """
-  use Coxir.Model
+  use Coxir.Model, embed?: true
 
   @primary_key false
 
