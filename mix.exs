@@ -48,6 +48,9 @@ defmodule Coxir.MixProject do
           Coxir.Presence,
           Coxir.VoiceState
         ],
+        Adapters: [
+          Coxir.Storage,
+        ],
         Other: ~r/(.*?)/
       ]
     ]
