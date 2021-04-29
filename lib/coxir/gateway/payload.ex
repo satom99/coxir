@@ -31,23 +31,12 @@ defmodule Coxir.Gateway.Payload do
 
   defmacro __using__(_options) do
     quote location: :keep do
-      use Ecto.Schema
-
-      import Ecto.Changeset
+      use Coxir.Model, storable?: false
 
       @derive Jason.Encoder
 
-      @primary_key false
-
-      @type t :: %__MODULE__{}
-
       def cast(object) do
-        fields = __schema__(:fields)
-
-        __MODULE__
-        |> struct()
-        |> cast(object, fields)
-        |> apply_changes()
+        Coxir.Model.Loader.load(__MODULE__, object)
       end
     end
   end
