@@ -141,12 +141,12 @@ defmodule Coxir.Model.Loader do
 
     casted
     |> cast(object, [])
-    |> loader(associations)
+    |> associator(associations)
     |> apply_changes()
     |> Storage.put()
   end
 
-  defp loader(%{data: struct, params: params} = changeset, [association | associations]) do
+  defp associator(%{data: struct, params: params} = changeset, [association | associations]) do
     param = to_string(association)
 
     changeset =
@@ -167,10 +167,10 @@ defmodule Coxir.Model.Loader do
         changeset
       end
 
-    loader(changeset, associations)
+    associator(changeset, associations)
   end
 
-  defp loader(changeset, []) do
+  defp associator(changeset, []) do
     changeset
   end
 
