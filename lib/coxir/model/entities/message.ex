@@ -4,6 +4,8 @@ defmodule Coxir.Message do
   """
   use Coxir.Model
 
+  alias Coxir.Message.Reference
+
   embedded_schema do
     field(:content, :string)
     field(:timestamp, :utc_datetime)
@@ -16,7 +18,7 @@ defmodule Coxir.Message do
     field(:type, :integer)
     field(:flags, :integer)
 
-    embeds_one(:message_reference, Message.Reference)
+    embeds_one(:message_reference, Reference)
     embeds_one(:referenced_message, Message)
 
     belongs_to(:channel, Channel, primary_key: true)
