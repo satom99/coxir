@@ -43,11 +43,7 @@ defmodule Coxir.Gateway.Dispatcher do
   end
 
   def handle_events(payloads, _from, state) do
-    events =
-      payloads
-      |> Stream.map(&handle_payload/1)
-      |> Enum.to_list()
-
+    events = Enum.map(payloads, &handle_payload/1)
     {:noreply, events, state}
   end
 
