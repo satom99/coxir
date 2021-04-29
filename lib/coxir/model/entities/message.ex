@@ -16,6 +16,9 @@ defmodule Coxir.Message do
     field(:type, :integer)
     field(:flags, :integer)
 
+    embeds_one(:message_reference, Message.Reference)
+    embeds_one(:referenced_message, Message)
+
     belongs_to(:channel, Channel, primary_key: true)
     belongs_to(:guild, Guild)
     belongs_to(:author, User)
