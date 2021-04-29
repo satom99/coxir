@@ -130,8 +130,7 @@ defmodule Coxir.Model.Loader do
     end
   end
 
-  @spec loader(Model.instance(), map, boolean) :: Model.instance()
-  defp loader(%model{} = struct, object, store? \\ true) when is_map(object) do
+  defp loader(%model{} = struct, object) do
     fields = get_fields(model)
     embeds = get_embeds(model)
     associations = get_associations(model)
@@ -148,11 +147,11 @@ defmodule Coxir.Model.Loader do
       |> associator(associations)
       |> apply_changes()
 
-    if store? do
+    if model.storable?() do
       Storage.put(loaded)
+    else
+      loaded
     end
-
-    loaded
   end
 
   defp embedder(%{params: params} = changeset, [embed | embeds]) do
@@ -162,7 +161,7 @@ defmodule Coxir.Model.Loader do
       if Map.has_key?(params, param) do
         caster = fn struct, object ->
           struct
-          |> loader(object, false)
+          |> loader(object)
           |> change()
         end
 
@@ -214,12 +213,14 @@ defmodule Coxir.Model.Loader do
   end
 
   defp getter(model, key, %{fetch: true} = options) do
-    case model.fetch(key, options) do
-      {:ok, object} ->
-        load(model, object)
+    if function_exported?(model, :fetch, 2) do
+      case model.fetch(key, options) do
+        {:ok, object} ->
+          load(model, object)
 
-      {:error, 404, _error} ->
-        nil
+        {:error, 404, _error} ->
+          nil
+      end
     end
   end
 
