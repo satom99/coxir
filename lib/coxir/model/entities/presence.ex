@@ -32,7 +32,4 @@ defmodule Coxir.Presence do
   def preload(presence, association, options) do
     super(presence, association, options)
   end
-
-  @doc false
-  def create(params, options)
 end
