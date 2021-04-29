@@ -8,6 +8,8 @@ defmodule Coxir.Message.Reference do
 
   @primary_key false
 
+  @type t :: %__MODULE__{}
+
   embedded_schema do
     belongs_to(:message, Message, primary_key: true)
     belongs_to(:channel, Channel, primary_key: true)
