@@ -20,6 +20,24 @@ defmodule Coxir.Member do
     belongs_to(:guild, Guild, primary_key: true)
   end
 
+  def fetch({user_id, guild_id}, options) do
+    with {:ok, object} <- API.get("guilds/#{guild_id}/members/#{user_id}", options) do
+      object = Map.put(object, "guild_id", guild_id)
+      {:ok, object}
+    end
+  end
+
+  def patch({user_id, guild_id}, params, options) do
+    with {:ok, object} <- API.patch("guilds/#{guild_id}/members/#{user_id}", params, options) do
+      object = Map.put(object, "guild_id", guild_id)
+      {:ok, object}
+    end
+  end
+
+  def drop({user_id, guild_id}, options) do
+    API.delete("guilds/#{guild_id}/members/#{user_id}", options)
+  end
+
   def preload(%Member{roles: [%Role{} | _rest] = roles} = member, :roles, options) do
     if options[:force] do
       roles = Enum.map(roles, & &1.id)
@@ -43,24 +61,6 @@ defmodule Coxir.Member do
 
   def preload(member, association, options) do
     super(member, association, options)
-  end
-
-  def fetch({user_id, guild_id}, options) do
-    with {:ok, object} <- API.get("guilds/#{guild_id}/members/#{user_id}", options) do
-      object = Map.put(object, "guild_id", guild_id)
-      {:ok, object}
-    end
-  end
-
-  def patch({user_id, guild_id}, params, options) do
-    with {:ok, object} <- API.patch("guilds/#{guild_id}/members/#{user_id}", params, options) do
-      object = Map.put(object, "guild_id", guild_id)
-      {:ok, object}
-    end
-  end
-
-  def drop({user_id, guild_id}, options) do
-    API.delete("guilds/#{guild_id}/members/#{user_id}", options)
   end
 
   @spec kick(t, Loader.options()) :: Loader.result()
