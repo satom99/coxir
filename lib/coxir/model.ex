@@ -55,6 +55,7 @@ defmodule Coxir.Model do
       @type t :: %__MODULE__{}
 
       def storable?, do: true
+      @doc false
 
       @doc false
       def fetch(key, options)
