@@ -49,7 +49,12 @@ defmodule Coxir.MixProject do
           Coxir.VoiceState
         ],
         Adapters: [
+          Coxir.Limiter,
+          Coxir.Limiter.Default,
           Coxir.Storage,
+          Coxir.Storage.Default,
+          Coxir.Sharder,
+          Coxir.Sharder.Default
         ],
         Other: ~r/(.*?)/
       ]
