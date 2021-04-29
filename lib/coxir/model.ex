@@ -50,10 +50,10 @@ defmodule Coxir.Model do
       alias Coxir.{Guild, Integration, Role}
       alias Coxir.{Member, Presence, VoiceState}
 
+      @storable unquote(storable?)
+
       @before_compile Coxir.Model
       @behaviour Coxir.Model
-
-      @storable unquote(storable?)
 
       @primary_key {:id, Snowflake, []}
       @foreign_key_type Snowflake
