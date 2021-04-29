@@ -2,7 +2,9 @@ defmodule Coxir.Message.Reference do
   @moduledoc """
   Work in progress.
   """
-  use Coxir.Model
+  use Ecto.Schema
+
+  alias Coxir.{Guild, Channel, Message}
 
   @primary_key false
 
