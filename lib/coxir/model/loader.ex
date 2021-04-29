@@ -130,8 +130,10 @@ defmodule Coxir.Model.Loader do
     end
   end
 
-  defp loader(%model{} = struct, object) when is_map(object) do
+  @spec loader(Model.instance(), map, boolean) :: Model.instance()
+  defp loader(%model{} = struct, object, store? \\ true) when is_map(object) do
     fields = get_fields(model)
+    embeds = get_embeds(model)
     associations = get_associations(model)
 
     casted =
@@ -139,11 +141,41 @@ defmodule Coxir.Model.Loader do
       |> cast(object, fields)
       |> apply_changes()
 
-    casted
-    |> cast(object, [])
-    |> associator(associations)
-    |> apply_changes()
-    |> Storage.put()
+    loaded =
+      casted
+      |> cast(object, [])
+      |> embedder(embeds)
+      |> associator(associations)
+      |> apply_changes()
+
+    if store? do
+      Storage.put(loaded)
+    end
+
+    loaded
+  end
+
+  defp embedder(%{params: params} = changeset, [embed | embeds]) do
+    param = to_string(embed)
+
+    changeset =
+      if Map.has_key?(params, param) do
+        caster = fn struct, object ->
+          struct
+          |> loader(object, false)
+          |> change()
+        end
+
+        cast_embed(changeset, embed, with: caster)
+      else
+        changeset
+      end
+
+    embedder(changeset, embeds)
+  end
+
+  defp embedder(changeset, []) do
+    changeset
   end
 
   defp associator(%{data: struct, params: params} = changeset, [association | associations]) do
