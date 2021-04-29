@@ -24,7 +24,7 @@ defmodule Coxir.API do
 
   plug(Tesla.Middleware.JSON)
 
-  plug(Tesla.Middleware.BaseUrl, "https://discord.com/api")
+  plug(Tesla.Middleware.BaseUrl, "https://discord.com/api/v9")
 
   plug(Coxir.API.Headers)
 
