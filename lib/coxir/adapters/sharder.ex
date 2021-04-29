@@ -1,4 +1,4 @@
-defmodule Coxir.Gateway.Sharder do
+defmodule Coxir.Sharder do
   @moduledoc """
   Work in progress.
   """

@@ -4,12 +4,12 @@ defmodule Coxir.Gateway do
   """
   import Supervisor, only: [start_child: 2]
 
-  alias Coxir.API
+  alias Coxir.{API, Sharder}
   alias Coxir.Gateway.{Producer, Dispatcher, Consumer}
-  alias Coxir.Gateway.{Intents, Session, Sharder}
+  alias Coxir.Gateway.{Intents, Session}
 
   @default_config [
-    sharder: Coxir.Gateway.Sharder.Default,
+    sharder: Sharder.Default,
     intents: :non_privileged
   ]
 

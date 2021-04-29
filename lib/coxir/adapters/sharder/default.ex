@@ -1,10 +1,11 @@
-defmodule Coxir.Gateway.Sharder.Default do
+defmodule Coxir.Sharder.Default do
   @moduledoc """
   Work in progress.
   """
   use Supervisor
 
-  alias Coxir.Gateway.{Sharder, Session}
+  alias Coxir.Sharder
+  alias Coxir.Gateway.Session
 
   def start_link(options) do
     Supervisor.start_link(__MODULE__, options)
