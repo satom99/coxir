@@ -27,6 +27,8 @@ defmodule Coxir.Gateway.Payload do
     :session
   ]
 
+  @type t :: %__MODULE__{}
+
   defmacro __using__(_options) do
     quote location: :keep do
       use Ecto.Schema
