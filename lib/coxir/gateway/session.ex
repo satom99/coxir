@@ -69,11 +69,7 @@ defmodule Coxir.Gateway.Session do
       token: token,
       shard: shard,
       intents: intents,
-      compress: true,
-      properties: %{
-        :"$browser" => "coxir",
-        :"$device" => "coxir"
-      }
+      compress: true
     }
 
     send_command(:IDENTIFY, identify, state)
