@@ -19,8 +19,9 @@ defmodule Coxir.Channel do
     field(:rtc_region, :string)
     field(:video_quality_mode, :integer)
 
-    embeds_many(:permission_overwrites, Overwrite)
     embeds_many(:recipients, User)
+
+    has_many(:permission_overwrites, Overwrite)
 
     belongs_to(:guild, Guild)
     belongs_to(:owner, User)

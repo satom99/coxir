@@ -8,5 +8,7 @@ defmodule Coxir.Overwrite do
     field(:type, :integer)
     field(:allow, :integer)
     field(:deny, :integer)
+
+    belongs_to(:channel, Channel, primary_key: true)
   end
 end
