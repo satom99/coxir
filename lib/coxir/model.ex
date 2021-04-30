@@ -67,8 +67,8 @@ defmodule Coxir.Model do
         Loader.get(__MODULE__, key, options)
       end
 
-      def preload(struct, association, options \\ []) do
-        Loader.preload(struct, association, options)
+      def preload(struct, preloads, options \\ []) do
+        Loader.preload(struct, preloads, options)
       end
 
       def create(params, options \\ []) do
@@ -94,7 +94,11 @@ defmodule Coxir.Model do
     patch? = Module.defines?(model, {:patch, 3})
     drop? = Module.defines?(model, {:drop, 2})
 
+    ecto_assocs = Module.get_attribute(model, :ecto_assocs)
+    preload? = length(ecto_assocs) > 0
+
     get = (storable? or fetch?) && nil
+    preload = preload? && nil
     create = insert? && nil
     update = patch? && nil
     delete = drop? && nil
@@ -117,6 +121,9 @@ defmodule Coxir.Model do
 
       @doc unquote(get)
       def get(key, options)
+
+      @doc unquote(preload)
+      def preload(struct, preloads, options)
 
       @doc unquote(create)
       def create(params, options)
