@@ -3,7 +3,7 @@ defmodule Example.Bot do
 
   require Logger
 
-  alias Coxir.Gateway.Payload.Ready
+  alias Coxir.Payload.Ready
   alias Coxir.{User, Guild, Channel, Message}
 
   def handle_event({:READY, ready}) do
