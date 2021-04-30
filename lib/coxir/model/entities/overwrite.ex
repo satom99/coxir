@@ -25,4 +25,8 @@ defmodule Coxir.Overwrite do
       {:error, 404, nil}
     end
   end
+
+  def drop({id, channel_id}, options) do
+    API.delete("channels/#{channel_id}/permissions/#{id}", options)
+  end
 end
