@@ -26,6 +26,11 @@ defmodule Coxir.Overwrite do
     end
   end
 
+  def insert(%{id: id, channel_id: channel_id} = params, options) do
+    overwrite = %Overwrite{id: id, channel_id: channel_id}
+    update(overwrite, params, options)
+  end
+
   def patch({id, channel_id}, params, options) do
     API.patch("channels/#{channel_id}/permissions/#{id}", params, options)
   end
