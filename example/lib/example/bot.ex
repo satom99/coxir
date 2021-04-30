@@ -23,8 +23,6 @@ defmodule Example.Bot do
 
     %Channel{name: channel_name, guild: guild} = channel
 
-    line = "#{username}##{discriminator}: #{content}"
-
     where =
       with %Guild{name: guild_name} <- guild do
         "[#{guild_name}] [##{channel_name}]"
@@ -32,7 +30,7 @@ defmodule Example.Bot do
         nil -> "[DM]"
       end
 
-    Logger.info("#{where} #{line}")
+    Logger.info("#{where} #{username}##{discriminator}: #{content}")
   end
 
   def handle_event(_event) do
