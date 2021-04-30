@@ -71,8 +71,10 @@ defmodule Coxir.Model.Loader do
   end
 
   def preload(%model{} = struct, {association, nested}, options) do
-    updater = fn %model{} = struct ->
-      model.preload(struct, nested, options)
+    updater = fn value ->
+      with %model{} = struct <- value do
+        model.preload(struct, nested, options)
+      end
     end
 
     struct
