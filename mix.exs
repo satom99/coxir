@@ -38,6 +38,7 @@ defmodule Coxir.MixProject do
         Entities: [
           Coxir.User,
           Coxir.Channel,
+          Coxir.Overwrite,
           Coxir.Webhook,
           Coxir.Message,
           Coxir.Message.Reference,
