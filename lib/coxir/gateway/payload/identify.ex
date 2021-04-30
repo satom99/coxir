@@ -1,8 +1,8 @@
-defmodule Coxir.Gateway.Payload.Identify do
+defmodule Coxir.Payload.Identify do
   @moduledoc """
   Work in progress.
   """
-  use Coxir.Gateway.Payload
+  use Coxir.Payload
 
   embedded_schema do
     field(:token, :string)

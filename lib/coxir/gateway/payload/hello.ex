@@ -1,8 +1,8 @@
-defmodule Coxir.Gateway.Payload.Hello do
+defmodule Coxir.Payload.Hello do
   @moduledoc """
   Work in progress.
   """
-  use Coxir.Gateway.Payload
+  use Coxir.Payload
 
   embedded_schema do
     field(:heartbeat_interval, :integer)

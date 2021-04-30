@@ -1,8 +1,8 @@
-defmodule Coxir.Gateway.Payload.Resume do
+defmodule Coxir.Payload.Resume do
   @moduledoc """
   Work in progress.
   """
-  use Coxir.Gateway.Payload
+  use Coxir.Payload
 
   embedded_schema do
     field(:token, :string)
