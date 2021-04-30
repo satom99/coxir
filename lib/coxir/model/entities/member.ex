@@ -16,10 +16,10 @@ defmodule Coxir.Member do
     field(:pending, :boolean)
     field(:permissions, :integer)
 
-    field(:voice_state, :any, virtual: true)
-
     belongs_to(:user, User, primary_key: true)
     belongs_to(:guild, Guild, primary_key: true)
+
+    has_one(:voice_state, VoiceState, references: :guild_id, foreign_key: :guild_id)
   end
 
   def fetch({user_id, guild_id}, options) do
