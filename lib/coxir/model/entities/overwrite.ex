@@ -26,6 +26,10 @@ defmodule Coxir.Overwrite do
     end
   end
 
+  def patch({id, channel_id}, params, options) do
+    API.patch("channels/#{channel_id}/permissions/#{id}", params, options)
+  end
+
   def drop({id, channel_id}, options) do
     API.delete("channels/#{channel_id}/permissions/#{id}", options)
   end
