@@ -32,6 +32,11 @@ defmodule Coxir.Channel do
     API.get("channels/#{id}", options)
   end
 
+  def fetch_many(id, :permission_overwrites, options) do
+    %Channel{permission_overwrites: overwrites} = get(id, options)
+    {:ok, overwrites}
+  end
+
   def insert(%{guild_id: guild_id} = params, options) do
     API.post("guilds/#{guild_id}/channels", params, options)
   end
