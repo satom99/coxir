@@ -4,6 +4,8 @@ defmodule Coxir.Channel do
   """
   use Coxir.Model
 
+  alias Coxir.Channel.Overwrite
+
   embedded_schema do
     field(:type, :integer)
     field(:position, :integer)
@@ -18,6 +20,9 @@ defmodule Coxir.Channel do
     field(:last_pin_timestamp, :utc_datetime)
     field(:rtc_region, :string)
     field(:video_quality_mode, :integer)
+
+    embeds_many(:permission_overwrites, Overwrite)
+    embeds_many(:recipients, User)
 
     belongs_to(:guild, Guild)
     belongs_to(:owner, User)
