@@ -22,6 +22,7 @@ defmodule Coxir.Channel do
     embeds_many(:recipients, User)
 
     has_many(:permission_overwrites, Overwrite)
+    has_many(:voice_states, VoiceState)
 
     belongs_to(:guild, Guild)
     belongs_to(:owner, User)
