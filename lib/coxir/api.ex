@@ -59,6 +59,10 @@ defmodule Coxir.API do
     perform(:patch, path, options, body)
   end
 
+  def put(path, body, options) do
+    perform(:put, path, options, body)
+  end
+
   def delete(path, options) do
     perform(:delete, path, options)
   end
