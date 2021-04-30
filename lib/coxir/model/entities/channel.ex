@@ -61,4 +61,12 @@ defmodule Coxir.Channel do
     |> Map.put(:channel_id, id)
     |> Message.create(options)
   end
+
+  @spec create_overwrite(t, Enum.t(), Loader.options()) :: Loader.result()
+  def create_overwrite(%Channel{id: id}, params, options \\ []) do
+    params
+    |> Map.new()
+    |> Map.put(:channel_id, id)
+    |> Overwrite.create(options)
+  end
 end
