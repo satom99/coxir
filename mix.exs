@@ -53,6 +53,9 @@ defmodule Coxir.MixProject do
           ~r/^Coxir.Storage.?/,
           ~r/^Coxir.Sharder.?/
         ],
+        Model: [
+          ~r/^Coxir.Model.?/
+        ],
         Other: ~r/(.*?)/
       ]
     ]
