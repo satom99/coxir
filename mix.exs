@@ -56,6 +56,13 @@ defmodule Coxir.MixProject do
         Model: [
           ~r/^Coxir.Model.?/
         ],
+        API: [
+          ~r/^Coxir.API.?/
+        ],
+        Gateway: [
+          ~r/^Coxir.Gateway.?/,
+          ~r/^Coxir.Payload.?/
+        ],
         Other: ~r/(.*?)/
       ]
     ]
