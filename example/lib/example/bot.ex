@@ -23,9 +23,13 @@ defmodule Example.Bot do
 
     %Channel{name: channel_name, guild: guild} = channel
 
-    %Guild{name: guild_name} = guild
+    line = "#{username}##{discriminator}: #{content}"
 
-    Logger.info("[#{guild_name}] [##{channel_name}] #{username}##{discriminator}: #{content}")
+    with %Guild{name: guild_name} <- guild do
+      Logger.info("[#{guild_name}] [##{channel_name}] #{line}")
+    else
+      nil -> Logger.info("[DM] #{line}")
+    end
   end
 
   def handle_event(_event) do
