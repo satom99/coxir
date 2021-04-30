@@ -30,7 +30,7 @@ defmodule Coxir.API do
 
   plug(Coxir.API.RateLimiter)
 
-  @spec perform(method, path, options, body) :: result
+  @spec perform(method, path, body, options) :: result
   def perform(method, path, body, options) do
     options = Keyword.new(options)
 
