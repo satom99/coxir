@@ -40,8 +40,7 @@ defmodule Coxir.MixProject do
           Coxir.Channel,
           Coxir.Overwrite,
           Coxir.Webhook,
-          Coxir.Message,
-          Coxir.Message.Reference,
+          ~r/^Coxir.Message.?/,
           Coxir.Guild,
           Coxir.Integration,
           Coxir.Role,
@@ -50,12 +49,9 @@ defmodule Coxir.MixProject do
           Coxir.VoiceState
         ],
         Adapters: [
-          Coxir.Limiter,
-          Coxir.Limiter.Default,
-          Coxir.Storage,
-          Coxir.Storage.Default,
-          Coxir.Sharder,
-          Coxir.Sharder.Default
+          ~r/^Coxir.Limiter.?/,
+          ~r/^Coxir.Storage.?/,
+          ~r/^Coxir.Sharder.?/
         ],
         Other: ~r/(.*?)/
       ]
