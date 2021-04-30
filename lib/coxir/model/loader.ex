@@ -103,9 +103,17 @@ defmodule Coxir.Model.Loader do
     key = get_key(struct)
     params = Map.new(params)
 
-    with {:ok, object} <- model.patch(key, params, options) do
-      struct = load(model, object)
-      {:ok, struct}
+    case model.patch(key, params, options) do
+      :ok ->
+        struct = loader(struct, params)
+        {:ok, struct}
+
+      {:ok, object} ->
+        struct = load(model, object)
+        {:ok, struct}
+
+      other ->
+        other
     end
   end
 
