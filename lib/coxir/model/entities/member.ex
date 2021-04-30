@@ -16,6 +16,8 @@ defmodule Coxir.Member do
     field(:pending, :boolean)
     field(:permissions, :integer)
 
+    field(:voice_state, :any, virtual: true)
+
     belongs_to(:user, User, primary_key: true)
     belongs_to(:guild, Guild, primary_key: true)
   end
@@ -57,6 +59,20 @@ defmodule Coxir.Member do
       |> Enum.to_list()
 
     %{member | roles: roles}
+  end
+
+  def preload(%Member{voice_state: %VoiceState{}} = member, :voice_state, options) do
+    if options[:force] do
+      member = %{member | voice_state: nil}
+      preload(member, :voice_state, options)
+    else
+      member
+    end
+  end
+
+  def preload(%Member{user_id: user_id, guild_id: guild_id} = member, :voice_state, options) do
+    voice_state = VoiceState.get({user_id, guild_id}, options)
+    %{member | voice_state: voice_state}
   end
 
   def preload(member, association, options) do
