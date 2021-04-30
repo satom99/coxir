@@ -34,7 +34,7 @@ defmodule Coxir.API do
   def perform(method, path, body, options) do
     options = Keyword.new(options)
 
-    case request!(method: method, url: path, opts: options, body: body) do
+    case request!(method: method, url: path, body: body, opts: options) do
       %{status: 204} ->
         :ok
 
