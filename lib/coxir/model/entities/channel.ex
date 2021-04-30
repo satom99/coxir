@@ -4,8 +4,6 @@ defmodule Coxir.Channel do
   """
   use Coxir.Model
 
-  alias Coxir.Channel.Overwrite
-
   embedded_schema do
     field(:type, :integer)
     field(:position, :integer)

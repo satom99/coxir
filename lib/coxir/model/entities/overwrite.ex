@@ -1,4 +1,4 @@
-defmodule Coxir.Channel.Overwrite do
+defmodule Coxir.Overwrite do
   @moduledoc """
   Work in progress.
   """
