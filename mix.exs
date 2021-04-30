@@ -9,6 +9,7 @@ defmodule Coxir.MixProject do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       docs: docs(),
+      package: package(),
       source_url: "https://github.com/satom99/coxir2"
     ]
   end
@@ -65,6 +66,13 @@ defmodule Coxir.MixProject do
         ],
         Other: ~r/(.*?)/
       ]
+    ]
+  end
+
+  defp package do
+    [
+      licenses: ["Apache-2.0"],
+      links: %{"GitHub" => "https://github.com/satom99/coxir2"}
     ]
   end
 end
