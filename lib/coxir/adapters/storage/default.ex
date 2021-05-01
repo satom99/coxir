@@ -13,7 +13,7 @@ defmodule Coxir.Storage.Default do
   end
 
   def init(state) do
-    :ets.new(@table, [:named_table, :public, {:read_concurrency, true}])
+    :ets.new(@table, [:named_table, :protected, {:read_concurrency, true}])
     {:ok, state}
   end
 
