@@ -12,4 +12,6 @@ defmodule Coxir.Sharder do
   @type options :: %__MODULE__{}
 
   @callback child_spec(options) :: Supervisor.child_spec()
+
+  @callback get_shard(pid, integer) :: pid
 end
