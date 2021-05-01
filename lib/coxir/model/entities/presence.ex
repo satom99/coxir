@@ -9,10 +9,10 @@ defmodule Coxir.Presence do
   embedded_schema do
     field(:status, :string)
 
+    field(:member, :any, virtual: true)
+
     belongs_to(:user, User, primary_key: true)
     belongs_to(:guild, Guild, primary_key: true)
-
-    has_one(:member, Member, references: :guild_id, foreign_key: :guild_id)
   end
 
   def preload(%Presence{member: %Member{}} = presence, :member, options) do

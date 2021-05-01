@@ -17,11 +17,11 @@ defmodule Coxir.VoiceState do
     field(:suppress, :boolean)
     field(:request_to_speak_timestamp, :utc_datetime)
 
+    field(:member, :any, virtual: true)
+
     belongs_to(:user, User, primary_key: true)
     belongs_to(:guild, Guild, primary_key: true)
     belongs_to(:channel, Channel)
-
-    has_one(:member, Member, references: :guild_id, foreign_key: :guild_id)
   end
 
   def preload(%VoiceState{member: %Member{}} = voice_state, :member, options) do
