@@ -26,4 +26,15 @@ defmodule Coxir.Sharder.Default do
 
     Supervisor.init(children, options)
   end
+
+  def get_shard(sharder, index) do
+    children = Supervisor.which_children(sharder)
+
+    Enum.find_value(
+      children,
+      fn {id, pid, _type, _modules} ->
+        if id == index, do: pid
+      end
+    )
+  end
 end
