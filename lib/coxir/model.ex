@@ -94,8 +94,9 @@ defmodule Coxir.Model do
     patch? = Module.defines?(model, {:patch, 3})
     drop? = Module.defines?(model, {:drop, 2})
 
+    preload_override? = Model.defines?(model, {:preload, 3})
     ecto_assocs = Module.get_attribute(model, :ecto_assocs)
-    preload? = length(ecto_assocs) > 0
+    preload? = preload_override? or (length(ecto_assocs) > 0)
 
     get = (storable? or fetch?) && nil
     preload = preload? && nil
