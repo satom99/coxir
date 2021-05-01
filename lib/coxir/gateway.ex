@@ -55,6 +55,22 @@ defmodule Coxir.Gateway do
     end
   end
 
+  def get_shard(gateway, index) do
+    {sharder_module, sharder_pid} = get_sharder(gateway)
+    sharder_module.get_shard(sharder_pid, index)
+  end
+
+  defp get_sharder(gateway) do
+    children = Supervisor.which_children(gateway)
+
+    Enum.find_value(
+      children,
+      fn {id, pid, _type, [module]} ->
+        if id == :sharder, do: {module, pid}
+      end
+    )
+  end
+
   defp get_sharder_spec(producer, config) do
     global = Application.get_all_env(:coxir)
 
@@ -86,7 +102,9 @@ defmodule Coxir.Gateway do
 
     sharder_module = Keyword.fetch!(config, :sharder)
 
-    {sharder_module, sharder_options}
+    spec = sharder_module.child_spec(sharder_options)
+
+    %{spec | id: :sharder}
   end
 
   defp request_gateway(token) do
