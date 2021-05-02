@@ -26,12 +26,12 @@ defmodule Coxir.Gateway.Session do
 
   @query "/?v=8&encoding=json&compress=zlib-stream"
 
+  @close_raise [4010, 4011, 4014]
+  @close_session [4007, 4009]
+
   @connect {:continue, :connect}
   @reconnect {:continue, :reconnect}
   @identify {:continue, :identify}
-
-  @close_raise [4010, 4011, 4014]
-  @close_session [4007, 4009]
 
   def update_presence(session, %UpdatePresence{} = payload) do
     GenServer.call(session, {:send_command, :PRESENCE_UPDATE, payload})
