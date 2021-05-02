@@ -157,7 +157,7 @@ defmodule Coxir.Model.Loader do
       |> associator(associations)
       |> apply_changes()
 
-    if model.storable?() do
+    if storable?(model) do
       Storage.put(loaded)
     else
       loaded

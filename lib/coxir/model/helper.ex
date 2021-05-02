@@ -21,6 +21,11 @@ defmodule Coxir.Model.Helper do
     |> Map.merge(keep)
   end
 
+  @spec storable?(Model.model()) :: boolean
+  def storable?(model) do
+    model.storable?()
+  end
+
   @spec get_key(Model.instance()) :: Model.key()
   def get_key(%model{} = struct) do
     primary = get_primary(model)
