@@ -36,23 +36,23 @@ defmodule Coxir.Gateway do
     end
   end
 
-  def get_shard(instance, %Channel{type: 1}) do
-    get_shard(instance, 0)
+  def get_shard(gateway, %Channel{type: 1}) do
+    get_shard(gateway, 0)
   end
 
-  def get_shard(instance, %Channel{guild_id: guild_id}) do
+  def get_shard(gateway, %Channel{guild_id: guild_id}) do
     guild = %Guild{id: guild_id}
-    get_shard(instance, guild)
+    get_shard(gateway, guild)
   end
 
-  def get_shard(instance, %Guild{id: id}) do
-    %Sharder{shard_count: shard_count} = get_sharder_options(instance)
+  def get_shard(gateway, %Guild{id: id}) do
+    %Sharder{shard_count: shard_count} = get_sharder_options(gateway)
     index = rem(id >>> 22, shard_count)
-    get_shard(instance, index)
+    get_shard(gateway, index)
   end
 
-  def get_shard(instance, index) when is_integer(index) do
-    {sharder, sharder_module} = get_sharder(instance)
+  def get_shard(gateway, index) when is_integer(index) do
+    {sharder, sharder_module} = get_sharder(gateway)
     sharder_module.get_shard(sharder, index)
   end
 
@@ -74,8 +74,8 @@ defmodule Coxir.Gateway do
     end
   end
 
-  defp get_sharder(instance) do
-    children = Supervisor.which_children(instance)
+  defp get_sharder(gateway) do
+    children = Supervisor.which_children(gateway)
 
     Enum.find_value(
       children,
@@ -85,8 +85,8 @@ defmodule Coxir.Gateway do
     )
   end
 
-  defp get_sharder_options(instance) do
-    {:ok, spec} = :supervisor.get_childspec(instance, :sharder)
+  defp get_sharder_options(gateway) do
+    {:ok, spec} = :supervisor.get_childspec(gateway, :sharder)
     %{start: {_module, _function, [sharder_options | _rest]}} = spec
     sharder_options
   end
