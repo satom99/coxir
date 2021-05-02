@@ -106,13 +106,13 @@ defmodule Coxir.Gateway do
       |> Keyword.fetch!(:intents)
       |> Intents.get_value()
 
-    {gateway, shard_count} = request_gateway(token)
+    {gateway_host, shard_count} = request_gateway_info(token)
 
     session_options = %Session{
       token: token,
       intents: intents,
-      gateway: gateway,
-      producer: producer
+      producer: producer,
+      gateway_host: gateway_host
     }
 
     sharder_options = %Sharder{
@@ -127,10 +127,10 @@ defmodule Coxir.Gateway do
     %{spec | id: :sharder}
   end
 
-  defp request_gateway(token) do
+  defp request_gateway_info(token) do
     {:ok, object} = API.get("gateway/bot", token: token)
-    %{"url" => "wss://" <> gateway, "shards" => shard_count} = object
-    gateway = :binary.bin_to_list(gateway)
-    {gateway, shard_count}
+    %{"url" => "wss://" <> gateway_host, "shards" => shard_count} = object
+    gateway_host = :binary.bin_to_list(gateway_host)
+    {gateway_host, shard_count}
   end
 end

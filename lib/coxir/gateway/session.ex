@@ -10,11 +10,11 @@ defmodule Coxir.Gateway.Session do
   alias __MODULE__
 
   defstruct [
-    :token,
     :shard,
+    :token,
     :intents,
-    :gateway,
     :producer,
+    :gateway_host,
     :gun_pid,
     :stream_ref,
     :zlib_context,
@@ -41,8 +41,8 @@ defmodule Coxir.Gateway.Session do
     {:ok, state, @connect}
   end
 
-  def handle_continue(:connect, %Session{gateway: gateway} = state) do
-    {:ok, gun_pid} = :gun.open(gateway, 443, %{protocols: [:http]})
+  def handle_continue(:connect, %Session{gateway_host: gateway_host} = state) do
+    {:ok, gun_pid} = :gun.open(gateway_host, 443, %{protocols: [:http]})
     state = %{state | gun_pid: gun_pid}
     {:noreply, state}
   end
