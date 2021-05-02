@@ -5,7 +5,7 @@ defmodule Coxir.Gateway.Session do
   use GenServer
 
   alias Coxir.Payload
-  alias Coxir.Payload.{Hello, Identify, Resume}
+  alias Coxir.Payload.{Hello, Identify, Resume, UpdatePresence}
   alias Coxir.Gateway.Producer
   alias __MODULE__
 
@@ -32,6 +32,10 @@ defmodule Coxir.Gateway.Session do
 
   @close_raise [4010, 4011, 4014]
   @close_session [4007, 4009]
+
+  def update_presence(session, %UpdatePresence{} = payload) do
+    GenServer.call(session, {:send_command, :PRESENCE_UPDATE, payload})
+  end
 
   def start_link(state) do
     GenServer.start_link(__MODULE__, state)
@@ -141,6 +145,11 @@ defmodule Coxir.Gateway.Session do
   def handle_payload(%Payload{operation: :HEARTBEAT_ACK}, state) do
     state = %{state | heartbeat_ack: true}
     {:noreply, state}
+  end
+
+  def handle_call({:send_command, operation, data}, _from, state) do
+    result = send_command(operation, data, state)
+    {:reply, result, state}
   end
 
   def handle_info(:heartbeat, %Session{sequence: sequence, heartbeat_ack: true} = state) do
