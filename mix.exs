@@ -46,7 +46,7 @@ defmodule Coxir.MixProject do
           Coxir.Integration,
           Coxir.Role,
           Coxir.Member,
-          Coxir.Presence,
+          ~r/^Coxir.Presence.?/,
           Coxir.VoiceState
         ],
         Adapters: [
