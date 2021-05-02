@@ -23,8 +23,6 @@ defmodule Example.Bot do
 
     %User{username: username, discriminator: discriminator} = author
 
-    if is_nil(channel), do: raise(message)
-
     %Channel{name: channel_name, guild: guild} = channel
 
     where =
