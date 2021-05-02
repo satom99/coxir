@@ -3,10 +3,12 @@ defmodule Coxir.Gateway do
   Work in progress.
   """
   import Supervisor, only: [start_child: 2]
+  import Bitwise
 
   alias Coxir.{API, Sharder}
   alias Coxir.Gateway.{Producer, Dispatcher, Consumer}
   alias Coxir.Gateway.{Intents, Session}
+  alias Coxir.{Guild, Channel}
 
   @default_config [
     sharder: Sharder.Default,
@@ -37,6 +39,26 @@ defmodule Coxir.Gateway do
     end
   end
 
+  def get_shard(instance, %Channel{type: 1}) do
+    get_shard(instance, 0)
+  end
+
+  def get_shard(instance, %Channel{guild_id: guild_id}) do
+    guild = %Guild{id: guild_id}
+    get_shard(instance, guild)
+  end
+
+  def get_shard(instance, %Guild{id: id}) do
+    %Sharder{shard_count: shard_count} = get_sharder_options(instance)
+    index = rem(id >>> 22, shard_count)
+    get_shard(instance, index)
+  end
+
+  def get_shard(instance, index) when is_integer(index) do
+    {sharder, sharder_module} = get_sharder(instance)
+    sharder_module.get_shard(sharder, index)
+  end
+
   def start_link(config, options \\ []) do
     handler = Keyword.fetch!(config, :handler)
     options = [{:strategy, :rest_for_one} | options]
@@ -48,36 +70,31 @@ defmodule Coxir.Gateway do
       consumer_options = %Consumer{handler: handler, dispatcher: dispatcher}
       {:ok, _consumer} = start_child(supervisor, {Consumer, consumer_options})
 
-      sharder_spec = get_sharder_spec(producer, config)
+      sharder_spec = generate_sharder_spec(producer, config)
       {:ok, _sharder} = start_child(supervisor, sharder_spec)
 
       {:ok, supervisor}
     end
   end
 
-  def get_shard(gateway, index) do
-    {sharder, sharder_module, _sharder_options} = get_sharder(gateway)
-    sharder_module.get_shard(sharder, index)
+  defp get_sharder(instance) do
+    children = Supervisor.which_children(instance)
+
+    Enum.find_value(
+      children,
+      fn {id, pid, _type, [module]} ->
+        if id == :sharder, do: {pid, module}
+      end
+    )
   end
 
-  def get_sharder(gateway) do
-    children = Supervisor.which_children(gateway)
-
-    {sharder, sharder_module} =
-      Enum.find_value(
-        children,
-        fn {id, pid, _type, [module]} ->
-          if id == :sharder, do: {pid, module}
-        end
-      )
-
-    {:ok, spec} = :supervisor.get_childspec(gateway, :sharder)
+  defp get_sharder_options(instance) do
+    {:ok, spec} = :supervisor.get_childspec(instance, :sharder)
     %{start: {_module, _function, [sharder_options | _rest]}} = spec
-
-    {sharder, sharder_module, sharder_options}
+    sharder_options
   end
 
-  defp get_sharder_spec(producer, config) do
+  defp generate_sharder_spec(producer, config) do
     global = Application.get_all_env(:coxir)
 
     config =
