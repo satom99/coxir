@@ -31,7 +31,7 @@ defmodule Coxir.API do
   plug(Coxir.API.RateLimiter)
 
   @spec perform(method, path, body, options) :: result
-  def perform(method, path, body, options) do
+  def perform(method, path, body \\ nil, options) do
     options = Keyword.new(options)
 
     case request!(method: method, url: path, body: body, opts: options) do
@@ -48,7 +48,7 @@ defmodule Coxir.API do
   end
 
   def get(path, options) do
-    perform(:get, path, nil, options)
+    perform(:get, path, options)
   end
 
   def post(path, body, options) do
@@ -64,6 +64,6 @@ defmodule Coxir.API do
   end
 
   def delete(path, options) do
-    perform(:delete, path, nil, options)
+    perform(:delete, path, options)
   end
 end
