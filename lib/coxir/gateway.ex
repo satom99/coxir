@@ -37,6 +37,17 @@ defmodule Coxir.Gateway do
     end
   end
 
+  @spec update_status(pid, Enum.t()) :: :ok
+  def update_status(gateway, params) do
+    shard_count = get_shard_count(gateway)
+
+    for index <- 1..shard_count do
+      :ok = update_status(gateway, index, params)
+    end
+
+    :ok
+  end
+
   @spec update_status(pid, Guild.t() | Channel.t() | non_neg_integer, Enum.t()) :: :ok
   def update_status(gateway, where, params) do
     shard = get_shard(gateway, where)
