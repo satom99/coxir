@@ -56,19 +56,25 @@ defmodule Coxir.Gateway do
   end
 
   def get_shard(gateway, index) do
-    {sharder_module, sharder} = get_sharder(gateway)
+    {sharder, sharder_module, _sharder_options} = get_sharder(gateway)
     sharder_module.get_shard(sharder, index)
   end
 
-  defp get_sharder(gateway) do
+  def get_sharder(gateway) do
     children = Supervisor.which_children(gateway)
 
-    Enum.find_value(
-      children,
-      fn {id, pid, _type, [module]} ->
-        if id == :sharder, do: {module, pid}
-      end
-    )
+    {sharder, sharder_module} =
+      Enum.find_value(
+        children,
+        fn {id, pid, _type, [module]} ->
+          if id == :sharder, do: {pid, module}
+        end
+      )
+
+    {:ok, spec} = :supervisor.get_childspec(gateway, :sharder)
+    %{start: {_module, _function, [sharder_options | _rest]}} = spec
+
+    {sharder, sharder_module, sharder_options}
   end
 
   defp get_sharder_spec(producer, config) do
