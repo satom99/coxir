@@ -6,6 +6,8 @@ defmodule Coxir.Presence.Activity do
 
   @primary_key false
 
+  @derive Jason.Encoder
+
   embedded_schema do
     field(:name, :string)
     field(:type, :integer)
