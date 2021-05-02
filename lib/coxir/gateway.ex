@@ -5,7 +5,7 @@ defmodule Coxir.Gateway do
   import Supervisor, only: [start_child: 2]
   import Bitwise
 
-  alias Coxir.{API, Sharder}
+  alias Coxir.{API, Sharder, Token}
   alias Coxir.Gateway.{Producer, Dispatcher, Consumer}
   alias Coxir.Gateway.{Intents, Session}
   alias Coxir.Payload.UpdatePresence
@@ -87,6 +87,12 @@ defmodule Coxir.Gateway do
     sharder_module.get_shard(sharder, index)
   end
 
+  @spec get_token(pid) :: Token.t()
+  def get_token(gateway) do
+    %Session{token: token} = get_session_options(gateway)
+    token
+  end
+
   def start_link(config, options \\ []) do
     handler = Keyword.fetch!(config, :handler)
     options = [{:strategy, :rest_for_one} | options]
@@ -119,6 +125,11 @@ defmodule Coxir.Gateway do
   defp get_shard_count(gateway) do
     %Sharder{shard_count: shard_count} = get_sharder_options(gateway)
     shard_count
+  end
+
+  defp get_session_options(gateway) do
+    %Sharder{session_options: session_options} = get_sharder_options(gateway)
+    session_options
   end
 
   defp get_sharder_options(gateway) do
