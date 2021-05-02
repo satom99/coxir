@@ -23,8 +23,7 @@ defmodule Coxir.Payload do
     :operation,
     :data,
     :sequence,
-    :event,
-    :session
+    :event
   ]
 
   @type t :: %Payload{}
@@ -43,7 +42,7 @@ defmodule Coxir.Payload do
 
   def cast(%{"op" => opcode, "d" => data, "s" => sequence, "t" => event}) do
     operation = Map.fetch!(@operations, opcode)
-    %Payload{operation: operation, data: data, sequence: sequence, event: event, session: self()}
+    %Payload{operation: operation, data: data, sequence: sequence, event: event}
   end
 
   def to_command(%Payload{operation: operation, data: data}) do
