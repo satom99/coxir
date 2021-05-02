@@ -23,7 +23,13 @@ defmodule Coxir.Model.Helper do
 
   @spec storable?(Model.model()) :: boolean
   def storable?(model) do
-    model.storable?()
+    with true <- model.storable?() do
+      if storable = Application.get_env(:coxir, :storable) do
+        model in storable
+      else
+        true
+      end
+    end
   end
 
   @spec get_key(Model.instance()) :: Model.key()
