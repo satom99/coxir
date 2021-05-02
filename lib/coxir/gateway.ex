@@ -47,7 +47,7 @@ defmodule Coxir.Gateway do
 
   @spec get_shard(pid, Guild.t() | Channel.t() | non_neg_integer) :: pid
   def get_shard(gateway, %Guild{id: id}) do
-    %Sharder{shard_count: shard_count} = get_sharder_options(gateway)
+    shard_count = get_shard_count(gateway)
     index = rem(id >>> 22, shard_count)
     get_shard(gateway, index)
   end
@@ -93,6 +93,11 @@ defmodule Coxir.Gateway do
         if id == :sharder, do: {pid, module}
       end
     )
+  end
+
+  defp get_shard_count(gateway) do
+    %Sharder{shard_count: shard_count} = get_sharder_options(gateway)
+    shard_count
   end
 
   defp get_sharder_options(gateway) do
