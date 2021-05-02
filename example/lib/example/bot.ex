@@ -12,6 +12,8 @@ defmodule Example.Bot do
     %User{username: username, discriminator: discriminator} = user
 
     Logger.info("Shard ##{shard} ready for user #{username}##{discriminator}.")
+
+    update_presence(activities: [%{type: 0, name: "with coxir!"}])
   end
 
   def handle_event({:MESSAGE_CREATE, message}) do
