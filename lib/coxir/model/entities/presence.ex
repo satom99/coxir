@@ -4,12 +4,16 @@ defmodule Coxir.Presence do
   """
   use Coxir.Model
 
+  alias Coxir.Presence.Activity
+
   @primary_key false
 
   embedded_schema do
     field(:status, :string)
 
     field(:member, :any, virtual: true)
+
+    embeds_many(:activities, Activity)
 
     belongs_to(:user, User, primary_key: true)
     belongs_to(:guild, Guild, primary_key: true)
