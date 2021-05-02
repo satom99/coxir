@@ -20,11 +20,13 @@ defmodule Coxir.Gateway do
     quote location: :keep do
       @behaviour Coxir.Gateway.Handler
 
+      alias Coxir.Gateway
+
       def start_link do
         :coxir
         |> Application.get_env(__MODULE__, [])
         |> Keyword.put(:handler, __MODULE__)
-        |> Coxir.Gateway.start_link(name: __MODULE__)
+        |> Gateway.start_link(name: __MODULE__)
       end
 
       def child_spec(_runtime) do
