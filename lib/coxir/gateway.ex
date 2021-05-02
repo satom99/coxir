@@ -19,18 +19,17 @@ defmodule Coxir.Gateway do
     quote location: :keep do
       @behaviour Coxir.Gateway.Handler
 
-      def start_link(runtime \\ []) do
+      def start_link do
         :coxir
         |> Application.get_env(__MODULE__, [])
-        |> Keyword.merge(runtime)
         |> Keyword.put(:handler, __MODULE__)
         |> Coxir.Gateway.start_link(name: __MODULE__)
       end
 
-      def child_spec(runtime) do
+      def child_spec(_runtime) do
         %{
           id: __MODULE__,
-          start: {__MODULE__, :start_link, [runtime]},
+          start: {__MODULE__, :start_link, []},
           restart: :permanent
         }
       end
