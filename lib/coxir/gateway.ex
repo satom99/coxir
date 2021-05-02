@@ -36,6 +36,14 @@ defmodule Coxir.Gateway do
           restart: :permanent
         }
       end
+
+      def update_status(params) do
+        Gateway.update_status(__MODULE__, params)
+      end
+
+      def update_status(where, params) do
+        Gateway.update_status(__MODULE__, where, params)
+      end
     end
   end
 
