@@ -37,29 +37,29 @@ defmodule Coxir.Gateway do
         }
       end
 
-      def update_status(params) do
-        Gateway.update_status(__MODULE__, params)
+      def update_presence(params) do
+        Gateway.update_presence(__MODULE__, params)
       end
 
-      def update_status(where, params) do
-        Gateway.update_status(__MODULE__, where, params)
+      def update_presence(where, params) do
+        Gateway.update_presence(__MODULE__, where, params)
       end
     end
   end
 
-  @spec update_status(pid, Enum.t()) :: :ok
-  def update_status(gateway, params) do
+  @spec update_presence(pid, Enum.t()) :: :ok
+  def update_presence(gateway, params) do
     shard_count = get_shard_count(gateway)
 
     for index <- 1..shard_count do
-      :ok = update_status(gateway, index - 1, params)
+      :ok = update_presence(gateway, index - 1, params)
     end
 
     :ok
   end
 
-  @spec update_status(pid, Guild.t() | Channel.t() | non_neg_integer, Enum.t()) :: :ok
-  def update_status(gateway, where, params) do
+  @spec update_presence(pid, Guild.t() | Channel.t() | non_neg_integer, Enum.t()) :: :ok
+  def update_presence(gateway, where, params) do
     shard = get_shard(gateway, where)
     params = Map.new(params)
     payload = UpdatePresence.cast(params)
