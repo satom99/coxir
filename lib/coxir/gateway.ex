@@ -23,7 +23,7 @@ defmodule Coxir.Gateway do
         unquote(config)
         |> Keyword.merge(specific)
         |> Keyword.merge(runtime)
-        |> Keyword.put_new(:handler, __MODULE__)
+        |> Keyword.put(:handler, __MODULE__)
         |> Coxir.Gateway.start_link(name: __MODULE__)
       end
 
