@@ -20,13 +20,13 @@ defmodule Coxir.API do
 
   adapter(Tesla.Adapter.Gun)
 
-  plug(Tesla.Middleware.Retry)
-
-  plug(Tesla.Middleware.JSON)
+  plug(Coxir.API.Headers)
 
   plug(Tesla.Middleware.BaseUrl, "https://discord.com/api/v9")
 
-  plug(Coxir.API.Headers)
+  plug(Tesla.Middleware.JSON)
+
+  plug(Tesla.Middleware.Retry)
 
   plug(Coxir.API.RateLimiter)
 
