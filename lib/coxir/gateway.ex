@@ -56,8 +56,8 @@ defmodule Coxir.Gateway do
   end
 
   def get_shard(gateway, index) do
-    {sharder_module, sharder_pid} = get_sharder(gateway)
-    sharder_module.get_shard(sharder_pid, index)
+    {sharder_module, sharder} = get_sharder(gateway)
+    sharder_module.get_shard(sharder, index)
   end
 
   defp get_sharder(gateway) do
