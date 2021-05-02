@@ -8,6 +8,7 @@ defmodule Coxir.Gateway do
   alias Coxir.{API, Sharder}
   alias Coxir.Gateway.{Producer, Dispatcher, Consumer}
   alias Coxir.Gateway.{Intents, Session}
+  alias Coxir.Payload.UpdatePresence
   alias Coxir.{Guild, Channel}
 
   @default_config [
@@ -34,6 +35,14 @@ defmodule Coxir.Gateway do
         }
       end
     end
+  end
+
+  @spec update_status(pid, Guild.t() | Channel.t() | non_neg_integer, Enum.t()) :: :ok
+  def update_status(gateway, where, params) do
+    shard = get_shard(gateway, where)
+    params = Map.new(params)
+    payload = UpdatePresence.cast(params)
+    Session.update_presence(shard, payload)
   end
 
   @spec get_shard(pid, Guild.t() | Channel.t() | non_neg_integer) :: pid
