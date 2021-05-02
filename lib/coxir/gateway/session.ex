@@ -25,7 +25,6 @@ defmodule Coxir.Gateway.Session do
   ]
 
   @query "/?v=8&encoding=json&compress=zlib-stream"
-  @timeout 10_000
 
   @connect {:continue, :connect}
   @reconnect {:continue, :reconnect}
@@ -44,10 +43,7 @@ defmodule Coxir.Gateway.Session do
 
   def handle_continue(:connect, %Session{gateway: gateway} = state) do
     {:ok, gun_pid} = :gun.open(gateway, 443, %{protocols: [:http]})
-    {:ok, :http} = :gun.await_up(gun_pid, @timeout)
-    stream_ref = :gun.ws_upgrade(gun_pid, @query)
-
-    state = %{state | gun_pid: gun_pid, stream_ref: stream_ref}
+    state = %{state | gun_pid: gun_pid}
     {:noreply, state}
   end
 
@@ -155,6 +151,12 @@ defmodule Coxir.Gateway.Session do
 
   def handle_info(:heartbeat, %Session{heartbeat_ack: false} = state) do
     {:noreply, state, @reconnect}
+  end
+
+  def handle_info({:gun_up, gun_pid, :http}, %Session{gun_pid: gun_pid} = state) do
+    stream_ref = :gun.ws_upgrade(gun_pid, @query)
+    state = %{state | stream_ref: stream_ref}
+    {:noreply, state}
   end
 
   def handle_info(
