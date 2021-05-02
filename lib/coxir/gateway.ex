@@ -15,15 +15,13 @@ defmodule Coxir.Gateway do
     intents: :non_privileged
   ]
 
-  defmacro __using__(config) do
-    quote do
+  defmacro __using__(_options) do
+    quote location: :keep do
       @behaviour Coxir.Gateway.Handler
 
       def start_link(runtime \\ []) do
-        specific = Application.get_env(:coxir, __MODULE__, [])
-
-        unquote(config)
-        |> Keyword.merge(specific)
+        :coxir
+        |> Application.get_env(__MODULE__, [])
         |> Keyword.merge(runtime)
         |> Keyword.put(:handler, __MODULE__)
         |> Coxir.Gateway.start_link(name: __MODULE__)
