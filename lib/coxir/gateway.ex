@@ -42,7 +42,7 @@ defmodule Coxir.Gateway do
     shard_count = get_shard_count(gateway)
 
     for index <- 1..shard_count do
-      :ok = update_status(gateway, index, params)
+      :ok = update_status(gateway, index - 1, params)
     end
 
     :ok
