@@ -5,7 +5,7 @@ defmodule Coxir.Gateway.Dispatcher do
   use GenStage
 
   alias Coxir.Payload
-  alias Coxir.Payload.Ready
+  alias Coxir.Payload.{Ready, VoiceServerUpdate}
 
   alias Coxir.Model.Loader
   alias Coxir.{Channel, Message}
@@ -35,6 +35,7 @@ defmodule Coxir.Gateway.Dispatcher do
           | {:MESSAGE_DELETE, Message.t()}
           | {:PRESENCE_UPDATE, Presence.t()}
           | {:VOICE_STATE_UPDATE, VoiceState.t()}
+          | {:VOICE_SERVER_UPDATE, VoiceServerUpdate.t()}
           | {:PAYLOAD, Payload.t()}
 
   def start_link(producer) do
@@ -181,6 +182,11 @@ defmodule Coxir.Gateway.Dispatcher do
     end
 
     {:VOICE_STATE_UPDATE, voice_state}
+  end
+
+  defp handle_payload(%Payload{event: "VOICE_SERVER_UPDATE", data: object}) do
+    voice_server_update = VoiceServerUpdate.cast(object)
+    {:VOICE_SERVER_UPDATE, voice_server_update}
   end
 
   defp handle_payload(%Payload{} = payload) do
