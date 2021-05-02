@@ -5,7 +5,8 @@ defmodule Coxir.Gateway.Session do
   use GenServer
 
   alias Coxir.Payload
-  alias Coxir.Payload.{Hello, Identify, Resume, UpdatePresence}
+  alias Coxir.Payload.{Hello, Identify, Resume}
+  alias Coxir.Payload.{UpdatePresence, UpdateVoiceState}
   alias Coxir.Gateway.Producer
   alias __MODULE__
 
@@ -35,6 +36,10 @@ defmodule Coxir.Gateway.Session do
 
   def update_presence(session, %UpdatePresence{} = payload) do
     GenServer.call(session, {:send_command, :PRESENCE_UPDATE, payload})
+  end
+
+  def update_voice_state(session, %UpdateVoiceState{} = payload) do
+    GenServer.call(session, {:send_command, :VOICE_STATE_UPDATE, payload})
   end
 
   def start_link(state) do
