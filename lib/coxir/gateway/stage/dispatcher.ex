@@ -8,7 +8,7 @@ defmodule Coxir.Gateway.Dispatcher do
   alias Coxir.Gateway.Payload.{Ready, VoiceServerUpdate}
 
   alias Coxir.Model.Loader
-  alias Coxir.{Channel, Message}
+  alias Coxir.{Channel, Message, Interaction}
   alias Coxir.{Guild, Role}
   alias Coxir.{Member, Presence, VoiceState}
 
@@ -30,6 +30,7 @@ defmodule Coxir.Gateway.Dispatcher do
           | {:GUILD_ROLE_CREATE, Role.t()}
           | {:GUILD_ROLE_UPDATE, Role.t()}
           | {:GUILD_ROLE_DELETE, Role.t()}
+          | {:INTERACTION_CREATE, Interaction.t()}
           | {:MESSAGE_CREATE, Message.t()}
           | {:MESSAGE_UPDATE, Message.t()}
           | {:MESSAGE_DELETE, Message.t()}
@@ -151,6 +152,11 @@ defmodule Coxir.Gateway.Dispatcher do
     role = Loader.load(Role, object)
     Loader.unload(role)
     {:GUILD_ROLE_DELETE, role}
+  end
+
+  defp handle_payload(%Payload{event: "INTERACTION_CREATE", data: object}) do
+    interaction = Loader.load(Interaction, object)
+    {:INTERACTION_CREATE, interaction}
   end
 
   defp handle_payload(%Payload{event: "MESSAGE_CREATE", data: object}) do
