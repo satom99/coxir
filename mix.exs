@@ -65,6 +65,9 @@ defmodule Coxir.MixProject do
           ~r/^Coxir.Gateway.?/,
           ~r/^Coxir.Payload.?/
         ],
+        Voice: [
+          ~r/^Coxir.Voice.?/
+        ],
         Other: ~r/(.*?)/
       ],
       extra_section: "GUIDES",
