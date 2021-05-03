@@ -10,10 +10,53 @@ Refer to the [documentation](https://satom99.github.io/coxir2) for more informat
 
 ### Installation
 
-Add coxir as a dependency to your `mix.exs` file as follows.
+Add coxir as a dependency to your `mix.exs` file:
 
 ```elixir
 defp deps do
   [{:coxir, "~> 0.1.0"}]
 end
 ```
+
+### Quickstart
+
+Before consuming events, coxir must be configured:
+
+```elixir
+config :coxir, :token, ""
+```
+
+Then a simple consumer can be set up as follows:
+
+```elixir
+defmodule Example.Bot do
+  use Coxir.Gateway
+  
+  alias Coxir.{User, Message}
+
+  def handle_event({:MESSAGE_CREATE, %Message{content: "!hello"} = message}) do
+    %Message{author: author} = Message.preload(message, :author)
+
+    %User{username: username, discriminator: discriminator} = author
+
+    Message.reply(message, content: "Hello #{username}##{discriminator}!")
+  end
+  
+  def handle_event(_event) do
+    :noop
+  end
+end
+```
+
+Which can then be added to a Supervisor, or started directly:
+
+```elixir
+iex(1)> Example.Bot.start_link
+{:ok, #PID<0.301.0>}
+```
+
+For the former we recommend having a look on the [`example`](https://github.com/satom99/coxir2/tree/master/example) app.
+
+### More
+
+For more information check out the [documentation](https://satom99.github.io/coxir2).
