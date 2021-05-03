@@ -10,7 +10,7 @@ Refer to the [documentation](https://satom99.github.io/coxir2) for more informat
 
 ### Installation
 
-Simply add coxir as a dependency to your `mix.exs` file as follows.
+Add coxir as a dependency to your `mix.exs` file as follows.
 
 ```elixir
 defp deps do
