@@ -40,7 +40,12 @@ defmodule Coxir.Model.Loader do
   @spec unload(Model.instance()) :: :ok
   def unload(%model{} = struct) do
     key = get_key(struct)
-    Storage.delete(model, key)
+
+    if storable?(model) do
+      :ok = Storage.delete(model, key)
+    end
+
+    :ok
   end
 
   @spec get(Model.model(), Model.key(), options) :: Model.instance() | nil
@@ -216,7 +221,12 @@ defmodule Coxir.Model.Loader do
   end
 
   defp getter(model, key, %{storage: true} = options) do
-    with nil <- Storage.get(model, key) do
+    storage =
+      if storable?(model) do
+        Storage.get(model, key)
+      end
+
+    with nil <- storage do
       options = %{options | storage: false}
       getter(model, key, options)
     end
@@ -267,7 +277,7 @@ defmodule Coxir.Model.Loader do
     owner_value = Map.fetch!(struct, owner_key)
 
     storage =
-      if storage? do
+      if storage? and storable?(related) do
         clauses = [{related_key, owner_value}]
         Storage.all_by(related, clauses)
       end
