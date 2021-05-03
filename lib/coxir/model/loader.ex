@@ -42,10 +42,10 @@ defmodule Coxir.Model.Loader do
     key = get_key(struct)
 
     if storable?(model) do
-      :ok = Storage.delete(model, key)
+      Storage.delete(model, key)
+    else
+      :ok
     end
-
-    :ok
   end
 
   @spec get(Model.model(), Model.key(), options) :: Model.instance() | nil
