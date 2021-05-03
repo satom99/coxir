@@ -42,6 +42,7 @@ defmodule Coxir.MixProject do
           Coxir.Overwrite,
           Coxir.Webhook,
           ~r/^Coxir.Message.?/,
+          ~r/^Coxir.Interaction.?/,
           Coxir.Guild,
           Coxir.Integration,
           Coxir.Role,
