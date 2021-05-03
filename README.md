@@ -25,7 +25,7 @@ Before consuming events, coxir must be configured:
 ```elixir
 config :coxir,
   token: "",
-  intents: :non_privileged
+  intents: :non_privileged # optional
 ```
 
 Then a simple consumer can be set up as follows:
