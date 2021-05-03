@@ -55,7 +55,7 @@ iex(1)> Example.Bot.start_link
 {:ok, #PID<0.301.0>}
 ```
 
-For the former we recommend having a look on the [`example`](https://github.com/satom99/coxir2/tree/master/example) app.
+For a complete and working example have a look on the [`example`](https://github.com/satom99/coxir2/tree/master/example) app.
 
 ### More
 
