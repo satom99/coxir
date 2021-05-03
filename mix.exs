@@ -74,7 +74,7 @@ defmodule Coxir.MixProject do
       extras: [
         "guides/Introduction.md"
       ],
-      main: "Introduction"
+      main: "introduction"
     ]
   end
 
