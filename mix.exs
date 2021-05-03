@@ -65,7 +65,12 @@ defmodule Coxir.MixProject do
           ~r/^Coxir.Payload.?/
         ],
         Other: ~r/(.*?)/
-      ]
+      ],
+      extra_section: "GUIDES",
+      extras: [
+        "guides/Introduction.md"
+      ],
+      main: "introduction"
     ]
   end
 
