@@ -1,4 +1,4 @@
-defmodule Coxir.Payload do
+defmodule Coxir.Gateway.Payload do
   @moduledoc """
   Work in progress.
   """

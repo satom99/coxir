@@ -4,10 +4,9 @@ defmodule Coxir.Gateway.Session do
   """
   use GenServer
 
-  alias Coxir.Payload
-  alias Coxir.Payload.{Hello, Identify, Resume}
-  alias Coxir.Payload.{UpdatePresence, UpdateVoiceState}
-  alias Coxir.Gateway.Producer
+  alias Coxir.Gateway.{Payload, Producer}
+  alias Coxir.Gateway.Payload.{Hello, Identify, Resume}
+  alias Coxir.Gateway.Payload.{UpdatePresence, UpdateVoiceState}
   alias __MODULE__
 
   defstruct [

@@ -8,7 +8,7 @@ defmodule Coxir.Gateway do
   alias Coxir.{API, Sharder, Token}
   alias Coxir.Gateway.{Producer, Dispatcher, Consumer}
   alias Coxir.Gateway.{Intents, Session}
-  alias Coxir.Payload.UpdatePresence
+  alias Coxir.Gateway.Payload.UpdatePresence
   alias Coxir.{Guild, Channel}
 
   @default_config [

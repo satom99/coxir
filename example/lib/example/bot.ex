@@ -3,7 +3,7 @@ defmodule Example.Bot do
 
   require Logger
 
-  alias Coxir.Payload.Ready
+  alias Coxir.Gateway.Payload.Ready
   alias Coxir.{User, Guild, Channel, Message}
 
   def handle_event({:READY, ready}) do
@@ -22,6 +22,8 @@ defmodule Example.Bot do
     %Message{content: content, author: author, channel: channel} = message
 
     %User{username: username, discriminator: discriminator} = author
+
+    if is_nil(channel), do: raise(message)
 
     %Channel{name: channel_name, guild: guild} = channel
 

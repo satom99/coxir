@@ -4,8 +4,8 @@ defmodule Coxir.Gateway.Dispatcher do
   """
   use GenStage
 
-  alias Coxir.Payload
-  alias Coxir.Payload.{Ready, VoiceServerUpdate}
+  alias Coxir.Gateway.Payload
+  alias Coxir.Gateway.Payload.{Ready, VoiceServerUpdate}
 
   alias Coxir.Model.Loader
   alias Coxir.{Channel, Message}

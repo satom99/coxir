@@ -1,8 +1,8 @@
-defmodule Coxir.Payload.VoiceServerUpdate do
+defmodule Coxir.Gateway.Payload.VoiceServerUpdate do
   @moduledoc """
   Work in progress.
   """
-  use Coxir.Payload
+  use Coxir.Gateway.Payload
 
   embedded_schema do
     field(:token, :string)

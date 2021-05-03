@@ -1,8 +1,8 @@
-defmodule Coxir.Payload.UpdatePresence do
+defmodule Coxir.Gateway.Payload.UpdatePresence do
   @moduledoc """
   Work in progress.
   """
-  use Coxir.Payload
+  use Coxir.Gateway.Payload
 
   alias Coxir.Presence.Activity
 

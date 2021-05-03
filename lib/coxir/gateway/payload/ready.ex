@@ -1,8 +1,8 @@
-defmodule Coxir.Payload.Ready do
+defmodule Coxir.Gateway.Payload.Ready do
   @moduledoc """
   Work in progress.
   """
-  use Coxir.Payload
+  use Coxir.Gateway.Payload
 
   embedded_schema do
     field(:v, :integer)

@@ -1,8 +1,8 @@
-defmodule Coxir.Payload.Identify do
+defmodule Coxir.Gateway.Payload.Identify do
   @moduledoc """
   Work in progress.
   """
-  use Coxir.Payload
+  use Coxir.Gateway.Payload
 
   @properties %{
     "$browser" => "coxir",

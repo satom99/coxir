@@ -1,8 +1,8 @@
-defmodule Coxir.Payload.UpdateVoiceState do
+defmodule Coxir.Gateway.Payload.UpdateVoiceState do
   @moduledoc """
   Work in progress.
   """
-  use Coxir.Payload
+  use Coxir.Gateway.Payload
 
   embedded_schema do
     field(:self_mute, :boolean)
