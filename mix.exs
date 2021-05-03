@@ -72,9 +72,10 @@ defmodule Coxir.MixProject do
       ],
       extra_section: "GUIDES",
       extras: [
+        "README.md",
         "guides/Introduction.md"
       ],
-      main: "introduction"
+      main: "README"
     ]
   end
 
