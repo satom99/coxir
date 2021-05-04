@@ -70,17 +70,6 @@ defmodule Coxir.Voice.Session do
     {:noreply, state}
   end
 
-  def handle_frame({:binary, frame}, state) do
-    frame
-    |> Jason.decode!()
-    |> Payload.cast()
-    |> handle_payload(state)
-  end
-
-  def handle_frame({:close, _status, _reason}, state) do
-    {:noreply, state, @reconnect}
-  end
-
   def handle_info({:gun_up, gun_pid, :http}, %Session{gun_pid: gun_pid} = state) do
     stream_ref = :gun.ws_upgrade(gun_pid, @query)
     state = %{state | stream_ref: stream_ref}
@@ -130,6 +119,17 @@ defmodule Coxir.Voice.Session do
   end
 
   def handle_info(:heartbeat, %Session{heartbeat_ack: false} = state) do
+    {:noreply, state, @reconnect}
+  end
+
+  defp handle_frame({:binary, frame}, state) do
+    frame
+    |> Jason.decode!()
+    |> Payload.cast()
+    |> handle_payload(state)
+  end
+
+  defp handle_frame({:close, _status, _reason}, state) do
     {:noreply, state, @reconnect}
   end
 
