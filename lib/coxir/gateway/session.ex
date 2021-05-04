@@ -96,61 +96,6 @@ defmodule Coxir.Gateway.Session do
     {:noreply, state}
   end
 
-  def handle_frame({:binary, frame}, %Session{zlib_context: zlib_context} = state) do
-    zlib_context
-    |> :zlib.inflate(frame)
-    |> Jason.decode!()
-    |> Payload.cast()
-    |> handle_payload(state)
-  end
-
-  def handle_frame({:close, status, reason}, _state) when status in @close_raise do
-    raise(reason)
-  end
-
-  def handle_frame({:close, status, _reason}, state) when status in @close_session do
-    state = %{state | session_id: nil}
-    {:noreply, state, @reconnect}
-  end
-
-  def handle_frame({:close, _status, _reason}, state) do
-    {:noreply, state, @reconnect}
-  end
-
-  def handle_payload(%Payload{operation: :HELLO, data: data}, state) do
-    %Hello{heartbeat_interval: heartbeat_interval} = Hello.cast(data)
-
-    heartbeat_ref = :timer.send_interval(heartbeat_interval, self(), :heartbeat)
-
-    state = %{state | heartbeat_ref: heartbeat_ref, heartbeat_ack: true}
-    {:noreply, state, @identify}
-  end
-
-  def handle_payload(%Payload{operation: :RECONNECT}, state) do
-    {:noreply, state, @reconnect}
-  end
-
-  def handle_payload(%Payload{operation: :INVALID_SESSION}, state) do
-    state = %{state | session_id: nil}
-    {:noreply, state, @identify}
-  end
-
-  def handle_payload(
-        %Payload{operation: :DISPATCH, data: data, sequence: sequence} = payload,
-        %Session{producer: producer, session_id: session_id} = state
-      ) do
-    Producer.notify(producer, payload)
-
-    session_id = Map.get(data, "session_id", session_id)
-    state = %{state | session_id: session_id, sequence: sequence}
-    {:noreply, state}
-  end
-
-  def handle_payload(%Payload{operation: :HEARTBEAT_ACK}, state) do
-    state = %{state | heartbeat_ack: true}
-    {:noreply, state}
-  end
-
   def handle_call({:send_command, operation, data}, _from, state) do
     result = send_command(operation, data, state)
     {:reply, result, state}
@@ -216,6 +161,61 @@ defmodule Coxir.Gateway.Session do
         %Session{gun_pid: gun_pid} = state
       ) do
     {:noreply, state, @reconnect}
+  end
+
+  defp handle_frame({:binary, frame}, %Session{zlib_context: zlib_context} = state) do
+    zlib_context
+    |> :zlib.inflate(frame)
+    |> Jason.decode!()
+    |> Payload.cast()
+    |> handle_payload(state)
+  end
+
+  defp handle_frame({:close, status, reason}, _state) when status in @close_raise do
+    raise(reason)
+  end
+
+  defp handle_frame({:close, status, _reason}, state) when status in @close_session do
+    state = %{state | session_id: nil}
+    {:noreply, state, @reconnect}
+  end
+
+  defp handle_frame({:close, _status, _reason}, state) do
+    {:noreply, state, @reconnect}
+  end
+
+  defp handle_payload(%Payload{operation: :HELLO, data: data}, state) do
+    %Hello{heartbeat_interval: heartbeat_interval} = Hello.cast(data)
+
+    heartbeat_ref = :timer.send_interval(heartbeat_interval, self(), :heartbeat)
+
+    state = %{state | heartbeat_ref: heartbeat_ref, heartbeat_ack: true}
+    {:noreply, state, @identify}
+  end
+
+  defp handle_payload(%Payload{operation: :RECONNECT}, state) do
+    {:noreply, state, @reconnect}
+  end
+
+  defp handle_payload(%Payload{operation: :INVALID_SESSION}, state) do
+    state = %{state | session_id: nil}
+    {:noreply, state, @identify}
+  end
+
+  defp handle_payload(
+        %Payload{operation: :DISPATCH, data: data, sequence: sequence} = payload,
+        %Session{producer: producer, session_id: session_id} = state
+      ) do
+    Producer.notify(producer, payload)
+
+    session_id = Map.get(data, "session_id", session_id)
+    state = %{state | session_id: session_id, sequence: sequence}
+    {:noreply, state}
+  end
+
+  defp handle_payload(%Payload{operation: :HEARTBEAT_ACK}, state) do
+    state = %{state | heartbeat_ack: true}
+    {:noreply, state}
   end
 
   defp send_command(operation, data, %Session{gun_pid: gun_pid}) do
