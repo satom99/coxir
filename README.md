@@ -63,7 +63,7 @@ end
 Which can then be added to a Supervisor, or started directly:
 
 ```elixir
-iex(1)> Example.Bot.start_link
+iex(1)> Example.Bot.start_link()
 {:ok, #PID<0.301.0>}
 ```
 
