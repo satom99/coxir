@@ -9,7 +9,7 @@ defmodule Coxir.Voice.Manager do
   alias Coxir.Voice.{Instance, Session}
   alias __MODULE__
 
-  @session {:continue, :session}
+  @start_session {:continue, :start_session}
 
   defstruct [
     :instance,
@@ -40,23 +40,23 @@ defmodule Coxir.Voice.Manager do
 
   defp handle_update(%VoiceState{session_id: session_id}, state) do
     state = %{state | session_id: session_id}
-    {:noreply, state, @session}
+    {:noreply, state, @start_session}
   end
 
   defp handle_update(%VoiceServerUpdate{token: token, endpoint: endpoint}, state) do
     state = %{state | token: token, endpoint: endpoint}
-    {:noreply, state, @session}
+    {:noreply, state, @start_session}
   end
 
-  def handle_continue(:session, %Manager{session_id: nil} = state) do
+  def handle_continue(:start_session, %Manager{session_id: nil} = state) do
     {:noreply, state}
   end
 
-  def handle_continue(:session, %Manager{token: nil} = state) do
+  def handle_continue(:start_session, %Manager{token: nil} = state) do
     {:noreply, state}
   end
 
-  def handle_continue(:session, state) do
+  def handle_continue(:start_session, state) do
     %Manager{
       instance: instance,
       udp_socket: udp_socket,
