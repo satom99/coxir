@@ -19,7 +19,7 @@ defmodule Coxir.Voice.Instance do
   def init(%Instance{guild_id: guild_id, channel_id: channel_id}) do
     manager_options = %Manager{
       instance: self(),
-      server_id: guild_id,
+      guild_id: guild_id,
       channel_id: channel_id
     }
 
