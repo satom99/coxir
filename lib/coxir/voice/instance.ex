@@ -10,6 +10,7 @@ defmodule Coxir.Voice.Instance do
   alias __MODULE__
 
   defstruct [
+    :user_id,
     :guild_id,
     :channel_id
   ]
@@ -46,12 +47,17 @@ defmodule Coxir.Voice.Instance do
     Supervisor.init(children, options)
   end
 
-  defp generate_manager_spec(%Instance{guild_id: guild_id, channel_id: channel_id}) do
+  defp generate_manager_spec(%Instance{
+         user_id: user_id,
+         guild_id: guild_id,
+         channel_id: channel_id
+       }) do
     udp_socket = Audio.get_udp_socket()
 
     manager_options = %Manager{
       instance: self(),
       udp_socket: udp_socket,
+      user_id: user_id,
       guild_id: guild_id,
       channel_id: channel_id
     }
