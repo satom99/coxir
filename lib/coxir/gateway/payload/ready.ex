@@ -9,7 +9,8 @@ defmodule Coxir.Gateway.Payload.Ready do
     field(:session_id, :string)
     field(:shard, {:array, :integer})
 
-    embeds_one(:user, User)
     embeds_many(:guilds, Guild)
+
+    belongs_to(:user, User)
   end
 end
