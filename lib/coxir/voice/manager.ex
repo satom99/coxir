@@ -6,21 +6,9 @@ defmodule Coxir.Voice.Manager do
 
   alias Coxir.VoiceState
   alias Coxir.Gateway.Payload.VoiceServerUpdate
-  alias Coxir.Voice.{Instance, Session}
-  alias __MODULE__
+  alias Coxir.Voice.Instance
 
   @start_session {:continue, :start_session}
-
-  defstruct [
-    :instance,
-    :udp_socket,
-    :user_id,
-    :guild_id,
-    :channel_id,
-    :session_id,
-    :endpoint,
-    :token
-  ]
 
   def update(manager, struct) do
     GenServer.call(manager, {:update, struct})
@@ -48,43 +36,16 @@ defmodule Coxir.Voice.Manager do
     {:noreply, state, @start_session}
   end
 
-  defp handle_update(%Session{} = _session, state) do
+  def handle_continue(:start_session, %Instance{session_id: nil} = state) do
     {:noreply, state}
   end
 
-  def handle_continue(:start_session, %Manager{session_id: nil} = state) do
+  def handle_continue(:start_session, %Instance{token: nil} = state) do
     {:noreply, state}
   end
 
-  def handle_continue(:start_session, %Manager{token: nil} = state) do
-    {:noreply, state}
-  end
-
-  def handle_continue(:start_session, state) do
-    %Manager{
-      instance: instance,
-      udp_socket: udp_socket,
-      user_id: user_id,
-      guild_id: guild_id,
-      channel_id: channel_id,
-      session_id: session_id,
-      endpoint: endpoint,
-      token: token
-    } = state
-
-    session_options = %Session{
-      manager: self(),
-      udp_socket: udp_socket,
-      user_id: user_id,
-      guild_id: guild_id,
-      channel_id: channel_id,
-      session_id: session_id,
-      endpoint: endpoint,
-      token: token
-    }
-
-    Instance.start_session(instance, session_options)
-
+  def handle_continue(:start_session, %Instance{instance: instance} = state) do
+    Instance.start_session(instance, state)
     {:noreply, state}
   end
 end

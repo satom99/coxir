@@ -7,12 +7,27 @@ defmodule Coxir.Voice.Instance do
   import Supervisor, only: [start_child: 2]
 
   alias Coxir.Voice.{Audio, Manager, Session}
-  alias __MODULE__
 
   defstruct [
+    :instance,
+    :manager,
+    :udp_socket,
     :user_id,
     :guild_id,
-    :channel_id
+    :channel_id,
+    :session_id,
+    :endpoint,
+    :token,
+    :remote_ip,
+    :remote_port,
+    :ssrc,
+    :secret_key,
+    # Session-only
+    :gun_pid,
+    :stream_ref,
+    :heartbeat_ref,
+    :heartbeat_nonce,
+    :heartbeat_ack
   ]
 
   def get_manager(instance) do
@@ -47,22 +62,13 @@ defmodule Coxir.Voice.Instance do
     Supervisor.init(children, options)
   end
 
-  defp generate_manager_spec(%Instance{
-         user_id: user_id,
-         guild_id: guild_id,
-         channel_id: channel_id
-       }) do
+  defp generate_manager_spec(state) do
+    instance = self()
     udp_socket = Audio.get_udp_socket()
 
-    manager_options = %Manager{
-      instance: self(),
-      udp_socket: udp_socket,
-      user_id: user_id,
-      guild_id: guild_id,
-      channel_id: channel_id
-    }
+    state = %{state | instance: instance, udp_socket: udp_socket}
 
-    manager_spec = Manager.child_spec(manager_options)
+    manager_spec = Manager.child_spec(state)
 
     %{manager_spec | id: :manager}
   end
