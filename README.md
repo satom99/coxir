@@ -8,6 +8,15 @@ A modern high-level Elixir wrapper for [Discord](https://discord.com).
 
 Refer to the [documentation](https://satom99.github.io/coxir2) for more information.
 
+### Features
+
+- Support for running multiple bots in a same application
+- Configurable adapters that alter how the library behaves:
+  - **Limiter:** handles how rate limit buckets are stored
+  - **Storage:** handles how entities are cached
+  - **Sharder:** handles how shards are started
+- Easy-to-use syntax for interacting with Discord entities
+
 ### Installation
 
 Add coxir as a dependency to your `mix.exs` file:
