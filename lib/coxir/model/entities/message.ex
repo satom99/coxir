@@ -19,11 +19,11 @@ defmodule Coxir.Message do
     field(:flags, :integer)
 
     embeds_one(:message_reference, Reference)
-    embeds_one(:referenced_message, Message)
 
     belongs_to(:channel, Channel, primary_key: true)
     belongs_to(:guild, Guild)
     belongs_to(:author, User)
+    belongs_to(:referenced_message, Message)
   end
 
   def fetch({id, channel_id}, options) do
