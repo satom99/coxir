@@ -4,13 +4,20 @@ defmodule Coxir.Voice.Instance do
   """
   use Supervisor
 
-  alias Coxir.Voice.Manager
+  import Supervisor, only: [start_child: 2]
+
+  alias Coxir.Voice.{Manager, Session}
   alias __MODULE__
 
   defstruct [
     :guild_id,
     :channel_id
   ]
+
+  def start_session(instance, options) do
+    spec = {Session, options}
+    start_child(instance, spec)
+  end
 
   def start_link(state) do
     Supervisor.start_link(__MODULE__, state)

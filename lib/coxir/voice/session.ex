@@ -7,6 +7,7 @@ defmodule Coxir.Voice.Session do
   alias __MODULE__
 
   defstruct [
+    :manager,
     :user_id,
     :guild_id,
     :channel_id,
