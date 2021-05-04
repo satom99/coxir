@@ -9,7 +9,7 @@ defmodule Coxir.Voice.Instance do
   alias Coxir.Voice.{Audio, Manager, Session}
 
   defstruct [
-    :player_module,
+    :player_spec,
     :instance,
     :manager,
     :udp_socket,
