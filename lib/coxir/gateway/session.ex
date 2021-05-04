@@ -203,9 +203,9 @@ defmodule Coxir.Gateway.Session do
   end
 
   defp handle_payload(
-        %Payload{operation: :DISPATCH, data: data, sequence: sequence} = payload,
-        %Session{producer: producer, session_id: session_id} = state
-      ) do
+         %Payload{operation: :DISPATCH, data: data, sequence: sequence} = payload,
+         %Session{producer: producer, session_id: session_id} = state
+       ) do
     Producer.notify(producer, payload)
 
     session_id = Map.get(data, "session_id", session_id)
