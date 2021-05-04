@@ -4,6 +4,8 @@ defmodule Coxir.Voice.Session do
   """
   use GenServer
 
+  alias Coxir.Voice.Payload
+  alias Coxir.Voice.Payload.Hello
   alias __MODULE__
 
   defstruct [
@@ -16,7 +18,9 @@ defmodule Coxir.Voice.Session do
     :token,
     :gun_pid,
     :stream_ref,
-    :heartbeat_ref
+    :heartbeat_ref,
+    :heartbeat_nonce,
+    :heartbeat_ack
   ]
 
   @query "/?v=4"
@@ -48,8 +52,11 @@ defmodule Coxir.Voice.Session do
     {:noreply, state, @connect}
   end
 
-  def handle_frame({:binary, _frame}, state) do
-    {:noreply, state}
+  def handle_frame({:binary, frame}, state) do
+    frame
+    |> Jason.decode!()
+    |> Payload.cast()
+    |> handle_payload(state)
   end
 
   def handle_frame({:close, _status, _reason}, state) do
@@ -95,5 +102,46 @@ defmodule Coxir.Voice.Session do
         %Session{gun_pid: gun_pid} = state
       ) do
     {:noreply, state, @reconnect}
+  end
+
+  def handle_info(:heartbeat, %Session{heartbeat_ack: true} = state) do
+    heartbeat_nonce = System.unique_integer()
+    send_command(:HEARTBEAT, heartbeat_nonce, state)
+    state = %{state | heartbeat_nonce: heartbeat_nonce, heartbeat_ack: false}
+    {:noreply, state}
+  end
+
+  def handle_info(:heartbeat, %Session{heartbeat_ack: false} = state) do
+    {:noreply, state, @reconnect}
+  end
+
+  defp handle_payload(%Payload{operation: :HELLO, data: data}, state) do
+    %Hello{heartbeat_interval: heartbeat_interval} = Hello.cast(data)
+
+    heartbeat_ref = :timer.send_interval(heartbeat_interval, self(), :heartbeat)
+
+    state = %{state | heartbeat_ref: heartbeat_ref, heartbeat_ack: true}
+    {:noreply, state, @identify}
+  end
+
+  defp handle_payload(
+         %Payload{operation: :HEARTBEAT_ACK, data: nonce},
+         %Session{heartbeat_nonce: nonce} = state
+       ) do
+    state = %{state | heartbeat_ack: true}
+    {:noreply, state}
+  end
+
+  defp handle_payload(%Payload{operation: :HEARTBEAT_ACK}, state) do
+    {:noreply, state}
+  end
+
+  defp send_command(operation, data, %Session{gun_pid: gun_pid}) do
+    payload = %Payload{operation: operation, data: data}
+    command = Payload.to_command(payload)
+    binary = Jason.encode!(command)
+    message = {:binary, binary}
+
+    :ok = :gun.ws_send(gun_pid, message)
   end
 end
