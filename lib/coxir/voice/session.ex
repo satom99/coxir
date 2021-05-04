@@ -5,7 +5,7 @@ defmodule Coxir.Voice.Session do
   use GenServer
 
   alias Coxir.Voice.Payload
-  alias Coxir.Voice.Payload.Hello
+  alias Coxir.Voice.Payload.{Hello, Identify}
   alias __MODULE__
 
   defstruct [
@@ -27,6 +27,7 @@ defmodule Coxir.Voice.Session do
 
   @connect {:continue, :connect}
   @reconnect {:continue, :reconnect}
+  @identify {:continue, :identify}
 
   def start_link(state) do
     GenServer.start_link(__MODULE__, state)
@@ -50,6 +51,23 @@ defmodule Coxir.Voice.Session do
     :timer.cancel(heartbeat_ref)
 
     {:noreply, state, @connect}
+  end
+
+  def handle_continue(
+        :identify,
+        %Session{user_id: user_id, guild_id: guild_id, session_id: session_id, token: token} =
+          state
+      ) do
+    identify = %Identify{
+      user_id: user_id,
+      server_id: guild_id,
+      session_id: session_id,
+      token: token
+    }
+
+    send_command(:IDENTIFY, identify, state)
+
+    {:noreply, state}
   end
 
   def handle_frame({:binary, frame}, state) do
