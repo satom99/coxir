@@ -4,15 +4,27 @@ defmodule Coxir.Voice.Instance do
   """
   use Supervisor
 
-  alias Coxir.Voice.Session
+  alias Coxir.Voice.Manager
+  alias __MODULE__
 
-  def start_link(session_options) do
-    Supervisor.start_link(__MODULE__, session_options)
+  defstruct [
+    :guild_id,
+    :channel_id
+  ]
+
+  def start_link(state) do
+    Supervisor.start_link(__MODULE__, state)
   end
 
-  def init(session_options) do
+  def init(%Instance{guild_id: guild_id, channel_id: channel_id}) do
+    manager_options = %Manager{
+      instance: self(),
+      server_id: guild_id,
+      channel_id: channel_id
+    }
+
     children = [
-      {Session, session_options}
+      {Manager, manager_options}
     ]
 
     options = [
