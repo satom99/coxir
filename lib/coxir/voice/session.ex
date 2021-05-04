@@ -4,9 +4,9 @@ defmodule Coxir.Voice.Session do
   """
   use GenServer
 
+  alias Coxir.Voice.{Instance, Payload, Audio}
   alias Coxir.Voice.Payload.{Hello, Ready, SessionDescription}
   alias Coxir.Voice.Payload.{Identify, SelectProtocol}
-  alias Coxir.Voice.{Instance, Payload, Audio}
 
   @query "/?v=4"
 
