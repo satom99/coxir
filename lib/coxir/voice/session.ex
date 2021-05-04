@@ -6,7 +6,7 @@ defmodule Coxir.Voice.Session do
 
   alias Coxir.Voice.Payload.{Hello, Ready, SessionDescription}
   alias Coxir.Voice.Payload.{Identify, SelectProtocol}
-  alias Coxir.Voice.{Payload, Audio}
+  alias Coxir.Voice.{Payload, Audio, Manager}
   alias __MODULE__
 
   defstruct [
@@ -168,12 +168,18 @@ defmodule Coxir.Voice.Session do
     {:noreply, state}
   end
 
-  defp handle_payload(%Payload{operation: :SESSION_DESCRIPTION, data: data}, state) do
+  defp handle_payload(
+         %Payload{operation: :SESSION_DESCRIPTION, data: data},
+         %Session{manager: manager} = state
+       ) do
     %SessionDescription{secret_key: secret_key} = SessionDescription.cast(data)
 
     secret_key = :erlang.list_to_binary(secret_key)
 
     state = %{state | secret_key: secret_key}
+
+    Manager.update(manager, state)
+
     {:noreply, state}
   end
 

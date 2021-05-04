@@ -48,6 +48,10 @@ defmodule Coxir.Voice.Manager do
     {:noreply, state, @start_session}
   end
 
+  defp handle_update(%Session{} = _session, state) do
+    {:noreply, state}
+  end
+
   def handle_continue(:start_session, %Manager{session_id: nil} = state) do
     {:noreply, state}
   end
