@@ -19,6 +19,7 @@ defmodule Coxir.Voice.Manager do
   end
 
   def init(state) do
+    state = %{state | manager: self()}
     {:ok, state}
   end
 
