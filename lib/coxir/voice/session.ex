@@ -4,7 +4,8 @@ defmodule Coxir.Voice.Session do
   """
   use GenServer
 
-  alias Coxir.Voice.Payload.{Hello, Identify, Ready, SelectProtocol}
+  alias Coxir.Voice.Payload.{Hello, Ready, SessionDescription}
+  alias Coxir.Voice.Payload.{Identify, SelectProtocol}
   alias Coxir.Voice.{Payload, Audio}
   alias __MODULE__
 
@@ -21,7 +22,11 @@ defmodule Coxir.Voice.Session do
     :stream_ref,
     :heartbeat_ref,
     :heartbeat_nonce,
-    :heartbeat_ack
+    :heartbeat_ack,
+    :remote_ip,
+    :remote_port,
+    :ssrc,
+    :secret_key
   ]
 
   @query "/?v=4"
@@ -159,6 +164,16 @@ defmodule Coxir.Voice.Session do
 
     send_command(:SELECT_PROTOCOL, select_protocol, state)
 
+    state = %{state | remote_ip: remote_ip, remote_port: remote_port, ssrc: ssrc}
+    {:noreply, state}
+  end
+
+  defp handle_payload(%Payload{operation: :SESSION_DESCRIPTION, data: data}, state) do
+    %SessionDescription{secret_key: secret_key} = SessionDescription.cast(data)
+
+    secret_key = :erlang.list_to_binary(secret_key)
+
+    state = %{state | secret_key: secret_key}
     {:noreply, state}
   end
 
