@@ -14,6 +14,17 @@ defmodule Coxir.Voice.Instance do
     :channel_id
   ]
 
+  def get_manager(instance) do
+    children = Supervisor.which_children(instance)
+
+    Enum.find_value(
+      children,
+      fn {id, pid, _type, _modules} ->
+        if id == :manager, do: pid
+      end
+    )
+  end
+
   def start_session(instance, options) do
     spec = {Session, options}
     start_child(instance, spec)
@@ -23,7 +34,19 @@ defmodule Coxir.Voice.Instance do
     Supervisor.start_link(__MODULE__, state)
   end
 
-  def init(%Instance{guild_id: guild_id, channel_id: channel_id}) do
+  def init(state) do
+    children = [
+      generate_manager_spec(state)
+    ]
+
+    options = [
+      strategy: :rest_for_one
+    ]
+
+    Supervisor.init(children, options)
+  end
+
+  defp generate_manager_spec(%Instance{guild_id: guild_id, channel_id: channel_id}) do
     udp_socket = Audio.get_udp_socket()
 
     manager_options = %Manager{
@@ -33,14 +56,8 @@ defmodule Coxir.Voice.Instance do
       channel_id: channel_id
     }
 
-    children = [
-      {Manager, manager_options}
-    ]
+    manager_spec = Manager.child_spec(manager_options)
 
-    options = [
-      strategy: :rest_for_one
-    ]
-
-    Supervisor.init(children, options)
+    %{manager_spec | id: :manager}
   end
 end
