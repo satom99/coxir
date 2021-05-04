@@ -15,7 +15,7 @@ Refer to the [documentation](https://satom99.github.io/coxir2) for more informat
   - **Limiter:** handles how rate limit buckets are stored
   - **Storage:** handles how entities are cached
   - **Sharder:** handles how shards are started
-  - **Player:** handles how audio is sent through voice
+  - **Player:** handles the audio sent through voice
 - Easy-to-use syntax for interacting with Discord entities
 
 ### Installation
