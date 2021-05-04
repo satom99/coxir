@@ -23,7 +23,7 @@ defmodule Coxir.Voice.Instance do
     :remote_port,
     :ssrc,
     :secret_key,
-    # Session-only
+    # Session-specific
     :gun_pid,
     :stream_ref,
     :heartbeat_ref,
