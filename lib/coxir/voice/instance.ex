@@ -63,10 +63,9 @@ defmodule Coxir.Voice.Instance do
   end
 
   defp generate_manager_spec(state) do
-    instance = self()
     udp_socket = Audio.get_udp_socket()
 
-    state = %{state | instance: instance, udp_socket: udp_socket}
+    state = %{state | instance: self(), udp_socket: udp_socket}
 
     manager_spec = Manager.child_spec(state)
 
