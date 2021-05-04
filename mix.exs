@@ -22,13 +22,13 @@ defmodule Coxir.MixProject do
 
   defp deps do
     [
-      {:ecto, "~> 3.6"},
-      {:idna, "~> 6.1"},
-      {:castore, "~> 0.1.9"},
-      {:jason, "~> 1.2"},
-      {:gun, "~> 1.3"},
-      {:tesla, "~> 1.4"},
-      {:gen_stage, "~> 1.1"},
+      {:ecto, ">= 3.0.0"},
+      {:jason, ">= 1.0.0"},
+      {:idna, ">= 6.0.0"},
+      {:castore, ">= 0.1.0"},
+      {:gun, ">= 1.3.0"},
+      {:tesla, ">= 1.3.0"},
+      {:gen_stage, ">= 0.14.0"},
       {:ex_doc, "~> 0.24.2", only: :dev}
     ]
   end
