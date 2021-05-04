@@ -54,6 +54,25 @@ defmodule Coxir.Channel do
     API.delete("channels/#{id}", options)
   end
 
+  def preload(
+        %Channel{recipients: [%User{} | _rest] = recipients} = channel,
+        :recipients,
+        options
+      ) do
+    recipients =
+      recipients
+      |> Stream.map(& &1.id)
+      |> Stream.map(&User.get(&1, options))
+      |> Stream.filter(& &1)
+      |> Enum.to_list()
+
+    %{channel | recipients: recipients}
+  end
+
+  def preload(channel, association, options) do
+    super(channel, association, options)
+  end
+
   @spec send_message(t, Enum.t(), Loader.options()) :: Loader.result()
   def send_message(%Channel{id: id}, params, options \\ []) do
     params
