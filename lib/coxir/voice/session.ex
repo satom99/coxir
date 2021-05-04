@@ -4,7 +4,7 @@ defmodule Coxir.Voice.Session do
   """
   use GenServer
 
-  alias Coxir.Voice.{Instance, Payload, Audio}
+  alias Coxir.Voice.{Instance, Payload, Audio, Manager}
   alias Coxir.Voice.Payload.{Hello, Ready, SessionDescription}
   alias Coxir.Voice.Payload.{Identify, SelectProtocol}
 
@@ -152,7 +152,10 @@ defmodule Coxir.Voice.Session do
 
     secret_key = :erlang.list_to_binary(secret_key)
 
-    state = %{state | secret_key: secret_key}
+    %Instance{manager: manager} = state = %{state | secret_key: secret_key}
+
+    Manager.update(manager, state)
+
     {:noreply, state}
   end
 
