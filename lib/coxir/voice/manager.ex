@@ -16,6 +16,10 @@ defmodule Coxir.Voice.Manager do
     :endpoint
   ]
 
+  def update(manager, struct) do
+    GenServer.call(manager, {:update, struct})
+  end
+
   def start_link(state) do
     GenServer.start_link(__MODULE__, state)
   end
