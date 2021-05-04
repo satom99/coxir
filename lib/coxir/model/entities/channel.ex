@@ -54,11 +54,7 @@ defmodule Coxir.Channel do
     API.delete("channels/#{id}", options)
   end
 
-  def preload(
-        %Channel{recipients: [%User{} | _rest] = recipients} = channel,
-        :recipients,
-        options
-      ) do
+  def preload(%Channel{recipients: recipients} = channel, :recipients, options) do
     recipients =
       recipients
       |> Stream.map(& &1.id)
