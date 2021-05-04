@@ -4,8 +4,8 @@ defmodule Coxir.Voice.Session do
   """
   use GenServer
 
-  alias Coxir.Voice.Payload
-  alias Coxir.Voice.Payload.{Hello, Identify}
+  alias Coxir.Voice.Payload.{Hello, Identify, Ready, SelectProtocol}
+  alias Coxir.Voice.{Payload, Audio}
   alias __MODULE__
 
   defstruct [
@@ -141,6 +141,25 @@ defmodule Coxir.Voice.Session do
 
     state = %{state | heartbeat_ref: heartbeat_ref, heartbeat_ack: true}
     {:noreply, state, @identify}
+  end
+
+  defp handle_payload(
+         %Payload{operation: :READY, data: data},
+         %Session{udp_socket: udp_socket} = state
+       ) do
+    %Ready{ssrc: ssrc, ip: remote_ip, port: remote_port} = Ready.cast(data)
+
+    {local_ip, local_port} = Audio.discover_local(udp_socket, remote_ip, remote_port, ssrc)
+
+    select_protocol = %SelectProtocol{
+      address: local_ip,
+      port: local_port,
+      mode: Audio.encryption_mode()
+    }
+
+    send_command(:SELECT_PROTOCOL, select_protocol, state)
+
+    {:noreply, state}
   end
 
   defp handle_payload(
