@@ -147,12 +147,15 @@ defmodule Coxir.Voice.Session do
     {:noreply, state}
   end
 
-  defp handle_payload(%Payload{operation: :SESSION_DESCRIPTION, data: data}, state) do
+  defp handle_payload(
+         %Payload{operation: :SESSION_DESCRIPTION, data: data},
+         %Instance{manager: manager} = state
+       ) do
     %SessionDescription{secret_key: secret_key} = SessionDescription.cast(data)
 
     secret_key = :erlang.list_to_binary(secret_key)
 
-    %Instance{manager: manager} = state = %{state | secret_key: secret_key}
+    state = %{state | secret_key: secret_key}
 
     Manager.update(manager, state)
 
