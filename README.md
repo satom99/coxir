@@ -11,7 +11,7 @@ Refer to the [documentation](https://satom99.github.io/coxir2) for more informat
 ### Features
 
 - Support for running multiple bots in a same application
-- Configurable adapters that alter how the library behaves:
+- Configurable adapters that change how the library behaves:
   - **Limiter:** handles how rate limit buckets are stored
   - **Storage:** handles how entities are cached
   - **Sharder:** handles how shards are started
