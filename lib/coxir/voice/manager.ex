@@ -13,6 +13,7 @@ defmodule Coxir.Voice.Manager do
 
   defstruct [
     :instance,
+    :udp_socket,
     :user_id,
     :guild_id,
     :channel_id,
@@ -58,6 +59,7 @@ defmodule Coxir.Voice.Manager do
   def handle_continue(:session, state) do
     %Manager{
       instance: instance,
+      udp_socket: udp_socket,
       user_id: user_id,
       guild_id: guild_id,
       channel_id: channel_id,
@@ -68,6 +70,7 @@ defmodule Coxir.Voice.Manager do
 
     session_options = %Session{
       manager: self(),
+      udp_socket: udp_socket,
       user_id: user_id,
       guild_id: guild_id,
       channel_id: channel_id,

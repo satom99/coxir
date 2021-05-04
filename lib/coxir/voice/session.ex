@@ -10,6 +10,7 @@ defmodule Coxir.Voice.Session do
 
   defstruct [
     :manager,
+    :udp_socket,
     :user_id,
     :guild_id,
     :channel_id,

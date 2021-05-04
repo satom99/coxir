@@ -6,7 +6,7 @@ defmodule Coxir.Voice.Instance do
 
   import Supervisor, only: [start_child: 2]
 
-  alias Coxir.Voice.{Manager, Session}
+  alias Coxir.Voice.{Audio, Manager, Session}
   alias __MODULE__
 
   defstruct [
@@ -24,8 +24,11 @@ defmodule Coxir.Voice.Instance do
   end
 
   def init(%Instance{guild_id: guild_id, channel_id: channel_id}) do
+    udp_socket = Audio.get_udp_socket()
+
     manager_options = %Manager{
       instance: self(),
+      udp_socket: udp_socket,
       guild_id: guild_id,
       channel_id: channel_id
     }
