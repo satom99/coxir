@@ -13,10 +13,9 @@ defmodule Coxir.Interaction do
     field(:version, :integer)
 
     embeds_one(:data, ApplicationCommandData)
-
-    embeds_one(:user, User)
     embeds_one(:member, Member)
 
+    belongs_to(:user, User)
     belongs_to(:channel, Channel)
     belongs_to(:guild, Guild)
   end
