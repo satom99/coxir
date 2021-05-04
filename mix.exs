@@ -53,7 +53,8 @@ defmodule Coxir.MixProject do
         Adapters: [
           ~r/^Coxir.Limiter.?/,
           ~r/^Coxir.Storage.?/,
-          ~r/^Coxir.Sharder.?/
+          ~r/^Coxir.Sharder.?/,
+          ~r/^Coxir.Player.?/
         ],
         Model: [
           ~r/^Coxir.Model.?/
