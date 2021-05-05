@@ -197,7 +197,7 @@ defmodule Coxir.Model.Loader do
 
     changeset =
       if Map.has_key?(params, param) do
-        struct = %{struct | association => nil}
+        struct = void_association(struct, association)
         changeset = %{changeset | data: struct}
 
         assoc = build_assoc(struct, association)
@@ -218,6 +218,16 @@ defmodule Coxir.Model.Loader do
 
   defp associator(changeset, []) do
     changeset
+  end
+
+  defp void_association(%model{} = struct, name) do
+    value =
+      case get_association(model, name) do
+        %{cardinality: :one} -> nil
+        %{cardinality: :many} -> []
+      end
+
+    Map.put(struct, name, value)
   end
 
   defp getter(model, key, %{storage: true} = options) do
