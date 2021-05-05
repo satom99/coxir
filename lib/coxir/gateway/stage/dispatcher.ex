@@ -96,9 +96,9 @@ defmodule Coxir.Gateway.Dispatcher do
   end
 
   defp handle_payload(%Payload{event: "GUILD_CREATE", data: object, user_id: user_id}) do
-    guild = Loader.load(Guild, object)
+    %Guild{voice_states: voice_states} = guild = Loader.load(Guild, object)
 
-    Enum.each(guild.voice_states, &handle_voice(&1, user_id))
+    Enum.each(voice_states, &handle_voice(&1, user_id))
 
     {:GUILD_CREATE, guild}
   end
