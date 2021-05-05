@@ -9,7 +9,7 @@ defmodule Coxir.Voice.Manager do
   alias Coxir.Voice.Instance
   alias Coxir.Voice
 
-  @start_session {:continue, :start_session}
+  @update_session {:continue, :update_session}
 
   def update(manager, struct) do
     GenServer.cast(manager, {:update, struct})
@@ -35,7 +35,7 @@ defmodule Coxir.Voice.Manager do
 
   defp handle_update(%VoiceState{channel_id: channel_id, session_id: session_id}, state) do
     state = %{state | channel_id: channel_id, session_id: session_id}
-    {:noreply, state, @start_session}
+    {:noreply, state, @update_session}
   end
 
   defp handle_update(%VoiceServerUpdate{token: token, endpoint: endpoint}, state) do
@@ -44,7 +44,7 @@ defmodule Coxir.Voice.Manager do
     endpoint_port = String.to_integer(port)
 
     state = %{state | token: token, endpoint_host: endpoint_host, endpoint_port: endpoint_port}
-    {:noreply, state, @start_session}
+    {:noreply, state, @update_session}
   end
 
   defp handle_update(
@@ -58,16 +58,23 @@ defmodule Coxir.Voice.Manager do
     {:noreply, state}
   end
 
-  def handle_continue(:start_session, %Instance{session_id: nil} = state) do
+  def handle_continue(:update_session, %Instance{session_id: nil} = state) do
     {:noreply, state}
   end
 
-  def handle_continue(:start_session, %Instance{token: nil} = state) do
+  def handle_continue(:update_session, %Instance{token: nil} = state) do
     {:noreply, state}
   end
 
-  def handle_continue(:start_session, %Instance{instance: instance} = state) do
-    Instance.start_session(instance, state)
+  def handle_continue(:update_session, %Instance{instance: instance, session: nil} = state) do
+    {:ok, session} = Instance.start_session(instance, state)
+    state = %{state | session: session}
     {:noreply, state}
+  end
+
+  def handle_continue(:update_session, %Instance{instance: instance} = state) do
+    Instance.stop_session(instance)
+    state = %{state | session: nil}
+    {:noreply, state, @update_session}
   end
 end
