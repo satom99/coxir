@@ -9,13 +9,12 @@ defmodule Coxir.Voice.Instance do
   alias Coxir.Voice.{Audio, Manager, Session}
 
   defstruct [
-    :player_spec,
-    :instance,
-    :manager,
-    :udp_socket,
     :user_id,
     :guild_id,
     :channel_id,
+    :instance,
+    :manager,
+    :udp_socket,
     :session_id,
     :endpoint,
     :token,
