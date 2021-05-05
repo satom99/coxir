@@ -28,11 +28,6 @@ defmodule Coxir.Voice.Manager do
     handle_update(struct, state)
   end
 
-  defp handle_update(%VoiceState{user_id: user_id, guild_id: guild_id, channel_id: nil}, state) do
-    Voice.stop(user_id, guild_id)
-    {:noreply, state}
-  end
-
   defp handle_update(%VoiceState{channel_id: channel_id, session_id: session_id}, state) do
     state = %{state | channel_id: channel_id, session_id: session_id}
     {:noreply, state, @update_session}
