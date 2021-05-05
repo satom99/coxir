@@ -181,7 +181,7 @@ defmodule Coxir.Voice.Session do
     payload = %Payload{operation: operation, data: data}
     command = Payload.to_command(payload)
     binary = Jason.encode!(command)
-    message = {:binary, binary}
+    message = {:text, binary}
 
     :ok = :gun.ws_send(gun_pid, message)
   end
