@@ -24,6 +24,7 @@ defmodule Coxir.Gateway.Payload do
     :data,
     :sequence,
     :event,
+    :user_id,
     :session
   ]
 
@@ -41,9 +42,17 @@ defmodule Coxir.Gateway.Payload do
     end
   end
 
-  def cast(%{"op" => opcode, "d" => data, "s" => sequence, "t" => event}) do
+  def cast(%{"op" => opcode, "d" => data, "s" => sequence, "t" => event}, user_id, session) do
     operation = Map.fetch!(@operations, opcode)
-    %Payload{operation: operation, data: data, sequence: sequence, event: event, session: self()}
+
+    %Payload{
+      operation: operation,
+      data: data,
+      sequence: sequence,
+      event: event,
+      user_id: user_id,
+      session: session
+    }
   end
 
   def to_command(%Payload{operation: operation, data: data}) do

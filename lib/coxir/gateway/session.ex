@@ -164,11 +164,14 @@ defmodule Coxir.Gateway.Session do
     {:noreply, state, @reconnect}
   end
 
-  defp handle_frame({:binary, frame}, %Session{zlib_context: zlib_context} = state) do
+  defp handle_frame(
+         {:binary, frame},
+         %Session{zlib_context: zlib_context, user_id: user_id} = state
+       ) do
     zlib_context
     |> :zlib.inflate(frame)
     |> Jason.decode!()
-    |> Payload.cast()
+    |> Payload.cast(user_id, self())
     |> handle_payload(state)
   end
 
