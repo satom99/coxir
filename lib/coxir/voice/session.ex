@@ -107,7 +107,7 @@ defmodule Coxir.Voice.Session do
     {:noreply, state, @reconnect}
   end
 
-  defp handle_frame({:binary, frame}, state) do
+  defp handle_frame({:text, frame}, state) do
     frame
     |> Jason.decode!()
     |> Payload.cast()
