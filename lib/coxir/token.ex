@@ -6,15 +6,15 @@ defmodule Coxir.Token do
 
   @type t :: String.t()
 
-  @spec get_snowflake(t) :: Snowflake.t()
-  def get_snowflake(token) do
-    {:ok, snowflake} =
+  @spec get_user_id(t) :: Snowflake.t()
+  def get_user_id(token) do
+    {:ok, user_id} =
       token
       |> String.split(".")
       |> List.first()
       |> Base.decode64!()
       |> Snowflake.cast()
 
-    snowflake
+    user_id
   end
 end

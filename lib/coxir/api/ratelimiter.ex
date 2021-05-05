@@ -69,10 +69,10 @@ defmodule Coxir.API.RateLimiter do
   end
 
   defp get_bucket(%{method: method, url: url} = request) do
-    snowflake =
+    user_id =
       request
       |> get_token()
-      |> Token.get_snowflake()
+      |> Token.get_user_id()
 
     bucket =
       case Regex.run(@regex, url) do
@@ -87,6 +87,6 @@ defmodule Coxir.API.RateLimiter do
           url
       end
 
-    "#{snowflake}:#{bucket}"
+    "#{user_id}:#{bucket}"
   end
 end
