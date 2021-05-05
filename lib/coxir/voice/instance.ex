@@ -32,6 +32,7 @@ defmodule Coxir.Voice.Instance do
 
   def stop_session(instance) do
     Supervisor.terminate_child(instance, :session)
+    Supervisor.delete_child(instance, :session)
   end
 
   def start_session(instance, state) do
