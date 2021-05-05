@@ -11,6 +11,7 @@ defmodule Coxir.Voice do
   alias Coxir.{Guild, Channel, VoiceState}
   alias __MODULE__
 
+  @spec join(Channel.t(), keyword) :: :ok
   def join(%Channel{id: channel_id, guild_id: guild_id} = channel, options) do
     gateway = Keyword.fetch!(options, :as)
     session = Gateway.get_shard(gateway, channel)
@@ -26,6 +27,7 @@ defmodule Coxir.Voice do
     Session.update_voice_state(session, update_voice_state)
   end
 
+  @spec leave(Guild.t() | Channel.t(), keyword) :: :ok
   def leave(%Guild{id: guild_id}, options) do
     channel = %Channel{guild_id: guild_id}
     leave(channel, options)
