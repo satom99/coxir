@@ -7,7 +7,6 @@ defmodule Coxir.Voice.Manager do
   alias Coxir.VoiceState
   alias Coxir.Gateway.Payload.VoiceServerUpdate
   alias Coxir.Voice.Instance
-  alias Coxir.Voice
 
   @update_session {:continue, :update_session}
 
