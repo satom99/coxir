@@ -69,7 +69,7 @@ defmodule Coxir.Gateway do
     Session.update_presence(shard, payload)
   end
 
-  @spec get_shard(gateway, Guild.t() | Channel.t() | non_neg_integer) :: pid
+  @spec get_shard(gateway, Guild.t() | Channel.t() | non_neg_integer) :: Session.session()
   def get_shard(gateway, %Guild{id: id}) do
     shard_count = get_shard_count(gateway)
     index = rem(id >>> 22, shard_count)
