@@ -4,11 +4,26 @@ defmodule Coxir.Voice do
   """
   use Supervisor
 
-  alias Coxir.{Channel, Gateway}
+  alias Coxir.Gateway
   alias Coxir.Gateway.Session
   alias Coxir.Gateway.Payload.UpdateVoiceState
   alias Coxir.Voice.{Instance, Manager}
+  alias Coxir.{Guild, Channel}
   alias __MODULE__
+
+  def leave(%Guild{id: guild_id}, options) do
+    channel = %Channel{guild_id: guild_id}
+    leave(channel, options)
+  end
+
+  def leave(%Channel{guild_id: guild_id} = channel, options) do
+    gateway = Keyword.fetch!(options, :as)
+    session = Gateway.get_shard(gateway, channel)
+
+    update_voice_state = %UpdateVoiceState{guild_id: guild_id, channel_id: nil}
+
+    Session.update_voice_state(session, update_voice_state)
+  end
 
   def join(%Channel{id: channel_id, guild_id: guild_id} = channel, options) do
     gateway = Keyword.fetch!(options, :as)
