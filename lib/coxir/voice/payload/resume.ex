@@ -6,7 +6,7 @@ defmodule Coxir.Voice.Payload.Resume do
 
   embedded_schema do
     field(:server_id, Snowflake)
-    field(:session_id, Snowflake)
+    field(:session_id, :string)
     field(:token, :string)
   end
 end

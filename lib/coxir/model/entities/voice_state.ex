@@ -7,7 +7,7 @@ defmodule Coxir.VoiceState do
   @primary_key false
 
   embedded_schema do
-    field(:session_id, Snowflake)
+    field(:session_id, :string)
     field(:deaf, :boolean)
     field(:mute, :boolean)
     field(:self_deaf, :boolean)
