@@ -9,7 +9,7 @@ defmodule Coxir.Gateway.Dispatcher do
 
   alias Coxir.Model.Loader
   alias Coxir.{Channel, Message, Interaction}
-  alias Coxir.{Guild, Role}
+  alias Coxir.{User, Guild, Role}
   alias Coxir.{Member, Presence, VoiceState}
 
   @type event ::
@@ -35,6 +35,7 @@ defmodule Coxir.Gateway.Dispatcher do
           | {:MESSAGE_UPDATE, Message.t()}
           | {:MESSAGE_DELETE, Message.t()}
           | {:PRESENCE_UPDATE, Presence.t()}
+          | {:USER_UPDATE, User.t()}
           | {:VOICE_STATE_UPDATE, VoiceState.t()}
           | {:VOICE_SERVER_UPDATE, VoiceServerUpdate.t()}
           | {:PAYLOAD, Payload.t()}
@@ -178,6 +179,11 @@ defmodule Coxir.Gateway.Dispatcher do
   defp handle_payload(%Payload{event: "PRESENCE_UPDATE", data: object}) do
     presence = Loader.load(Presence, object)
     {:PRESENCE_UPDATE, presence}
+  end
+
+  defp handle_payload(%Payload{event: "USER_UPDATE", data: object}) do
+    user = Loader.load(User, object)
+    {:USER_UPDATE, user}
   end
 
   defp handle_payload(%Payload{event: "VOICE_STATE_UPDATE", data: object}) do
