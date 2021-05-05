@@ -139,9 +139,11 @@ defmodule Coxir.Voice.Session do
     {local_ip, local_port} = Audio.discover_local(udp_socket, remote_ip, remote_port, ssrc)
 
     select_protocol = %SelectProtocol{
-      address: local_ip,
-      port: local_port,
-      mode: Audio.encryption_mode()
+      data: %SelectProtocol.Data{
+        address: local_ip,
+        port: local_port,
+        mode: Audio.encryption_mode()
+      }
     }
 
     send_command(:SELECT_PROTOCOL, select_protocol, state)
