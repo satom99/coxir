@@ -7,6 +7,7 @@ defmodule Coxir.Voice.Manager do
   alias Coxir.VoiceState
   alias Coxir.Gateway.Payload.VoiceServerUpdate
   alias Coxir.Voice.Instance
+  alias Coxir.Voice
 
   @start_session {:continue, :start_session}
 
@@ -25,6 +26,11 @@ defmodule Coxir.Voice.Manager do
 
   def handle_cast({:update, struct}, state) do
     handle_update(struct, state)
+  end
+
+  defp handle_update(%VoiceState{channel_id: nil}, state) do
+    Voice.stop(state)
+    {:noreply, state}
   end
 
   defp handle_update(%VoiceState{channel_id: channel_id, session_id: session_id}, state) do
