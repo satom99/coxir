@@ -17,6 +17,8 @@ defmodule Coxir.Gateway do
     intents: :non_privileged
   ]
 
+  @type gateway :: pid
+
   defmacro __using__(_options) do
     quote location: :keep do
       @behaviour Coxir.Gateway.Handler
@@ -48,7 +50,7 @@ defmodule Coxir.Gateway do
     end
   end
 
-  @spec update_presence(pid, Enum.t()) :: :ok
+  @spec update_presence(gateway, Enum.t()) :: :ok
   def update_presence(gateway, params) do
     shard_count = get_shard_count(gateway)
 
@@ -59,7 +61,7 @@ defmodule Coxir.Gateway do
     :ok
   end
 
-  @spec update_presence(pid, Guild.t() | Channel.t() | non_neg_integer, Enum.t()) :: :ok
+  @spec update_presence(gateway, Guild.t() | Channel.t() | non_neg_integer, Enum.t()) :: :ok
   def update_presence(gateway, where, params) do
     shard = get_shard(gateway, where)
     params = Map.new(params)
@@ -67,7 +69,7 @@ defmodule Coxir.Gateway do
     Session.update_presence(shard, payload)
   end
 
-  @spec get_shard(pid, Guild.t() | Channel.t() | non_neg_integer) :: pid
+  @spec get_shard(gateway, Guild.t() | Channel.t() | non_neg_integer) :: pid
   def get_shard(gateway, %Guild{id: id}) do
     shard_count = get_shard_count(gateway)
     index = rem(id >>> 22, shard_count)
@@ -88,13 +90,13 @@ defmodule Coxir.Gateway do
     sharder_module.get_shard(sharder, index)
   end
 
-  @spec get_user_id(pid) :: Snowflake.t()
+  @spec get_user_id(gateway) :: Snowflake.t()
   def get_user_id(gateway) do
     %Session{user_id: user_id} = get_session_options(gateway)
     user_id
   end
 
-  @spec get_token(pid) :: Token.t()
+  @spec get_token(gateway) :: Token.t()
   def get_token(gateway) do
     %Session{token: token} = get_session_options(gateway)
     token
