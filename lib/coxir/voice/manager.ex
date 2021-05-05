@@ -11,7 +11,7 @@ defmodule Coxir.Voice.Manager do
   @start_session {:continue, :start_session}
 
   def update(manager, struct) do
-    GenServer.call(manager, {:update, struct})
+    GenServer.cast(manager, {:update, struct})
   end
 
   def start_link(state) do
@@ -23,7 +23,7 @@ defmodule Coxir.Voice.Manager do
     {:ok, state}
   end
 
-  def handle_call({:update, struct}, _from, state) do
+  def handle_cast({:update, struct}, state) do
     handle_update(struct, state)
   end
 
