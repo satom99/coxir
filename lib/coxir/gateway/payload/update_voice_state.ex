@@ -8,7 +8,7 @@ defmodule Coxir.Gateway.Payload.UpdateVoiceState do
     field(:self_mute, :boolean)
     field(:self_deaf, :boolean)
 
-    belongs_to(:guild, Guild)
-    belongs_to(:channel, Channel)
+    field(:guild_id, Snowflake)
+    field(:channel_id, Snowflake)
   end
 end
