@@ -4,11 +4,9 @@ defmodule Coxir.Voice do
   """
   use Supervisor
 
-  import Supervisor, only: [start_child: 2]
-
+  alias Coxir.{Channel, Gateway}
   alias Coxir.Gateway.Session
   alias Coxir.Gateway.Payload.UpdateVoiceState
-  alias Coxir.{Gateway, Channel}
   alias Coxir.Voice.{Instance, Manager}
   alias __MODULE__
 
@@ -27,14 +25,13 @@ defmodule Coxir.Voice do
     Session.update_voice_state(session, update_voice_state)
   end
 
-  def update_instance(user_id, guild_id, struct) do
+  def update(user_id, guild_id, struct) do
     user_id
     |> get_instance(guild_id)
     |> Instance.get_manager()
     |> Manager.update(struct)
   end
 
-  @spec start_link(any) :: :ignore | {:error, any} | {:ok, pid}
   def start_link(state) do
     Supervisor.start_link(__MODULE__, state, name: Voice)
   end
@@ -46,17 +43,18 @@ defmodule Coxir.Voice do
   defp get_instance(user_id, guild_id) do
     spec = generate_instance_spec(user_id, guild_id)
 
-    case start_child(Voice, spec) do
+    case Supervisor.start_child(Voice, spec) do
       {:ok, instance} ->
         instance
+
       {:error, {:already_started, instance}} ->
         instance
     end
   end
 
   defp generate_instance_spec(user_id, guild_id) do
-    options = %Instance{user_id: user_id, guild_id: guild_id}
-    spec = Instance.child_spec(options)
+    state = %Instance{user_id: user_id, guild_id: guild_id}
+    spec = Instance.child_spec(state)
     %{spec | id: {user_id, guild_id}}
   end
 end
