@@ -17,6 +17,7 @@ defmodule Coxir.Voice.Instance do
     :endpoint_host,
     :endpoint_port,
     :token,
+    :session,
     :remote_ip,
     :remote_port,
     :ssrc,
@@ -29,8 +30,13 @@ defmodule Coxir.Voice.Instance do
     :heartbeat_ack
   ]
 
+  def stop_session(instance) do
+    Supervisor.terminate_child(instance, :session)
+  end
+
   def start_session(instance, state) do
-    Supervisor.start_child(instance, {Session, state})
+    session_spec = generate_session_spec(state)
+    Supervisor.start_child(instance, session_spec)
   end
 
   def get_manager(instance) do
@@ -58,6 +64,11 @@ defmodule Coxir.Voice.Instance do
     ]
 
     Supervisor.init(children, options)
+  end
+
+  defp generate_session_spec(state) do
+    spec = Session.child_spec(state)
+    %{spec | id: :session}
   end
 
   defp generate_manager_spec(state) do
