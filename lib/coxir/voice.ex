@@ -32,7 +32,7 @@ defmodule Coxir.Voice do
     |> Manager.update(struct)
   end
 
-  def stop(%Instance{user_id: user_id, guild_id: guild_id}) do
+  def stop(user_id, guild_id) do
     Supervisor.terminate_child(Voice, {user_id, guild_id})
   end
 
