@@ -41,9 +41,9 @@ defmodule Coxir.Voice do
   end
 
   defp get_instance(user_id, guild_id) do
-    spec = generate_instance_spec(user_id, guild_id)
+    instance_spec = generate_instance_spec(user_id, guild_id)
 
-    case Supervisor.start_child(Voice, spec) do
+    case Supervisor.start_child(Voice, instance_spec) do
       {:ok, instance} ->
         instance
 
