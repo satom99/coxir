@@ -130,11 +130,10 @@ defmodule Coxir.Voice.Session do
     {:noreply, state, @identify}
   end
 
-  defp handle_payload(
-         %Payload{operation: :READY, data: data},
-         %Instance{udp_socket: udp_socket} = state
-       ) do
+  defp handle_payload(%Payload{operation: :READY, data: data}, state) do
     %Ready{ssrc: ssrc, ip: remote_ip, port: remote_port} = Ready.cast(data)
+
+    udp_socket = Audio.get_udp_socket()
 
     {local_ip, local_port} = Audio.discover_local(udp_socket, remote_ip, remote_port, ssrc)
 
@@ -148,7 +147,14 @@ defmodule Coxir.Voice.Session do
 
     send_command(:SELECT_PROTOCOL, select_protocol, state)
 
-    state = %{state | remote_ip: remote_ip, remote_port: remote_port, ssrc: ssrc}
+    state = %{
+      state
+      | udp_socket: udp_socket,
+        remote_ip: remote_ip,
+        remote_port: remote_port,
+        ssrc: ssrc
+    }
+
     {:noreply, state}
   end
 
