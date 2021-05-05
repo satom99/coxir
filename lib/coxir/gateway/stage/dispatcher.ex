@@ -11,6 +11,7 @@ defmodule Coxir.Gateway.Dispatcher do
   alias Coxir.{Channel, Message, Interaction}
   alias Coxir.{User, Guild, Role}
   alias Coxir.{Member, Presence, VoiceState}
+  alias Coxir.Voice
 
   @type event ::
           {:READY, Ready.t()}
@@ -94,8 +95,11 @@ defmodule Coxir.Gateway.Dispatcher do
     {:THREAD_DELETE, channel}
   end
 
-  defp handle_payload(%Payload{event: "GUILD_CREATE", data: object}) do
+  defp handle_payload(%Payload{event: "GUILD_CREATE", data: object, user_id: user_id}) do
     guild = Loader.load(Guild, object)
+
+    Enum.each(guild.voice_states, &handle_voice(&1, user_id))
+
     {:GUILD_CREATE, guild}
   end
 
@@ -186,22 +190,39 @@ defmodule Coxir.Gateway.Dispatcher do
     {:USER_UPDATE, user}
   end
 
-  defp handle_payload(%Payload{event: "VOICE_STATE_UPDATE", data: object}) do
+  defp handle_payload(%Payload{event: "VOICE_STATE_UPDATE", data: object, user_id: user_id}) do
     voice_state = Loader.load(VoiceState, object)
 
     if is_nil(voice_state.channel_id) do
       Loader.unload(voice_state)
     end
 
+    handle_voice(voice_state, user_id)
+
     {:VOICE_STATE_UPDATE, voice_state}
   end
 
-  defp handle_payload(%Payload{event: "VOICE_SERVER_UPDATE", data: object}) do
+  defp handle_payload(%Payload{event: "VOICE_SERVER_UPDATE", data: object, user_id: user_id}) do
     voice_server_update = VoiceServerUpdate.cast(object)
+
+    handle_voice(voice_server_update, user_id)
+
     {:VOICE_SERVER_UPDATE, voice_server_update}
   end
 
   defp handle_payload(%Payload{} = payload) do
     {:PAYLOAD, payload}
+  end
+
+  defp handle_voice(%VoiceState{user_id: user_id, guild_id: guild_id} = voice_state, user_id) do
+    Voice.update_instance(user_id, guild_id, voice_state)
+  end
+
+  defp handle_voice(%VoiceServerUpdate{guild_id: guild_id} = voice_server_update, user_id) do
+    Voice.update_instance(user_id, guild_id, voice_server_update)
+  end
+
+  defp handle_voice(_struct, _user_id) do
+    :noop
   end
 end
