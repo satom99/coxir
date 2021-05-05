@@ -11,10 +11,10 @@ defmodule Coxir.Voice.Instance do
   defstruct [
     :user_id,
     :guild_id,
-    :channel_id,
     :instance,
     :manager,
     :udp_socket,
+    :channel_id,
     :session_id,
     :endpoint,
     :token,
