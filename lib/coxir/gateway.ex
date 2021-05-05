@@ -9,6 +9,7 @@ defmodule Coxir.Gateway do
   alias Coxir.Gateway.{Producer, Dispatcher, Consumer}
   alias Coxir.Gateway.{Intents, Session}
   alias Coxir.Gateway.Payload.UpdatePresence
+  alias Coxir.Model.Snowflake
   alias Coxir.{Guild, Channel}
 
   @default_config [
@@ -85,6 +86,12 @@ defmodule Coxir.Gateway do
   def get_shard(gateway, index) when is_integer(index) do
     {sharder, sharder_module} = get_sharder(gateway)
     sharder_module.get_shard(sharder, index)
+  end
+
+  @spec get_user_id(pid) :: Snowflake.t()
+  def get_user_id(gateway) do
+    %Session{user_id: user_id} = get_session_options(gateway)
+    user_id
   end
 
   @spec get_token(pid) :: Token.t()
