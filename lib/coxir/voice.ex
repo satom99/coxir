@@ -8,7 +8,7 @@ defmodule Coxir.Voice do
   alias Coxir.Gateway.Session
   alias Coxir.Gateway.Payload.UpdateVoiceState
   alias Coxir.Voice.{Instance, Manager}
-  alias Coxir.{Guild, Channel}
+  alias Coxir.{Guild, Channel, VoiceState}
   alias __MODULE__
 
   def leave(%Guild{id: guild_id}, options) do
@@ -40,16 +40,16 @@ defmodule Coxir.Voice do
     Session.update_voice_state(session, update_voice_state)
   end
 
+  def update(user_id, guild_id, %VoiceState{channel_id: nil}) do
+    Supervisor.terminate_child(Voice, {user_id, guild_id})
+    Supervisor.delete_child(Voice, {user_id, guild_id})
+  end
+
   def update(user_id, guild_id, struct) do
     user_id
     |> get_instance(guild_id)
     |> Instance.get_manager()
     |> Manager.update(struct)
-  end
-
-  def stop(user_id, guild_id) do
-    Supervisor.terminate_child(Voice, {user_id, guild_id})
-    Supervisor.delete_child(Voice, {user_id, guild_id})
   end
 
   def start_link(state) do
