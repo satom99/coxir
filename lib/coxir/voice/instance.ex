@@ -65,8 +65,8 @@ defmodule Coxir.Voice.Instance do
 
     state = %{state | instance: self(), udp_socket: udp_socket}
 
-    manager_spec = Manager.child_spec(state)
+    spec = Manager.child_spec(state)
 
-    %{manager_spec | id: :manager}
+    %{spec | id: :manager}
   end
 end
