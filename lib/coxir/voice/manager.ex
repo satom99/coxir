@@ -42,10 +42,10 @@ defmodule Coxir.Voice.Manager do
   end
 
   defp handle_update(
-         %Instance{session_id: session_id} = new_state,
-         %Instance{session_id: session_id} = _state
+         %Instance{session_id: session_id} = _new_state,
+         %Instance{session_id: session_id} = state
        ) do
-    {:noreply, new_state}
+    {:noreply, state}
   end
 
   defp handle_update(%Instance{} = _obsolete, state) do
