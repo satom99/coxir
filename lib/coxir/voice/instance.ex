@@ -4,8 +4,6 @@ defmodule Coxir.Voice.Instance do
   """
   use Supervisor
 
-  import Supervisor, only: [start_child: 2]
-
   alias Coxir.Voice.{Audio, Manager, Session}
 
   defstruct [
@@ -31,6 +29,10 @@ defmodule Coxir.Voice.Instance do
     :heartbeat_ack
   ]
 
+  def start_session(instance, state) do
+    Supervisor.start_child(instance, {Session, state})
+  end
+
   def get_manager(instance) do
     children = Supervisor.which_children(instance)
 
@@ -40,11 +42,6 @@ defmodule Coxir.Voice.Instance do
         if id == :manager, do: pid
       end
     )
-  end
-
-  def start_session(instance, options) do
-    spec = {Session, options}
-    start_child(instance, spec)
   end
 
   def start_link(state) do
