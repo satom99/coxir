@@ -12,6 +12,7 @@ defmodule Coxir.Gateway.Session do
   defstruct [
     :shard,
     :token,
+    :user_id,
     :intents,
     :producer,
     :gateway_host,

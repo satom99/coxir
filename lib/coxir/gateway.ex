@@ -157,6 +157,7 @@ defmodule Coxir.Gateway do
 
     session_options = %Session{
       token: token,
+      user_id: Token.get_user_id(token),
       intents: intents,
       producer: producer,
       gateway_host: gateway_host
