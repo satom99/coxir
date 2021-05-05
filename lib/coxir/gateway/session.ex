@@ -34,10 +34,6 @@ defmodule Coxir.Gateway.Session do
   @reconnect {:continue, :reconnect}
   @identify {:continue, :identify}
 
-  def get_user_id(session) do
-    GenServer.call(session, :get_user_id)
-  end
-
   def update_presence(session, %UpdatePresence{} = payload) do
     GenServer.call(session, {:send_command, :PRESENCE_UPDATE, payload})
   end
@@ -99,10 +95,6 @@ defmodule Coxir.Gateway.Session do
     send_command(:RESUME, resume, state)
 
     {:noreply, state}
-  end
-
-  def handle_call(:get_user_id, _from, %Session{user_id: user_id} = state) do
-    {:reply, user_id, state}
   end
 
   def handle_call({:send_command, operation, data}, _from, state) do
