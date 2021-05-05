@@ -30,6 +30,8 @@ defmodule Coxir.Voice.Payload do
     quote location: :keep do
       use Coxir.Model, storable?: false
 
+      @primary_key false
+
       @derive Jason.Encoder
 
       def cast(object) do
