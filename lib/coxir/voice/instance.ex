@@ -4,20 +4,20 @@ defmodule Coxir.Voice.Instance do
   """
   use Supervisor
 
-  alias Coxir.Voice.{Audio, Manager, Session}
+  alias Coxir.Voice.{Manager, Session}
 
   defstruct [
     :user_id,
     :guild_id,
     :instance,
     :manager,
-    :udp_socket,
     :channel_id,
     :session_id,
     :endpoint_host,
     :endpoint_port,
     :token,
     :session,
+    :udp_socket,
     :remote_ip,
     :remote_port,
     :ssrc,
@@ -73,9 +73,7 @@ defmodule Coxir.Voice.Instance do
   end
 
   defp generate_manager_spec(state) do
-    udp_socket = Audio.get_udp_socket()
-
-    state = %{state | instance: self(), udp_socket: udp_socket}
+    state = %{state | instance: self()}
 
     spec = Manager.child_spec(state)
 
