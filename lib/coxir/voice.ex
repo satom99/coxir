@@ -49,6 +49,7 @@ defmodule Coxir.Voice do
 
   def stop(user_id, guild_id) do
     Supervisor.terminate_child(Voice, {user_id, guild_id})
+    Supervisor.delete_child(Voice, {user_id, guild_id})
   end
 
   def start_link(state) do
