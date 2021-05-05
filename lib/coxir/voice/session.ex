@@ -22,8 +22,11 @@ defmodule Coxir.Voice.Session do
     {:ok, state, @connect}
   end
 
-  def handle_continue(:connect, %Instance{endpoint: endpoint} = state) do
-    {:ok, gun_pid} = :gun.open(endpoint, 443, %{protocols: [:http]})
+  def handle_continue(
+        :connect,
+        %Instance{endpoint_host: endpoint_host, endpoint_port: endpoint_port} = state
+      ) do
+    {:ok, gun_pid} = :gun.open(endpoint_host, endpoint_port, %{protocols: [:http]})
     state = %{state | gun_pid: gun_pid}
     {:noreply, state}
   end

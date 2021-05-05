@@ -33,7 +33,11 @@ defmodule Coxir.Voice.Manager do
   end
 
   defp handle_update(%VoiceServerUpdate{token: token, endpoint: endpoint}, state) do
-    state = %{state | token: token, endpoint: endpoint}
+    [host, port] = String.split(endpoint, ":")
+    endpoint_host = :binary.bin_to_list(host)
+    endpoint_port = String.to_integer(port)
+
+    state = %{state | token: token, endpoint_host: endpoint_host, endpoint_port: endpoint_port}
     {:noreply, state, @start_session}
   end
 
