@@ -34,6 +34,8 @@ defmodule Coxir.Gateway.Session do
   @reconnect {:continue, :reconnect}
   @identify {:continue, :identify}
 
+  @type session :: pid
+
   def update_presence(session, %UpdatePresence{} = payload) do
     GenServer.call(session, {:send_command, :PRESENCE_UPDATE, payload})
   end
