@@ -27,8 +27,8 @@ defmodule Coxir.Voice.Manager do
     handle_update(struct, state)
   end
 
-  defp handle_update(%VoiceState{session_id: session_id}, state) do
-    state = %{state | session_id: session_id}
+  defp handle_update(%VoiceState{channel_id: channel_id, session_id: session_id}, state) do
+    state = %{state | channel_id: channel_id, session_id: session_id}
     {:noreply, state, @start_session}
   end
 
