@@ -4,15 +4,41 @@ defmodule Coxir.Voice.Session do
   """
   use GenServer
 
-  alias Coxir.Voice.{Instance, Payload, Audio, Manager}
   alias Coxir.Voice.Payload.{Hello, Ready, SessionDescription}
-  alias Coxir.Voice.Payload.{Identify, SelectProtocol}
+  alias Coxir.Voice.Payload.{Identify, Resume, SelectProtocol}
+  alias Coxir.Voice.{Payload, Audio, Instance}
+  alias __MODULE__
+
+  defstruct [
+    :instance,
+    :user_id,
+    :guild_id,
+    :session_id,
+    :endpoint_host,
+    :endpoint_port,
+    :token,
+    :gun_pid,
+    :stream_ref,
+    :heartbeat_ref,
+    :heartbeat_nonce,
+    :heartbeat_ack,
+    {:been_ready?, false},
+    :udp_socket,
+    :audio_ip,
+    :audio_port,
+    :ssrc,
+    :secret_key
+  ]
 
   @query "/?v=4"
+
+  @close_session [4006, 4009]
+  @close_stop [4011, 4014]
 
   @connect {:continue, :connect}
   @reconnect {:continue, :reconnect}
   @identify {:continue, :identify}
+  @update_instance {:continue, :update_instance}
 
   def start_link(state) do
     GenServer.start_link(__MODULE__, state)
@@ -24,7 +50,7 @@ defmodule Coxir.Voice.Session do
 
   def handle_continue(
         :connect,
-        %Instance{endpoint_host: endpoint_host, endpoint_port: endpoint_port} = state
+        %Session{endpoint_host: endpoint_host, endpoint_port: endpoint_port} = state
       ) do
     {:ok, gun_pid} = :gun.open(endpoint_host, endpoint_port, %{protocols: [:http]})
     state = %{state | gun_pid: gun_pid}
@@ -33,7 +59,7 @@ defmodule Coxir.Voice.Session do
 
   def handle_continue(
         :reconnect,
-        %Instance{gun_pid: gun_pid, heartbeat_ref: heartbeat_ref} = state
+        %Session{gun_pid: gun_pid, heartbeat_ref: heartbeat_ref} = state
       ) do
     :ok = :gun.close(gun_pid)
     :timer.cancel(heartbeat_ref)
@@ -43,22 +69,42 @@ defmodule Coxir.Voice.Session do
 
   def handle_continue(
         :identify,
-        %Instance{user_id: user_id, guild_id: guild_id, session_id: session_id, token: token} =
-          state
+        %Session{
+          user_id: user_id,
+          guild_id: guild_id,
+          session_id: session_id,
+          token: token,
+          been_ready?: been_ready?
+        } = state
       ) do
-    identify = %Identify{
-      user_id: user_id,
-      server_id: guild_id,
-      session_id: session_id,
-      token: token
-    }
+    if not been_ready? do
+      identify = %Identify{
+        user_id: user_id,
+        server_id: guild_id,
+        session_id: session_id,
+        token: token
+      }
 
-    send_command(:IDENTIFY, identify, state)
+      send_command(:IDENTIFY, identify, state)
+    else
+      resume = %Resume{
+        server_id: guild_id,
+        session_id: session_id,
+        token: token
+      }
+
+      send_command(:RESUME, resume, state)
+    end
 
     {:noreply, state}
   end
 
-  def handle_info({:gun_up, gun_pid, :http}, %Instance{gun_pid: gun_pid} = state) do
+  def handle_continue(:update_instance, %Session{instance: instance} = state) do
+    Instance.ready(instance, state)
+    {:noreply, state}
+  end
+
+  def handle_info({:gun_up, gun_pid, :http}, %Session{gun_pid: gun_pid} = state) do
     stream_ref = :gun.ws_upgrade(gun_pid, @query)
     state = %{state | stream_ref: stream_ref}
     {:noreply, state}
@@ -66,47 +112,47 @@ defmodule Coxir.Voice.Session do
 
   def handle_info(
         {:gun_upgrade, gun_pid, stream_ref, ["websocket"], _headers},
-        %Instance{gun_pid: gun_pid, stream_ref: stream_ref} = state
+        %Session{gun_pid: gun_pid, stream_ref: stream_ref} = state
       ) do
     {:noreply, state}
   end
 
   def handle_info(
         {:gun_ws, gun_pid, stream_ref, frame},
-        %Instance{gun_pid: gun_pid, stream_ref: stream_ref} = state
+        %Session{gun_pid: gun_pid, stream_ref: stream_ref} = state
       ) do
     handle_frame(frame, state)
   end
 
   def handle_info(
         {:gun_response, gun_pid, stream_ref, _is_fin, _status, _headers},
-        %Instance{gun_pid: gun_pid, stream_ref: stream_ref} = state
+        %Session{gun_pid: gun_pid, stream_ref: stream_ref} = state
       ) do
     {:noreply, state, @reconnect}
   end
 
   def handle_info(
         {:gun_error, gun_pid, stream_ref, _reason},
-        %Instance{gun_pid: gun_pid, stream_ref: stream_ref} = state
+        %Session{gun_pid: gun_pid, stream_ref: stream_ref} = state
       ) do
     {:noreply, state, @reconnect}
   end
 
   def handle_info(
         {:gun_down, gun_pid, _protocol, _reason, _killed, _unprocessed},
-        %Instance{gun_pid: gun_pid} = state
+        %Session{gun_pid: gun_pid} = state
       ) do
     {:noreply, state, @reconnect}
   end
 
-  def handle_info(:heartbeat, %Instance{heartbeat_ack: true} = state) do
+  def handle_info(:heartbeat, %Session{heartbeat_ack: true} = state) do
     heartbeat_nonce = System.unique_integer()
     send_command(:HEARTBEAT, heartbeat_nonce, state)
     state = %{state | heartbeat_nonce: heartbeat_nonce, heartbeat_ack: false}
     {:noreply, state}
   end
 
-  def handle_info(:heartbeat, %Instance{heartbeat_ack: false} = state) do
+  def handle_info(:heartbeat, %Session{heartbeat_ack: false} = state) do
     {:noreply, state, @reconnect}
   end
 
@@ -117,6 +163,18 @@ defmodule Coxir.Voice.Session do
     |> handle_payload(state)
   end
 
+  defp handle_frame({:close, status, _reason}, %Session{instance: instance} = state)
+       when status in @close_session do
+    Instance.invalidate(instance)
+    {:noreply, state}
+  end
+
+  defp handle_frame({:close, status, _reason}, %Session{instance: instance} = state)
+       when status in @close_stop do
+    Instance.stop(instance)
+    {:stop, :normal, state}
+  end
+
   defp handle_frame({:close, _status, _reason}, state) do
     {:noreply, state, @reconnect}
   end
@@ -124,7 +182,9 @@ defmodule Coxir.Voice.Session do
   defp handle_payload(%Payload{operation: :HELLO, data: data}, state) do
     %Hello{heartbeat_interval: heartbeat_interval} = Hello.cast(data)
 
-    heartbeat_ref = :timer.send_interval(heartbeat_interval, self(), :heartbeat)
+    heartbeat_interval = trunc(heartbeat_interval)
+
+    {:ok, heartbeat_ref} = :timer.send_interval(heartbeat_interval, self(), :heartbeat)
 
     state = %{state | heartbeat_ref: heartbeat_ref, heartbeat_ack: true}
     {:noreply, state, @identify}
@@ -149,33 +209,31 @@ defmodule Coxir.Voice.Session do
 
     state = %{
       state
-      | udp_socket: udp_socket,
-        remote_ip: remote_ip,
-        remote_port: remote_port,
+      | been_ready?: true,
+        udp_socket: udp_socket,
+        audio_ip: remote_ip,
+        audio_port: remote_port,
         ssrc: ssrc
     }
 
     {:noreply, state}
   end
 
-  defp handle_payload(
-         %Payload{operation: :SESSION_DESCRIPTION, data: data},
-         %Instance{manager: manager} = state
-       ) do
+  defp handle_payload(%Payload{operation: :SESSION_DESCRIPTION, data: data}, state) do
     %SessionDescription{secret_key: secret_key} = SessionDescription.cast(data)
-
     secret_key = :erlang.list_to_binary(secret_key)
 
     state = %{state | secret_key: secret_key}
+    {:noreply, state, @update_instance}
+  end
 
-    Manager.update(manager, state)
-
-    {:noreply, state}
+  defp handle_payload(%Payload{operation: :RESUMED}, state) do
+    {:noreply, state, @update_instance}
   end
 
   defp handle_payload(
          %Payload{operation: :HEARTBEAT_ACK, data: nonce},
-         %Instance{heartbeat_nonce: nonce} = state
+         %Session{heartbeat_nonce: nonce} = state
        ) do
     state = %{state | heartbeat_ack: true}
     {:noreply, state}
@@ -185,11 +243,11 @@ defmodule Coxir.Voice.Session do
     {:noreply, state}
   end
 
-  defp send_command(operation, data, %Instance{gun_pid: gun_pid}) do
+  defp send_command(operation, data, %Session{gun_pid: gun_pid}) do
     payload = %Payload{operation: operation, data: data}
     command = Payload.to_command(payload)
-    binary = Jason.encode!(command)
-    message = {:text, binary}
+    encoded = Jason.encode!(command)
+    message = {:text, encoded}
 
     :ok = :gun.ws_send(gun_pid, message)
   end

@@ -95,10 +95,10 @@ defmodule Coxir.Gateway.Dispatcher do
     {:THREAD_DELETE, channel}
   end
 
-  defp handle_payload(%Payload{event: "GUILD_CREATE", data: object, user_id: user_id}) do
+  defp handle_payload(%Payload{event: "GUILD_CREATE", data: object} = payload) do
     %Guild{voice_states: voice_states} = guild = Loader.load(Guild, object)
 
-    Enum.each(voice_states, &handle_voice(&1, user_id))
+    Enum.each(voice_states, &handle_voice(&1, payload))
 
     {:GUILD_CREATE, guild}
   end
@@ -190,22 +190,22 @@ defmodule Coxir.Gateway.Dispatcher do
     {:USER_UPDATE, user}
   end
 
-  defp handle_payload(%Payload{event: "VOICE_STATE_UPDATE", data: object, user_id: user_id}) do
+  defp handle_payload(%Payload{event: "VOICE_STATE_UPDATE", data: object} = payload) do
     voice_state = Loader.load(VoiceState, object)
 
     if is_nil(voice_state.channel_id) do
       Loader.unload(voice_state)
     end
 
-    handle_voice(voice_state, user_id)
+    handle_voice(voice_state, payload)
 
     {:VOICE_STATE_UPDATE, voice_state}
   end
 
-  defp handle_payload(%Payload{event: "VOICE_SERVER_UPDATE", data: object, user_id: user_id}) do
+  defp handle_payload(%Payload{event: "VOICE_SERVER_UPDATE", data: object} = payload) do
     voice_server_update = VoiceServerUpdate.cast(object)
 
-    handle_voice(voice_server_update, user_id)
+    handle_voice(voice_server_update, payload)
 
     {:VOICE_SERVER_UPDATE, voice_server_update}
   end
@@ -214,15 +214,22 @@ defmodule Coxir.Gateway.Dispatcher do
     {:PAYLOAD, payload}
   end
 
-  defp handle_voice(%VoiceState{user_id: user_id, guild_id: guild_id} = voice_state, user_id) do
-    Voice.update(user_id, guild_id, voice_state)
+  defp handle_voice(
+         %VoiceState{user_id: user_id, guild_id: guild_id} = voice_state,
+         %Payload{gateway: gateway, user_id: user_id}
+       ) do
+    Voice.update(user_id, guild_id, voice_state, gateway)
   end
 
-  defp handle_voice(%VoiceServerUpdate{guild_id: guild_id} = voice_server_update, user_id) do
-    Voice.update(user_id, guild_id, voice_server_update)
+  defp handle_voice(
+         %VoiceServerUpdate{guild_id: guild_id} = voice_server_update,
+         %Payload{gateway: gateway, user_id: user_id}
+       ) do
+    Voice.update(user_id, guild_id, voice_server_update, gateway)
   end
 
-  defp handle_voice(_struct, _user_id) do
+  defp handle_voice(struct, payload) do
+    IO.inspect({struct, payload}, label: "NOT HANDLING")
     :noop
   end
 end

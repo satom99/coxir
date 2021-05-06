@@ -7,7 +7,7 @@ defmodule Coxir.Voice do
   alias Coxir.Gateway
   alias Coxir.Gateway.Session
   alias Coxir.Gateway.Payload.UpdateVoiceState
-  alias Coxir.Voice.{Instance, Manager}
+  alias Coxir.Voice.Instance
   alias Coxir.{Guild, Channel, VoiceState}
   alias __MODULE__
 
@@ -43,15 +43,14 @@ defmodule Coxir.Voice do
     Session.update_voice_state(session, update_voice_state)
   end
 
-  def update(user_id, guild_id, %VoiceState{channel_id: nil}) do
+  def update(user_id, guild_id, %VoiceState{channel_id: nil}, _gateway) do
     stop_instance(user_id, guild_id)
   end
 
-  def update(user_id, guild_id, struct) do
+  def update(user_id, guild_id, struct, gateway) do
     user_id
     |> get_instance(guild_id)
-    |> Instance.get_manager()
-    |> Manager.update(struct)
+    |> Instance.update(struct, gateway)
   end
 
   def start_link(state) do
@@ -60,11 +59,6 @@ defmodule Coxir.Voice do
 
   def init(_state) do
     Supervisor.init([], strategy: :one_for_one)
-  end
-
-  defp stop_instance(user_id, guild_id) do
-    Supervisor.terminate_child(Voice, {user_id, guild_id})
-    Supervisor.delete_child(Voice, {user_id, guild_id})
   end
 
   defp get_instance(user_id, guild_id) do
@@ -76,7 +70,16 @@ defmodule Coxir.Voice do
 
       {:error, {:already_started, instance}} ->
         instance
+
+      {:error, :already_present} ->
+        stop_instance(user_id, guild_id)
+        get_instance(user_id, guild_id)
     end
+  end
+
+  defp stop_instance(user_id, guild_id) do
+    Supervisor.terminate_child(Voice, {user_id, guild_id})
+    Supervisor.delete_child(Voice, {user_id, guild_id})
   end
 
   defp generate_instance_spec(user_id, guild_id) do
