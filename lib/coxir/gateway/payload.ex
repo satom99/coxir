@@ -25,7 +25,7 @@ defmodule Coxir.Gateway.Payload do
     :sequence,
     :event,
     :user_id,
-    :session
+    :gateway
   ]
 
   @type t :: %Payload{}
@@ -44,7 +44,7 @@ defmodule Coxir.Gateway.Payload do
     end
   end
 
-  def cast(%{"op" => opcode, "d" => data, "s" => sequence, "t" => event}, user_id, session) do
+  def cast(%{"op" => opcode, "d" => data, "s" => sequence, "t" => event}, user_id, gateway) do
     operation = Map.fetch!(@operations, opcode)
 
     %Payload{
@@ -53,7 +53,7 @@ defmodule Coxir.Gateway.Payload do
       sequence: sequence,
       event: event,
       user_id: user_id,
-      session: session
+      gateway: gateway
     }
   end
 

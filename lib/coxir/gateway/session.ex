@@ -10,12 +10,13 @@ defmodule Coxir.Gateway.Session do
   alias __MODULE__
 
   defstruct [
-    :shard,
-    :token,
+    :gateway,
     :user_id,
+    :token,
     :intents,
     :producer,
     :gateway_host,
+    :shard,
     :gun_pid,
     :stream_ref,
     :zlib_context,
@@ -168,12 +169,12 @@ defmodule Coxir.Gateway.Session do
 
   defp handle_frame(
          {:binary, frame},
-         %Session{zlib_context: zlib_context, user_id: user_id} = state
+         %Session{zlib_context: zlib_context, gateway: gateway, user_id: user_id} = state
        ) do
     zlib_context
     |> :zlib.inflate(frame)
     |> Jason.decode!()
-    |> Payload.cast(user_id, self())
+    |> Payload.cast(gateway, user_id)
     |> handle_payload(state)
   end
 

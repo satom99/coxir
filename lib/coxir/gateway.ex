@@ -169,8 +169,9 @@ defmodule Coxir.Gateway do
     {gateway_host, shard_count} = request_gateway_info(token)
 
     session_options = %Session{
-      token: token,
+      gateway: self(),
       user_id: Token.get_user_id(token),
+      token: token,
       intents: intents,
       producer: producer,
       gateway_host: gateway_host
