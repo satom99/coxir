@@ -194,7 +194,7 @@ defmodule Coxir.Gateway.Session do
   defp handle_payload(%Payload{operation: :HELLO, data: data}, state) do
     %Hello{heartbeat_interval: heartbeat_interval} = Hello.cast(data)
 
-    heartbeat_ref = :timer.send_interval(heartbeat_interval, self(), :heartbeat)
+    {:ok, heartbeat_ref} = :timer.send_interval(heartbeat_interval, self(), :heartbeat)
 
     state = %{state | heartbeat_ref: heartbeat_ref, heartbeat_ack: true}
     {:noreply, state, @identify}
