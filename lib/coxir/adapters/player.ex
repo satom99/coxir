@@ -2,13 +2,7 @@ defmodule Coxir.Player do
   @moduledoc """
   Work in progress.
   """
-  defstruct [
-    :udp_socket,
-    :remote_ip,
-    :remote_port
-  ]
-
-  @type t :: %__MODULE__{}
+  alias Coxir.Voice.Audio
 
   @type player :: GenServer.server()
 
@@ -16,7 +10,9 @@ defmodule Coxir.Player do
 
   @callback child_spec(term) :: Supervisor.child_spec()
 
-  @callback update(player, t) :: :ok
+  @callback ready(player, Audio.t()) :: :ok
+
+  @callback invalidate(player) :: :ok
 
   @callback play(player, playable) :: :ok
 
