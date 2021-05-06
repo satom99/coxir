@@ -5,6 +5,6 @@ defmodule Coxir.Voice.Payload.Hello do
   use Coxir.Voice.Payload
 
   embedded_schema do
-    field(:heartbeat_interval, :integer)
+    field(:heartbeat_interval, :float)
   end
 end
