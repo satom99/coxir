@@ -10,11 +10,11 @@ defmodule Coxir.Player do
 
   @type t :: %__MODULE__{}
 
-  @type player :: pid | GenServer.name()
+  @type player :: GenServer.server()
 
   @type playable :: term
 
-  @callback child_spec(term) :: GenServer.child_spec()
+  @callback child_spec(term) :: Supervisor.child_spec()
 
   @callback update(player, t) :: :ok
 

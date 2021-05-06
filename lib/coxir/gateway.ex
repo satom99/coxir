@@ -17,7 +17,7 @@ defmodule Coxir.Gateway do
     intents: :non_privileged
   ]
 
-  @type gateway :: pid | Supervisor.name()
+  @type gateway :: Supervisor.supervisor()
 
   defmacro __using__(_options) do
     quote location: :keep do
