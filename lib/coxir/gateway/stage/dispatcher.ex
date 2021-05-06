@@ -228,8 +228,7 @@ defmodule Coxir.Gateway.Dispatcher do
     Voice.update(user_id, guild_id, voice_server_update, gateway)
   end
 
-  defp handle_voice(struct, payload) do
-    IO.inspect({struct, payload}, label: "NOT HANDLING")
+  defp handle_voice(_struct, _payload) do
     :noop
   end
 end
