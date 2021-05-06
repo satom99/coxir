@@ -12,7 +12,7 @@ defmodule Coxir.Player do
 
   @type player :: pid | GenServer.name()
 
-  @type playable :: any
+  @type playable :: term
 
   @callback child_spec(term) :: GenServer.child_spec()
 
