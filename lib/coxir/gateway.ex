@@ -80,7 +80,7 @@ defmodule Coxir.Gateway do
     get_shard(gateway, index)
   end
 
-  def get_shard(gateway, %Channel{type: 1}) do
+  def get_shard(gateway, %Channel{guild_id: nil}) do
     get_shard(gateway, 0)
   end
 
