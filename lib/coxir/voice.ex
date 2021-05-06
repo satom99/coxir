@@ -23,7 +23,6 @@ defmodule Coxir.Voice do
       |> Map.new()
 
     update_voice_state = UpdateVoiceState.cast(params)
-
     Session.update_voice_state(session, update_voice_state)
   end
 
@@ -36,15 +35,16 @@ defmodule Coxir.Voice do
   def leave(%Channel{guild_id: guild_id} = channel, options) do
     gateway = Keyword.fetch!(options, :as)
     session = Gateway.get_shard(gateway, channel)
+    user_id = Gateway.get_user_id(gateway)
+
+    stop_instance(user_id, guild_id)
 
     update_voice_state = %UpdateVoiceState{guild_id: guild_id, channel_id: nil}
-
     Session.update_voice_state(session, update_voice_state)
   end
 
   def update(user_id, guild_id, %VoiceState{channel_id: nil}) do
-    Supervisor.terminate_child(Voice, {user_id, guild_id})
-    Supervisor.delete_child(Voice, {user_id, guild_id})
+    stop_instance(user_id, guild_id)
   end
 
   def update(user_id, guild_id, struct) do
@@ -60,6 +60,11 @@ defmodule Coxir.Voice do
 
   def init(_state) do
     Supervisor.init([], strategy: :one_for_one)
+  end
+
+  defp stop_instance(user_id, guild_id) do
+    Supervisor.terminate_child(Voice, {user_id, guild_id})
+    Supervisor.delete_child(Voice, {user_id, guild_id})
   end
 
   defp get_instance(user_id, guild_id) do
