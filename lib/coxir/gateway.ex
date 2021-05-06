@@ -40,6 +40,10 @@ defmodule Coxir.Gateway do
         }
       end
 
+      def get_user_id do
+        Gateway.get_user_id(__MODULE__)
+      end
+
       def update_presence(params) do
         Gateway.update_presence(__MODULE__, params)
       end
