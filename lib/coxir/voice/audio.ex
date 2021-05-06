@@ -4,6 +4,14 @@ defmodule Coxir.Voice.Audio do
   """
   @encryption_mode "xsalsa20_poly1305"
 
+  defstruct [
+    :udp_socket,
+    :ip,
+    :port,
+    :ssrc,
+    :secret_key
+  ]
+
   def encryption_mode do
     @encryption_mode
   end
