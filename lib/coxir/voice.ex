@@ -43,11 +43,11 @@ defmodule Coxir.Voice do
     Session.update_voice_state(session, update_voice_state)
   end
 
-  def update(user_id, guild_id, %VoiceState{channel_id: nil}, _gateway) do
+  def update(_gateway, user_id, guild_id, %VoiceState{channel_id: nil}) do
     stop_instance(user_id, guild_id)
   end
 
-  def update(user_id, guild_id, struct, gateway) do
+  def update(gateway, user_id, guild_id, struct) do
     user_id
     |> get_instance(guild_id)
     |> Instance.update(struct, gateway)

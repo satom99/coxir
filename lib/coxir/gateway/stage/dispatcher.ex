@@ -218,14 +218,14 @@ defmodule Coxir.Gateway.Dispatcher do
          %VoiceState{user_id: user_id, guild_id: guild_id} = voice_state,
          %Payload{gateway: gateway, user_id: user_id}
        ) do
-    Voice.update(user_id, guild_id, voice_state, gateway)
+    Voice.update(gateway, user_id, guild_id, voice_state)
   end
 
   defp handle_voice(
          %VoiceServerUpdate{guild_id: guild_id} = voice_server_update,
          %Payload{gateway: gateway, user_id: user_id}
        ) do
-    Voice.update(user_id, guild_id, voice_server_update, gateway)
+    Voice.update(gateway, user_id, guild_id, voice_server_update)
   end
 
   defp handle_voice(_struct, _payload) do
