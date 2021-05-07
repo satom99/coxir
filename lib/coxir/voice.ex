@@ -18,8 +18,10 @@ defmodule Coxir.Voice do
     user_id = Gateway.get_user_id(gateway)
 
     instance = ensure_instance(user_id, guild_id)
+    has_endpoint? = Instance.has_endpoint?(instance)
+    same_channel? = Instance.get_channel_id(instance) == channel_id
 
-    if Instance.get_channel_id(instance) != channel_id do
+    if not has_endpoint? or not same_channel? do
       update_voice_state(gateway, guild_id, channel_id, options)
     end
 

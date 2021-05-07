@@ -67,10 +67,12 @@ defmodule Coxir.Voice.Instance do
   end
 
   def handle_continue(:update_session, %Instance{session_id: nil} = state) do
+    IO.inspect "nil session_id"
     {:noreply, state}
   end
 
   def handle_continue(:update_session, %Instance{endpoint_host: nil} = state) do
+    IO.inspect "nil endpoint_host"
     {:noreply, state}
   end
 
@@ -233,6 +235,8 @@ defmodule Coxir.Voice.Instance do
       ssrc: ssrc,
       secret_key: secret_key
     }
+
+    IO.inspect(audio, label: "GOT AUDIO")
 
     state = %{state | audio: audio}
     state = update_player(state)
