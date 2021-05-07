@@ -12,56 +12,31 @@ defmodule Coxir.Voice do
   alias Coxir.Player
   alias __MODULE__
 
-  @spec resume(Channel.t(), keyword) :: term
-  def resume(%Channel{id: channel_id, guild_id: guild_id}, as: gateway) do
-    user_id = Gateway.get_user_id(gateway)
-    instance = get_instance(user_id, guild_id)
-
-    cond do
-      is_nil(instance) ->
-        {:error, :not_started}
-      Instance.get_channel_id(instance) != channel_id ->
-        {:error, :wrong_channel}
-      true ->
-        Instance.resume(instance)
-    end
-  end
-
-  @spec pause(Channel.t(), keyword) :: term
-  def pause(%Channel{id: channel_id, guild_id: guild_id}, as: gateway) do
-    user_id = Gateway.get_user_id(gateway)
-    instance = get_instance(user_id, guild_id)
-
-    cond do
-      is_nil(instance) ->
-        {:error, :not_started}
-      Instance.get_channel_id(instance) != channel_id ->
-        {:error, :wrong_channel}
-      true ->
-        Instance.pause(instance)
-    end
-  end
-
-  @spec play(Channel.t(), Player.playable(), keyword) :: term
-  def play(%Channel{guild_id: guild_id} = channel, playable, options) do
+  @spec join(Channel.t(), keyword) :: pid
+  def join(%Channel{id: channel_id, guild_id: guild_id}, options) do
     gateway = Keyword.fetch!(options, :as)
     user_id = Gateway.get_user_id(gateway)
 
-    instance =
-      with nil <- get_instance(user_id, guild_id) do
-        join(channel, options)
-        ensure_instance(user_id, guild_id)
-      end
+    with nil <- get_instance(user_id, guild_id) do
+      update_voice_state(gateway, guild_id, channel_id, options)
+      ensure_instance(user_id, guild_id)
+    end
+  end
 
+  @spec play(Instance.instance(), Player.playable(), keyword) :: term
+  def play(instance, playable, options) do
     player_module = Keyword.get(options, :player, Player.Default)
-
     Instance.play(instance, player_module, playable)
   end
 
-  @spec join(Channel.t(), keyword) :: :ok
-  def join(%Channel{id: channel_id, guild_id: guild_id}, options) do
-    gateway = Keyword.fetch!(options, :as)
-    update_voice_state(gateway, guild_id, channel_id, options)
+  @spec pause(Instance.instance()) :: term
+  def pause(instance) do
+    Instance.pause(instance)
+  end
+
+  @spec resume(Instance.instance()) :: term
+  def resume(instance) do
+    Instance.resume(instance)
   end
 
   @spec leave(Guild.t() | Channel.t(), keyword) :: :ok
