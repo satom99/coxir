@@ -4,11 +4,23 @@ defmodule Coxir.Player.Default do
   """
   use GenServer
 
-  def ready(_player, _audio) do
-    :ok
+  def resume(_player) do
+    :noop
+  end
+
+  def pause(_player) do
+    :noop
+  end
+
+  def play(_player, _playable) do
+    :noop
   end
 
   def invalidate(_player) do
+    :ok
+  end
+
+  def ready(_player, _audio) do
     :ok
   end
 
