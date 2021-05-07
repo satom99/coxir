@@ -6,6 +6,8 @@ defmodule Example.MixProject do
       app: :example,
       version: "0.1.0",
       elixir: "~> 1.11",
+      deps_path: "../deps",
+      build_path: "../_build",
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
