@@ -7,10 +7,11 @@ defmodule Coxir.Voice.Instance do
   alias Coxir.VoiceState
   alias Coxir.Gateway.Payload.VoiceServerUpdate
   alias Coxir.Voice.{Session, Audio}
+  alias Coxir.Voice
   alias __MODULE__
 
   defstruct [
-    {:player_module, Coxir.Player.Default},
+    :player_module,
     :player,
     :gateway,
     :user_id,
@@ -21,31 +22,29 @@ defmodule Coxir.Voice.Instance do
     :endpoint_port,
     :token,
     :session,
-    :audio_struct
+    :audio
   ]
 
-  @start_player {:continue, :start_player}
-  @start_session {:continue, :start_session}
-  @ready_player {:continue, :ready_player}
+  @update_session {:continue, :update_session}
 
-  def stop(instance) do
-    GenServer.cast(instance, :stop)
+  def resume(instance) do
+    GenServer.call(instance, :resume)
   end
 
-  def invalidate(instance) do
-    GenServer.cast(instance, :invalidate)
+  def pause(instance) do
+    GenServer.call(instance, :pause)
   end
 
-  def play(instance, playable) do
-    GenServer.call(instance, {:play, playable})
+  def play(instance, player_module, playable) do
+    GenServer.call(instance, {:play, player_module, playable})
   end
 
-  def ready(instance, session_state) do
-    GenServer.cast(instance, {:ready, session_state})
+  def update(instance, struct) do
+    GenServer.cast(instance, {:update, struct})
   end
 
-  def update(instance, struct, gateway) do
-    GenServer.cast(instance, {:update, struct, gateway})
+  def update(instance, gateway, struct) do
+    GenServer.cast(instance, {:update, gateway, struct})
   end
 
   def start_link(state) do
@@ -54,33 +53,28 @@ defmodule Coxir.Voice.Instance do
 
   def init(state) do
     Process.flag(:trap_exit, true)
-    {:ok, state, @start_player}
+    {:ok, state}
   end
 
-  def handle_continue(:start_player, %Instance{player_module: player_module} = state) do
-    %{start: {module, function, args}} = player_module.child_spec([])
-    {:ok, player} = apply(module, function, args)
+  def handle_continue(:update_session, %Instance{session: nil} = state) do
+    %Instance{
+      user_id: user_id,
+      guild_id: guild_id,
+      session_id: session_id,
+      endpoint_host: endpoint_host,
+      endpoint_port: endpoint_port,
+      token: token
+    } = state
 
-    state = %{state | player: player}
-    {:noreply, state}
-  end
-
-  def handle_continue(:start_session, %Instance{session_id: nil} = state) do
-    {:noreply, state}
-  end
-
-  def handle_continue(:start_session, %Instance{endpoint_host: nil} = state) do
-    {:noreply, state}
-  end
-
-  def handle_continue(:start_session, %Instance{session: nil} = state) do
-    values =
-      state
-      |> Map.from_struct()
-      |> Keyword.new()
-      |> Keyword.put(:instance, self())
-
-    session_state = struct(Session, values)
+    session_state = %Session{
+      instance: self(),
+      user_id: user_id,
+      guild_id: guild_id,
+      session_id: session_id,
+      endpoint_host: endpoint_host,
+      endpoint_port: endpoint_port,
+      token: token
+    }
 
     {:ok, session} = Session.start_link(session_state)
 
@@ -88,67 +82,93 @@ defmodule Coxir.Voice.Instance do
     {:noreply, state}
   end
 
-  def handle_continue(:start_session, %Instance{session: session} = state) do
-    Process.exit(session, :killed)
-    handle_cast(:invalidate, state)
-
-    state = %{state | session: nil}
-    {:noreply, state, @start_session}
-  end
-
-  def handle_continue(
-        :ready_player,
-        %Instance{player_module: player_module, player: player, audio_struct: audio_struct} =
-          state
-      ) do
-    player_module.ready(player, audio_struct)
+  def handle_continue(:update_session, %Instance{session: session} = state) do
+    Process.exit(session, :restart)
     {:noreply, state}
   end
 
   def handle_call(
-        {:play, playable},
-        _from,
-        %Instance{player_module: player_module, player: player} = state
+        {:play, player_module, playable},
+        %Instance{player_module: player_module} = state
       ) do
+    %{player: player} = state = update_player(state)
+
     result = player_module.play(player, playable)
+
     {:reply, result, state}
   end
 
-  def handle_cast(:stop, state) do
-    {:stop, :normal, state}
+  def handle_call(:resume, %Instance{player: nil} = state) do
+    {:reply, :no_player, state}
   end
 
-  def handle_cast(:invalidate, %Instance{player_module: player_module, player: player} = state) do
-    player_module.invalidate(player)
-    {:noreply, state}
+  def handle_call(:resume, %Instance{player_module: player_module, player: player} = state) do
+    result = player_module.resume(player)
+    {:reply, result, state}
   end
 
-  def handle_cast({:ready, session_state}, state) do
-    handle_update(session_state, state)
+  def handle_call(:pause, %Instance{player: nil} = state) do
+    {:reply, :no_player, state}
   end
 
-  def handle_cast({:update, struct, gateway}, state) do
+  def handle_call(:pause, %Instance{player_module: player_module, player: player} = state) do
+    result = player_module.pause(player)
+    {:reply, result, state}
+  end
+
+  def handle_call({:play, player_module, _playable} = call, %Instance{player_module: nil} = state) do
+    state = %{state | player_module: player_module}
+    handle_call(call, state)
+  end
+
+  def handle_call({:play, _player_module, _playable} = call, %Instance{player: player} = state) do
+    Process.exit(player, :kill)
+    state = %{state | player_module: nil, player: nil}
+    handle_call(call, state)
+  end
+
+  def handle_cast({:update, struct}, state) do
+    handle_update(struct, state)
+  end
+
+  def handle_cast({:update, gateway, struct}, state) do
     state = %{state | gateway: gateway}
     handle_update(struct, state)
   end
 
-  def handle_info({:EXIT, player, _reason}, %Instance{player: player} = state) do
-    {:noreply, state} = handle_continue(:start_player, state)
-    {:noreply, state, @ready_player}
+  def handle_info({:EXIT, session, :invalid}, %Instance{session: session} = state) do
+    state = %{state | session: nil, audio: nil}
+    state = update_player(state)
+
+    %Instance{gateway: gateway, guild_id: guild_id, channel_id: channel_id} = state
+    Voice.update_voice_state(gateway, guild_id, channel_id)
+
+    {:noreply, state}
   end
 
-  def handle_info({:EXIT, session, reason}, %Instance{session: session} = state)
-      when reason not in [:normal, :killed] do
-    {:noreply, state, @start_session}
+  def handle_info({:EXIT, session, :restart}, %Instance{session: session} = state) do
+    state = %{state | session: nil, audio: nil}
+    state = update_player(state)
+    {:noreply, state, @update_session}
   end
 
-  def handle_info(_message, state) do
+  def handle_info({:EXIT, session, :stop}, %Instance{session: session} = state) do
+    {:stop, :normal, state}
+  end
+
+  def handle_info({:EXIT, player, :killed}, %Instance{player: player} = state) do
+    state = %{state | player: nil}
+    state = update_player(state)
+    {:noreply, state}
+  end
+
+  def handle_info({:EXIT, _pid, _reason}, state) do
     {:noreply, state}
   end
 
   defp handle_update(%VoiceState{channel_id: channel_id, session_id: session_id}, state) do
     state = %{state | channel_id: channel_id, session_id: session_id}
-    {:noreply, state, @start_session}
+    {:noreply, state, @update_session}
   end
 
   defp handle_update(%VoiceServerUpdate{endpoint: endpoint, token: token}, state) do
@@ -157,19 +177,18 @@ defmodule Coxir.Voice.Instance do
     endpoint_port = String.to_integer(port)
 
     state = %{state | endpoint_host: endpoint_host, endpoint_port: endpoint_port, token: token}
-    {:noreply, state, @start_session}
+    {:noreply, state, @update_session}
   end
 
-  defp handle_update(
-         %Session{
-           udp_socket: udp_socket,
-           audio_ip: audio_ip,
-           audio_port: audio_port,
-           ssrc: ssrc,
-           secret_key: secret_key
-         },
-         state
-       ) do
+  defp handle_update(%Session{} = session_state, state) do
+    %Session{
+      udp_socket: udp_socket,
+      audio_ip: audio_ip,
+      audio_port: audio_port,
+      ssrc: ssrc,
+      secret_key: secret_key
+    } = session_state
+
     audio = %Audio{
       udp_socket: udp_socket,
       ip: audio_ip,
@@ -178,7 +197,41 @@ defmodule Coxir.Voice.Instance do
       secret_key: secret_key
     }
 
-    state = %{state | audio_struct: audio}
-    {:noreply, state, @ready_player}
+    state = %{state | audio: audio}
+    state = update_player(state)
+    {:noreply, state}
+  end
+
+  defp update_player(%Instance{player_module: nil} = state) do
+    state
+  end
+
+  defp update_player(%Instance{player_module: player_module, audio: nil} = state) do
+    %{player: player} = state = ensure_player(state)
+
+    player_module.invalidate(player)
+
+    state
+  end
+
+  defp update_player(%Instance{player_module: player_module, audio: audio} = state) do
+    %{player: player} = state = ensure_player(state)
+
+    player_module.ready(player, audio)
+
+    state
+  end
+
+  defp ensure_player(%Instance{player_module: player_module, player: nil} = state) do
+    %{start: start_mfa} = player_module.child_spec([])
+    {module, function, arguments} = start_mfa
+
+    {:ok, player} = apply(module, function, arguments)
+
+    %{state | player: player}
+  end
+
+  defp ensure_player(state) do
+    state
   end
 end

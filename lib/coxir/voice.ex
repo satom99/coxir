@@ -23,7 +23,9 @@ defmodule Coxir.Voice do
         ensure_instance(user_id, guild_id)
       end
 
-    Instance.play(instance, playable)
+    player_module = Keyword.get(options, :player, Player.Default)
+
+    Instance.play(instance, player_module, playable)
   end
 
   @spec join(Channel.t(), keyword) :: :ok
@@ -68,11 +70,11 @@ defmodule Coxir.Voice do
   def update(gateway, user_id, guild_id, struct) do
     user_id
     |> ensure_instance(guild_id)
-    |> Instance.update(struct, gateway)
+    |> Instance.update(gateway, struct)
   end
 
-  def start_link do
-    Supervisor.start_link(__MODULE__, nil, name: Voice)
+  def start_link(state) do
+    Supervisor.start_link(__MODULE__, state, name: Voice)
   end
 
   def init(_state) do

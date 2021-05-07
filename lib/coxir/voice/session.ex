@@ -100,7 +100,7 @@ defmodule Coxir.Voice.Session do
   end
 
   def handle_continue(:update_instance, %Session{instance: instance} = state) do
-    Instance.ready(instance, state)
+    Instance.update(instance, state)
     {:noreply, state}
   end
 
@@ -163,16 +163,12 @@ defmodule Coxir.Voice.Session do
     |> handle_payload(state)
   end
 
-  defp handle_frame({:close, status, _reason}, %Session{instance: instance} = state)
-       when status in @close_session do
-    Instance.invalidate(instance)
-    {:noreply, state}
+  defp handle_frame({:close, status, _reason}, state) when status in @close_session do
+    {:stop, :invalid, state}
   end
 
-  defp handle_frame({:close, status, _reason}, %Session{instance: instance} = state)
-       when status in @close_stop do
-    Instance.stop(instance)
-    {:stop, :normal, state}
+  defp handle_frame({:close, status, _reason}, state) when status in @close_stop do
+    {:stop, :stop, state}
   end
 
   defp handle_frame({:close, _status, _reason}, state) do
