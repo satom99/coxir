@@ -12,7 +12,7 @@ defmodule Coxir.Voice do
   alias Coxir.Player
   alias __MODULE__
 
-  @spec join(Channel.t(), keyword) :: pid
+  @spec join(Channel.t(), keyword) :: Instance.instance()
   def join(%Channel{id: channel_id, guild_id: guild_id}, options) do
     gateway = Keyword.fetch!(options, :as)
     user_id = Gateway.get_user_id(gateway)
