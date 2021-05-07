@@ -27,20 +27,20 @@ defmodule Coxir.Voice.Instance do
 
   @update_session {:continue, :update_session}
 
-  def resume(instance) do
-    GenServer.call(instance, :resume)
-  end
-
-  def pause(instance) do
-    GenServer.call(instance, :pause)
+  def get_channel_id(instance) do
+    GenServer.call(instance, :get_channel_id)
   end
 
   def play(instance, player_module, playable) do
     GenServer.call(instance, {:play, player_module, playable})
   end
 
-  def get_channel_id(instance) do
-    GenServer.call(instance, :get_channel_id)
+  def pause(instance) do
+    GenServer.call(instance, :pause)
+  end
+
+  def resume(instance) do
+    GenServer.call(instance, :resume)
   end
 
   def update(instance, struct) do
@@ -99,22 +99,8 @@ defmodule Coxir.Voice.Instance do
     {:noreply, state}
   end
 
-  def handle_call(:resume, _from, %Instance{player: nil} = state) do
-    {:reply, :no_player, state}
-  end
-
-  def handle_call(:resume, _from, %Instance{player_module: player_module, player: player} = state) do
-    result = player_module.resume(player)
-    {:reply, result, state}
-  end
-
-  def handle_call(:pause, _from, %Instance{player: nil} = state) do
-    {:reply, :no_player, state}
-  end
-
-  def handle_call(:pause, _from, %Instance{player_module: player_module, player: player} = state) do
-    result = player_module.pause(player)
-    {:reply, result, state}
+  def handle_call(:get_channel_id, _from, %Instance{channel_id: channel_id} = state) do
+    {:reply, channel_id, state}
   end
 
   def handle_call(
@@ -148,8 +134,22 @@ defmodule Coxir.Voice.Instance do
     handle_call(call, from, state)
   end
 
-  def handle_call(:get_channel_id, _from, %Instance{channel_id: channel_id} = state) do
-    {:reply, channel_id, state}
+  def handle_call(:pause, _from, %Instance{player: nil} = state) do
+    {:reply, :no_player, state}
+  end
+
+  def handle_call(:pause, _from, %Instance{player_module: player_module, player: player} = state) do
+    result = player_module.pause(player)
+    {:reply, result, state}
+  end
+
+  def handle_call(:resume, _from, %Instance{player: nil} = state) do
+    {:reply, :no_player, state}
+  end
+
+  def handle_call(:resume, _from, %Instance{player_module: player_module, player: player} = state) do
+    result = player_module.resume(player)
+    {:reply, result, state}
   end
 
   def handle_cast({:update, struct}, state) do
