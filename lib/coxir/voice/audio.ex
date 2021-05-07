@@ -17,8 +17,8 @@ defmodule Coxir.Voice.Audio do
     :port,
     :ssrc,
     :secret_key,
-    :rtp_sequence,
-    :rtp_timestamp,
+    {:rtp_sequence, 0},
+    {:rtp_timestamp, 0},
     :last_timestamp
   ]
 
@@ -83,6 +83,7 @@ defmodule Coxir.Voice.Audio do
     ended? = length(frames) < @burst_frames
 
     now_timestamp = time_now()
+    last_timestamp = last_timestamp || now_timestamp
 
     audio = %{audio | last_timestamp: now_timestamp}
     audio = send_frames(audio, frames)
@@ -108,7 +109,7 @@ defmodule Coxir.Voice.Audio do
       frames,
       audio,
       fn frame, audio ->
-        send_frame(frame, audio)
+        send_frame(audio, frame)
       end
     )
   end
@@ -123,8 +124,11 @@ defmodule Coxir.Voice.Audio do
          } = audio,
          frame
        ) do
-    encrypted = encrypt_packet(audio, frame)
-    :gen_udp.send(udp_socket, ip, port, encrypted)
+    address = ip_to_address(ip)
+
+    encrypted = encrypt_frame(audio, frame)
+
+    :gen_udp.send(udp_socket, address, port, encrypted)
 
     %{audio | rtp_sequence: rtp_sequence + 1, rtp_timestamp: rtp_timestamp + @frame_samples}
   end
@@ -134,14 +138,14 @@ defmodule Coxir.Voice.Audio do
       0x80::8,
       0x78::8,
       rtp_sequence::16,
-      rtp_timestamp::16,
+      rtp_timestamp::32,
       ssrc::32
     >>
   end
 
-  defp encrypt_packet(%Audio{secret_key: secret_key} = audio, packet) do
+  defp encrypt_frame(%Audio{secret_key: secret_key} = audio, frame) do
     header = rtp_header(audio)
     nonce = header <> <<0::96>>
-    header <> Kcl.secretbox(packet, nonce, secret_key)
+    header <> Kcl.secretbox(frame, nonce, secret_key)
   end
 end
