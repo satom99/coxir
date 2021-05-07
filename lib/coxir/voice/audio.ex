@@ -81,11 +81,13 @@ defmodule Coxir.Voice.Audio do
     frames = Enum.take(source, @burst_frames)
     ended? = length(frames) < @burst_frames
 
+    audio = send_frames(audio, frames)
+
     now_timestamp = time_now()
-    last_timestamp = last_timestamp || now_timestamp
 
     audio = %{audio | last_timestamp: now_timestamp}
-    audio = send_frames(audio, frames)
+
+    last_timestamp = last_timestamp || now_timestamp
 
     wait = @burst_wait - (now_timestamp - last_timestamp)
 
