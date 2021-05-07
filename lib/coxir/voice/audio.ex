@@ -65,16 +65,15 @@ defmodule Coxir.Voice.Audio do
     {local_ip, local_port}
   end
 
-  @spec set_speaking(t, non_neg_integer) :: t
-  def set_speaking(%Audio{session: session, ssrc: ssrc} = audio, bit) do
-    speaking = %Speaking{speaking: bit, ssrc: ssrc}
-    Session.set_speaking(session, speaking)
+  @spec start_speaking(t) :: :ok
+  def start_speaking(audio) do
+    set_speaking(audio, 1)
+  end
 
-    if bit == 0 do
-      send_frames(audio, @silence)
-    else
-      audio
-    end
+  @spec stop_speaking(t) :: :ok
+  def stop_speaking(audio) do
+    send_frames(audio, @silence)
+    set_speaking(audio, 0)
   end
 
   @spec process_burst(t, Enum.t()) :: {t, boolean, timeout}
@@ -102,6 +101,11 @@ defmodule Coxir.Voice.Audio do
       |> :inet_parse.address()
 
     address
+  end
+
+  defp set_speaking(%Audio{session: session, ssrc: ssrc} = audio, bit) do
+    speaking = %Speaking{speaking: bit, ssrc: ssrc}
+    Session.set_speaking(session, speaking)
   end
 
   defp send_frames(%Audio{} = audio, frames) do

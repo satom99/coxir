@@ -129,7 +129,7 @@ defmodule Coxir.Player.Default do
         {:EXIT, processor, _reason},
         %Default{audio: audio, processor: processor} = state
       ) do
-    Audio.set_speaking(audio, 0)
+    Audio.stop_speaking(audio)
     {:noreply, state}
   end
 
@@ -140,7 +140,7 @@ defmodule Coxir.Player.Default do
   defp update_processor(%Default{audio: audio, processor: processor} = state)
        when is_pid(processor) do
     Process.exit(processor, :kill)
-    Audio.set_speaking(audio, 0)
+    Audio.stop_speaking(audio)
     state = %{state | processor: nil}
     update_processor(state)
   end
@@ -158,7 +158,7 @@ defmodule Coxir.Player.Default do
   end
 
   defp update_processor(%Default{audio: audio, processor: nil} = state) do
-    Audio.set_speaking(audio, 1)
+    Audio.start_speaking(audio)
     {:ok, processor} = Task.start_link(fn -> processor_loop(state) end)
     %{state | processor: processor}
   end
