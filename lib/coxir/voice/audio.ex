@@ -103,7 +103,7 @@ defmodule Coxir.Voice.Audio do
     address
   end
 
-  defp set_speaking(%Audio{session: session, ssrc: ssrc} = audio, bit) do
+  defp set_speaking(%Audio{session: session, ssrc: ssrc}, bit) do
     speaking = %Speaking{speaking: bit, ssrc: ssrc}
     Session.set_speaking(session, speaking)
   end
