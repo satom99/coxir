@@ -14,7 +14,7 @@ defmodule Coxir.Player do
 
   @callback invalidate(player) :: :ok
 
-  @callback play(player, playable) :: :ok
+  @callback play(player, playable, keyword) :: :ok
 
   @callback pause(player) :: :ok
 
