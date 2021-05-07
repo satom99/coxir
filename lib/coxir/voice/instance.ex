@@ -56,6 +56,14 @@ defmodule Coxir.Voice.Instance do
     {:ok, state}
   end
 
+  def handle_continue(:update_session, %Instance{session_id: nil} = state) do
+    {:noreply, state}
+  end
+
+  def handle_continue(:update_session, %Instance{endpoint_host: nil} = state) do
+    {:noreply, state}
+  end
+
   def handle_continue(:update_session, %Instance{session: nil} = state) do
     %Instance{
       user_id: user_id,
@@ -149,6 +157,9 @@ defmodule Coxir.Voice.Instance do
   def handle_info({:EXIT, session, :restart}, %Instance{session: session} = state) do
     state = %{state | session: nil, audio: nil}
     state = update_player(state)
+
+    IO.inspect("session EXIT restart")
+
     {:noreply, state, @update_session}
   end
 
