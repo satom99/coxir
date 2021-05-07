@@ -27,12 +27,12 @@ defmodule Coxir.Player.Default do
     GenServer.cast(player, {:play, url})
   end
 
-  def pause(_player) do
-    :noop
+  def pause(player) do
+    GenServer.cast(player, :pause)
   end
 
-  def resume(_player) do
-    :noop
+  def resume(player) do
+    GenServer.cast(player, :resume)
   end
 
   def start_link(state) do
