@@ -95,8 +95,27 @@ defmodule Coxir.Voice.Instance do
     {:noreply, state}
   end
 
+  def handle_call(:resume, _from, %Instance{player: nil} = state) do
+    {:reply, :no_player, state}
+  end
+
+  def handle_call(:resume, _from, %Instance{player_module: player_module, player: player} = state) do
+    result = player_module.resume(player)
+    {:reply, result, state}
+  end
+
+  def handle_call(:pause, _from, %Instance{player: nil} = state) do
+    {:reply, :no_player, state}
+  end
+
+  def handle_call(:pause, _from, %Instance{player_module: player_module, player: player} = state) do
+    result = player_module.pause(player)
+    {:reply, result, state}
+  end
+
   def handle_call(
         {:play, player_module, playable},
+        _from,
         %Instance{player_module: player_module} = state
       ) do
     %{player: player} = state = update_player(state)
@@ -106,33 +125,23 @@ defmodule Coxir.Voice.Instance do
     {:reply, result, state}
   end
 
-  def handle_call(:resume, %Instance{player: nil} = state) do
-    {:reply, :no_player, state}
-  end
-
-  def handle_call(:resume, %Instance{player_module: player_module, player: player} = state) do
-    result = player_module.resume(player)
-    {:reply, result, state}
-  end
-
-  def handle_call(:pause, %Instance{player: nil} = state) do
-    {:reply, :no_player, state}
-  end
-
-  def handle_call(:pause, %Instance{player_module: player_module, player: player} = state) do
-    result = player_module.pause(player)
-    {:reply, result, state}
-  end
-
-  def handle_call({:play, player_module, _playable} = call, %Instance{player_module: nil} = state) do
+  def handle_call(
+        {:play, player_module, _playable} = call,
+        from,
+        %Instance{player_module: nil} = state
+      ) do
     state = %{state | player_module: player_module}
-    handle_call(call, state)
+    handle_call(call, from, state)
   end
 
-  def handle_call({:play, _player_module, _playable} = call, %Instance{player: player} = state) do
+  def handle_call(
+        {:play, _player_module, _playable} = call,
+        from,
+        %Instance{player: player} = state
+      ) do
     Process.exit(player, :kill)
     state = %{state | player_module: nil, player: nil}
-    handle_call(call, state)
+    handle_call(call, from, state)
   end
 
   def handle_cast({:update, struct}, state) do
