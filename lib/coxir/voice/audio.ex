@@ -79,6 +79,7 @@ defmodule Coxir.Voice.Audio do
   @spec process_burst(t, Enum.t()) :: {t, boolean, timeout}
   def process_burst(%Audio{last_timestamp: last_timestamp} = audio, source) do
     frames = Enum.take(source, @burst_frames)
+
     ended? = length(frames) < @burst_frames
 
     audio = send_frames(audio, frames)
