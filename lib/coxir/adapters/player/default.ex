@@ -113,7 +113,7 @@ defmodule Coxir.Player.Default do
     {:reply, :ok, state}
   end
 
-  def handle_call(:stop_playing, _from, %Default{playback: nil} = state) do
+  def handle_call(:stop_playing, _from, %Default{process: nil} = state) do
     {:reply, :noop, state}
   end
 
@@ -133,14 +133,11 @@ defmodule Coxir.Player.Default do
     {:noreply, state}
   end
 
-  defp halt_playing(state) do
-    state = stop_process(state)
-    update_playback(state)
-  end
-
-  defp stop_process(%Default{process: process} = state) do
+  defp halt_playing(%Default{process: process} = state) do
+    state = %{state | process: nil}
+    state = update_playback(state)
     Proc.stop(process)
-    %{state | process: nil}
+    state
   end
 
   defp update_playback(%Default{playback: playback} = state) when is_pid(playback) do
