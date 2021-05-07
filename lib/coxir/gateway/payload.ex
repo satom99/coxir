@@ -24,8 +24,8 @@ defmodule Coxir.Gateway.Payload do
     :data,
     :sequence,
     :event,
-    :user_id,
-    :gateway
+    :gateway,
+    :user_id
   ]
 
   @type t :: %Payload{}
