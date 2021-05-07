@@ -5,7 +5,7 @@ defmodule Coxir.Voice.Session do
   use GenServer
 
   alias Coxir.Voice.Payload.{Hello, Ready, SessionDescription}
-  alias Coxir.Voice.Payload.{Identify, Resume, SelectProtocol}
+  alias Coxir.Voice.Payload.{Identify, Resume, SelectProtocol, Speaking}
   alias Coxir.Voice.{Payload, Audio, Instance}
   alias __MODULE__
 
@@ -39,6 +39,10 @@ defmodule Coxir.Voice.Session do
   @reconnect {:continue, :reconnect}
   @identify {:continue, :identify}
   @update_instance {:continue, :update_instance}
+
+  def set_speaking(session, %Speaking{} = speaking) do
+    GenServer.call(session, {:send_command, speaking})
+  end
 
   def start_link(state) do
     GenServer.start_link(__MODULE__, state)
@@ -102,6 +106,11 @@ defmodule Coxir.Voice.Session do
   def handle_continue(:update_instance, %Session{instance: instance} = state) do
     Instance.update(instance, state)
     {:noreply, state}
+  end
+
+  def handle_call({:send_command, operation, data}, _from, state) do
+    result = send_command(operation, data, state)
+    {:reply, result, state}
   end
 
   def handle_info({:gun_up, gun_pid, :http}, %Session{gun_pid: gun_pid} = state) do

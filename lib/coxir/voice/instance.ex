@@ -205,7 +205,7 @@ defmodule Coxir.Voice.Instance do
     {:noreply, state, @update_session}
   end
 
-  defp handle_update(%Session{} = session_state, state) do
+  defp handle_update(%Session{} = session_state, %Instance{session: session} = state) do
     %Session{
       udp_socket: udp_socket,
       audio_ip: audio_ip,
@@ -215,6 +215,7 @@ defmodule Coxir.Voice.Instance do
     } = session_state
 
     audio = %Audio{
+      session: session,
       udp_socket: udp_socket,
       ip: audio_ip,
       port: audio_port,
