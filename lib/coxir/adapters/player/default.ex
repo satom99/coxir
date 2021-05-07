@@ -12,33 +12,33 @@ defmodule Coxir.Player.Default do
 
   defstruct [
     :audio,
-    :porcelain,
-    {:paused?, false},
-    :processor
+    :process,
+    :playback,
+    {:paused?, false}
   ]
 
   def ready(player, audio) do
-    GenServer.cast(player, {:ready, audio})
+    GenServer.call(player, {:ready, audio})
   end
 
   def invalidate(player) do
-    GenServer.cast(player, :invalidate)
+    GenServer.call(player, :invalidate)
   end
 
-  def play(player, url, _options) do
-    GenServer.cast(player, {:play, url})
+  def play(player, url, options) do
+    GenServer.call(player, {:play, url, options})
   end
 
   def pause(player) do
-    GenServer.cast(player, :pause)
+    GenServer.call(player, :pause)
   end
 
   def resume(player) do
-    GenServer.cast(player, :resume)
+    GenServer.call(player, :resume)
   end
 
   def stop_playing(player) do
-    GenServer.cast(player, :stop_playing)
+    GenServer.call(player, :stop_playing)
   end
 
   def start_link(state) do
@@ -50,19 +50,21 @@ defmodule Coxir.Player.Default do
     {:ok, %Default{}}
   end
 
-  def handle_cast({:ready, audio}, state) do
+  def handle_call({:ready, audio}, _from, state) do
     state = %{state | audio: audio}
-    state = update_processor(state)
-    {:noreply, state}
+    state = update_playback(state)
+    {:reply, :ok, state}
   end
 
-  def handle_cast(:invalidate, state) do
+  def handle_call(:invalidate, _from, state) do
     state = %{state | audio: nil}
-    state = update_processor(state)
-    {:noreply, state}
+    state = update_playback(state)
+    {:reply, :ok, state}
   end
 
-  def handle_cast({:play, url}, %Default{porcelain: nil} = state) do
+  def handle_call({:play, url, _options}, _from, %Default{process: nil} = state) do
+    ffmpeg = Application.get_env(:coxir, :ffmpeg, "ffmpeg")
+
     options = [
       ["-i", url],
       ["-ac", "2"],
@@ -73,62 +75,54 @@ defmodule Coxir.Player.Default do
       ["pipe:1"]
     ]
 
-    porcelain =
+    process =
       %Proc{} =
       Porcelain.spawn(
-        Application.get_env(:coxir, :ffmpeg, "ffmpeg"),
+        ffmpeg,
         List.flatten(options),
-        in: <<>>,
         out: :stream
       )
 
-    state = %{state | porcelain: porcelain, paused?: false}
-    state = update_processor(state)
-    {:noreply, state}
+    state = %{state | process: process, paused?: false}
+    state = update_playback(state)
+    {:reply, :ok, state}
   end
 
-  def handle_cast({:play, _url} = call, %Default{porcelain: porcelain} = state) do
-    state = %{state | porcelain: nil}
-    state = update_processor(state)
-    Proc.stop(porcelain)
-    handle_cast(call, state)
+  def handle_call({:play, _url, _options} = call, from, state) do
+    state = halt_playing(state)
+    handle_call(call, from, state)
   end
 
-  def handle_cast(:pause, %Default{paused?: true} = state) do
-    {:noreply, state}
+  def handle_call(:pause, _from, %Default{paused?: true} = state) do
+    {:reply, :noop, state}
   end
 
-  def handle_cast(:pause, state) do
+  def handle_call(:pause, _from, state) do
     state = %{state | paused?: true}
-    state = update_processor(state)
-    {:noreply, state}
+    state = update_playback(state)
+    {:reply, :ok, state}
   end
 
-  def handle_cast(:resume, %Default{paused?: false} = state) do
-    {:noreply, state}
+  def handle_call(:resume, _from, %Default{paused?: false} = state) do
+    {:reply, :noop, state}
   end
 
-  def handle_cast(:resume, state) do
+  def handle_call(:resume, _from, state) do
     state = %{state | paused?: false}
-    state = update_processor(state)
-    {:noreply, state}
+    state = update_playback(state)
+    {:reply, :ok, state}
   end
 
-  def handle_cast(:stop_playing, %Default{processor: nil} = state) do
-    {:noreply, state}
+  def handle_call(:stop_playing, _from, %Default{playback: nil} = state) do
+    {:reply, :noop, state}
   end
 
-  def handle_cast(:stop_playing, %Default{porcelain: porcelain} = state) do
-    state = %{state | porcelain: nil}
-    state = update_processor(state)
-    Proc.stop(porcelain)
-    {:noreply, state}
+  def handle_call(:stop_playing, _from, state) do
+    state = halt_playing(state)
+    {:reply, :ok, state}
   end
 
-  def handle_info(
-        {:EXIT, processor, _reason},
-        %Default{audio: audio, processor: processor} = state
-      ) do
+  def handle_info({:EXIT, playback, _reason}, %Default{audio: audio, playback: playback} = state) do
     Audio.stop_speaking(audio)
     {:noreply, state}
   end
@@ -137,39 +131,47 @@ defmodule Coxir.Player.Default do
     {:noreply, state}
   end
 
-  defp update_processor(%Default{audio: audio, processor: processor} = state)
-       when is_pid(processor) do
-    Process.exit(processor, :kill)
-    Audio.stop_speaking(audio)
-    state = %{state | processor: nil}
-    update_processor(state)
+  defp halt_playing(state) do
+    state = stop_process(state)
+    update_playback(state)
   end
 
-  defp update_processor(%Default{audio: nil} = state) do
+  defp stop_process(%Default{process: process} = state) do
+    Proc.stop(process)
+    %{state | process: nil}
+  end
+
+  defp update_playback(%Default{playback: playback} = state) when is_pid(playback) do
+    Process.exit(playback, :kill)
+    state = %{state | playback: nil}
+    update_playback(state)
+  end
+
+  defp update_playback(%Default{audio: nil} = state) do
     state
   end
 
-  defp update_processor(%Default{porcelain: nil} = state) do
+  defp update_playback(%Default{process: nil} = state) do
     state
   end
 
-  defp update_processor(%Default{paused?: true} = state) do
+  defp update_playback(%Default{paused?: true} = state) do
     state
   end
 
-  defp update_processor(%Default{audio: audio, processor: nil} = state) do
+  defp update_playback(%Default{audio: audio} = state) do
     starter = fn ->
       Audio.start_speaking(audio)
-      processor_loop(state)
+      playback_loop(state)
     end
 
-    {:ok, processor} = Task.start_link(starter)
+    {:ok, playback} = Task.start_link(starter)
 
-    %{state | processor: processor}
+    %{state | playback: playback}
   end
 
-  defp processor_loop(%Default{audio: audio, porcelain: porcelain} = state) do
-    %Proc{out: source} = porcelain
+  defp playback_loop(%Default{audio: audio, process: process} = state) do
+    %Proc{out: source} = process
 
     {audio, ended?, sleep} = Audio.process_burst(audio, source)
 
@@ -177,6 +179,6 @@ defmodule Coxir.Player.Default do
 
     state = %{state | audio: audio}
 
-    unless ended?, do: processor_loop(state)
+    unless ended?, do: playback_loop(state)
   end
 end
