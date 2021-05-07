@@ -78,27 +78,32 @@ defmodule Coxir.Voice.Session do
           guild_id: guild_id,
           session_id: session_id,
           token: token,
-          been_ready?: been_ready?
+          been_ready?: false
         } = state
       ) do
-    if not been_ready? do
-      identify = %Identify{
-        user_id: user_id,
-        server_id: guild_id,
-        session_id: session_id,
-        token: token
-      }
+    identify = %Identify{
+      user_id: user_id,
+      server_id: guild_id,
+      session_id: session_id,
+      token: token
+    }
 
-      send_command(:IDENTIFY, identify, state)
-    else
-      resume = %Resume{
-        server_id: guild_id,
-        session_id: session_id,
-        token: token
-      }
+    send_command(:IDENTIFY, identify, state)
 
-      send_command(:RESUME, resume, state)
-    end
+    {:noreply, state}
+  end
+
+  def handle_continue(
+        :identify,
+        %Session{guild_id: guild_id, session_id: session_id, token: token} = state
+      ) do
+    resume = %Resume{
+      server_id: guild_id,
+      session_id: session_id,
+      token: token
+    }
+
+    send_command(:RESUME, resume, state)
 
     {:noreply, state}
   end
