@@ -15,7 +15,11 @@ defmodule Coxir.Voice.Payload do
     7 => :RESUME,
     8 => :HELLO,
     9 => :RESUMED,
-    13 => :CLIENT_DISCONNECT
+    10 => :UNKNOWN,
+    11 => :UNKNOWN,
+    12 => :CLIENT_CONNECT,
+    13 => :CLIENT_DISCONNECT,
+    14 => :CODEC_INFO
   }
   @codes Map.new(@operations, fn {key, value} -> {value, key} end)
 
