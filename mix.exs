@@ -30,6 +30,7 @@ defmodule Coxir.MixProject do
       {:tesla, ">= 1.3.0"},
       {:gen_stage, ">= 0.14.0"},
       {:kcl, ">= 1.0.0"},
+      {:porcelain, ">= 2.0.3"},
       {:ex_doc, "~> 0.24.2", only: :dev}
     ]
   end
