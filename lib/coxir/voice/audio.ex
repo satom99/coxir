@@ -2,9 +2,13 @@ defmodule Coxir.Voice.Audio do
   @moduledoc """
   Work in progress.
   """
+  import Coxir.Limiter.Helper, only: [time_now: 0]
+
   alias Coxir.Voice.Payload.Speaking
   alias Coxir.Voice.Session
   alias __MODULE__
+
+  @type t :: %Audio{}
 
   defstruct [
     :session,
@@ -15,13 +19,15 @@ defmodule Coxir.Voice.Audio do
     :secret_key,
     :rtp_sequence,
     :rtp_timestamp,
-    {:speaking?, false}
+    :last_timestamp
   ]
 
   @encryption_mode "xsalsa20_poly1305"
-  @frame_samples 960
-  @burst_frames 10
   @silence List.duplicate(<<0xF8, 0xFF, 0xFE>>, 5)
+  @frame_samples 960
+  @frame_duration 20000
+  @burst_frames 10
+  @burst_wait @burst_frames * @frame_duration
 
   def encryption_mode do
     @encryption_mode
@@ -59,27 +65,36 @@ defmodule Coxir.Voice.Audio do
     {local_ip, local_port}
   end
 
-  def process_stream(stream, %Audio{session: session, ssrc: ssrc, speaking?: speaking?} = audio) do
-    audio =
-      if not speaking? do
-        speaking = %Speaking{speaking: 1, ssrc: ssrc}
-        Session.set_speaking(session, speaking)
-        %{audio | speaking?: true}
-      else
-        audio
-      end
+  @spec set_speaking(t, non_neg_integer) :: t
+  def set_speaking(%Audio{session: session, ssrc: ssrc} = audio, bit) do
+    speaking = %Speaking{speaking: bit, ssrc: ssrc}
+    Session.set_speaking(session, speaking)
 
-    frames = Enum.take(stream, @burst_frames)
-    audio = send_frames(frames, audio)
-
-    if length(frames) < @burst_frames do
-      audio = send_frames(@silence, audio)
-      speaking = %Speaking{speaking: 0, ssrc: ssrc}
-      Session.set_speaking(session, speaking)
-      %{audio | speaking?: true}
+    if bit == 0 do
+      send_frames(audio, @silence)
     else
       audio
     end
+  end
+
+  @spec process_burst(t, Enum.t()) :: {t, boolean, timeout}
+  def process_burst(%Audio{last_timestamp: last_timestamp} = audio, source) do
+    frames = Enum.take(source, @burst_frames)
+    ended? = length(frames) < @burst_frames
+
+    now_timestamp = time_now()
+
+    audio = %{audio | last_timestamp: now_timestamp}
+    audio = send_frames(audio, frames)
+
+    wait = @burst_wait - (now_timestamp - last_timestamp)
+
+    sleep =
+      wait
+      |> trunc()
+      |> max(0)
+
+    {audio, ended?, sleep}
   end
 
   defp ip_to_address(ip) do
@@ -91,7 +106,7 @@ defmodule Coxir.Voice.Audio do
     address
   end
 
-  defp send_frames(frames, %Audio{} = audio) do
+  defp send_frames(%Audio{} = audio, frames) do
     Enum.reduce(
       frames,
       audio,
@@ -102,14 +117,14 @@ defmodule Coxir.Voice.Audio do
   end
 
   defp send_frame(
-         frame,
          %Audio{
            udp_socket: udp_socket,
            ip: ip,
            port: port,
            rtp_sequence: rtp_sequence,
            rtp_timestamp: rtp_timestamp
-         } = audio
+         } = audio,
+         frame
        ) do
     encrypted = encrypt_packet(audio, frame)
     :gen_udp.send(udp_socket, ip, port, encrypted)
