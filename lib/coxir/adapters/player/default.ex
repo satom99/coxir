@@ -89,7 +89,7 @@ defmodule Coxir.Player.Default do
   end
 
   def handle_call({:play, _url, _options} = call, from, state) do
-    state = halt_playing(state)
+    state = stop_process(state)
     handle_call(call, from, state)
   end
 
@@ -118,7 +118,7 @@ defmodule Coxir.Player.Default do
   end
 
   def handle_call(:stop_playing, _from, state) do
-    state = halt_playing(state)
+    state = stop_process(state)
     {:reply, :ok, state}
   end
 
@@ -133,7 +133,7 @@ defmodule Coxir.Player.Default do
     {:noreply, state}
   end
 
-  defp halt_playing(%Default{process: process} = state) do
+  defp stop_process(%Default{process: process} = state) do
     state = %{state | process: nil}
     state = update_playback(state)
     Proc.stop(process)
