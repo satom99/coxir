@@ -158,8 +158,13 @@ defmodule Coxir.Player.Default do
   end
 
   defp update_processor(%Default{audio: audio, processor: nil} = state) do
-    Audio.start_speaking(audio)
-    {:ok, processor} = Task.start_link(fn -> processor_loop(state) end)
+    starter = fn ->
+      Audio.start_speaking(audio)
+      processor_loop(state)
+    end
+
+    {:ok, processor} = Task.start_link(starter)
+
     %{state | processor: processor}
   end
 
