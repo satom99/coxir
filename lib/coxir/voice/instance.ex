@@ -39,6 +39,10 @@ defmodule Coxir.Voice.Instance do
     GenServer.call(instance, {:play, player_module, playable})
   end
 
+  def get_channel_id(instance) do
+    GenServer.call(instance, :get_channel_id)
+  end
+
   def update(instance, struct) do
     GenServer.cast(instance, {:update, struct})
   end
@@ -142,6 +146,10 @@ defmodule Coxir.Voice.Instance do
     Process.exit(player, :kill)
     state = %{state | player_module: nil, player: nil}
     handle_call(call, from, state)
+  end
+
+  def handle_call(:get_channel_id, _from, %Instance{channel_id: channel_id} = state) do
+    {:reply, channel_id, state}
   end
 
   def handle_cast({:update, struct}, state) do
