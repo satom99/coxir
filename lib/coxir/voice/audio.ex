@@ -31,17 +31,17 @@ defmodule Coxir.Voice.Audio do
   def discover_local(udp_socket, remote_ip, remote_port, ssrc) do
     remote_address = ip_to_address(remote_ip)
 
-    padded_ip = String.pad_trailing(remote_ip, 64, <<0>>)
+    padded_remote_ip = String.pad_trailing(remote_ip, 64, <<0>>)
 
-    request = <<1::16, 70::16, ssrc::32>> <> padded_ip <> <<remote_port::16>>
+    request = <<1::16, 70::16, ssrc::32>> <> padded_remote_ip <> <<remote_port::16>>
 
     :ok = :gen_udp.send(udp_socket, remote_address, remote_port, request)
 
-    {:ok, response} = :gen_udp.recv(udp_socket, 74)
+    {:ok, received} = :gen_udp.recv(udp_socket, 74)
 
-    {^remote_address, ^remote_port, packet} = response
+    {^remote_address, ^remote_port, response} = received
 
-    <<2::16, 70::16, ^ssrc::32, local_ip::bitstring-size(512), local_port::16>> = packet
+    <<2::16, 70::16, ^ssrc::32, local_ip::bitstring-size(512), local_port::16>> = response
 
     local_ip = String.trim(local_ip, <<0>>)
 
