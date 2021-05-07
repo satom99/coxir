@@ -2,6 +2,8 @@ defmodule Coxir.Player.Default do
   @moduledoc """
   Work in progress.
   """
+  @behaviour Coxir.Player
+
   use GenServer
 
   alias Porcelain.Process, as: Proc
