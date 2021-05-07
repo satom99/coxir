@@ -4,7 +4,15 @@ defmodule Coxir.Player.Default do
   """
   use GenServer
 
-  def resume(_player) do
+  def ready(_player, _audio) do
+    :ok
+  end
+
+  def invalidate(_player) do
+    :ok
+  end
+
+  def play(_player, _playable) do
     :noop
   end
 
@@ -12,16 +20,8 @@ defmodule Coxir.Player.Default do
     :noop
   end
 
-  def play(_player, _playable) do
+  def resume(_player) do
     :noop
-  end
-
-  def invalidate(_player) do
-    :ok
-  end
-
-  def ready(_player, _audio) do
-    :ok
   end
 
   def start_link(state) do
