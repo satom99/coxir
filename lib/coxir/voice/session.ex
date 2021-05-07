@@ -41,7 +41,7 @@ defmodule Coxir.Voice.Session do
   @update_instance {:continue, :update_instance}
 
   def set_speaking(session, %Speaking{} = speaking) do
-    GenServer.call(session, {:send_command, speaking})
+    GenServer.cast(session, {:send_command, speaking})
   end
 
   def start_link(state) do
@@ -108,9 +108,9 @@ defmodule Coxir.Voice.Session do
     {:noreply, state}
   end
 
-  def handle_call({:send_command, operation, data}, _from, state) do
+  def handle_cast{:send_command, operation, data}, state) do
     result = send_command(operation, data, state)
-    {:reply, result, state}
+    {:noreply, state}
   end
 
   def handle_info({:gun_up, gun_pid, :http}, %Session{gun_pid: gun_pid} = state) do
