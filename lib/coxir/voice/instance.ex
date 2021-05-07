@@ -10,6 +10,8 @@ defmodule Coxir.Voice.Instance do
   alias Coxir.Voice
   alias __MODULE__
 
+  @type instance :: pid
+
   defstruct [
     :player_module,
     :player,
