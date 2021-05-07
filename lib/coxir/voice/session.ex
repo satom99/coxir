@@ -178,7 +178,7 @@ defmodule Coxir.Voice.Session do
   end
 
   defp handle_frame({:close, status, _reason}, state) when status in @close_session do
-    {:stop, :invalid, state}
+    {:stop, :normal, state}
   end
 
   defp handle_frame({:close, status, _reason}, state) when status in @close_stop do

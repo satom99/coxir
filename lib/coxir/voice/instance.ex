@@ -189,7 +189,7 @@ defmodule Coxir.Voice.Instance do
     handle_update(struct, state)
   end
 
-  def handle_info({:EXIT, session, :invalid}, %Instance{session: session} = state) do
+  def handle_info({:EXIT, session, :normal}, %Instance{session: session} = state) do
     state = %{state | session_id: nil, endpoint_host: nil, session: nil, audio: nil}
     state = update_player(state)
 
