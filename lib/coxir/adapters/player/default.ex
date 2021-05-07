@@ -56,9 +56,17 @@ defmodule Coxir.Player.Default do
     {:noreply, state}
   end
 
+  def handle_cast(:pause, %Default{paused?: true} = state) do
+    {:noreply, state}
+  end
+
   def handle_cast(:pause, state) do
     state = %{state | paused?: true}
     state = update_processor(state)
+    {:noreply, state}
+  end
+
+  def handle_cast(:resume, %Default{paused?: false} = state) do
     {:noreply, state}
   end
 
