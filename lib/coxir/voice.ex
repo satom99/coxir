@@ -27,7 +27,7 @@ defmodule Coxir.Voice do
   end
 
   @spec play(Instance.instance(), Player.playable(), keyword) :: term
-  def play(instance, playable, options) do
+  def play(instance, playable, options \\ []) do
     player_module = Keyword.get(options, :player, Player.Default)
     Instance.play(instance, player_module, playable)
   end
