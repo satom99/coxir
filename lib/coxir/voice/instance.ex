@@ -29,6 +29,10 @@ defmodule Coxir.Voice.Instance do
 
   @update_session {:continue, :update_session}
 
+  def has_endpoint?(instance) do
+    GenServer.call(instance, :has_endpoint?)
+  end
+
   def get_channel_id(instance) do
     GenServer.call(instance, :get_channel_id)
   end
@@ -99,6 +103,11 @@ defmodule Coxir.Voice.Instance do
   def handle_continue(:update_session, %Instance{session: session} = state) do
     Process.exit(session, :restart)
     {:noreply, state}
+  end
+
+  def handle_call(:has_endpoint?, _from, %Instance{endpoint_host: endpoint_host} = state) do
+    has_endpoint? = not is_nil(endpoint_host)
+    {:reply, has_endpoint?, state}
   end
 
   def handle_call(:get_channel_id, _from, %Instance{channel_id: channel_id} = state) do
