@@ -28,16 +28,16 @@ defmodule Coxir.Voice.Instance do
   @start_session {:continue, :start_session}
   @ready_player {:continue, :ready_player}
 
-  def get_player(instance) do
-    GenServer.call(instance, :get_player)
-  end
-
   def stop(instance) do
     GenServer.cast(instance, :stop)
   end
 
   def invalidate(instance) do
     GenServer.cast(instance, :invalidate)
+  end
+
+  def play(instance, playable) do
+    GenServer.call(instance, {:play, playable})
   end
 
   def ready(instance, session_state) do
@@ -105,8 +105,13 @@ defmodule Coxir.Voice.Instance do
     {:noreply, state}
   end
 
-  def handle_call(:get_player, _from, %Instance{player: player} = state) do
-    {:reply, player, state}
+  def handle_call(
+        {:play, playable},
+        _from,
+        %Instance{player_module: player_module, player: player} = state
+      ) do
+    result = player_module.play(player, playable)
+    {:reply, result, state}
   end
 
   def handle_cast(:stop, state) do
