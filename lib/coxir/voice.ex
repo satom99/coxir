@@ -89,17 +89,6 @@ defmodule Coxir.Voice do
     Supervisor.init([], strategy: :one_for_one)
   end
 
-  defp get_instance(user_id, guild_id) do
-    children = Supervisor.which_children(Voice)
-
-    Enum.find_value(
-      children,
-      fn {id, pid, _type, _modules} ->
-        if id == {user_id, guild_id}, do: pid
-      end
-    )
-  end
-
   defp ensure_instance(user_id, guild_id) do
     instance_spec = generate_instance_spec(user_id, guild_id)
 
