@@ -108,8 +108,8 @@ defmodule Coxir.Voice.Session do
     {:noreply, state}
   end
 
-  def handle_cast{:send_command, operation, data}, state) do
-    result = send_command(operation, data, state)
+  def handle_cast({:send_command, operation, data}, state) do
+    send_command(operation, data, state)
     {:noreply, state}
   end
 
