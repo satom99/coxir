@@ -17,10 +17,13 @@ defmodule Coxir.Voice do
     gateway = Keyword.fetch!(options, :as)
     user_id = Gateway.get_user_id(gateway)
 
-    with nil <- get_instance(user_id, guild_id) do
+    instance = ensure_instance(user_id, guild_id)
+
+    if Instance.get_channel_id(instance) != channel_id do
       update_voice_state(gateway, guild_id, channel_id, options)
-      ensure_instance(user_id, guild_id)
     end
+
+    instance
   end
 
   @spec play(Instance.instance(), Player.playable(), keyword) :: term
