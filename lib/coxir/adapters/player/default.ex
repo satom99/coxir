@@ -124,6 +124,8 @@ defmodule Coxir.Player.Default do
 
   def handle_info({:EXIT, playback, _reason}, %Default{audio: audio, playback: playback} = state) do
     Audio.stop_speaking(audio)
+    state = %{state | playback: nil}
+    state = update_playback(state)
     {:noreply, state}
   end
 
