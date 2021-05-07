@@ -248,6 +248,10 @@ defmodule Coxir.Voice.Session do
     {:noreply, state}
   end
 
+  defp handle_payload(_payload, state) do
+    {:noreply, state}
+  end
+
   defp send_command(operation, data, %Session{gun_pid: gun_pid}) do
     payload = %Payload{operation: operation, data: data}
     command = Payload.to_command(payload)
