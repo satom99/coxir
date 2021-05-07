@@ -29,7 +29,7 @@ defmodule Coxir.Voice do
   @spec play(Instance.instance(), Player.playable(), keyword) :: term
   def play(instance, playable, options \\ []) do
     player_module = Keyword.get(options, :player, Player.Default)
-    Instance.play(instance, player_module, playable)
+    Instance.play(instance, player_module, playable, options)
   end
 
   @spec pause(Instance.instance()) :: term

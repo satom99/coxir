@@ -33,8 +33,8 @@ defmodule Coxir.Voice.Instance do
     GenServer.call(instance, :get_channel_id)
   end
 
-  def play(instance, player_module, playable) do
-    GenServer.call(instance, {:play, player_module, playable})
+  def play(instance, player_module, playable, options) do
+    GenServer.call(instance, {:play, player_module, playable, options})
   end
 
   def pause(instance) do
@@ -106,19 +106,19 @@ defmodule Coxir.Voice.Instance do
   end
 
   def handle_call(
-        {:play, player_module, playable},
+        {:play, player_module, playable, options},
         _from,
         %Instance{player_module: player_module} = state
       ) do
     %{player: player} = state = update_player(state)
 
-    result = player_module.play(player, playable)
+    result = player_module.play(player, playable, options)
 
     {:reply, result, state}
   end
 
   def handle_call(
-        {:play, player_module, _playable} = call,
+        {:play, player_module, _playable, _options} = call,
         from,
         %Instance{player_module: nil} = state
       ) do
@@ -127,7 +127,7 @@ defmodule Coxir.Voice.Instance do
   end
 
   def handle_call(
-        {:play, _player_module, _playable} = call,
+        {:play, _player_module, _playable, _options} = call,
         from,
         %Instance{player: player} = state
       ) do
