@@ -89,10 +89,7 @@ defmodule Coxir.Voice.Audio do
 
     wait = @burst_wait - (now_timestamp - last_timestamp)
 
-    sleep =
-      wait
-      |> trunc()
-      |> max(0)
+    sleep = max(trunc(wait / 1000), 0)
 
     {audio, ended?, sleep}
   end
