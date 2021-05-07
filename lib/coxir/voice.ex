@@ -12,6 +12,36 @@ defmodule Coxir.Voice do
   alias Coxir.Player
   alias __MODULE__
 
+  @spec resume(Channel.t(), keyword) :: term
+  def resume(%Channel{id: channel_id, guild_id: guild_id}, as: gateway) do
+    user_id = Gateway.get_user_id(gateway)
+    instance = get_instance(user_id, guild_id)
+
+    cond do
+      is_nil(instance) ->
+        {:error, :not_started}
+      Instance.get_channel_id(instance) != channel_id ->
+        {:error, :wrong_channel}
+      true ->
+        Instance.resume(instance)
+    end
+  end
+
+  @spec pause(Channel.t(), keyword) :: term
+  def pause(%Channel{id: channel_id, guild_id: guild_id}, as: gateway) do
+    user_id = Gateway.get_user_id(gateway)
+    instance = get_instance(user_id, guild_id)
+
+    cond do
+      is_nil(instance) ->
+        {:error, :not_started}
+      Instance.get_channel_id(instance) != channel_id ->
+        {:error, :wrong_channel}
+      true ->
+        Instance.pause(instance)
+    end
+  end
+
   @spec play(Channel.t(), Player.playable(), keyword) :: term
   def play(%Channel{guild_id: guild_id} = channel, playable, options) do
     gateway = Keyword.fetch!(options, :as)
