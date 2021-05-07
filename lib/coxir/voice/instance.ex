@@ -171,7 +171,11 @@ defmodule Coxir.Voice.Instance do
     {:reply, :no_player, state}
   end
 
-  def handle_call(:stop_playing, _from, %Instance{player_module: player_module, player: player} = state) do
+  def handle_call(
+        :stop_playing,
+        _from,
+        %Instance{player_module: player_module, player: player} = state
+      ) do
     result = player_module.stop_playing(player)
     {:reply, result, state}
   end
@@ -186,7 +190,7 @@ defmodule Coxir.Voice.Instance do
   end
 
   def handle_info({:EXIT, session, :invalid}, %Instance{session: session} = state) do
-    state = %{state | session_id: nil, session: nil, audio: nil}
+    state = %{state | session_id: nil, endpoint_host: nil, session: nil, audio: nil}
     state = update_player(state)
 
     %Instance{gateway: gateway, guild_id: guild_id, channel_id: channel_id} = state
