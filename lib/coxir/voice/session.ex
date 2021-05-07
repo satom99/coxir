@@ -237,14 +237,12 @@ defmodule Coxir.Voice.Session do
   end
 
   defp handle_payload(
-         %Payload{operation: :HEARTBEAT_ACK, data: nonce},
-         %Session{heartbeat_nonce: nonce} = state
+         %Payload{operation: :HEARTBEAT_ACK, data: received_nonce},
+         %Session{heartbeat_nonce: heartbeat_nonce} = state
        ) do
-    state = %{state | heartbeat_ack: true}
-    {:noreply, state}
-  end
-
-  defp handle_payload(%Payload{operation: :HEARTBEAT_ACK}, state) do
+    received_nonce = String.to_integer(received_nonce)
+    heartbeat_ack = received_nonce == heartbeat_nonce
+    state = %{state | heartbeat_ack: heartbeat_ack}
     {:noreply, state}
   end
 
