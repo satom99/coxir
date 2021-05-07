@@ -44,6 +44,11 @@ defmodule Coxir.Voice do
     Instance.resume(instance)
   end
 
+  @spec stop_playing(Instance.instance()) :: term
+  def stop_playing(instance) do
+    Instance.stop_playing(instance)
+  end
+
   @spec leave(Guild.t() | Channel.t(), keyword) :: :ok
   def leave(%Guild{id: guild_id}, options) do
     channel = %Channel{guild_id: guild_id}

@@ -37,6 +37,10 @@ defmodule Coxir.Player.Default do
     GenServer.cast(player, :resume)
   end
 
+  def stop_playing(player) do
+    GenServer.cast(player, :stop_playing)
+  end
+
   def start_link(state) do
     GenServer.start_link(__MODULE__, state)
   end
@@ -54,26 +58,6 @@ defmodule Coxir.Player.Default do
 
   def handle_cast(:invalidate, state) do
     state = %{state | audio: nil}
-    state = update_processor(state)
-    {:noreply, state}
-  end
-
-  def handle_cast(:pause, %Default{paused?: true} = state) do
-    {:noreply, state}
-  end
-
-  def handle_cast(:pause, state) do
-    state = %{state | paused?: true}
-    state = update_processor(state)
-    {:noreply, state}
-  end
-
-  def handle_cast(:resume, %Default{paused?: false} = state) do
-    {:noreply, state}
-  end
-
-  def handle_cast(:resume, state) do
-    state = %{state | paused?: false}
     state = update_processor(state)
     {:noreply, state}
   end
@@ -108,6 +92,37 @@ defmodule Coxir.Player.Default do
     state = update_processor(state)
     Proc.stop(porcelain)
     handle_cast(call, state)
+  end
+
+  def handle_cast(:pause, %Default{paused?: true} = state) do
+    {:noreply, state}
+  end
+
+  def handle_cast(:pause, state) do
+    state = %{state | paused?: true}
+    state = update_processor(state)
+    {:noreply, state}
+  end
+
+  def handle_cast(:resume, %Default{paused?: false} = state) do
+    {:noreply, state}
+  end
+
+  def handle_cast(:resume, state) do
+    state = %{state | paused?: false}
+    state = update_processor(state)
+    {:noreply, state}
+  end
+
+  def handle_cast(:stop_playing, %Default{processor: nil} = state) do
+    {:noreply, state}
+  end
+
+  def handle_cast(:stop_playing, %Default{porcelain: porcelain} = state) do
+    state = %{state | porcelain: nil}
+    state = update_processor(state)
+    Proc.stop(porcelain)
+    {:noreply, state}
   end
 
   def handle_info(

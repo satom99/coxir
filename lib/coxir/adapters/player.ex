@@ -19,4 +19,6 @@ defmodule Coxir.Player do
   @callback pause(player) :: :ok
 
   @callback resume(player) :: :ok
+
+  @callback stop_playing(player) :: :ok
 end

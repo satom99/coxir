@@ -49,6 +49,10 @@ defmodule Coxir.Voice.Instance do
     GenServer.call(instance, :resume)
   end
 
+  def stop_playing(instance) do
+    GenServer.call(instance, :stop_playing)
+  end
+
   def update(instance, struct) do
     GenServer.cast(instance, {:update, struct})
   end
@@ -160,6 +164,15 @@ defmodule Coxir.Voice.Instance do
 
   def handle_call(:resume, _from, %Instance{player_module: player_module, player: player} = state) do
     result = player_module.resume(player)
+    {:reply, result, state}
+  end
+
+  def handle_call(:stop_playing, _from, %Instance{player: nil} = state) do
+    {:reply, :no_player, state}
+  end
+
+  def handle_call(:stop_playing, _from, %Instance{player_module: player_module, player: player} = state) do
+    result = player_module.stop_playing(player)
     {:reply, result, state}
   end
 
