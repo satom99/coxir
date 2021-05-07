@@ -110,17 +110,17 @@ defmodule Coxir.Gateway do
     handler = Keyword.fetch!(config, :handler)
     options = [{:strategy, :rest_for_one} | options]
 
-    with {:ok, supervisor} <- Supervisor.start_link([], options) do
-      {:ok, producer} = start_child(supervisor, Producer)
-      {:ok, dispatcher} = start_child(supervisor, {Dispatcher, producer})
+    with {:ok, gateway} <- Supervisor.start_link([], options) do
+      {:ok, producer} = start_child(gateway, Producer)
+      {:ok, dispatcher} = start_child(gateway, {Dispatcher, producer})
 
       consumer_options = %Consumer{handler: handler, dispatcher: dispatcher}
-      {:ok, _consumer} = start_child(supervisor, {Consumer, consumer_options})
+      {:ok, _consumer} = start_child(gateway, {Consumer, consumer_options})
 
-      sharder_spec = generate_sharder_spec(producer, config)
-      {:ok, _sharder} = start_child(supervisor, sharder_spec)
+      sharder_spec = generate_sharder_spec(gateway, producer, config)
+      {:ok, _sharder} = start_child(gateway, sharder_spec)
 
-      {:ok, supervisor}
+      {:ok, gateway}
     end
   end
 
@@ -151,7 +151,7 @@ defmodule Coxir.Gateway do
     sharder_options
   end
 
-  defp generate_sharder_spec(producer, config) do
+  defp generate_sharder_spec(gateway, producer, config) do
     global = Application.get_all_env(:coxir)
 
     config =
@@ -169,7 +169,7 @@ defmodule Coxir.Gateway do
     {gateway_host, shard_count} = request_gateway_info(token)
 
     session_options = %Session{
-      gateway: self(),
+      gateway: gateway,
       user_id: Token.get_user_id(token),
       token: token,
       intents: intents,
