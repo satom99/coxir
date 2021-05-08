@@ -34,12 +34,12 @@ defmodule Coxir.Voice do
     Instance.play(instance, player_module, playable, options)
   end
 
-  @spec pause(Instance.instance()) :: :ok | {:error, :already_paused} | {:error, :no_player}
+  @spec pause(Instance.instance()) :: :ok | {:error, :no_player}
   def pause(instance) do
     Instance.pause(instance)
   end
 
-  @spec resume(Instance.instance()) :: :ok | {:error, :already_resumed} | {:error, :no_player}
+  @spec resume(Instance.instance()) :: :ok | {:error, :no_player}
   def resume(instance) do
     Instance.resume(instance)
   end

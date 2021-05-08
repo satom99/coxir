@@ -161,14 +161,11 @@ defmodule Coxir.Voice.Instance do
   end
 
   def handle_call(:pause, _from, %Instance{player_module: player_module, player: player} = state) do
-    result =
-      if player_module.playing?(player) do
-        player_module.pause(player)
-      else
-        {:error, :already_paused}
-      end
+    if player_module.playing?(player) do
+      player_module.pause(player)
+    end
 
-    {:reply, result, state}
+    {:reply, :ok, state}
   end
 
   def handle_call(:resume, _from, %Instance{player: nil} = state) do
@@ -176,14 +173,11 @@ defmodule Coxir.Voice.Instance do
   end
 
   def handle_call(:resume, _from, %Instance{player_module: player_module, player: player} = state) do
-    result =
-      if not player_module.playing?(player) do
-        player_module.resume(player)
-      else
-        {:error, :already_resumed}
-      end
+    if not player_module.playing?(player) do
+      player_module.resume(player)
+    end
 
-    {:reply, result, state}
+    {:reply, :ok, state}
   end
 
   def handle_call(:playing?, _from, %Instance{player: nil} = state) do
