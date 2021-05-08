@@ -40,7 +40,7 @@ defmodule Coxir.Voice.Payload do
   end
 
   def cast(%{"op" => opcode, "d" => data}) do
-    operation = Map.get(@operations, opcode, :UNKNOWN)
+    operation = Map.get(@operations, opcode, {:UNKNOWN, opcode})
     %Payload{operation: operation, data: data}
   end
 

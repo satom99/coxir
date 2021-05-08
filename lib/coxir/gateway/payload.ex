@@ -45,7 +45,7 @@ defmodule Coxir.Gateway.Payload do
   end
 
   def cast(%{"op" => opcode, "d" => data, "s" => sequence, "t" => event}, gateway, user_id) do
-    operation = Map.get(@operations, opcode, :UNKNOWN)
+    operation = Map.get(@operations, opcode, {:UNKNOWN, opcode})
 
     %Payload{
       operation: operation,
