@@ -25,10 +25,6 @@ defmodule Coxir.Player.Default do
     GenServer.call(player, :invalidate)
   end
 
-  def play(player, url, options) do
-    GenServer.call(player, {:play, url, options})
-  end
-
   def pause(player) do
     GenServer.call(player, :pause)
   end
@@ -37,32 +33,15 @@ defmodule Coxir.Player.Default do
     GenServer.call(player, :resume)
   end
 
-  def stop_playing(player) do
-    GenServer.call(player, :stop_playing)
+  def playing?(player) do
+    GenServer.call(player, :playing?)
   end
 
-  def start_link(state) do
-    GenServer.start_link(__MODULE__, state)
+  def start_link(start) do
+    GenServer.start_link(__MODULE__, start)
   end
 
-  def init(_state) do
-    Process.flag(:trap_exit, true)
-    {:ok, %Default{}}
-  end
-
-  def handle_call({:ready, audio}, _from, state) do
-    state = %{state | audio: audio}
-    state = update_playback(state)
-    {:reply, :ok, state}
-  end
-
-  def handle_call(:invalidate, _from, state) do
-    state = %{state | audio: nil}
-    state = update_playback(state)
-    {:reply, :ok, state}
-  end
-
-  def handle_call({:play, url, _options}, _from, %Default{process: nil} = state) do
+  def init({url, _options}) do
     ffmpeg = Application.get_env(:coxir, :ffmpeg, "ffmpeg")
 
     options = [
@@ -83,18 +62,20 @@ defmodule Coxir.Player.Default do
         out: :stream
       )
 
-    state = %{state | process: process, paused?: false}
+    state = %Default{process: process}
+    {:ok, state}
+  end
+
+  def handle_call({:ready, audio}, _from, state) do
+    state = %{state | audio: audio}
     state = update_playback(state)
     {:reply, :ok, state}
   end
 
-  def handle_call({:play, _url, _options} = call, from, state) do
-    state = stop_process(state)
-    handle_call(call, from, state)
-  end
-
-  def handle_call(:pause, _from, %Default{paused?: true} = state) do
-    {:reply, :noop, state}
+  def handle_call(:invalidate, _from, state) do
+    state = %{state | audio: nil}
+    state = update_playback(state)
+    {:reply, :ok, state}
   end
 
   def handle_call(:pause, _from, state) do
@@ -103,23 +84,18 @@ defmodule Coxir.Player.Default do
     {:reply, :ok, state}
   end
 
-  def handle_call(:resume, _from, %Default{paused?: false} = state) do
-    {:reply, :noop, state}
-  end
-
   def handle_call(:resume, _from, state) do
     state = %{state | paused?: false}
     state = update_playback(state)
     {:reply, :ok, state}
   end
 
-  def handle_call(:stop_playing, _from, %Default{process: nil} = state) do
-    {:reply, :noop, state}
+  def handle_call(:playing?, _from, %Default{paused?: paused?} = state) do
+    {:reply, not paused?, state}
   end
 
-  def handle_call(:stop_playing, _from, state) do
-    state = stop_process(state)
-    {:reply, :ok, state}
+  def handle_info({:EXIT, playback, :normal}, %Default{playback: playback} = state) do
+    {:stop, :normal, state}
   end
 
   def handle_info({:EXIT, playback, _reason}, %Default{audio: audio, playback: playback} = state) do
@@ -129,17 +105,6 @@ defmodule Coxir.Player.Default do
     {:noreply, state}
   end
 
-  def handle_info(_message, state) do
-    {:noreply, state}
-  end
-
-  defp stop_process(%Default{process: process} = state) do
-    state = %{state | process: nil}
-    state = update_playback(state)
-    Proc.stop(process)
-    state
-  end
-
   defp update_playback(%Default{playback: playback} = state) when is_pid(playback) do
     Process.exit(playback, :kill)
     state = %{state | playback: nil}
@@ -147,10 +112,6 @@ defmodule Coxir.Player.Default do
   end
 
   defp update_playback(%Default{audio: nil} = state) do
-    state
-  end
-
-  defp update_playback(%Default{process: nil} = state) do
     state
   end
 
