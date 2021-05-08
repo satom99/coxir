@@ -44,6 +44,11 @@ defmodule Coxir.Voice do
     Instance.resume(instance)
   end
 
+  @spec playing?(Instance.instance()) :: term
+  def playing?(instance) do
+    Instance.playing?(instance)
+  end
+
   @spec stop_playing(Instance.instance()) :: term
   def stop_playing(instance) do
     Instance.stop_playing(instance)
