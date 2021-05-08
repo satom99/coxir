@@ -23,11 +23,11 @@ defmodule Coxir.Voice.Audio do
   ]
 
   @encryption_mode "xsalsa20_poly1305"
-  @silence List.duplicate(<<0xF8, 0xFF, 0xFE>>, 5)
   @frame_samples 960
   @frame_duration 20000
   @burst_frames 10
   @burst_wait @burst_frames * @frame_duration
+  @silence List.duplicate(<<0xF8, 0xFF, 0xFE>>, 5)
 
   def encryption_mode do
     @encryption_mode
