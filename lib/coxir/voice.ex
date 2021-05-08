@@ -25,6 +25,10 @@ defmodule Coxir.Voice do
       update_voice_state(gateway, guild_id, channel_id, options)
     end
 
+    if not same_channel? do
+      stop_playing(instance)
+    end
+
     instance
   end
 
