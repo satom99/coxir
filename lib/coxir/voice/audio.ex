@@ -19,7 +19,7 @@ defmodule Coxir.Voice.Audio do
     :secret_key,
     {:rtp_sequence, 0},
     {:rtp_timestamp, 0},
-    {:last_timestamp, 0}
+    :last_timestamp
   ]
 
   @encryption_mode "xsalsa20_poly1305"
@@ -87,6 +87,8 @@ defmodule Coxir.Voice.Audio do
     now_timestamp = time_now()
 
     audio = %{audio | last_timestamp: now_timestamp}
+
+    last_timestamp = last_timestamp || now_timestamp
 
     wait = @burst_wait - (now_timestamp - last_timestamp)
 
