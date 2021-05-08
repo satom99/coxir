@@ -28,28 +28,28 @@ defmodule Coxir.Voice do
     instance
   end
 
-  @spec play(Instance.instance(), Player.playable(), keyword) :: term
+  @spec play(Instance.instance(), Player.playable(), keyword) :: :ok | {:error, term}
   def play(instance, playable, options \\ []) do
     player_module = Keyword.get(options, :player, Player.Default)
     Instance.play(instance, player_module, playable, options)
   end
 
-  @spec pause(Instance.instance()) :: term
+  @spec pause(Instance.instance()) :: :ok | {:error, :already_paused} | {:error, :no_player}
   def pause(instance) do
     Instance.pause(instance)
   end
 
-  @spec resume(Instance.instance()) :: term
+  @spec resume(Instance.instance()) :: :ok | {:error, :already_resumed} | {:error, :no_player}
   def resume(instance) do
     Instance.resume(instance)
   end
 
-  @spec playing?(Instance.instance()) :: term
+  @spec playing?(Instance.instance()) :: boolean
   def playing?(instance) do
     Instance.playing?(instance)
   end
 
-  @spec stop_playing(Instance.instance()) :: term
+  @spec stop_playing(Instance.instance()) :: :ok
   def stop_playing(instance) do
     Instance.stop_playing(instance)
   end
