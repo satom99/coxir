@@ -94,19 +94,23 @@ defmodule Coxir.Player.Default do
     {:reply, not paused?, state}
   end
 
-  def handle_info({:EXIT, playback, :normal}, %Default{playback: playback} = state) do
+  def handle_info({ref, :ended}, %Default{playback: %Task{ref: ref}} = state) do
     {:stop, :normal, state}
   end
 
-  def handle_info({:EXIT, playback, _reason}, %Default{audio: audio, playback: playback} = state) do
+  def handle_info({ref, _reason}, %Default{audio: audio, playback: %Task{ref: ref}} = state) do
     Audio.stop_speaking(audio)
     state = %{state | playback: nil}
     state = update_playback(state)
     {:noreply, state}
   end
 
-  defp update_playback(%Default{playback: playback} = state) when is_pid(playback) do
-    Process.exit(playback, :kill)
+  def handle_info(_message, state) do
+    {:noreply, state}
+  end
+
+  defp update_playback(%Default{playback: playback} = state) when not is_nil(playback) do
+    Task.shutdown(playback)
     state = %{state | playback: nil}
     update_playback(state)
   end
@@ -125,7 +129,7 @@ defmodule Coxir.Player.Default do
       playback_loop(state)
     end
 
-    {:ok, playback} = Task.start_link(starter)
+    playback = Task.async(starter)
 
     %{state | playback: playback}
   end
@@ -139,6 +143,6 @@ defmodule Coxir.Player.Default do
 
     state = %{state | audio: audio}
 
-    unless ended?, do: playback_loop(state)
+    unless ended?, do: playback_loop(state), else: :ended
   end
 end
