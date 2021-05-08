@@ -94,7 +94,8 @@ defmodule Coxir.Player.Default do
     {:reply, not paused?, state}
   end
 
-  def handle_info({ref, :ended}, %Default{playback: %Task{ref: ref}} = state) do
+  def handle_info({ref, :ended}, %Default{audio: audio, playback: %Task{ref: ref}} = state) do
+    Audio.stop_speaking(audio)
     {:stop, :normal, state}
   end
 
