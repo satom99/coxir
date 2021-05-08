@@ -97,15 +97,6 @@ defmodule Coxir.Voice.Audio do
     {audio, ended?, sleep}
   end
 
-  defp ip_to_address(ip) do
-    {:ok, address} =
-      ip
-      |> String.to_charlist()
-      |> :inet_parse.address()
-
-    address
-  end
-
   defp set_speaking(%Audio{session: session, ssrc: ssrc}, bit) do
     speaking = %Speaking{speaking: bit, ssrc: ssrc}
     Session.set_speaking(session, speaking)
@@ -140,6 +131,12 @@ defmodule Coxir.Voice.Audio do
     %{audio | rtp_sequence: rtp_sequence + 1, rtp_timestamp: rtp_timestamp + @frame_samples}
   end
 
+  defp encrypt_frame(%Audio{secret_key: secret_key} = audio, frame) do
+    header = rtp_header(audio)
+    nonce = header <> <<0::96>>
+    header <> Kcl.secretbox(frame, nonce, secret_key)
+  end
+
   defp rtp_header(%Audio{ssrc: ssrc, rtp_sequence: rtp_sequence, rtp_timestamp: rtp_timestamp}) do
     <<
       0x80::8,
@@ -150,9 +147,12 @@ defmodule Coxir.Voice.Audio do
     >>
   end
 
-  defp encrypt_frame(%Audio{secret_key: secret_key} = audio, frame) do
-    header = rtp_header(audio)
-    nonce = header <> <<0::96>>
-    header <> Kcl.secretbox(frame, nonce, secret_key)
+  defp ip_to_address(ip) do
+    {:ok, address} =
+      ip
+      |> String.to_charlist()
+      |> :inet_parse.address()
+
+    address
   end
 end
