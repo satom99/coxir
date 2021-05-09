@@ -22,6 +22,7 @@ defmodule Coxir.Channel do
     embeds_many(:recipients, User)
 
     has_many(:permission_overwrites, Overwrite)
+    has_many(:webhooks, Webhook)
     has_many(:voice_states, VoiceState)
 
     belongs_to(:guild, Guild)
@@ -36,6 +37,10 @@ defmodule Coxir.Channel do
   def fetch_many(id, :permission_overwrites, options) do
     %Channel{permission_overwrites: overwrites} = get(id, options)
     {:ok, overwrites}
+  end
+
+  def fetch_many(id, :webhooks, options) do
+    API.get("channels/#{id}/webhooks", options)
   end
 
   def insert(%{guild_id: guild_id} = params, options) do
