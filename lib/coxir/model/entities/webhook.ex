@@ -28,4 +28,8 @@ defmodule Coxir.Webhook do
   def patch(id, params, options) do
     API.patch("webhooks/#{id}", params, options)
   end
+
+  def drop(id, options) do
+    API.delete("webhooks/#{id}", options)
+  end
 end
