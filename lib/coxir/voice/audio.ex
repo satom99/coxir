@@ -19,7 +19,7 @@ defmodule Coxir.Voice.Audio do
     :secret_key,
     {:rtp_sequence, 0},
     {:rtp_timestamp, 0},
-    :last_timestamp
+    :burst_timestamp
   ]
 
   @encryption_mode "xsalsa20_poly1305"
@@ -77,7 +77,7 @@ defmodule Coxir.Voice.Audio do
   end
 
   @spec process_burst(t, Enum.t()) :: {t, boolean, timeout}
-  def process_burst(%Audio{last_timestamp: last_timestamp} = audio, source) do
+  def process_burst(%Audio{burst_timestamp: burst_timestamp} = audio, source) do
     frames = Enum.take(source, @burst_frames)
 
     ended? = length(frames) < @burst_frames
@@ -86,11 +86,11 @@ defmodule Coxir.Voice.Audio do
 
     now_timestamp = time_now()
 
-    audio = %{audio | last_timestamp: now_timestamp}
+    audio = %{audio | burst_timestamp: now_timestamp}
 
-    last_timestamp = last_timestamp || now_timestamp
+    burst_timestamp = burst_timestamp || now_timestamp
 
-    wait = @burst_wait - (now_timestamp - last_timestamp)
+    wait = @burst_wait - (now_timestamp - burst_timestamp)
 
     sleep = max(trunc(wait / 1000), 0)
 
