@@ -140,10 +140,12 @@ defmodule Coxir.Player.Default do
 
     {audio, ended?, sleep} = Audio.process_burst(audio, source)
 
-    Process.sleep(sleep)
-
-    state = %{state | audio: audio}
-
-    unless ended?, do: playback_loop(state), else: :ended
+    if not ended? do
+      Process.sleep(sleep)
+      state = %{state | audio: audio}
+      playback_loop(state)
+    else
+      :ended
+    end
   end
 end
