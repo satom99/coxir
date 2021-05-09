@@ -10,7 +10,7 @@ defmodule Coxir.Webhook do
     field(:avatar, :string)
     field(:token, :string)
 
-    belongs_to(:channel, Channel, primary_key: true)
+    belongs_to(:channel, Channel)
     belongs_to(:guild, Guild)
     belongs_to(:user, User)
     belongs_to(:source_guild, Guild)
