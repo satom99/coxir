@@ -89,4 +89,12 @@ defmodule Coxir.Channel do
     |> Map.put(:channel_id, id)
     |> Overwrite.create(options)
   end
+
+  @spec create_webhook(t, Enum.t(), Loader.options()) :: Loader.result()
+  def create_webhook(%Channel{id: id}, params, options \\ []) do
+    params
+    |> Map.new()
+    |> Map.put(:channel_id, id)
+    |> Webhook.create(options)
+  end
 end
