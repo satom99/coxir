@@ -83,4 +83,13 @@ defmodule Coxir.Member do
   def kick(member, options \\ []) do
     delete(member, options)
   end
+
+  @spec ban(t, Enum.t(), Loader.options()) :: Loader.result()
+  def ban(%Member{user_id: user_id, guild_id: guild_id}, params, options \\ []) do
+    params
+    |> Map.new()
+    |> Map.put(:user_id, user_id)
+    |> Map.put(:guild_id, guild_id)
+    |> Ban.create(options)
+  end
 end
