@@ -16,4 +16,8 @@ defmodule Coxir.Webhook do
     belongs_to(:source_guild, Guild)
     belongs_to(:source_channel, Channel)
   end
+
+  def insert(%{channel_id: channel_id} = params, options) do
+    API.post("channels/#{channel_id}/webhooks", params, options)
+  end
 end
