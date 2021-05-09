@@ -24,4 +24,8 @@ defmodule Coxir.Webhook do
   def insert(%{channel_id: channel_id} = params, options) do
     API.post("channels/#{channel_id}/webhooks", params, options)
   end
+
+  def patch(id, params, options) do
+    API.patch("webhooks/#{id}", params, options)
+  end
 end
