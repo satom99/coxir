@@ -26,6 +26,6 @@ defmodule Coxir.API.Error do
   end
 
   def message(%Error{status: status, code: code, message: message}) do
-    "(#{status}) Got an error ##{code}: #{message}"
+    "(#{status}) #{code} - #{message}"
   end
 end
