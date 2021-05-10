@@ -33,7 +33,7 @@ defmodule Coxir.Channel do
 
   @type id :: Snowflake.t()
 
-  @type type :: non_neg_integer
+  @type type :: non_neg_integer | nil
 
   @type position :: non_neg_integer | nil
 
