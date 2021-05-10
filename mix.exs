@@ -48,6 +48,7 @@ defmodule Coxir.MixProject do
           Coxir.Guild,
           Coxir.Integration,
           Coxir.Role,
+          Coxir.Ban,
           Coxir.Member,
           ~r/^Coxir.Presence.?/,
           Coxir.VoiceState
