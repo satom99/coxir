@@ -2,24 +2,17 @@ defmodule Coxir.API.Error do
   @moduledoc """
   Work in progress.
   """
-  use Ecto.Schema
+  alias __MODULE__
 
-  import Ecto.Changeset
+  @type t :: %Error{}
 
-  @primary_key false
+  defexception [
+    :status,
+    :code,
+    :message
+  ]
 
-  @type t :: %__MODULE__{}
-
-  embedded_schema do
-    field(:code, :integer)
-    field(:message, :string)
-  end
-
-  def cast(object) do
-    fields = __schema__(:fields)
-
-    %__MODULE__{}
-    |> cast(object, fields)
-    |> apply_changes()
+  def cast(status, %{"code" => code, "message" => message}) do
+    %Error{status: status, code: code, message: message}
   end
 end

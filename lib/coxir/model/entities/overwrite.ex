@@ -22,7 +22,7 @@ defmodule Coxir.Overwrite do
     if not is_nil(overwrite) do
       {:ok, overwrite}
     else
-      {:error, 404, nil}
+      {:error, %Error{status: 404}}
     end
   end
 

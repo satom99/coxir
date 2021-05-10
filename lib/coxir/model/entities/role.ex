@@ -26,7 +26,7 @@ defmodule Coxir.Role do
     if not is_nil(role) do
       {:ok, role}
     else
-      {:error, 404, nil}
+      {:error, %Error{status: 404}}
     end
   end
 

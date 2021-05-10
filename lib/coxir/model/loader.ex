@@ -8,6 +8,7 @@ defmodule Coxir.Model.Loader do
 
   alias Ecto.Association.{NotLoaded, BelongsTo, Has}
   alias Coxir.{Model, Storage, API}
+  alias Coxir.API.Error
 
   @default_options %{
     force: false,
@@ -248,7 +249,7 @@ defmodule Coxir.Model.Loader do
         {:ok, object} ->
           load(model, object)
 
-        {:error, 404, _error} ->
+        {:error, %Error{status: 404}} ->
           nil
       end
     end

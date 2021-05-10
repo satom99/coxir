@@ -14,9 +14,7 @@ defmodule Coxir.API do
 
   @type body :: Tesla.Env.body()
 
-  @type status :: Tesla.Env.status()
-
-  @type result :: :ok | {:ok, body} | {:error, status, Error.t()}
+  @type result :: :ok | {:ok, body} | {:error, Error.t()}
 
   adapter(Tesla.Adapter.Gun)
 
@@ -42,8 +40,8 @@ defmodule Coxir.API do
         {:ok, body}
 
       %{status: status, body: body} ->
-        error = Error.cast(body)
-        {:error, status, error}
+        error = Error.cast(status, body)
+        {:error, error}
     end
   end
 
