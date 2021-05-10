@@ -74,6 +74,11 @@ defmodule Coxir.Channel do
     super(channel, association, options)
   end
 
+  @spec start_typing(t, Loader.options()) :: Loader.result()
+  def start_typing(%Channel{id: id}, options \\ []) do
+    API.post("channels/#{id}/typing", %{}, options)
+  end
+
   @spec send_message(t, Enum.t(), Loader.options()) :: Loader.result()
   def send_message(%Channel{id: id}, params, options \\ []) do
     params
