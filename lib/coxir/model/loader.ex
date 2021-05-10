@@ -55,6 +55,13 @@ defmodule Coxir.Model.Loader do
     getter(model, key, options)
   end
 
+  @spec get!(Model.model(), Model.key(), options) :: Model.instance()
+  def get!(model, key, options) do
+    with %Error{} = error <- get(model, key, options) do
+      raise(error)
+    end
+  end
+
   @spec preload(list(Model.instance()), preloads, options) :: list(Model.instance())
   @spec preload(Model.instance(), preloads, options) :: Model.instance()
   def preload(structs, preloads, options) when is_list(structs) do

@@ -27,6 +27,8 @@ defmodule Coxir.Model do
 
   @callback get(key, Loader.options()) :: instance | Error.t()
 
+  @callback get!(key, Loader.options()) :: instance
+
   @callback preload(instance, Loader.preloads(), Loader.options()) :: instance
 
   @callback preload(list(instance), Loader.preloads(), Loader.options()) :: list(instance)
@@ -67,6 +69,10 @@ defmodule Coxir.Model do
 
       def get(key, options \\ []) do
         Loader.get(__MODULE__, key, options)
+      end
+
+      def get!(key, options \\ []) do
+        Loader.get!(__MODULE__, key, options)
       end
 
       def preload(struct, preloads, options \\ []) do
@@ -123,6 +129,9 @@ defmodule Coxir.Model do
 
       @doc unquote(get)
       def get(key, options)
+
+      @doc unquote(get)
+      def get!(key, options)
 
       @doc unquote(preload)
       def preload(struct, preloads, options)
