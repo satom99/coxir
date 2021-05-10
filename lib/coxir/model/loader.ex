@@ -49,7 +49,7 @@ defmodule Coxir.Model.Loader do
     end
   end
 
-  @spec get(Model.model(), Model.key(), options) :: Model.instance() | nil
+  @spec get(Model.model(), Model.key(), options) :: Model.instance() | Error.t() | nil
   def get(model, key, options) do
     options = Enum.into(options, @default_options)
     getter(model, key, options)
@@ -251,6 +251,9 @@ defmodule Coxir.Model.Loader do
 
         {:error, %Error{status: 404}} ->
           nil
+
+        {:error, error} ->
+          error
       end
     end
   end
@@ -300,8 +303,13 @@ defmodule Coxir.Model.Loader do
 
     fetch =
       if is_nil(storage) and fetch? do
-        {:ok, objects} = model.fetch_many(owner_value, field, options)
-        load(related, objects)
+        case model.fetch_many(owner_value, field, options) do
+          {:ok, objects} ->
+            load(related, objects)
+
+          {:error, error} ->
+            error
+        end
       end
 
     resolved = storage || fetch || []
