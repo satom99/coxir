@@ -4,7 +4,7 @@ defmodule Coxir.Player do
   """
   alias Coxir.Voice.Audio
 
-  @type player :: GenServer.server()
+  @type player :: pid
 
   @type playable :: term
 
