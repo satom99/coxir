@@ -17,5 +17,5 @@ defmodule Coxir.Sharder do
 
   @callback child_spec(options) :: Supervisor.child_spec()
 
-  @callback get_shard(sharder, integer) :: Session.session()
+  @callback get_shard(sharder, non_neg_integer) :: Session.session()
 end
