@@ -4,6 +4,7 @@ defmodule Coxir.Model do
   """
   alias Macro.Env
   alias Coxir.API
+  alias Coxir.API.Error
   alias Coxir.Model.{Snowflake, Loader}
 
   @type model :: module
