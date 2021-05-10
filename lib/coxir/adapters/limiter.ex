@@ -1,6 +1,6 @@
 defmodule Coxir.Limiter do
   @moduledoc """
-  Work in progress.
+  Handles how rate limit buckets are stored.
   """
   @type bucket :: :global | String.t()
 
@@ -22,14 +22,17 @@ defmodule Coxir.Limiter do
     end
   end
 
+  @doc false
   def child_spec(term) do
     limiter().child_spec(term)
   end
 
+  @doc false
   def put(bucket, limit, reset) do
     limiter().put(bucket, limit, reset)
   end
 
+  @doc false
   def hit(bucket) do
     limiter().hit(bucket)
   end

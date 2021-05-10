@@ -1,6 +1,6 @@
 defmodule Coxir.Sharder do
   @moduledoc """
-  Work in progress.
+  Handles how gateway shards are started.
   """
   defstruct [
     :shard_count,

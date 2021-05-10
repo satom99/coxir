@@ -1,6 +1,6 @@
 defmodule Coxir.Player.Default do
   @moduledoc """
-  Work in progress.
+  Pipes audio from ffmpeg.
   """
   @behaviour Coxir.Player
 
@@ -9,6 +9,8 @@ defmodule Coxir.Player.Default do
   alias Porcelain.Process, as: Proc
   alias Coxir.Voice.Audio
   alias __MODULE__
+
+  @type playable :: String.t()
 
   defstruct [
     :audio,

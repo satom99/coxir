@@ -1,6 +1,6 @@
 defmodule Coxir.Storage do
   @moduledoc """
-  Work in progress.
+  Handles how models are cached.
   """
   alias Coxir.Model
 
@@ -28,34 +28,42 @@ defmodule Coxir.Storage do
     end
   end
 
+  @doc false
   def child_spec(term) do
     storage().child_spec(term)
   end
 
+  @doc false
   def put(struct) do
     storage().put(struct)
   end
 
+  @doc false
   def all(model) do
     storage().all(model)
   end
 
+  @doc false
   def all_by(model, clauses) do
     storage().all_by(model, clauses)
   end
 
+  @doc false
   def get(model, key) do
     storage().get(model, key)
   end
 
+  @doc false
   def get_by(model, clauses) do
     storage().get_by(model, clauses)
   end
 
+  @doc false
   def delete(model, key) do
     storage().delete(model, key)
   end
 
+  @doc false
   def delete_by(model, clauses) do
     storage().delete_by(model, clauses)
   end

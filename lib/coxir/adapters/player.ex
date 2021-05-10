@@ -1,6 +1,6 @@
 defmodule Coxir.Player do
   @moduledoc """
-  Work in progress.
+  Handles the audio sent through voice.
   """
   alias Coxir.Voice.Audio
 
@@ -8,7 +8,9 @@ defmodule Coxir.Player do
 
   @type playable :: term
 
-  @type start :: {playable, keyword}
+  @type options :: keyword
+
+  @type start :: {playable, options}
 
   @callback child_spec(start) :: Supervisor.child_spec()
 

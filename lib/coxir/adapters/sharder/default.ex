@@ -1,6 +1,6 @@
 defmodule Coxir.Sharder.Default do
   @moduledoc """
-  Work in progress.
+  Starts all shards locally.
   """
   use Supervisor
 
