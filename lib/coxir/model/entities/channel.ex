@@ -4,6 +4,8 @@ defmodule Coxir.Channel do
   """
   use Coxir.Model
 
+  @type t :: %Channel{}
+
   embedded_schema do
     field(:type, :integer)
     field(:position, :integer)
