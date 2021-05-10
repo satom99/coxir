@@ -49,7 +49,7 @@ defmodule Coxir.Model.Loader do
     end
   end
 
-  @spec get(Model.model(), Model.key(), options) :: Model.instance() | nil | Error.t()
+  @spec get(Model.model(), Model.key(), options) :: Model.instance() | Error.t()
   def get(model, key, options) do
     options = Enum.into(options, @default_options)
     getter(model, key, options)
@@ -248,9 +248,6 @@ defmodule Coxir.Model.Loader do
       case model.fetch(key, options) do
         {:ok, object} ->
           load(model, object)
-
-        {:error, %Error{status: 404}} ->
-          nil
 
         {:error, error} ->
           error

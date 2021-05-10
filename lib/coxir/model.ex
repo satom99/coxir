@@ -24,7 +24,7 @@ defmodule Coxir.Model do
 
   @callback storable?() :: boolean
 
-  @callback get(key, Loader.options()) :: instance | nil | Error.t()
+  @callback get(key, Loader.options()) :: instance | Error.t()
 
   @callback preload(instance, Loader.preloads(), Loader.options()) :: instance
 
