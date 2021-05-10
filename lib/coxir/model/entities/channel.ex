@@ -69,15 +69,15 @@ defmodule Coxir.Channel do
 
   @type guild_id :: Snowflake.t() | nil
 
-  @type guild :: NotLoaded.t() | Guild.t() | nil
+  @type guild :: NotLoaded.t() | Error.t() | Guild.t() | nil
 
   @type owner_id :: Snowflake.t() | nil
 
-  @type owner :: NotLoaded.t() | User.t() | nil
+  @type owner :: NotLoaded.t() | Error.t() | User.t() | nil
 
   @type parent_id :: Snowflake.t() | nil
 
-  @type parent :: NotLoaded.t() | t | nil
+  @type parent :: NotLoaded.t() | Error.t() | t | nil
 
   embedded_schema do
     field(:type, :integer)
