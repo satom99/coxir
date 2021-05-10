@@ -49,16 +49,16 @@ defmodule Coxir.API do
     perform(:get, path, options)
   end
 
-  def post(path, body, options) do
+  def post(path, body \\ %{}, options) do
     perform(:post, path, body, options)
+  end
+
+  def put(path, body \\ %{}, options) do
+    perform(:put, path, body, options)
   end
 
   def patch(path, body, options) do
     perform(:patch, path, body, options)
-  end
-
-  def put(path, body, options) do
-    perform(:put, path, body, options)
   end
 
   def delete(path, options) do
