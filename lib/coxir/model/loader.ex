@@ -49,7 +49,7 @@ defmodule Coxir.Model.Loader do
     end
   end
 
-  @spec get(Model.model(), Model.key(), options) :: Model.instance() | Error.t() | nil
+  @spec get(Model.model(), Model.key(), options) :: Model.instance() | nil | Error.t()
   def get(model, key, options) do
     options = Enum.into(options, @default_options)
     getter(model, key, options)
