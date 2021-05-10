@@ -52,4 +52,14 @@ defmodule Coxir.Message do
     |> Map.put(:message_reference, reference)
     |> create(options)
   end
+
+  @spec pin(t, Loader.options()) :: Loader.result()
+  def pin(%Message{id: id, channel_id: channel_id}, options \\ []) do
+    API.put("channels/#{channel_id}/pins/#{id}", options)
+  end
+
+  @spec unpin(t, Loader.options()) :: Loader.result()
+  def unpin(%Message{id: id, channel_id: channel_id}, options \\ []) do
+    API.delete("channels/#{channel_id}/pins/#{id}", options)
+  end
 end
