@@ -38,6 +38,8 @@ defmodule Coxir.Gateway.Payload do
 
       @derive Jason.Encoder
 
+      @type t :: %__MODULE__{}
+
       def cast(object) do
         Coxir.Model.Loader.load(__MODULE__, object)
       end
