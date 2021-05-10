@@ -8,6 +8,8 @@ defmodule Coxir.Presence do
 
   @primary_key false
 
+  @type t :: %Presence{}
+
   embedded_schema do
     field(:status, :string)
 

@@ -8,6 +8,8 @@ defmodule Coxir.Interaction.ApplicationCommandDataOption do
 
   @primary_key false
 
+  @type t :: %ApplicationCommandDataOption{}
+
   embedded_schema do
     field(:name, :string)
     field(:type, :integer)

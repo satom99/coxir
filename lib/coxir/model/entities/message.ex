@@ -6,6 +6,8 @@ defmodule Coxir.Message do
 
   alias Coxir.Message.Reference
 
+  @type t :: %Message{}
+
   embedded_schema do
     field(:content, :string)
     field(:timestamp, :utc_datetime)

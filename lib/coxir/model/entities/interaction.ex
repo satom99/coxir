@@ -6,6 +6,8 @@ defmodule Coxir.Interaction do
 
   alias Coxir.Interaction.ApplicationCommandData
 
+  @type t :: %Interaction{}
+
   embedded_schema do
     field(:application_id, Snowflake)
     field(:type, :integer)

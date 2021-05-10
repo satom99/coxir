@@ -4,6 +4,8 @@ defmodule Coxir.Webhook do
   """
   use Coxir.Model
 
+  @type t :: %Webhook{}
+
   embedded_schema do
     field(:type, :integer)
     field(:name, :string)

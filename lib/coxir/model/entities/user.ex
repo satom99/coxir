@@ -4,6 +4,8 @@ defmodule Coxir.User do
   """
   use Coxir.Model
 
+  @type t :: %User{}
+
   embedded_schema do
     field(:username, :string)
     field(:discriminator, :string)

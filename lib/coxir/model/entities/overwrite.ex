@@ -4,6 +4,8 @@ defmodule Coxir.Overwrite do
   """
   use Coxir.Model
 
+  @type t :: %Overwrite{}
+
   embedded_schema do
     field(:type, :integer)
     field(:allow, :integer)

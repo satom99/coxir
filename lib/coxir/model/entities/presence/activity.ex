@@ -8,6 +8,8 @@ defmodule Coxir.Presence.Activity do
 
   @derive Jason.Encoder
 
+  @type t :: %Activity{}
+
   embedded_schema do
     field(:name, :string)
     field(:type, :integer)

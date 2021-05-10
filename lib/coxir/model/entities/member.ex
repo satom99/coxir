@@ -6,6 +6,8 @@ defmodule Coxir.Member do
 
   @primary_key false
 
+  @type t :: %Member{}
+
   embedded_schema do
     field(:nick, :string)
     field(:roles, {:array, Snowflake})

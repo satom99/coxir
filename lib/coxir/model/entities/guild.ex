@@ -4,6 +4,8 @@ defmodule Coxir.Guild do
   """
   use Coxir.Model
 
+  @type t :: %Guild{}
+
   embedded_schema do
     field(:name, :string)
     field(:icon, :string)

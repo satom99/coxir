@@ -50,6 +50,7 @@ defmodule Coxir.Model do
       alias Coxir.{User, Channel, Overwrite, Webhook, Message, Interaction}
       alias Coxir.{Guild, Integration, Role, Ban}
       alias Coxir.{Member, Presence, VoiceState}
+      alias __MODULE__
 
       @storable unquote(storable?)
 
@@ -58,8 +59,6 @@ defmodule Coxir.Model do
 
       @primary_key {:id, Snowflake, []}
       @foreign_key_type Snowflake
-
-      @type t :: %__MODULE__{}
 
       @doc false
       def storable?, do: @storable

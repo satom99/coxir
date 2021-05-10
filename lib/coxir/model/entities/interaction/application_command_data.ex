@@ -8,6 +8,8 @@ defmodule Coxir.Interaction.ApplicationCommandData do
 
   @primary_key false
 
+  @type t :: %ApplicationCommandData{}
+
   embedded_schema do
     field(:name, :string)
 

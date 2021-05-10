@@ -6,6 +6,8 @@ defmodule Coxir.VoiceState do
 
   @primary_key false
 
+  @type t :: %VoiceState{}
+
   embedded_schema do
     field(:session_id, :string)
     field(:deaf, :boolean)

@@ -4,6 +4,8 @@ defmodule Coxir.Role do
   """
   use Coxir.Model
 
+  @type t :: %Role{}
+
   embedded_schema do
     field(:name, :string)
     field(:color, :integer)

@@ -4,6 +4,8 @@ defmodule Coxir.Integration do
   """
   use Coxir.Model
 
+  @type t :: %Integration{}
+
   embedded_schema do
     field(:name, :string)
     field(:type, :string)

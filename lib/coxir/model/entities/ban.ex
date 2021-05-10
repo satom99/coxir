@@ -6,6 +6,8 @@ defmodule Coxir.Ban do
 
   @primary_key false
 
+  @type t :: %Ban{}
+
   embedded_schema do
     belongs_to(:user, User, primary_key: true)
     belongs_to(:guild, Guild, primary_key: true)
