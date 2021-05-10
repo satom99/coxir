@@ -50,6 +50,7 @@ defmodule Coxir.Model do
       alias Coxir.{User, Channel, Overwrite, Webhook, Message, Interaction}
       alias Coxir.{Guild, Integration, Role, Ban}
       alias Coxir.{Member, Presence, VoiceState}
+      alias Ecto.Association.NotLoaded
       alias __MODULE__
 
       @storable unquote(storable?)
