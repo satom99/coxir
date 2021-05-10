@@ -61,23 +61,23 @@ defmodule Coxir.Channel do
 
   @type recipients :: list(User.t()) | nil
 
-  @type permission_overwrites :: NotLoaded.t() | Error.t() | list(Overwrite.t())
+  @type permission_overwrites :: NotLoaded.t() | list(Overwrite.t()) | Error.t()
 
-  @type webhooks :: NotLoaded.t() | Error.t() | list(Webhook.t())
+  @type webhooks :: NotLoaded.t() | list(Webhook.t()) | Error.t()
 
   @type voice_states :: NotLoaded.t() | list(VoiceState.t())
 
   @type guild_id :: Snowflake.t() | nil
 
-  @type guild :: NotLoaded.t() | Error.t() | Guild.t() | nil
+  @type guild :: NotLoaded.t() | Guild.t() | nil | Error.t()
 
   @type owner_id :: Snowflake.t() | nil
 
-  @type owner :: NotLoaded.t() | Error.t() | User.t() | nil
+  @type owner :: NotLoaded.t() | User.t() | nil | Error.t()
 
   @type parent_id :: Snowflake.t() | nil
 
-  @type parent :: NotLoaded.t() | Error.t() | t | nil
+  @type parent :: NotLoaded.t() | t | nil | Error.t()
 
   embedded_schema do
     field(:type, :integer)
