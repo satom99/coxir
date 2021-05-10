@@ -16,6 +16,11 @@ defmodule Coxir.API.Error do
     %Error{status: status, code: code, message: message}
   end
 
+  def message(%Error{status: status, code: nil}) do
+    reason = :httpd_util.reason_phrase(status)
+    "(#{status}) #{reason}"
+  end
+
   def message(%Error{status: status, code: code, message: message}) do
     "(#{status}) Got an error ##{code}: #{message}"
   end
