@@ -2,6 +2,10 @@ defmodule Coxir.Sharder do
   @moduledoc """
   Handles how gateway shards are started.
   """
+  alias Coxir.Gateway.Session
+
+  @type sharder :: pid
+
   defstruct [
     :shard_count,
     :session_options
@@ -13,5 +17,5 @@ defmodule Coxir.Sharder do
 
   @callback child_spec(options) :: Supervisor.child_spec()
 
-  @callback get_shard(pid, integer) :: pid
+  @callback get_shard(sharder, integer) :: Session.session()
 end
