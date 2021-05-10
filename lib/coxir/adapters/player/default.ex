@@ -46,23 +46,17 @@ defmodule Coxir.Player.Default do
   def init({url, _options}) do
     ffmpeg = Application.get_env(:coxir, :ffmpeg, "ffmpeg")
 
-    options = [
-      ["-i", url],
-      ["-ac", "2"],
-      ["-ar", "48000"],
-      ["-f", "s16le"],
-      ["-acodec", "libopus"],
-      ["-loglevel", "quiet"],
-      ["pipe:1"]
-    ]
+    options = ~w(
+      -i #{url}
+      -ac 2
+      -ar 48000
+      -f s16le
+      -acodec libopus
+      -loglevel quiet
+      pipe:1
+    )
 
-    process =
-      %Proc{} =
-      Porcelain.spawn(
-        ffmpeg,
-        List.flatten(options),
-        out: :stream
-      )
+    process = %Proc{} = Porcelain.spawn(ffmpeg, options, out: :stream)
 
     state = %Default{process: process}
     {:ok, state}
