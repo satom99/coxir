@@ -17,7 +17,7 @@ defmodule Coxir.Ban do
         }
 
   @typedoc """
-  The coxir key of a channel.
+  The coxir key of a ban.
   """
   @type key :: {user_id, guild_id}
 
