@@ -95,7 +95,7 @@ defmodule Coxir.Model.Loader do
     |> Map.update!(association, updater)
   end
 
-  def preload(%model{} = struct, association, options) do
+  def preload(%model{} = struct, association, options) when is_atom(association) do
     reflection = get_association(model, association)
     options = Enum.into(options, @default_options)
     preloader(reflection, struct, options)
