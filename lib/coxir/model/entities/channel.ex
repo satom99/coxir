@@ -16,7 +16,6 @@ defmodule Coxir.Channel do
           rate_limit_per_user: rate_limit_per_user,
           icon: icon,
           application_id: application_id,
-          last_pin_timestamp: last_pin_timestamp,
           rtc_region: rtc_region,
           video_quality_mode: video_quality_mode,
           recipients: recipients,
@@ -53,8 +52,6 @@ defmodule Coxir.Channel do
 
   @type application_id :: Snowflake.t() | nil
 
-  @type last_pin_timestamp :: DateTime.t() | nil
-
   @type rtc_region :: String.t() | nil
 
   @type video_quality_mode :: non_neg_integer | nil
@@ -90,7 +87,6 @@ defmodule Coxir.Channel do
     field(:rate_limit_per_user, :integer)
     field(:icon, :string)
     field(:application_id, Snowflake)
-    field(:last_pin_timestamp, :utc_datetime)
     field(:rtc_region, :string)
     field(:video_quality_mode, :integer)
 
