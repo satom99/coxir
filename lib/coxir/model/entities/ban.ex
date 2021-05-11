@@ -1,12 +1,49 @@
 defmodule Coxir.Ban do
   @moduledoc """
-  Work in progress.
+  Represents a Discord guild ban.
   """
   use Coxir.Model, storable?: false
 
   @primary_key false
 
-  @type t :: %Ban{}
+  @typedoc """
+  The struct for a ban.
+  """
+  @type t :: %Ban{
+          user: user,
+          user_id: user_id,
+          guild: guild,
+          guild_id: guild_id
+        }
+
+  @typedoc """
+  The coxir key of a channel.
+  """
+  @type key :: {user_id, guild_id}
+
+  @typedoc """
+  The id of the banned user.
+  """
+  @type user_id :: Snowflake.t()
+
+  @typedoc """
+  The banned user.
+
+  Needs to be preloaded via `preload/3`.
+  """
+  @type user :: NotLoaded.t() | User.t() | Error.t()
+
+  @typedoc """
+  The id of the belonging guild.
+  """
+  @type guild_id :: Snowflake.t()
+
+  @typedoc """
+  The belonging guild.
+
+  Needs to be preloaded via `preload/3`.
+  """
+  @type guild :: NotLoaded.t() | Guild.t() | Error.t()
 
   embedded_schema do
     belongs_to(:user, User, primary_key: true)
