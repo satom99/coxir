@@ -4,6 +4,9 @@ defmodule Coxir.Channel do
   """
   use Coxir.Model
 
+  @typedoc """
+  The struct for a channel.
+  """
   @type t :: %Channel{
           id: id,
           type: type,
