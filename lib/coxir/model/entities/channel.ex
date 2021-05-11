@@ -34,6 +34,11 @@ defmodule Coxir.Channel do
         }
 
   @typedoc """
+  The coxir key of a channel.
+  """
+  @type key :: id
+
+  @typedoc """
   The id of the channel.
   """
   @type id :: Snowflake.t()
