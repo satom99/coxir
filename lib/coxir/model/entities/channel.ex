@@ -30,50 +30,119 @@ defmodule Coxir.Channel do
           parent_id: parent_id
         }
 
+  @typedoc """
+  The id of the channel.
+  """
   @type id :: Snowflake.t()
 
+  @typedoc """
+  The type of the channel. For a list of types have a look [here](https://discord.com/developers/docs/resources/channel#channel-object-channel-types).
+  """
   @type type :: non_neg_integer | nil
 
+  @typedoc """
+  Sorting position of the channel.
+  """
   @type position :: non_neg_integer | nil
 
+  @typedoc """
+  The name of the channel.
+  """
   @type name :: String.t() | nil
 
+  @typedoc """
+  The topic of the channel.
+  """
   @type topic :: String.t() | nil
 
+  @typedoc """
+  Whether the channel is nsfw.
+  """
   @type nsfw :: boolean | nil
 
+  @typedoc """
+  The bitrate (in bits) of the voice channel.
+  """
   @type bitrate :: non_neg_integer | nil
 
+  @typedoc """
+  The user limit of the voice channel.
+  """
   @type user_limit :: non_neg_integer | nil
 
+  @typedoc """
+  Amount of seconds a user has to wait before sending another message.
+  """
   @type rate_limit_per_user :: non_neg_integer | nil
 
+  @typedoc """
+  The icon hash of the channel.
+  """
   @type icon :: String.t() | nil
 
+  @typedoc """
+  Application id of the group DM creator if it is bot-created.
+  """
   @type application_id :: Snowflake.t() | nil
 
+  @typedoc """
+  The voice region id for the voice channel, automatic when nil.
+  """
   @type rtc_region :: String.t() | nil
 
+  @typedoc """
+  The camera video quality mode of the voice channel.
+  """
   @type video_quality_mode :: non_neg_integer | nil
 
+  @typedoc """
+  The recipients of the DM.
+  """
   @type recipients :: list(User.t()) | nil
 
+  @typedoc """
+  Permission overwrites for members and roles.
+  """
   @type permission_overwrites :: NotLoaded.t() | list(Overwrite.t()) | Error.t()
 
+  @typedoc """
+  Webhooks configured for the channel.
+  """
   @type webhooks :: NotLoaded.t() | list(Webhook.t()) | Error.t()
 
+  @typedoc """
+  Active voice states for the voice channel.
+  """
   @type voice_states :: NotLoaded.t() | list(VoiceState.t())
 
+  @typedoc """
+  The id of the guild the channel belongs to.
+  """
   @type guild_id :: Snowflake.t() | nil
 
+  @typedoc """
+  The guild the channel belongs to.
+  """
   @type guild :: NotLoaded.t() | Guild.t() | nil | Error.t()
 
+  @typedoc """
+  The id of the creator of the group DM or thread.
+  """
   @type owner_id :: Snowflake.t() | nil
 
+  @typedoc """
+  The creator of the group DM or thread.
+  """
   @type owner :: NotLoaded.t() | User.t() | nil | Error.t()
 
+  @typedoc """
+  The id of the parent category for guild channels. The id of the belonging channel for threads.
+  """
   @type parent_id :: Snowflake.t() | nil
 
+  @typedoc """
+  The parent category for guild channels. The belonging channel for threads.
+  """
   @type parent :: NotLoaded.t() | t | nil | Error.t()
 
   embedded_schema do
