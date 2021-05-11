@@ -34,12 +34,12 @@ defmodule Coxir.Ban do
   @type user :: NotLoaded.t() | User.t() | Error.t()
 
   @typedoc """
-  The id of the belonging guild.
+  The id of the guild the ban belongs to.
   """
   @type guild_id :: Snowflake.t()
 
   @typedoc """
-  The belonging guild.
+  The guild the ban belongs to.
 
   Needs to be preloaded via `preload/3`.
   """
