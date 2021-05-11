@@ -97,21 +97,29 @@ defmodule Coxir.Channel do
 
   @typedoc """
   The recipients of the DM.
+
+  Must be preloaded via `preload/3`.
   """
   @type recipients :: list(User.t()) | nil
 
   @typedoc """
   Permission overwrites for members and roles.
+
+  Must be preloaded via `preload/3`.
   """
   @type permission_overwrites :: NotLoaded.t() | list(Overwrite.t()) | Error.t()
 
   @typedoc """
   Webhooks configured for the channel.
+
+  Must be preloaded via `preload/3`.
   """
   @type webhooks :: NotLoaded.t() | list(Webhook.t()) | Error.t()
 
   @typedoc """
   Active voice states for the voice channel.
+
+  Must be preloaded via `preload/3`.
   """
   @type voice_states :: NotLoaded.t() | list(VoiceState.t())
 
@@ -122,6 +130,8 @@ defmodule Coxir.Channel do
 
   @typedoc """
   The guild the channel belongs to.
+
+  Must be preloaded via `preload/3`.
   """
   @type guild :: NotLoaded.t() | Guild.t() | nil | Error.t()
 
@@ -132,6 +142,8 @@ defmodule Coxir.Channel do
 
   @typedoc """
   The creator of the group DM or thread.
+
+  Must be preloaded via `preload/3`.
   """
   @type owner :: NotLoaded.t() | User.t() | nil | Error.t()
 
@@ -142,6 +154,8 @@ defmodule Coxir.Channel do
 
   @typedoc """
   The parent category for guild channels. The belonging channel for threads.
+
+  Must be preloaded via `preload/3`.
   """
   @type parent :: NotLoaded.t() | t | nil | Error.t()
 
