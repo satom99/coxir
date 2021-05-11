@@ -192,12 +192,13 @@ defmodule Coxir.Gateway do
 
   defp request_gateway_info(token) do
     {:ok, object} = API.get("gateway/bot", token: token)
+    gateway_info = GatewayInfo.cast(object)
 
     %GatewayInfo{
       url: "wss://" <> gateway_host,
       shards: shard_count,
       session_start_limit: start_limit
-    } = GatewayInfo.cast(object)
+    } = gateway_info
 
     gateway_host = :binary.bin_to_list(gateway_host)
 
