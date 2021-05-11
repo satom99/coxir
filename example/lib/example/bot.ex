@@ -29,7 +29,7 @@ defmodule Example.Bot do
       with %Guild{name: guild_name} <- guild do
         "[#{guild_name}] [##{channel_name}]"
       else
-        nil -> "[DM]"
+        _other -> "[DM]"
       end
 
     Logger.info("#{where} #{username}##{discriminator}: #{content}")
