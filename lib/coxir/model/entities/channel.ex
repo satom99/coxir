@@ -94,7 +94,7 @@ defmodule Coxir.Channel do
   @type application_id :: Snowflake.t() | nil
 
   @typedoc """
-  The voice region id for the voice channel, automatic when nil.
+  The voice region id for the voice channel, nil when automatic.
   """
   @type rtc_region :: String.t() | nil
 
