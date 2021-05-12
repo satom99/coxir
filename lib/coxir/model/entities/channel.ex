@@ -199,6 +199,26 @@ defmodule Coxir.Channel do
           optional(:nsfw) => nsfw
         }
 
+  @typedoc """
+  The parameters that can be passed to `update/2`.
+  """
+  @type update_params :: Enum.t() | update_params_guild
+
+  @typedoc """
+  Parameters when updating a guild channel.
+  """
+  @type update_params_guild :: %{
+          optional(:type) => type,
+          optional(:topic) => topic,
+          optional(:bitrate) => bitrate,
+          optional(:user_limit) => user_limit,
+          optional(:rate_limit_per_user) => rate_limit_per_user,
+          optional(:position) => position,
+          optional(:permission_overwrites) => permission_overwrites,
+          optional(:parent_id) => parent_id,
+          optional(:nsfw) => nsfw
+        }
+
   embedded_schema do
     field(:type, :integer)
     field(:position, :integer)
@@ -270,6 +290,9 @@ defmodule Coxir.Channel do
 
   @spec create(create_params, Loader.options()) :: Loader.result()
   def create(params, options)
+
+  @spec update(t, update_params, Loader.options()) :: Loader.result()
+  def update(channel, params, options)
 
   @doc """
   Triggers the typing indicator on a given channel.
