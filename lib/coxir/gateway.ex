@@ -30,12 +30,12 @@ defmodule Coxir.Gateway do
   If no `shard_count` is provided, the value suggested by Discord will be used.
   """
   @type config :: [
-    token: Token.t() | none,
-    intents: Intents.intents() | :non_privileged,
-    shard_count: non_neg_integer | none,
-    sharder: Sharder.t() | Sharder.Default,
-    handler: Handler.t()
-  ]
+          token: Token.t() | none,
+          intents: Intents.intents() | :non_privileged,
+          shard_count: non_neg_integer | none,
+          sharder: Sharder.t() | Sharder.Default,
+          handler: Handler.t()
+        ]
 
   defmacro __using__(_options) do
     quote location: :keep do
