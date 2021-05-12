@@ -1,13 +1,13 @@
 defmodule Coxir.Gateway do
   @moduledoc """
-  Work in progress.
+  Supervises the components necessary to interact with Discord's gateway.
   """
   import Supervisor, only: [start_child: 2]
   import Bitwise
 
   alias Coxir.{API, Sharder, Token}
   alias Coxir.Gateway.Payload.{GatewayInfo, UpdatePresence}
-  alias Coxir.Gateway.{Producer, Dispatcher, Consumer}
+  alias Coxir.Gateway.{Producer, Dispatcher, Consumer, Handler}
   alias Coxir.Gateway.{Intents, Session}
   alias Coxir.Model.Snowflake
   alias Coxir.{Guild, Channel}
@@ -18,6 +18,17 @@ defmodule Coxir.Gateway do
   ]
 
   @type gateway :: Supervisor.supervisor()
+
+  @typedoc """
+  The config that must be passed to `start_link/2`.
+  """
+  @type config :: [
+    token: Token.t(),
+    intents: Intents.intents() | :non_privileged,
+    shard_count: non_neg_integer | nil,
+    sharder: Sharder.t() | Sharder.Default,
+    handler: Handler.t()
+  ]
 
   defmacro __using__(_options) do
     quote location: :keep do
@@ -54,6 +65,9 @@ defmodule Coxir.Gateway do
     end
   end
 
+  @doc """
+  Calls `update_presence/3` on all the shards of a given gateway.
+  """
   @spec update_presence(gateway, Enum.t()) :: :ok
   def update_presence(gateway, params) do
     shard_count = get_shard_count(gateway)
@@ -65,7 +79,12 @@ defmodule Coxir.Gateway do
     :ok
   end
 
-  @spec update_presence(gateway, Guild.t() | Channel.t() | non_neg_integer, Enum.t()) :: :ok
+  @doc """
+  Updates the presence on a given channel, guild or specific shard.
+
+  The possible parameters are the fields of `t:Coxir.Gateway.Payload.UpdatePresence.t()`.
+  """
+  @spec update_presence(gateway, Channel.t() | Guild.t() | non_neg_integer, Enum.t()) :: :ok
   def update_presence(gateway, where, params) do
     shard = get_shard(gateway, where)
     params = Map.new(params)
@@ -73,6 +92,9 @@ defmodule Coxir.Gateway do
     Session.update_presence(shard, payload)
   end
 
+  @doc """
+  Returns the session process tied to a given channel, guild or specific shard.
+  """
   @spec get_shard(gateway, Channel.t() | Guild.t() | non_neg_integer) :: Session.session()
   def get_shard(gateway, %Channel{guild_id: nil}) do
     get_shard(gateway, 0)
@@ -94,18 +116,28 @@ defmodule Coxir.Gateway do
     sharder_module.get_shard(sharder, index)
   end
 
+  @doc """
+  Returns the id of the user the given gateway is running for.
+  """
   @spec get_user_id(gateway) :: Snowflake.t()
   def get_user_id(gateway) do
     %Session{user_id: user_id} = get_session_options(gateway)
     user_id
   end
 
+  @doc """
+  Returns the token configured for the given gateway.
+  """
   @spec get_token(gateway) :: Token.t()
   def get_token(gateway) do
     %Session{token: token} = get_session_options(gateway)
     token
   end
 
+  @doc """
+  Starts a gateway with the given configuration and options.
+  """
+  @spec start_link(config, list(Supervisor.option() | Supervisor.init_option())) :: Supervisor.on_start()
   def start_link(config, options \\ []) do
     handler = Keyword.fetch!(config, :handler)
     options = [{:strategy, :rest_for_one} | options]
