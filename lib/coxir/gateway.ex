@@ -26,9 +26,9 @@ defmodule Coxir.Gateway do
   The config that must be passed to `start_link/2`.
   """
   @type config :: [
-    token: Token.t(),
+    token: Token.t() | none,
     intents: Intents.intents() | :non_privileged,
-    shard_count: non_neg_integer | nil,
+    shard_count: non_neg_integer | none,
     sharder: Sharder.t() | Sharder.Default,
     handler: Handler.t()
   ]
