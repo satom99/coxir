@@ -73,12 +73,12 @@ defmodule Coxir.Model.Loader do
     )
   end
 
-  def preload(%_model{} = struct, associations, options) when is_list(associations) do
+  def preload(%model{} = struct, associations, options) when is_list(associations) do
     Enum.reduce(
       associations,
       struct,
       fn association, struct ->
-        preload(struct, association, options)
+        model.preload(struct, association, options)
       end
     )
   end
