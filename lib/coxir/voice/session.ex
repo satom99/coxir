@@ -33,7 +33,7 @@ defmodule Coxir.Voice.Session do
   @query "/?v=4"
 
   @close_session [4006, 4009]
-  @close_stop [4011, 4014]
+  @close_dropped [4014]
 
   @connect {:continue, :connect}
   @reconnect {:continue, :reconnect}
@@ -178,11 +178,11 @@ defmodule Coxir.Voice.Session do
   end
 
   defp handle_frame({:close, status, _reason}, state) when status in @close_session do
-    {:stop, :normal, state}
+    {:stop, :killed, state}
   end
 
-  defp handle_frame({:close, status, _reason}, state) when status in @close_stop do
-    {:stop, :stop, state}
+  defp handle_frame({:close, status, _reason}, state) when status in @close_dropped do
+    {:stop, :normal, state}
   end
 
   defp handle_frame({:close, _status, _reason}, state) do

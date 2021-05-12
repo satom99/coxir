@@ -212,7 +212,7 @@ defmodule Coxir.Voice.Instance do
     handle_update(struct, state)
   end
 
-  def handle_info({:EXIT, session, :normal}, %Instance{session: session} = state) do
+  def handle_info({:EXIT, session, :killed}, %Instance{session: session} = state) do
     state = %{state | session_id: nil, endpoint_host: nil, session: nil, audio: nil}
     update_player(state)
 
@@ -222,8 +222,8 @@ defmodule Coxir.Voice.Instance do
     {:noreply, state}
   end
 
-  def handle_info({:EXIT, session, :stop}, %Instance{session: session} = state) do
-    {:stop, :normal, state}
+  def handle_info({:EXIT, session, :normal}, %Instance{session: session} = state) do
+    {:noreply, state}
   end
 
   def handle_info({:EXIT, player, :normal}, %Instance{player: player} = state) do
