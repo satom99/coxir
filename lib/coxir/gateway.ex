@@ -43,19 +43,19 @@ defmodule Coxir.Gateway do
 
       alias Coxir.Gateway
 
-      def start_link do
-        :coxir
-        |> Application.get_env(__MODULE__, [])
-        |> Keyword.put(:handler, __MODULE__)
-        |> Gateway.start_link(name: __MODULE__)
-      end
-
       def child_spec(_runtime) do
         %{
           id: __MODULE__,
           start: {__MODULE__, :start_link, []},
           restart: :permanent
         }
+      end
+
+      def start_link do
+        :coxir
+        |> Application.get_env(__MODULE__, [])
+        |> Keyword.put(:handler, __MODULE__)
+        |> Gateway.start_link(name: __MODULE__)
       end
 
       def get_user_id do
