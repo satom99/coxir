@@ -175,7 +175,7 @@ defmodule Coxir.Channel do
   @typedoc """
   The parameters that can be passed to `create/2`.
   """
-  @type create_params :: create_params_dm | create_params_guild
+  @type create_params :: Enum.t() | create_params_dm | create_params_guild
 
   @typedoc """
   Parameters when creating a DM channel.
