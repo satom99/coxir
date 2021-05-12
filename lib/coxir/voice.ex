@@ -36,7 +36,7 @@ defmodule Coxir.Voice do
 
   If the user is already in the channel, the function acts as a no-op.
 
-  If the user is in a different channel of the same guild, it will switch and stop playing.
+  If the user is in a different channel of the same guild, it will stop playing and then switch.
   """
   @spec join(Channel.t(), join_options) :: Instance.instance()
   def join(%Channel{id: channel_id, guild_id: guild_id}, options) do
