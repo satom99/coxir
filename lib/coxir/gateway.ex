@@ -25,7 +25,7 @@ defmodule Coxir.Gateway do
   @typedoc """
   The config that must be passed to `start_link/2`.
 
-  If no `token` is provided, it is expected to be configured as `:token` under the `:coxir` app.
+  If no `token` is provided, one is expected to be configured as `:token` under the `:coxir` app.
 
   If no `shard_count` is provided, the value suggested by Discord will be used.
   """
