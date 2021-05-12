@@ -206,7 +206,7 @@ defmodule Coxir.Gateway do
       |> Keyword.fetch!(:intents)
       |> Intents.get_value()
 
-    {gateway_host, shard_count, start_limit} = request_gateway_info(token)
+    {gateway_host, shard_count, _start_limit} = request_gateway_info(token)
 
     session_options = %Session{
       gateway: gateway,
@@ -218,7 +218,6 @@ defmodule Coxir.Gateway do
     }
 
     sharder_options = %Sharder{
-      start_limit: start_limit,
       shard_count: Keyword.get(config, :shard_count, shard_count),
       session_options: session_options
     }

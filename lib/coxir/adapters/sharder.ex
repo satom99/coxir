@@ -7,7 +7,6 @@ defmodule Coxir.Sharder do
   @type sharder :: pid
 
   defstruct [
-    :start_limit,
     :shard_count,
     :session_options
   ]
