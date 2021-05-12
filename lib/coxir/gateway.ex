@@ -89,7 +89,7 @@ defmodule Coxir.Gateway do
   @doc """
   Updates the presence on a given channel, guild or specific shard.
 
-  The possible parameters are the fields of `t:Coxir.Gateway.Payload.UpdatePresence.t()`.
+  The possible parameters are the fields of `t:Coxir.Gateway.Payload.UpdatePresence.t/0`.
   """
   @spec update_presence(gateway, Channel.t() | Guild.t() | non_neg_integer, Enum.t()) :: :ok
   def update_presence(gateway, where, params) do
