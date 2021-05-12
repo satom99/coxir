@@ -23,7 +23,7 @@ defmodule Coxir.Gateway do
   @type gateway :: Supervisor.supervisor()
 
   @typedoc """
-  The config that must be passed to `start_link/2`.
+  The configuration that must be passed to `start_link/2`.
 
   If no `token` is provided, one is expected to be configured as `:token` under the `:coxir` app.
 
