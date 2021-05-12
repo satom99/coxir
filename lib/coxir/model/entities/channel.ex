@@ -167,6 +167,38 @@ defmodule Coxir.Channel do
   """
   @type parent :: NotLoaded.t() | t | nil | Error.t()
 
+  @typedoc """
+  The id of the recipient user of the DM.
+  """
+  @type recipient_id :: Snowflake.t()
+
+  @typedoc """
+  The parameters that can be passed to `create/2`.
+  """
+  @type create_params :: create_params_dm | create_params_guild
+
+  @typedoc """
+  Parameters when creating a DM channel.
+  """
+  @type create_params_dm :: %{recipient_id: recipient_id}
+
+  @typedoc """
+  Parameters when creating a guild channel.
+  """
+  @type create_params_guild :: %{
+          :guild_id => guild_id,
+          :name => name,
+          optional(:type) => type,
+          optional(:topic) => topic,
+          optional(:bitrate) => bitrate,
+          optional(:user_limit) => user_limit,
+          optional(:rate_limit_per_user) => rate_limit_per_user,
+          optional(:position) => position,
+          optional(:permission_overwrites) => permission_overwrites,
+          optional(:parent_id) => parent_id,
+          optional(:nsfw) => nsfw
+        }
+
   embedded_schema do
     field(:type, :integer)
     field(:position, :integer)
@@ -235,6 +267,9 @@ defmodule Coxir.Channel do
   def preload(channel, association, options) do
     super(channel, association, options)
   end
+
+  @spec create(create_params, Loader.options()) :: Loader.result()
+  def create(params, options)
 
   @doc """
   Triggers the typing indicator on a given channel.
