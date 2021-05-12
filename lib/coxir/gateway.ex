@@ -144,7 +144,8 @@ defmodule Coxir.Gateway do
   @doc """
   Starts a gateway with the given configuration and options.
   """
-  @spec start_link(config, list(Supervisor.option() | Supervisor.init_option())) :: Supervisor.on_start()
+  @spec start_link(config, list(Supervisor.option() | Supervisor.init_option())) ::
+          Supervisor.on_start()
   def start_link(config, options \\ []) do
     handler = Keyword.fetch!(config, :handler)
     options = [{:strategy, :rest_for_one} | options]
