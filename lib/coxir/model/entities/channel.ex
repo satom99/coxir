@@ -292,7 +292,7 @@ defmodule Coxir.Channel do
   def create(params, options)
 
   @spec update(t, update_params, Loader.options()) :: Loader.result()
-  def update(channel, params, options)
+  def update(struct, params, options)
 
   @doc """
   Triggers the typing indicator on a given channel.
