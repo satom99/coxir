@@ -17,6 +17,9 @@ defmodule Coxir.Gateway do
     intents: :non_privileged
   ]
 
+  @typedoc """
+  A gateway process.
+  """
   @type gateway :: Supervisor.supervisor()
 
   @typedoc """
