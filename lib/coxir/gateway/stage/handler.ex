@@ -4,6 +4,8 @@ defmodule Coxir.Gateway.Handler do
   """
   alias Coxir.Gateway.Dispatcher
 
+  @type t :: module
+
   @callback handle_event(Dispatcher.event()) :: any
 
   def child_spec(handler) do
