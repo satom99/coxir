@@ -148,6 +148,11 @@ defmodule Coxir.Voice do
   end
 
   @doc false
+  def child_spec(term) do
+    super(term)
+  end
+
+  @doc false
   def start_link(state) do
     Supervisor.start_link(__MODULE__, state, name: Voice)
   end
