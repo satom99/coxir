@@ -226,7 +226,7 @@ defmodule Coxir.Voice.Instance do
     {:noreply, state}
   end
 
-  def handle_info({:EXIT, player, :normal}, %Instance{player: player} = state) do
+  def handle_info({:EXIT, player, _reason}, %Instance{player: player} = state) do
     state = %{state | player: nil}
     {:noreply, state}
   end
