@@ -17,8 +17,8 @@ defmodule Coxir.Voice do
   """
   @type join_options :: [
           as: Gateway.gateway(),
-          self_deaf: :boolean | false,
-          self_mute: :boolean | false
+          self_deaf: boolean | false,
+          self_mute: boolean | false
         ]
 
   @typedoc """
