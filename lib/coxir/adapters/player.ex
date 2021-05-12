@@ -4,6 +4,8 @@ defmodule Coxir.Player do
   """
   alias Coxir.Voice.Audio
 
+  @type t :: module
+
   @type player :: pid
 
   @type playable :: term
