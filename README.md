@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/github/license/satom99/coxir.svg)](https://github.com/satom99/coxir/blob/master/LICENSE)
 [![Validation](https://github.com/satom99/coxir2/actions/workflows/validation.yml/badge.svg)](https://github.com/satom99/coxir2/actions/workflows/validation.yml)
 [![Documentation](https://github.com/satom99/coxir2/actions/workflows/documentation.yml/badge.svg)](https://github.com/satom99/coxir2/actions/workflows/documentation.yml)
-[![Join Discord](https://img.shields.io/badge/discord-join-7289DA.svg)](https://discord.gg/6JrqNEX)
+[![Join Discord](https://img.shields.io/badge/Discord-join-7289DA.svg)](https://discord.gg/6JrqNEX)
 
 A modern high-level Elixir wrapper for [Discord](https://discord.com).
 
