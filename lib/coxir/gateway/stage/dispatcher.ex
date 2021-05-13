@@ -5,7 +5,7 @@ defmodule Coxir.Gateway.Dispatcher do
   use GenStage
 
   alias Coxir.Gateway.Payload
-  alias Coxir.Gateway.Payload.{Ready, VoiceServerUpdate}
+  alias Coxir.Gateway.Payload.{Ready, VoiceServerUpdate, VoiceInstanceUpdate}
 
   alias Coxir.Model.Loader
   alias Coxir.{Channel, Message, Interaction}
@@ -39,6 +39,7 @@ defmodule Coxir.Gateway.Dispatcher do
           | user_update
           | voice_state_update
           | voice_server_update
+          | voice_instance_update
           | payload
 
   @type ready :: {:READY, Ready.t()}
@@ -90,6 +91,8 @@ defmodule Coxir.Gateway.Dispatcher do
   @type voice_state_update :: {:VOICE_STATE_UPDATE, VoiceState.t()}
 
   @type voice_server_update :: {:VOICE_SERVER_UPDATE, VoiceServerUpdate.t()}
+
+  @type voice_instance_update :: {:VOICE_INSTANCE_UPDATE, VoiceInstanceUpdate.t()}
 
   @type payload :: {:PAYLOAD, Payload.t()}
 
