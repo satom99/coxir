@@ -1,6 +1,12 @@
 defmodule Coxir.Gateway do
   @moduledoc """
   Supervises the components necessary to interact with Discord's gateway.
+
+  ### Using the module
+
+  The module can be used with `Kernel.use/2` to transform the calling module into a gateway.
+
+  Check out the `__using__/1` macro to see what this does exactly.
   """
   import Supervisor, only: [start_child: 2]
   import Bitwise
@@ -37,6 +43,21 @@ defmodule Coxir.Gateway do
           handler: Handler.t()
         ]
 
+  @doc """
+  Defines functions in order to transform the calling module into a gateway.
+
+  Defines `child_spec/1` and `start_link/1` so that the module can be added to a supervisor.
+
+  Note that the `t:gateway/0` process that the last function starts is named after the module.
+
+  Defines `get_user_id/0` which delegates to `get_user_id/1`.
+
+  Defines `update_presence/1` which delegates to `update_presence/2`.
+
+  Defines `update_presence/2` which delegates to `update_presence/3`.
+
+  Custom configuration may be given for this module by configuring it under the `:coxir` app.
+  """
   defmacro __using__(_options) do
     quote location: :keep do
       @behaviour Coxir.Gateway.Handler
