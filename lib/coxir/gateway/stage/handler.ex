@@ -10,7 +10,7 @@ defmodule Coxir.Gateway.Handler do
   @type t :: module
 
   @doc """
-  Called when a `t:Dispatcher.event/0` is to be handled.
+  Called when a `t:Coxir.Gateway.Dispatcher.event/0` is to be handled.
   """
   @callback handle_event(Dispatcher.event()) :: any
 
