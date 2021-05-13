@@ -14,32 +14,84 @@ defmodule Coxir.Gateway.Dispatcher do
   alias Coxir.Voice
 
   @type event ::
-          {:READY, Ready.t()}
-          | :RESUMED
-          | {:CHANNEL_CREATE, Channel.t()}
-          | {:CHANNEL_UPDATE, Channel.t()}
-          | {:CHANNEL_DELETE, Channel.t()}
-          | {:THREAD_CREATE, Channel.t()}
-          | {:THREAD_UPDATE, Channel.t()}
-          | {:THREAD_DELETE, Channel.t()}
-          | {:GUILD_CREATE, Guild.t()}
-          | {:GUILD_UPDATE, Guild.t()}
-          | {:GUILD_DELETE, Guild.t()}
-          | {:GUILD_MEMBER_ADD, Member.t()}
-          | {:GUILD_MEMBER_UPDATE, Member.t()}
-          | {:GUILD_MEMBER_REMOVE, Member.t()}
-          | {:GUILD_ROLE_CREATE, Role.t()}
-          | {:GUILD_ROLE_UPDATE, Role.t()}
-          | {:GUILD_ROLE_DELETE, Role.t()}
-          | {:INTERACTION_CREATE, Interaction.t()}
-          | {:MESSAGE_CREATE, Message.t()}
-          | {:MESSAGE_UPDATE, Message.t()}
-          | {:MESSAGE_DELETE, Message.t()}
-          | {:PRESENCE_UPDATE, Presence.t()}
-          | {:USER_UPDATE, User.t()}
-          | {:VOICE_STATE_UPDATE, VoiceState.t()}
-          | {:VOICE_SERVER_UPDATE, VoiceServerUpdate.t()}
-          | {:PAYLOAD, Payload.t()}
+          ready
+          | resumed
+          | channel_create
+          | channel_update
+          | channel_delete
+          | thread_create
+          | thread_update
+          | thread_delete
+          | guild_create
+          | guild_update
+          | guild_delete
+          | guild_member_add
+          | guild_member_update
+          | guild_member_remove
+          | guild_role_create
+          | guild_role_update
+          | guild_role_delete
+          | interaction_create
+          | message_create
+          | message_update
+          | message_delete
+          | presence_update
+          | user_update
+          | voice_state_update
+          | voice_server_update
+          | payload
+
+  @type ready :: {:READY, Ready.t()}
+
+  @type resumed :: :RESUMED
+
+  @type channel_create :: {:CHANNEL_CREATE, Channel.t()}
+
+  @type channel_update :: {:CHANNEL_UPDATE, Channel.t()}
+
+  @type channel_delete :: {:CHANNEL_DELETE, Channel.t()}
+
+  @type thread_create :: {:THREAD_CREATE, Channel.t()}
+
+  @type thread_update :: {:THREAD_UPDATE, Channel.t()}
+
+  @type thread_delete :: {:THREAD_DELETE, Channel.t()}
+
+  @type guild_create :: {:GUILD_CREATE, Guild.t()}
+
+  @type guild_update :: {:GUILD_UPDATE, Guild.t()}
+
+  @type guild_delete :: {:GUILD_DELETE, Guild.t()}
+
+  @type guild_member_add :: {:GUILD_MEMBER_ADD, Member.t()}
+
+  @type guild_member_update :: {:GUILD_MEMBER_UPDATE, Member.t()}
+
+  @type guild_member_remove :: {:GUILD_MEMBER_REMOVE, Member.t()}
+
+  @type guild_role_create :: {:GUILD_ROLE_CREATE, Role.t()}
+
+  @type guild_role_update :: {:GUILD_ROLE_UPDATE, Role.t()}
+
+  @type guild_role_delete :: {:GUILD_ROLE_DELETE, Role.t()}
+
+  @type interaction_create :: {:INTERACTION_CREATE, Interaction.t()}
+
+  @type message_create :: {:MESSAGE_CREATE, Message.t()}
+
+  @type message_update :: {:MESSAGE_UPDATE, Message.t()}
+
+  @type message_delete :: {:MESSAGE_DELETE, Message.t()}
+
+  @type presence_update :: {:PRESENCE_UPDATE, Presence.t()}
+
+  @type user_update :: {:USER_UPDATE, User.t()}
+
+  @type voice_state_update :: {:VOICE_STATE_UPDATE, VoiceState.t()}
+
+  @type voice_server_update :: {:VOICE_SERVER_UPDATE, VoiceServerUpdate.t()}
+
+  @type payload :: {:PAYLOAD, Payload.t()}
 
   def start_link(producer) do
     GenStage.start_link(__MODULE__, producer)
