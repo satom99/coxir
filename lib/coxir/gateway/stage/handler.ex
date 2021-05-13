@@ -1,13 +1,20 @@
 defmodule Coxir.Gateway.Handler do
   @moduledoc """
-  Work in progress.
+  Behaviour for modules handling events from `Coxir.Gateway.Consumer`.
   """
   alias Coxir.Gateway.Dispatcher
 
+  @typedoc """
+  A module that implements the behaviour.
+  """
   @type t :: module
 
+  @doc """
+  Called when a `t:Dispatcher.event/0` is to be handled.
+  """
   @callback handle_event(Dispatcher.event()) :: any
 
+  @doc false
   def child_spec(handler) do
     %{
       id: __MODULE__,
@@ -16,6 +23,7 @@ defmodule Coxir.Gateway.Handler do
     }
   end
 
+  @doc false
   def start_handler(handler, event) do
     Task.start_link(fn ->
       handler.handle_event(event)
