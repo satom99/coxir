@@ -56,6 +56,8 @@ defmodule Coxir.Gateway do
 
   Defines `update_presence/2` which delegates to `update_presence/3`.
 
+  Requires the `Coxir.Gateway.Handler` behaviour to be implemented for handling events.
+
   Custom configuration can be given for this module by configuring it under the `:coxir` app.
   """
   defmacro __using__(_options) do
