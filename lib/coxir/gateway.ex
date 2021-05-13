@@ -46,7 +46,7 @@ defmodule Coxir.Gateway do
   @doc """
   Defines functions in order to transform the calling module into a gateway.
 
-  Defines `child_spec/1` and `start_link/1` so that the module can be added to a supervisor.
+  Defines `child_spec/1` and `start_link/0` so that the module can be added to a supervisor.
 
   Note that the `t:gateway/0` process that the last function starts is named after the module.
 
