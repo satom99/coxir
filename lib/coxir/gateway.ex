@@ -56,7 +56,7 @@ defmodule Coxir.Gateway do
 
   Defines `update_presence/2` which delegates to `update_presence/3`.
 
-  Custom configuration may be given for this module by configuring it under the `:coxir` app.
+  Custom configuration can be given for this module by configuring it under the `:coxir` app.
   """
   defmacro __using__(_options) do
     quote location: :keep do
