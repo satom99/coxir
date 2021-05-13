@@ -1,11 +1,14 @@
 defmodule Coxir do
   @moduledoc """
-  Work in progress.
+  Entry-point for the coxir application.
+
+  Starts a supervisor with the components required by the library.
   """
   use Application
 
   alias Coxir.{Limiter, Storage, Voice}
 
+  @doc false
   def start(_type, _args) do
     children = [
       Limiter,
