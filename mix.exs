@@ -53,6 +53,13 @@ defmodule Coxir.MixProject do
           ~r/^Coxir.Presence.?/,
           Coxir.VoiceState
         ],
+        Gateway: [
+          ~r/^Coxir.Gateway.?/,
+          ~r/^Coxir.Payload.?/
+        ],
+        Voice: [
+          ~r/^Coxir.Voice.?/
+        ],
         Adapters: [
           ~r/^Coxir.Limiter.?/,
           ~r/^Coxir.Storage.?/,
@@ -64,13 +71,6 @@ defmodule Coxir.MixProject do
         ],
         API: [
           ~r/^Coxir.API.?/
-        ],
-        Gateway: [
-          ~r/^Coxir.Gateway.?/,
-          ~r/^Coxir.Payload.?/
-        ],
-        Voice: [
-          ~r/^Coxir.Voice.?/
         ],
         Other: ~r/(.*?)/
       ],
