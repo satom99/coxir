@@ -1,6 +1,16 @@
 defmodule Coxir.Storage do
   @moduledoc """
   Handles how models are cached.
+
+  ### Configuration
+
+  A list of models to be stored can be configured as `:storable` under the `:coxir` app.
+
+  If no such list is configured, all models hardcoded as storable will be stored by default.
+
+  A custom storage adapter can be configured as `:adapter` under the `:coxir` app.
+
+  If no custom adapter is configured, the default `Coxir.Storage.Default` will be used.
   """
   alias Coxir.Model
 
