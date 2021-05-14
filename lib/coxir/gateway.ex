@@ -180,7 +180,7 @@ defmodule Coxir.Gateway do
       consumer_options = %Consumer{handler: handler, dispatcher: dispatcher}
       {:ok, _consumer} = start_child(gateway, {Consumer, consumer_options})
 
-      sharder_spec = generate_sharder_spec(gateway, producer, config)
+      sharder_spec = generate_sharder_spec(producer, config)
       {:ok, _sharder} = start_child(gateway, sharder_spec)
 
       {:ok, gateway}
@@ -214,7 +214,7 @@ defmodule Coxir.Gateway do
     sharder_options
   end
 
-  defp generate_sharder_spec(gateway, producer, config) do
+  defp generate_sharder_spec(producer, config) do
     global = Application.get_all_env(:coxir)
 
     config =
@@ -232,7 +232,6 @@ defmodule Coxir.Gateway do
     {gateway_host, shard_count, _start_limit} = request_gateway_info(token)
 
     session_options = %Session{
-      gateway: gateway,
       user_id: Token.get_user_id(token),
       token: token,
       intents: intents,
