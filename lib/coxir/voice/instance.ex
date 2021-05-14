@@ -15,10 +15,10 @@ defmodule Coxir.Voice.Instance do
   @update_session {:continue, :update_session}
 
   defstruct [
-    :player_module,
-    :player,
     :gateway,
     :producer,
+    :player_module,
+    :player,
     :user_id,
     :guild_id,
     :channel_id,
