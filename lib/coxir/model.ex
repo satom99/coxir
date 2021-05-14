@@ -33,6 +33,10 @@ defmodule Coxir.Model do
 
   @callback preload(list(instance), Loader.preloads(), Loader.options()) :: list(instance)
 
+  @callback preload!(instance, Loader.preloads(), Loader.options()) :: instance
+
+  @callback preload!(list(instance), Loader.preloads(), Loader.options()) :: list(instance)
+
   @callback create(Enum.t(), Loader.options()) :: Loader.result()
 
   @callback update(instance, Enum.t(), Loader.options()) :: Loader.result()
@@ -77,6 +81,10 @@ defmodule Coxir.Model do
 
       def preload(struct, preloads, options \\ []) do
         Loader.preload(struct, preloads, options)
+      end
+
+      def preload!(struct, preloads, options \\ []) do
+        Loader.preload!(struct, preloads, options)
       end
 
       def create(params, options \\ []) do
@@ -135,6 +143,9 @@ defmodule Coxir.Model do
 
       @doc unquote(preload)
       def preload(struct, preloads, options)
+
+      @doc unquote(preload)
+      def preload!(struct, preloads, options)
 
       @doc unquote(create)
       def create(params, options)
