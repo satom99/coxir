@@ -91,7 +91,7 @@ defmodule Coxir.Model do
   @callback update(instance, Enum.t(), Loader.options()) :: Loader.result()
 
   @doc """
-  Delegates to `Coxir.Model.Loader.delete/3`.
+  Delegates to `Coxir.Model.Loader.delete/2`.
   """
   @callback delete(instance, Loader.options()) :: Loader.result()
 
