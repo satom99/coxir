@@ -101,6 +101,45 @@ defmodule Coxir.Model.Loader do
     preloader(reflection, struct, options)
   end
 
+  @spec preload!(list(Model.instance()), preloads, options) :: list(Model.instance())
+  @spec preload!(Model.instance(), preloads, options) :: Model.instance()
+  def preload!(structs, preloads, options) when is_list(structs) do
+    Enum.map(
+      structs,
+      fn struct ->
+        preload!(struct, preloads, options)
+      end
+    )
+  end
+
+  def preload!(%_model{} = struct, associations, options) when is_list(associations) do
+    Enum.reduce(
+      associations,
+      struct,
+      fn association, struct ->
+        preload!(struct, association, options)
+      end
+    )
+  end
+
+  def preload!(%_model{} = struct, {association, nested}, options) do
+    updater = fn value ->
+      with %_model{} = struct <- value do
+        preload!(struct, nested, options)
+      end
+    end
+
+    struct
+    |> preload!(association, options)
+    |> Map.update!(association, updater)
+  end
+
+  def preload!(%model{} = struct, association, options) do
+    with %{^association => %Error{} = error} <- model.preload(struct, association, options) do
+      raise(error)
+    end
+  end
+
   @spec create(Model.model(), Enum.t(), options) :: result
   def create(model, params, options) do
     params = Map.new(params)
