@@ -1,46 +1,94 @@
 defmodule Coxir.Model do
   @moduledoc """
-  Work in progress.
+  The base behaviour for entities.
   """
   alias Macro.Env
   alias Coxir.API
   alias Coxir.API.Error
   alias Coxir.Model.{Snowflake, Loader}
 
+  @typedoc """
+  A module that implements the behaviour.
+  """
   @type model :: module
 
+  @typedoc """
+  A struct object of a given `t:model/0`.
+  """
   @type instance :: struct
 
+  @typedoc """
+  The internal coxir identificator for a `t:instance/0`.
+  """
   @type key :: Snowflake.t() | tuple
 
+  @doc """
+  Called to fetch a `t:instance/0` from the API.
+  """
   @callback fetch(key, keyword) :: API.result()
 
+  @doc """
+  Called to fetch a `Ecto.Schema.has_many/3` association of a `t:instance/0` from the API.
+  """
   @callback fetch_many(key, atom, keyword) :: API.result()
 
+  @doc """
+  Called to create a `t:instance/0` through the API.
+  """
   @callback insert(map, keyword) :: API.result()
 
+  @doc """
+  Called to update a `t:instance/0` through the API.
+  """
   @callback patch(key, map, keyword) :: API.result()
 
+  @doc """
+  Called to delete a `t:instance/0` through the API.
+  """
   @callback drop(key, keyword) :: API.result()
 
+  @doc """
+  Returns whether a `t:model/0` is hardcoded to be stored.
+  """
   @callback storable?() :: boolean
 
+  @doc """
+  Delegates to `Model.Loader.get/3`.
+  """
   @callback get(key, Loader.options()) :: instance | Error.t()
 
+  @doc """
+  Delegates to `Model.Loader.get!/3`.
+  """
   @callback get!(key, Loader.options()) :: instance
 
+  @doc """
+  Delegates to `Model.Loader.preload/3`.
+  """
   @callback preload(instance, Loader.preloads(), Loader.options()) :: instance
 
   @callback preload(list(instance), Loader.preloads(), Loader.options()) :: list(instance)
 
+  @doc """
+  Delegates to `Model.Loader.preload!/3`.
+  """
   @callback preload!(instance, Loader.preloads(), Loader.options()) :: instance
 
   @callback preload!(list(instance), Loader.preloads(), Loader.options()) :: list(instance)
 
+  @doc """
+  Delegates to `Model.Loader.create/3`.
+  """
   @callback create(Enum.t(), Loader.options()) :: Loader.result()
 
+  @doc """
+  Delegates to `Model.Loader.update/3`.
+  """
   @callback update(instance, Enum.t(), Loader.options()) :: Loader.result()
 
+  @doc """
+  Delegates to `Model.Loader.delete/3`.
+  """
   @callback delete(instance, Loader.options()) :: Loader.result()
 
   @optional_callbacks [fetch: 2, fetch_many: 3, insert: 2, patch: 3, drop: 2, preload: 3]
