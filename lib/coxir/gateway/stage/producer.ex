@@ -6,6 +6,8 @@ defmodule Coxir.Gateway.Producer do
 
   alias GenStage.BroadcastDispatcher
 
+  @type producer :: pid
+
   def start_link(state) do
     GenStage.start_link(__MODULE__, state)
   end
