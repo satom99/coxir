@@ -123,7 +123,7 @@ defmodule Coxir.Gateway do
   end
 
   @doc """
-  Returns the session process tied to a given channel, guild or specific shard.
+  Returns the session process for a given channel, guild or specific shard.
   """
   @spec get_shard(gateway, Channel.t() | Guild.t() | non_neg_integer) :: Session.session()
   def get_shard(gateway, %Channel{guild_id: nil}) do
