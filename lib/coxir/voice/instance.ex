@@ -18,6 +18,7 @@ defmodule Coxir.Voice.Instance do
     :player_module,
     :player,
     :gateway,
+    :producer,
     :user_id,
     :guild_id,
     :channel_id,
