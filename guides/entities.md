@@ -46,6 +46,6 @@ Which will set the `:guild` field of the given `channel` to the associated `t:Co
 
 If the given channel has no associated guild, the field will simply be set to `nil`.
 
-If there is an error getting the associated guild, the field will be set to the error struct.
+If there is an error getting the associated guild, the field will be set to the error's struct.
 
 Note though that the example uses `preload!/2` which means that it will raise if there's an error.
