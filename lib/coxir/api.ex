@@ -6,15 +6,9 @@ defmodule Coxir.API do
 
   alias Coxir.API.Error
 
-  @type method :: Tesla.Env.method()
-
-  @type path :: Tesla.Env.url()
-
   @type options :: Tesla.Env.opts()
 
-  @type body :: Tesla.Env.body()
-
-  @type result :: :ok | {:ok, body} | {:error, Error.t()}
+  @type result :: :ok | {:ok, map} | {:error, Error.t()}
 
   adapter(Tesla.Adapter.Gun)
 
@@ -28,7 +22,7 @@ defmodule Coxir.API do
 
   plug(Coxir.API.RateLimiter)
 
-  @spec perform(method, path, body, options) :: result
+  @spec perform(Tesla.Env.method(), Tesla.Env.url(), Tesla.Env.body(), options) :: result
   def perform(method, path, body \\ nil, options) do
     options = Keyword.new(options)
 
