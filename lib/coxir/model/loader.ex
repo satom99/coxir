@@ -18,11 +18,11 @@ defmodule Coxir.Model.Loader do
   }
 
   @typedoc """
-  Set of options specific to the model loader.
+  Set of options specific to this module.
 
-  The `force` option specifies whether an association must be re-processed.
+  The `force` option specifies whether an association must be reloaded.
 
-  The `storage` option specifies whether the coxir storage should be hit.
+  The `storage` option specifies whether the storage should be hit.
 
   The `fetch` option specifies whether the API should be hit.
   """
@@ -38,7 +38,7 @@ defmodule Coxir.Model.Loader do
   @type options :: loader_options | API.options()
 
   @typedoc """
-  The format of the preloads argument for `preload/3`.
+  The format of the `preloads` argument of `preload/3`.
   """
   @type preloads :: atom | list(atom) | [{atom, preloads}]
 
@@ -85,7 +85,7 @@ defmodule Coxir.Model.Loader do
   @doc """
   Attempts to get a `t:Coxir.Model.instance/0` from the storage and/or the API.
 
-  If fetched from the API, the instance will be passed through `load/2`.
+  If fetched from the API, the instance will be passed through `load/2` on success.
   """
   @spec get(Model.model(), Model.key(), options) :: Model.instance() | Error.t()
   def get(model, key, options) do
@@ -106,7 +106,7 @@ defmodule Coxir.Model.Loader do
   @doc """
   Attempts to load the associations for a `t:Coxir.Model.instance/0`.
 
-  If fetched from the API, the associations will be passed through `load/2`.
+  If fetched from the API, the associations will be passed through `load/2` on success.
   """
   @spec preload(list(Model.instance()), preloads, options) :: list(Model.instance())
   @spec preload(Model.instance(), preloads, options) :: Model.instance()
