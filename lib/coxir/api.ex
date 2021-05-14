@@ -1,13 +1,24 @@
 defmodule Coxir.API do
   @moduledoc """
-  Work in progress.
+  Entry-point to the Discord REST API.
   """
   use Tesla, only: [], docs: false
 
+  alias Tesla.Env
+  alias Coxir.{Gateway, Token}
   alias Coxir.API.Error
 
-  @type options :: Tesla.Env.opts()
+  @typedoc """
+  The options that can be passed to `perform/4`.
+  """
+  @type options :: [
+          token: Token.t() | none,
+          as: Gateway.gateway() | none
+        ]
 
+  @typedoc """
+  The possible outcomes of `perform/4`.
+  """
   @type result :: :ok | {:ok, map} | {:error, Error.t()}
 
   adapter(Tesla.Adapter.Gun)
@@ -22,7 +33,10 @@ defmodule Coxir.API do
 
   plug(Coxir.API.RateLimiter)
 
-  @spec perform(Tesla.Env.method(), Tesla.Env.url(), Tesla.Env.body(), options) :: result
+  @doc """
+  Performs a request to the API.
+  """
+  @spec perform(Env.method(), Env.url(), Env.body(), options) :: result
   def perform(method, path, body \\ nil, options) do
     options = Keyword.new(options)
 
@@ -39,22 +53,42 @@ defmodule Coxir.API do
     end
   end
 
+  @doc """
+  Delegates to `perform/4` with `method` set to `:get`.
+  """
+  @spec get(Env.url(), options) :: result
   def get(path, options) do
     perform(:get, path, options)
   end
 
+  @doc """
+  Delegates to `perform/4` with `method` set to `:post`.
+  """
+  @spec post(Env.url(), Env.body(), options) :: result
   def post(path, body \\ %{}, options) do
     perform(:post, path, body, options)
   end
 
+  @doc """
+  Delegates to `perform/4` with `method` set to `:put`.
+  """
+  @spec put(Env.url(), Env.body(), options) :: result
   def put(path, body \\ %{}, options) do
     perform(:put, path, body, options)
   end
 
+  @doc """
+  Delegates to `perform/4` with `method` set to `:patch`.
+  """
+  @spec patch(Env.url(), Env.body(), options) :: result
   def patch(path, body, options) do
     perform(:patch, path, body, options)
   end
 
+  @doc """
+  Delegates to `perform/4` with `method` set to `:delete`.
+  """
+  @spec delete(Env.url(), options) :: result
   def delete(path, options) do
     perform(:delete, path, options)
   end
