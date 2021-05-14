@@ -1,6 +1,6 @@
 defmodule Coxir.Model.Loader do
   @moduledoc """
-  Work in progress.
+  Implements functionality for `t:Coxir.Model.model/0` implementations.
   """
   import Ecto
   import Ecto.Changeset
@@ -9,6 +9,7 @@ defmodule Coxir.Model.Loader do
   alias Ecto.Association.{NotLoaded, BelongsTo, Has}
   alias Coxir.{Model, Storage, API}
   alias Coxir.API.Error
+  alias Coxir.API
 
   @default_options %{
     force: false,
@@ -16,12 +17,41 @@ defmodule Coxir.Model.Loader do
     fetch: true
   }
 
-  @type options :: Enum.t()
+  @typedoc """
+  Set of options specific to the model loader.
 
+  The `force` option specifies whether an association must be re-processed.
+
+  The `storage` option specifies whether the coxir storage should be hit.
+
+  The `fetch` option specifies whether the API should be hit.
+  """
+  @type loader_options :: [
+          force: boolean | false,
+          storage: boolean | true,
+          fetch: boolean | true
+        ]
+
+  @typedoc """
+  The options that can be passed to the functions.
+  """
+  @type options :: loader_options | API.options()
+
+  @typedoc """
+  The format of the preloads argument for `preload/3`.
+  """
   @type preloads :: atom | list(atom) | [{atom, preloads}]
 
+  @typedoc """
+  The possible outcomes of a write operation.
+  """
   @type result :: {:ok, Model.instance()} | API.result()
 
+  @doc """
+  Loads `t:Coxir.Model.instance/0` from a `t:map/0` object.
+
+  This function also stores the models configured as storable.
+  """
   @spec load(Model.model(), list(map)) :: list(Model.instance())
   @spec load(Model.model(), map) :: Model.instance()
   def load(model, objects) when is_list(objects) do
@@ -38,6 +68,9 @@ defmodule Coxir.Model.Loader do
     |> loader(object)
   end
 
+  @doc """
+  Removes a `t:Coxir.Model.instance/0` from the storage when of a storable model.
+  """
   @spec unload(Model.instance()) :: :ok
   def unload(%model{} = struct) do
     key = get_key(struct)
@@ -49,12 +82,20 @@ defmodule Coxir.Model.Loader do
     end
   end
 
+  @doc """
+  Attempts to get a `t:Coxir.Model.instance/0` from the storage and/or the API.
+
+  If fetched from the API, the instance will be passed through `load/2`.
+  """
   @spec get(Model.model(), Model.key(), options) :: Model.instance() | Error.t()
   def get(model, key, options) do
     options = Enum.into(options, @default_options)
     getter(model, key, options)
   end
 
+  @doc """
+  Same as `get/3` but raises on error.
+  """
   @spec get!(Model.model(), Model.key(), options) :: Model.instance()
   def get!(model, key, options) do
     with %Error{} = error <- get(model, key, options) do
@@ -62,6 +103,11 @@ defmodule Coxir.Model.Loader do
     end
   end
 
+  @doc """
+  Attempts to load the associations for a `t:Coxir.Model.instance/0`.
+
+  If fetched from the API, the associations will be passed through `load/2`.
+  """
   @spec preload(list(Model.instance()), preloads, options) :: list(Model.instance())
   @spec preload(Model.instance(), preloads, options) :: Model.instance()
   def preload(structs, preloads, options) when is_list(structs) do
@@ -101,6 +147,9 @@ defmodule Coxir.Model.Loader do
     preloader(reflection, struct, options)
   end
 
+  @doc """
+  Same as `preload/3` but raises on error.
+  """
   @spec preload!(list(Model.instance()), preloads, options) :: list(Model.instance())
   @spec preload!(Model.instance(), preloads, options) :: Model.instance()
   def preload!(structs, preloads, options) when is_list(structs) do
@@ -140,6 +189,11 @@ defmodule Coxir.Model.Loader do
     end
   end
 
+  @doc """
+  Attempts to create a `t:Coxir.Model.instance/0` through the API.
+
+  The created entity will be passed through `load/2` on success.
+  """
   @spec create(Model.model(), Enum.t(), options) :: result
   def create(model, params, options) do
     params = Map.new(params)
@@ -150,6 +204,11 @@ defmodule Coxir.Model.Loader do
     end
   end
 
+  @doc """
+  Attempts to update a `t:Coxir.Model.instance/0` through the API.
+
+  The updated entity will be passed through `load/2` on success.
+  """
   @spec update(Model.instance(), Enum.t(), options) :: result
   def update(%model{} = struct, params, options) do
     key = get_key(struct)
@@ -169,6 +228,11 @@ defmodule Coxir.Model.Loader do
     end
   end
 
+  @doc """
+  Attempts to delete a `t:Coxir.Model.instance/0` through the API.
+
+  The deleted entity will be passed through `unload/1` on success.
+  """
   @spec delete(Model.instance(), options) :: result
   def delete(%model{} = struct, options) do
     key = get_key(struct)
