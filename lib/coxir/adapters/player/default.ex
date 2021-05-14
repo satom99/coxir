@@ -1,6 +1,8 @@
 defmodule Coxir.Player.Default do
   @moduledoc """
   Pipes audio from ffmpeg.
+
+  A custom path for ffmpeg can be set by configuring `:ffmpeg` under the `:coxir` app.
   """
   @behaviour Coxir.Player
 
