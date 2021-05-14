@@ -12,6 +12,8 @@ defmodule Coxir.Player.Default do
 
   @type playable :: String.t()
 
+  @type options :: keyword
+
   defstruct [
     :audio,
     :process,
