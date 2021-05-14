@@ -16,8 +16,8 @@ defmodule Coxir.API do
   If no token is provided, one is expected to be configured as `:token` under the `:coxir` app.
   """
   @type options :: [
-          token: Token.t() | none,
-          as: Gateway.gateway() | none
+          as: Gateway.gateway() | none,
+          token: Token.t() | none
         ]
 
   @typedoc """
