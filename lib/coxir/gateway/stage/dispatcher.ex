@@ -269,6 +269,10 @@ defmodule Coxir.Gateway.Dispatcher do
     {:PAYLOAD, payload}
   end
 
+  defp handle_event(%VoiceInstanceUpdate{} = voice_instance_update) do
+    {:VOICE_INSTANCE_UPDATE, voice_instance_update}
+  end
+
   defp handle_voice(
          %VoiceState{user_id: user_id, guild_id: guild_id} = voice_state,
          %Payload{user_id: user_id}
