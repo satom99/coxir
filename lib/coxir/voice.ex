@@ -43,7 +43,7 @@ defmodule Coxir.Voice do
     gateway = Keyword.fetch!(options, :as)
     user_id = Gateway.get_user_id(gateway)
 
-    instance = ensure_instance(user_id, guild_id)
+    instance = ensure_instance(gateway, user_id, guild_id)
     has_endpoint? = Instance.has_endpoint?(instance)
     same_channel? = Instance.get_channel_id(instance) == channel_id
 
@@ -162,8 +162,8 @@ defmodule Coxir.Voice do
     Supervisor.init([], strategy: :one_for_one)
   end
 
-  defp ensure_instance(user_id, guild_id) do
-    instance_spec = generate_instance_spec(user_id, guild_id)
+  defp ensure_instance(gateway, user_id, guild_id) do
+    instance_spec = generate_instance_spec(gateway, user_id, guild_id)
 
     case Supervisor.start_child(Voice, instance_spec) do
       {:ok, instance} ->
@@ -174,7 +174,7 @@ defmodule Coxir.Voice do
 
       {:error, :already_present} ->
         terminate_instance(user_id, guild_id)
-        ensure_instance(user_id, guild_id)
+        ensure_instance(gateway, user_id, guild_id)
     end
   end
 
@@ -183,8 +183,8 @@ defmodule Coxir.Voice do
     Supervisor.delete_child(Voice, {user_id, guild_id})
   end
 
-  defp generate_instance_spec(user_id, guild_id) do
-    state = %Instance{user_id: user_id, guild_id: guild_id}
+  defp generate_instance_spec(gateway, user_id, guild_id) do
+    state = %Instance{gateway: gateway, user_id: user_id, guild_id: guild_id}
     spec = Instance.child_spec(state)
     %{spec | id: {user_id, guild_id}}
   end
