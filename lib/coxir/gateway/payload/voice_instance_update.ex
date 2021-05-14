@@ -7,6 +7,7 @@ defmodule Coxir.Gateway.Payload.VoiceInstanceUpdate do
 
   @type t :: %__MODULE__{
           instance: Instance.instance(),
+          user_id: Snowflake.t(),
           guild_id: Snowflake.t() | nil,
           channel_id: Snowflake.t(),
           invalid?: boolean,
@@ -15,9 +16,10 @@ defmodule Coxir.Gateway.Payload.VoiceInstanceUpdate do
 
   defstruct [
     :instance,
+    :user_id,
     :guild_id,
     :channel_id,
-    {:invalid?, false},
-    {:playing?, false}
+    :invalid?,
+    :playing?
   ]
 end
