@@ -18,7 +18,7 @@ defmodule Coxir.Model.Loader do
   }
 
   @typedoc """
-  Set of options specific to this module.
+  The options specific to this module.
 
   The `force` option specifies whether an association must be reloaded.
 
