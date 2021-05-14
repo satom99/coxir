@@ -265,12 +265,12 @@ defmodule Coxir.Gateway.Dispatcher do
     {:VOICE_SERVER_UPDATE, voice_server_update}
   end
 
-  defp handle_event(%Payload{} = payload) do
-    {:PAYLOAD, payload}
-  end
-
   defp handle_event(%VoiceInstanceUpdate{} = voice_instance_update) do
     {:VOICE_INSTANCE_UPDATE, voice_instance_update}
+  end
+
+  defp handle_event(%Payload{} = payload) do
+    {:PAYLOAD, payload}
   end
 
   defp handle_voice(
