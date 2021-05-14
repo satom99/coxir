@@ -4,12 +4,15 @@ defmodule Coxir.API.Helper do
   """
   alias Tesla.Env
   alias Coxir.{Token, Gateway}
+  alias Coxir.API.Error
 
   @spec get_token(Env.t()) :: Token.t()
   def get_token(%Env{opts: options}) do
-    options
-    |> Map.new()
-    |> obtain_token()
+    options = Map.new(options)
+
+    with nil <- obtain_token(options) do
+      raise(Error, status: 401)
+    end
   end
 
   defp obtain_token(%{as: gateway}) do
