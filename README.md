@@ -72,4 +72,4 @@ For a complete and working example check out the [`example`](https://github.com/
 
 ### More
 
-For more information check out the [documentation](https://satom99.github.io/coxir2).
+For more information check out the guides on the [documentation](https://satom99.github.io/coxir2).
