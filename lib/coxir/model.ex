@@ -57,41 +57,41 @@ defmodule Coxir.Model do
   @callback storable?() :: boolean
 
   @doc """
-  Delegates to `Model.Loader.get/3`.
+  Delegates to `Coxir.Model.Loader.get/3`.
   """
   @callback get(key, Loader.options()) :: instance | Error.t()
 
   @doc """
-  Delegates to `Model.Loader.get!/3`.
+  Delegates to `Coxir.Model.Loader.get!/3`.
   """
   @callback get!(key, Loader.options()) :: instance
 
   @doc """
-  Delegates to `Model.Loader.preload/3`.
+  Delegates to `Coxir.Model.Loader.preload/3`.
   """
   @callback preload(instance, Loader.preloads(), Loader.options()) :: instance
 
   @callback preload(list(instance), Loader.preloads(), Loader.options()) :: list(instance)
 
   @doc """
-  Delegates to `Model.Loader.preload!/3`.
+  Delegates to `Coxir.Model.Loader.preload!/3`.
   """
   @callback preload!(instance, Loader.preloads(), Loader.options()) :: instance
 
   @callback preload!(list(instance), Loader.preloads(), Loader.options()) :: list(instance)
 
   @doc """
-  Delegates to `Model.Loader.create/3`.
+  Delegates to `Coxir.Model.Loader.create/3`.
   """
   @callback create(Enum.t(), Loader.options()) :: Loader.result()
 
   @doc """
-  Delegates to `Model.Loader.update/3`.
+  Delegates to `Coxir.Model.Loader.update/3`.
   """
   @callback update(instance, Enum.t(), Loader.options()) :: Loader.result()
 
   @doc """
-  Delegates to `Model.Loader.delete/3`.
+  Delegates to `Coxir.Model.Loader.delete/3`.
   """
   @callback delete(instance, Loader.options()) :: Loader.result()
 
