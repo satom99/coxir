@@ -177,16 +177,8 @@ defmodule Coxir.Voice.Instance do
     {:reply, :ok, state}
   end
 
-  def handle_call(:playing?, _from, %Instance{player: nil} = state) do
-    {:reply, false, state}
-  end
-
-  def handle_call(
-        :playing?,
-        _from,
-        %Instance{player_module: player_module, player: player} = state
-      ) do
-    playing? = player_module.playing?(player)
+  def handle_call(:playing?, _from, state) do
+    playing? = get_playing?(state)
     {:reply, playing?, state}
   end
 
@@ -262,6 +254,14 @@ defmodule Coxir.Voice.Instance do
     state = %{state | audio: audio}
     update_player(state)
     {:noreply, state}
+  end
+
+  defp get_playing?(%Instance{player: nil}) do
+    false
+  end
+
+  defp get_playing?(%Instance{player_module: player_module, player: player}) do
+    player_module.playing?(player)
   end
 
   defp update_player(%Instance{player: nil}) do
