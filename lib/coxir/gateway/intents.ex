@@ -34,9 +34,9 @@ defmodule Coxir.Gateway.Intents do
 
   @type intent :: unquote(@typespec)
 
-  @type intents :: list(intent)
+  @type intents :: :all | :non_privileged | list(intent)
 
-  @spec get_value(:all | :non_privileged | intents) :: non_neg_integer
+  @spec get_value(intents) :: non_neg_integer
   def get_value(:all) do
     get_value(@intents)
   end
