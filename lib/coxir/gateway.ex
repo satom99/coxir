@@ -165,6 +165,21 @@ defmodule Coxir.Gateway do
   end
 
   @doc """
+  Returns the `t:Coxir.Gateway.Producer.producer/0` process of a given gateway.
+  """
+  @spec get_producer(gateway) :: Producer.producer()
+  def get_producer(gateway) do
+    children = Supervisor.which_children(gateway)
+
+    Enum.find_value(
+      children,
+      fn {_id, pid, _type, [module]} ->
+        if module == Producer, do: pid
+      end
+    )
+  end
+
+  @doc """
   Starts a gateway with the given configuration and options.
   """
   @spec start_link(config, list(Supervisor.option() | Supervisor.init_option())) ::
