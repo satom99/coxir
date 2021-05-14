@@ -5,7 +5,8 @@ defmodule Coxir.Voice.Instance do
   use GenServer, restart: :transient
 
   alias Coxir.VoiceState
-  alias Coxir.Gateway.Payload.VoiceServerUpdate
+  alias Coxir.Gateway.Producer
+  alias Coxir.Gateway.Payload.{VoiceServerUpdate, VoiceInstanceUpdate}
   alias Coxir.Voice.{Session, Audio}
   alias Coxir.Voice
   alias __MODULE__
@@ -108,6 +109,7 @@ defmodule Coxir.Voice.Instance do
   def handle_continue(:update_session, %Instance{session: session} = state) do
     state = %{state | session: nil, audio: nil}
     update_player(state)
+    dispatch_update(state)
     Process.exit(session, :kill)
     {:noreply, state, @update_session}
   end
@@ -136,6 +138,7 @@ defmodule Coxir.Voice.Instance do
       {:ok, player} ->
         state = %{state | player_module: player_module, player: player}
         update_player(state)
+        dispatch_update(state)
         {:reply, :ok, state}
 
       {:error, _reason} = result ->
@@ -199,6 +202,7 @@ defmodule Coxir.Voice.Instance do
   def handle_info({:EXIT, session, :killed}, %Instance{session: session} = state) do
     state = %{state | session_id: nil, endpoint_host: nil, session: nil, audio: nil}
     update_player(state)
+    dispatch_update(state)
 
     %Instance{gateway: gateway, guild_id: guild_id, channel_id: channel_id} = state
     Voice.update_voice_state(gateway, guild_id, channel_id)
@@ -253,7 +257,31 @@ defmodule Coxir.Voice.Instance do
 
     state = %{state | audio: audio}
     update_player(state)
+    dispatch_update(state)
     {:noreply, state}
+  end
+
+  defp dispatch_update(
+         %Instance{
+           producer: producer,
+           user_id: user_id,
+           guild_id: guild_id,
+           channel_id: channel_id,
+           player: player,
+           audio: audio
+         } = state
+       ) do
+    voice_instance_update = %VoiceInstanceUpdate{
+      instance: self(),
+      user_id: user_id,
+      guild_id: guild_id,
+      channel_id: channel_id,
+      has_player?: is_nil(player),
+      invalid?: is_nil(audio),
+      playing?: get_playing?(state)
+    }
+
+    Producer.notify(producer, voice_instance_update)
   end
 
   defp get_playing?(%Instance{player: nil}) do
