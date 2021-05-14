@@ -61,10 +61,6 @@ defmodule Coxir.Voice.Instance do
     GenServer.cast(instance, {:update, struct})
   end
 
-  def update(instance, gateway, struct) do
-    GenServer.cast(instance, {:update, gateway, struct})
-  end
-
   def start_link(state) do
     GenServer.start_link(__MODULE__, state)
   end
@@ -204,11 +200,6 @@ defmodule Coxir.Voice.Instance do
   end
 
   def handle_cast({:update, struct}, state) do
-    handle_update(struct, state)
-  end
-
-  def handle_cast({:update, gateway, struct}, state) do
-    state = %{state | gateway: gateway}
     handle_update(struct, state)
   end
 
