@@ -19,7 +19,7 @@ Which means that either of these fields can be configured under the `:coxir` app
 
 ### Gateway-specific
 
-Instead of global configuration, fields not marked as global can be configured at gateway level like:
+Instead of global configuration, fields not marked as **GLOBAL?** can be configured at gateway level like:
 
 ```elixir
 config :coxir, Example.Bot, token: ""
