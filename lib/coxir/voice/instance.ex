@@ -4,11 +4,11 @@ defmodule Coxir.Voice.Instance do
   """
   use GenServer, restart: :transient
 
-  alias Coxir.VoiceState
+  alias Coxir.Gateway
   alias Coxir.Gateway.Producer
   alias Coxir.Gateway.Payload.{VoiceServerUpdate, VoiceInstanceUpdate}
+  alias Coxir.{VoiceState, Voice}
   alias Coxir.Voice.{Session, Audio}
-  alias Coxir.Voice
   alias __MODULE__
 
   @type instance :: pid
@@ -17,7 +17,6 @@ defmodule Coxir.Voice.Instance do
 
   defstruct [
     :gateway,
-    :producer,
     :player_module,
     :player,
     :user_id,
@@ -263,7 +262,7 @@ defmodule Coxir.Voice.Instance do
 
   defp dispatch_update(
          %Instance{
-           producer: producer,
+           gateway: gateway,
            user_id: user_id,
            guild_id: guild_id,
            channel_id: channel_id,
@@ -281,6 +280,7 @@ defmodule Coxir.Voice.Instance do
       playing?: get_playing?(state)
     }
 
+    producer = Gateway.get_producer(gateway)
     Producer.notify(producer, voice_instance_update)
   end
 

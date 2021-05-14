@@ -195,11 +195,8 @@ defmodule Coxir.Voice do
   end
 
   defp generate_instance_spec(gateway, user_id, guild_id) do
-    producer = Gateway.get_producer(gateway)
-
     state = %Instance{
       gateway: gateway,
-      producer: producer,
       user_id: user_id,
       guild_id: guild_id
     }
