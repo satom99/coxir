@@ -76,7 +76,11 @@ defmodule Coxir.MixProject do
       ],
       extra_section: "GUIDES",
       extras: [
-        "guides/Introduction.md"
+        "guides/introduction.md",
+        "guides/quickstart.md",
+        "guides/configuration.md",
+        "guides/multiple-clients.md",
+        "guides/entities.md"
       ],
       main: "introduction"
     ]
