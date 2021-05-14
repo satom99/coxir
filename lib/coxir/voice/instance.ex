@@ -31,14 +31,6 @@ defmodule Coxir.Voice.Instance do
     :audio
   ]
 
-  def has_endpoint?(instance) do
-    GenServer.call(instance, :has_endpoint?)
-  end
-
-  def get_channel_id(instance) do
-    GenServer.call(instance, :get_channel_id)
-  end
-
   def play(instance, player_module, playable, options) do
     GenServer.call(instance, {:play, player_module, playable, options})
   end
@@ -57,6 +49,14 @@ defmodule Coxir.Voice.Instance do
 
   def stop_playing(instance) do
     GenServer.call(instance, :stop_playing)
+  end
+
+  def has_endpoint?(instance) do
+    GenServer.call(instance, :has_endpoint?)
+  end
+
+  def get_channel_id(instance) do
+    GenServer.call(instance, :get_channel_id)
   end
 
   def update(instance, struct) do
