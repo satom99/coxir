@@ -19,6 +19,10 @@ defmodule Coxir.Model do
 
   @typedoc """
   The internal coxir identificator for a `t:instance/0`.
+
+  Matches the primary key of the `t:model/0`.
+
+  If the primary key has many fields, they appear in the order they are defined.
   """
   @type key :: Snowflake.t() | tuple
 
