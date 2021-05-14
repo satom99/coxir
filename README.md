@@ -25,7 +25,7 @@ Add coxir as a dependency to your `mix.exs` file:
 
 ```elixir
 defp deps do
-  [{:coxir, "~> 0.1.0"}]
+  [{:coxir, "~> 2.0.0"}]
 end
 ```
 
