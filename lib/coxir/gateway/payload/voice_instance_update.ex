@@ -10,6 +10,7 @@ defmodule Coxir.Gateway.Payload.VoiceInstanceUpdate do
           user_id: Snowflake.t(),
           guild_id: Snowflake.t() | nil,
           channel_id: Snowflake.t(),
+          has_player?: boolean,
           invalid?: boolean,
           playing?: boolean
         }
@@ -19,6 +20,7 @@ defmodule Coxir.Gateway.Payload.VoiceInstanceUpdate do
     :user_id,
     :guild_id,
     :channel_id,
+    :has_player?,
     :invalid?,
     :playing?
   ]
