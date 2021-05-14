@@ -137,14 +137,14 @@ defmodule Coxir.Voice do
   end
 
   @doc false
-  def update(_gateway, user_id, guild_id, %VoiceState{channel_id: nil}) do
+  def update(user_id, guild_id, %VoiceState{channel_id: nil}) do
     terminate_instance(user_id, guild_id)
   end
 
-  def update(gateway, user_id, guild_id, struct) do
-    user_id
-    |> ensure_instance(guild_id)
-    |> Instance.update(gateway, struct)
+  def update(user_id, guild_id, struct) do
+    if instance = get_instance(user_id, guild_id) do
+      Instance.update(instance, struct)
+    end
   end
 
   @doc false
@@ -160,6 +160,17 @@ defmodule Coxir.Voice do
   @doc false
   def init(_state) do
     Supervisor.init([], strategy: :one_for_one)
+  end
+
+  defp get_instance(user_id, guild_id) do
+    children = Supervisor.which_children(Voice)
+
+    Enum.find_value(
+      children,
+      fn {id, pid, _type, _modules} ->
+        if id == {user_id, guild_id}, do: pid
+      end
+    )
   end
 
   defp ensure_instance(gateway, user_id, guild_id) do
