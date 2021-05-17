@@ -25,7 +25,7 @@ Instead of global configuration, fields not marked as **GLOBAL?** can be configu
 config :coxir, Example.Bot, token: ""
 ```
 
-Where `Example.Bot` in this example is the name of a module that uses the `Coxir.Gateway` module.
+where `Example.Bot` in this example is the name of a module that uses the `Coxir.Gateway` module.
 
 ### When a token is not configured globally
 
@@ -35,7 +35,7 @@ If no token is configured globally but configured for a gateway instead, the fol
 Coxir.Channel.get(432535429162729494, as: Example.Bot)
 ```
 
-Where a gateway process must be passed as the `:as` option. Or if there is no available gateway:
+where a gateway process must be passed as the `:as` option. Or if there is no available gateway:
 
 ```elixir
 Coxir.Channel.get(432535429162729494, token: "")

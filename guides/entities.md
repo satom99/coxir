@@ -20,9 +20,9 @@ Here we are trying to get a channel with an invalid id. This is obviously going 
 
 In this case we instead get a `t:Coxir.API.Error.t/0` struct describing what went wrong.
 
-Now suppose we try to get a channel we don't have permissions to view. We get an error.
+Now imagine we try to get a channel we don't have permissions to view. We get another error.
 
-So when getting entities, make sure the returned struct is not that of an error.
+So when getting entities, always make sure the returned struct is not that of an error.
 
 ### Bang functions
 
@@ -32,7 +32,7 @@ If you however want to keep it simple, the bang equivalent function can be used:
 Coxir.Channel.get!(0)
 ```
 
-Which will just raise if there was an error. These should be used with caution, however.
+Which will just raise if there is an error. These should be used with caution, however.
 
 ### Preloading
 
@@ -48,4 +48,4 @@ If the given channel has no associated guild, the field will simply be set to `n
 
 If there is an error getting the associated guild, the field will be set to the error's struct.
 
-Note though that the example uses `preload!/2` which means that it will raise if there's an error.
+Note though that the example uses `preload!/2` which means that it will raise in case of error.

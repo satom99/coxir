@@ -4,7 +4,7 @@ This guide explains how multiple clients can be run at once.
 
 ### Configuration
 
-As shown in the Configuration guide, each client's `token` must be configured per-gateway.
+Each client's `token` must be configured per-gateway as shown in the Configuration guide.
 
 ### Multiple gateways
 
@@ -70,4 +70,4 @@ defmodule Example.Eva do
 end
 ```
 
-In which case the resulting behaviour will be as expected from two separate clients.
+In which case the resulting behaviour will be as expected from two independent clients.
