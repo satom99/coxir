@@ -48,7 +48,7 @@ defmodule Coxir.Gateway do
 
   Defines `child_spec/1` and `start_link/0` so that the module can be added to a supervisor.
 
-  Note that the `t:gateway/0` process that the last function starts is named after the module.
+  Note that the `t:gateway/0` process that the second function starts is named after the module.
 
   Defines `get_user_id/0` which delegates to `get_user_id/1`.
 
