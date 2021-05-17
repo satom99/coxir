@@ -190,6 +190,7 @@ defmodule Coxir.Gateway do
 
     with {:ok, gateway} <- Supervisor.start_link([], options) do
       {:ok, producer} = start_child(gateway, Producer)
+
       {:ok, dispatcher} = start_child(gateway, {Dispatcher, producer})
 
       consumer_options = %Consumer{handler: handler, dispatcher: dispatcher}
