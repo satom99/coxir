@@ -40,7 +40,7 @@ defmodule Coxir.Gateway do
           intents: Intents.intents() | :non_privileged,
           shard_count: non_neg_integer | none,
           sharder: Sharder.t() | Sharder.Default,
-          handler: Handler.t()
+          handler: Handler.handler()
         ]
 
   @doc """

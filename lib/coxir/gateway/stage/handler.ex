@@ -5,9 +5,9 @@ defmodule Coxir.Gateway.Handler do
   alias Coxir.Gateway.Dispatcher
 
   @typedoc """
-  A module that implements the behaviour.
+  A module that implements the behaviour or an anonymous function.
   """
-  @type t :: module
+  @type handler :: module | (Dispatcher.event() -> any)
 
   @doc """
   Called when a `t:Coxir.Gateway.Dispatcher.event/0` is to be handled.
