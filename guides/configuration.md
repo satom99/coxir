@@ -6,14 +6,14 @@ This guide explains the different configuration possibilities the library has.
 
 The following table shows a complete list of the fields that can be configured globally:
 
-| Field         | Description                                 | Default                        | Global? |
-|---------------|---------------------------------------------|--------------------------------|---------|
-| `limiter`     | The Limiter adapter coxir should use.       | `Coxir.Limiter.Default`        | ✓       |
-| `storage`     | The Storage adapter coxir should use.       | `Coxir.Storage.Default`        | ✓       |
-| `storables`   | The list of entities coxir should store.    | All storable entities.         | ✓       |
-| `token`       | The default token to be used for API calls. |                                |         |
-| `ìntents`     | The default gateway intents value to use.   | `:non_privileged`              |         |
-| `shard_count` | The amount of gateway shards to use.        | The value provided by Discord. |         |
+| Field         | Description                              | Default                        | Global? |
+|---------------|------------------------------------------|--------------------------------|---------|
+| `limiter`     | The Limiter adapter coxir should use.    | `Coxir.Limiter.Default`        | ✓       |
+| `storage`     | The Storage adapter coxir should use.    | `Coxir.Storage.Default`        | ✓       |
+| `storable`    | The list of entities coxir should store. | All storable entities.         | ✓       |
+| `token`       | The token to be used for API calls.      |                                |         |
+| `ìntents`     | The gateway intents value to use.        | `:non_privileged`              |         |
+| `shard_count` | The amount of gateway shards to use.     | The value provided by Discord. |         |
 
 Which means that either of these fields can be configured under the `:coxir` application.
 
