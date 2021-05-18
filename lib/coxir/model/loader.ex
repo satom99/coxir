@@ -261,8 +261,13 @@ defmodule Coxir.Model.Loader do
     embeds = get_embeds(model)
     associations = get_associations(model)
 
-    casted =
+    changeset =
       struct
+      |> change()
+      |> Map.put(:empty_values, [])
+
+    casted =
+      changeset
       |> cast(object, fields -- embeds)
       |> apply_changes()
 
