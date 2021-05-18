@@ -24,7 +24,13 @@ defmodule Coxir.Gateway.Handler do
   end
 
   @doc false
-  def start_handler(handler, event) do
+  def start_handler(handler, event) when is_function(handler) do
+    Task.start_link(fn ->
+      handler.(event)
+    end)
+  end
+
+  def start_handler(handler, event) when is_atom(handler) do
     Task.start_link(fn ->
       handler.handle_event(event)
     end)
