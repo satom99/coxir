@@ -5,7 +5,7 @@ defmodule Coxir.Gateway.Dispatcher do
   use GenStage
 
   alias Coxir.Gateway.Payload
-  alias Coxir.Gateway.Payload.{Ready, VoiceServerUpdate, VoiceInstanceUpdate}
+  alias Coxir.Gateway.Payload.{Ready, GuildMembersChunk, VoiceServerUpdate, VoiceInstanceUpdate}
 
   alias Coxir.Model.Loader
   alias Coxir.{Channel, Message, Interaction}
@@ -28,6 +28,7 @@ defmodule Coxir.Gateway.Dispatcher do
           | guild_member_add
           | guild_member_update
           | guild_member_remove
+          | guild_members_chunk
           | guild_role_create
           | guild_role_update
           | guild_role_delete
@@ -69,6 +70,8 @@ defmodule Coxir.Gateway.Dispatcher do
   @type guild_member_update :: {:GUILD_MEMBER_UPDATE, Member.t()}
 
   @type guild_member_remove :: {:GUILD_MEMBER_REMOVE, Member.t()}
+
+  @type guild_members_chunk :: {:GUILD_MEMBERS_CHUNK, GuildMembersChunk.t()}
 
   @type guild_role_create :: {:GUILD_ROLE_CREATE, Role.t()}
 
@@ -187,6 +190,11 @@ defmodule Coxir.Gateway.Dispatcher do
     member = Loader.load(Member, object)
     Loader.unload(member)
     {:GUILD_MEMBER_REMOVE, member}
+  end
+
+  defp handle_event(%Payload{event: "GUILD_MEMBERS_CHUNK", data: object}) do
+    guild_members_chunk = GuildMembersChunk.cast(object)
+    {:GUILD_MEMBERS_CHUNK, guild_members_chunk}
   end
 
   defp handle_event(%Payload{event: "GUILD_ROLE_CREATE", data: data}) do
