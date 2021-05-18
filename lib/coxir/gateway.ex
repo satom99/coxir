@@ -12,7 +12,7 @@ defmodule Coxir.Gateway do
   import Bitwise
 
   alias Coxir.{API, Sharder, Token}
-  alias Coxir.Gateway.Payload.{GatewayInfo, UpdatePresence}
+  alias Coxir.Gateway.Payload.{GatewayInfo, RequestGuildMembers, UpdatePresence}
   alias Coxir.Gateway.{Producer, Dispatcher, Consumer, Handler}
   alias Coxir.Gateway.{Intents, Session}
   alias Coxir.Model.Snowflake
@@ -120,6 +120,24 @@ defmodule Coxir.Gateway do
     params = Map.new(params)
     payload = UpdatePresence.cast(params)
     Session.update_presence(shard, payload)
+  end
+
+  @doc """
+  Requests members for a given guild.
+
+  The possible parameters are the fields of `t:Coxir.Gateway.Payload.RequestGuildMembers.t/0`.
+  """
+  @spec request_guild_members(gateway, Guild.t(), Enum.t()) :: :ok
+  def request_guild_members(gateway, %Guild{id: guild_id} = guild, params) do
+    shard = get_shard(gateway, guild)
+
+    params =
+      params
+      |> Map.new()
+      |> Map.put(:guild_id, guild_id)
+
+    payload = RequestGuildMembers.cast(params)
+    Session.request_guild_members(shard, payload)
   end
 
   @doc """
