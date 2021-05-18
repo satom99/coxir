@@ -6,7 +6,7 @@ defmodule Coxir.Gateway.Session do
 
   alias Coxir.Gateway.{Payload, Producer}
   alias Coxir.Gateway.Payload.{Hello, Identify, Resume}
-  alias Coxir.Gateway.Payload.{UpdatePresence, UpdateVoiceState}
+  alias Coxir.Gateway.Payload.{RequestGuildMembers, UpdatePresence, UpdateVoiceState}
   alias __MODULE__
 
   defstruct [
@@ -35,6 +35,10 @@ defmodule Coxir.Gateway.Session do
   @identify {:continue, :identify}
 
   @type session :: pid
+
+  def request_guild_members(session, %RequestGuildMembers{} = payload) do
+    GenServer.call(session, {:send_command, :REQUEST_GUILD_MEMBERS, payload})
+  end
 
   def update_presence(session, %UpdatePresence{} = payload) do
     GenServer.call(session, {:send_command, :PRESENCE_UPDATE, payload})
