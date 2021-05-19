@@ -1,13 +1,13 @@
 # coxir
 
-[![License](https://img.shields.io/github/license/satom99/coxir.svg)](https://github.com/satom99/coxir/blob/master/LICENSE)
-[![Validation](https://github.com/satom99/coxir2/actions/workflows/validation.yml/badge.svg)](https://github.com/satom99/coxir2/actions/workflows/validation.yml)
-[![Documentation](https://github.com/satom99/coxir2/actions/workflows/documentation.yml/badge.svg)](https://github.com/satom99/coxir2/actions/workflows/documentation.yml)
+[![License](https://img.shields.io/github/license/satom99/coxir.svg)](https://github.com/satom99/coxir/blob/main/LICENSE)
+[![Validation](https://github.com/satom99/coxir/actions/workflows/validation.yml/badge.svg)](https://github.com/satom99/coxir/actions/workflows/validation.yml)
+[![Documentation](https://github.com/satom99/coxir/actions/workflows/documentation.yml/badge.svg)](https://github.com/satom99/coxir/actions/workflows/documentation.yml)
 [![Join Discord](https://img.shields.io/badge/Discord-join-7289DA.svg)](https://discord.gg/6JrqNEX)
 
 A modern high-level Elixir wrapper for [Discord](https://discord.com).
 
-Refer to the [documentation](https://satom99.github.io/coxir2) for more information.
+Refer to the [documentation](https://satom.me/coxir) for more information.
 
 ### Features
 
@@ -68,8 +68,8 @@ iex(1)> Example.Bot.start_link()
 {:ok, #PID<0.301.0>}
 ```
 
-For a complete and working example check out the [`example`](https://github.com/satom99/coxir2/tree/master/example) app.
+For a complete and working example check out the [`example`](https://github.com/satom99/coxir/tree/main/example) app.
 
 ### More
 
-For more information check out the guides on the [documentation](https://satom99.github.io/coxir2).
+For more information check out the guides on the [documentation](https://satom.me/coxir).

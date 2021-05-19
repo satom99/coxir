@@ -10,7 +10,7 @@ defmodule Coxir.MixProject do
       deps: deps(),
       docs: docs(),
       package: package(),
-      source_url: "https://github.com/satom99/coxir2"
+      source_url: "https://github.com/satom99/coxir"
     ]
   end
 
@@ -89,7 +89,7 @@ defmodule Coxir.MixProject do
   defp package do
     [
       licenses: ["Apache-2.0"],
-      links: %{"GitHub" => "https://github.com/satom99/coxir2"}
+      links: %{"GitHub" => "https://github.com/satom99/coxir"}
     ]
   end
 end
