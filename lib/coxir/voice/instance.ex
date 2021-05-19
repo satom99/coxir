@@ -127,8 +127,8 @@ defmodule Coxir.Voice.Instance do
         _from,
         %Instance{player: nil} = state
       ) do
-    start_argument = {playable, options}
-    child_spec = player_module.child_spec(start_argument)
+    init_argument = {playable, options}
+    child_spec = player_module.child_spec(init_argument)
 
     %{start: start_mfa} = child_spec
     {module, function, arguments} = start_mfa

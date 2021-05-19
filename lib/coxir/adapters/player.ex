@@ -12,9 +12,9 @@ defmodule Coxir.Player do
 
   @type options :: keyword
 
-  @type start_argument :: {playable, options}
+  @type init_argument :: {playable, options}
+  @callback child_spec(init_argument) :: Supervisor.child_spec()
 
-  @callback child_spec(start_argument) :: Supervisor.child_spec()
 
   @callback ready(player, Audio.t()) :: :ok
 
