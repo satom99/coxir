@@ -10,7 +10,7 @@
     <title>Coxir.Player — coxir v2.0.0</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-6ab30824c0.js"></script>
+    <script src="dist/sidebar_items-574c45908b.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -110,9 +110,20 @@ Coxir.Player <small>behaviour</small> <small class="app-vsn">(coxir v2.0.0)</sma
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#t:init_argument/0">init_argument()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The argument that is passed to <a href="#c:child_spec/1"><code class="inline">child_spec/1</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#t:options/0">options()</a>
 
   </div>
+
+    <div class="summary-synopsis"><p>Specifies the options that can be passed to the <a href="#t:t/0"><code class="inline">t/0</code></a> in use.</p></div>
 
 </div>
 <div class="summary-row">
@@ -121,6 +132,8 @@ Coxir.Player <small>behaviour</small> <small class="app-vsn">(coxir v2.0.0)</sma
 
   </div>
 
+    <div class="summary-synopsis"><p>Specifies what can be played with the <a href="#t:t/0"><code class="inline">t/0</code></a> in use.</p></div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
@@ -128,12 +141,7 @@ Coxir.Player <small>behaviour</small> <small class="app-vsn">(coxir v2.0.0)</sma
 
   </div>
 
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:start_argument/0">start_argument()</a>
-
-  </div>
+    <div class="summary-synopsis"><p>A player process.</p></div>
 
 </div>
 <div class="summary-row">
@@ -141,6 +149,8 @@ Coxir.Player <small>behaviour</small> <small class="app-vsn">(coxir v2.0.0)</sma
     <a href="#t:t/0">t()</a>
 
   </div>
+
+    <div class="summary-synopsis"><p>A module that implements the behaviour.</p></div>
 
 </div>
 
@@ -152,9 +162,11 @@ Coxir.Player <small>behaviour</small> <small class="app-vsn">(coxir v2.0.0)</sma
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#c:child_spec/1">child_spec(start_argument)</a>
+    <a href="#c:child_spec/1">child_spec(init_argument)</a>
 
   </div>
+
+    <div class="summary-synopsis"><p>Must return a child specification from a <a href="#t:init_argument/0"><code class="inline">init_argument/0</code></a>.</p></div>
 
 </div>
 <div class="summary-row">
@@ -163,12 +175,16 @@ Coxir.Player <small>behaviour</small> <small class="app-vsn">(coxir v2.0.0)</sma
 
   </div>
 
+    <div class="summary-synopsis"><p>Called when the connection to the Discord voice channel is lost.</p></div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:pause/1">pause(player)</a>
 
   </div>
+
+    <div class="summary-synopsis"><p>Called to pause audio playback.</p></div>
 
 </div>
 <div class="summary-row">
@@ -177,6 +193,8 @@ Coxir.Player <small>behaviour</small> <small class="app-vsn">(coxir v2.0.0)</sma
 
   </div>
 
+    <div class="summary-synopsis"><p>Called to check whether audio playback is paused.</p></div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
@@ -184,12 +202,16 @@ Coxir.Player <small>behaviour</small> <small class="app-vsn">(coxir v2.0.0)</sma
 
   </div>
 
+    <div class="summary-synopsis"><p>Called when the connection to the Discord voice channel is ready.</p></div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:resume/1">resume(player)</a>
 
   </div>
+
+    <div class="summary-synopsis"><p>Called to resume audio playback.</p></div>
 
 </div>
 
@@ -207,6 +229,35 @@ Coxir.Player <small>behaviour</small> <small class="app-vsn">(coxir v2.0.0)</sma
 Types
           </h1>
           <div class="types-list">
+<section class="detail" id="t:init_argument/0">
+
+  <div class="detail-header">
+    <a href="#t:init_argument/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">init_argument()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/adapters/player.ex#L30" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>init_argument() :: {<a href="#t:playable/0">playable</a>(), <a href="#t:options/0">options</a>()}</pre>
+
+      </div>
+
+<p>The argument that is passed to <a href="#c:child_spec/1"><code class="inline">child_spec/1</code></a>.</p>
+  </section>
+</section>
 <section class="detail" id="t:options/0">
 
   <div class="detail-header">
@@ -216,7 +267,7 @@ Types
     </a>
     <h1 class="signature">options()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/adapters/player.ex#L13" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/adapters/player.ex#L25" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -233,7 +284,7 @@ Types
 
       </div>
 
-
+<p>Specifies the options that can be passed to the <a href="#t:t/0"><code class="inline">t/0</code></a> in use.</p>
   </section>
 </section>
 <section class="detail" id="t:playable/0">
@@ -245,7 +296,7 @@ Types
     </a>
     <h1 class="signature">playable()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/adapters/player.ex#L11" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/adapters/player.ex#L20" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -262,7 +313,7 @@ Types
 
       </div>
 
-
+<p>Specifies what can be played with the <a href="#t:t/0"><code class="inline">t/0</code></a> in use.</p>
   </section>
 </section>
 <section class="detail" id="t:player/0">
@@ -274,7 +325,7 @@ Types
     </a>
     <h1 class="signature">player()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/adapters/player.ex#L9" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/adapters/player.ex#L15" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -291,36 +342,7 @@ Types
 
       </div>
 
-
-  </section>
-</section>
-<section class="detail" id="t:start_argument/0">
-
-  <div class="detail-header">
-    <a href="#t:start_argument/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">start_argument()</h1>
-
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/adapters/player.ex#L15" class="view-source" rel="help" title="View Source">
-       <span class="icon-code" aria-hidden="true"></span>
-       <span class="sr-only">View Source</span>
-     </a>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>start_argument() :: {<a href="#t:playable/0">playable</a>(), <a href="#t:options/0">options</a>()}</pre>
-
-      </div>
-
-
+<p>A player process.</p>
   </section>
 </section>
 <section class="detail" id="t:t/0">
@@ -332,7 +354,7 @@ Types
     </a>
     <h1 class="signature">t()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/adapters/player.ex#L7" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/adapters/player.ex#L10" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -349,7 +371,7 @@ Types
 
       </div>
 
-
+<p>A module that implements the behaviour.</p>
   </section>
 </section>
 
@@ -372,9 +394,9 @@ Callbacks
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature">child_spec(start_argument)</h1>
+    <h1 class="signature">child_spec(init_argument)</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/adapters/player.ex#L17" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/adapters/player.ex#L35" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -387,11 +409,11 @@ Callbacks
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>child_spec(<a href="#t:start_argument/0">start_argument</a>()) :: <a href="https://hexdocs.pm/elixir/Supervisor.html#t:child_spec/0">Supervisor.child_spec</a>()</pre>
+          <pre>child_spec(<a href="#t:init_argument/0">init_argument</a>()) :: <a href="https://hexdocs.pm/elixir/Supervisor.html#t:child_spec/0">Supervisor.child_spec</a>()</pre>
 
       </div>
 
-
+<p>Must return a child specification from a <a href="#t:init_argument/0"><code class="inline">init_argument/0</code></a>.</p>
   </section>
 </section>
 <section class="detail" id="c:invalidate/1">
@@ -403,7 +425,7 @@ Callbacks
     </a>
     <h1 class="signature">invalidate(player)</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/adapters/player.ex#L21" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/adapters/player.ex#L51" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -420,7 +442,7 @@ Callbacks
 
       </div>
 
-
+<p>Called when the connection to the Discord voice channel is lost.</p><p>This invalidates the previously received <a href="Coxir.Voice.Audio.html#t:t/0"><code class="inline">Coxir.Voice.Audio.t/0</code></a> struct.</p><p>Thus the player should stop sending audio until <a href="#c:ready/2"><code class="inline">ready/2</code></a> is called again.</p>
   </section>
 </section>
 <section class="detail" id="c:pause/1">
@@ -432,7 +454,7 @@ Callbacks
     </a>
     <h1 class="signature">pause(player)</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/adapters/player.ex#L23" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/adapters/player.ex#L56" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -449,7 +471,7 @@ Callbacks
 
       </div>
 
-
+<p>Called to pause audio playback.</p>
   </section>
 </section>
 <section class="detail" id="c:playing?/1">
@@ -461,7 +483,7 @@ Callbacks
     </a>
     <h1 class="signature">playing?(player)</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/adapters/player.ex#L27" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/adapters/player.ex#L66" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -478,7 +500,7 @@ Callbacks
 
       </div>
 
-
+<p>Called to check whether audio playback is paused.</p>
   </section>
 </section>
 <section class="detail" id="c:ready/2">
@@ -490,7 +512,7 @@ Callbacks
     </a>
     <h1 class="signature">ready(player, arg2)</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/adapters/player.ex#L19" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/adapters/player.ex#L42" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -507,7 +529,7 @@ Callbacks
 
       </div>
 
-
+<p>Called when the connection to the Discord voice channel is ready.</p><p>The received <a href="Coxir.Voice.Audio.html#t:t/0"><code class="inline">Coxir.Voice.Audio.t/0</code></a> struct can be used to send audio.</p>
   </section>
 </section>
 <section class="detail" id="c:resume/1">
@@ -519,7 +541,7 @@ Callbacks
     </a>
     <h1 class="signature">resume(player)</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/adapters/player.ex#L25" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/adapters/player.ex#L61" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -536,7 +558,7 @@ Callbacks
 
       </div>
 
-
+<p>Called to resume audio playback.</p>
   </section>
 </section>
 
