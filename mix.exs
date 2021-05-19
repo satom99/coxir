@@ -82,7 +82,8 @@ defmodule Coxir.MixProject do
         "guides/multiple-clients.md",
         "guides/entities.md"
       ],
-      main: "introduction"
+      main: "introduction",
+      source_ref: "main"
     ]
   end
 
