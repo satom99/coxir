@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.24.2">
+    <meta name="project" content="coxir v2.0.0">
+
+    <title>Coxir.Voice — coxir v2.0.0</title>
+    <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
+
+    <script src="dist/sidebar_items-6ab30824c0.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/app-f27ff079945e43879c46.js"></script>
+
+
+  </head>
+  <body data-type="modules">
+    <script>
+
+      try {
+        if (localStorage.getItem('night-mode') === 'true') {
+          document.body.classList.add('night-mode');
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle">
+  <span class="icon-menu" title="Collapse/expand sidebar"></span>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <span class="icon-search" aria-hidden="true" title="Submit search"></span>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <span class="icon-cross" aria-hidden="true" title="Cancel search"></span>
+    </button>
+    <label class="search-label">
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectDetails">
+      <a href="introduction.html" class="sidebar-projectName">
+coxir
+      </a>
+      <strong class="sidebar-projectVersion">
+        v2.0.0
+      </strong>
+    </div>
+
+  </div>
+
+  <ul class="sidebar-listNav">
+    <li><a id="extras-list-link" href="#full-list">GUIDES</a></li>
+
+      <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+  </ul>
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+      <h1>
+Coxir.Voice <small class="app-vsn">(coxir v2.0.0)</small>
+
+          <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/voice.ex#L1" title="View Source" class="view-source" rel="help">
+            <span class="icon-code" aria-hidden="true"></span>
+            <span class="sr-only">View Source</span>
+          </a>
+
+      </h1>
+
+
+        <section id="moduledoc">
+<p>Allows for interaction with Discord voice channels.</p>
+        </section>
+
+
+        <section id="summary" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#summary">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+            Summary
+          </h1>
+
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:join_options/0">join_options()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The options that must be passed to <a href="#join/2"><code class="inline">join/2</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:leave_options/0">leave_options()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The options that must be passed to <a href="#leave/2"><code class="inline">leave/2</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:play_options/0">play_options()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The options that can be passed to <a href="#play/3"><code class="inline">play/3</code></a>.</p></div>
+
+</div>
+
+  </div>
+
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#join/2">join(channel, options)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Joins a given voice channel.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#leave/2">leave(arg1, options)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Leaves from a given voice channel, or the active voice channel for a guild.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#pause/1">pause(instance)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Pauses audio playback on a given instance.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#play/3">play(instance, playable, options \\ [])</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Begins playing audio on a given instance.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#playing?/1">playing?(instance)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Returns whether audio is currently playing on a given instance.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#resume/1">resume(instance)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Resumes audio playback on a given instance.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#stop_playing/1">stop_playing(instance)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Stops playing audio on a given instance.</p></div>
+
+</div>
+
+  </div>
+
+        </section>
+
+
+        <section id="types" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#types">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Types
+          </h1>
+          <div class="types-list">
+<section class="detail" id="t:join_options/0">
+
+  <div class="detail-header">
+    <a href="#t:join_options/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">join_options()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/voice.ex#L18" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>join_options() :: [
+  as: <a href="Coxir.Gateway.html#t:gateway/0">Coxir.Gateway.gateway</a>(),
+  self_deaf: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>() | false,
+  self_mute: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>() | false
+]</pre>
+
+      </div>
+
+<p>The options that must be passed to <a href="#join/2"><code class="inline">join/2</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="t:leave_options/0">
+
+  <div class="detail-header">
+    <a href="#t:leave_options/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">leave_options()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/voice.ex#L32" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>leave_options() :: [{:as, <a href="Coxir.Gateway.html#t:gateway/0">Coxir.Gateway.gateway</a>()}]</pre>
+
+      </div>
+
+<p>The options that must be passed to <a href="#leave/2"><code class="inline">leave/2</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="t:play_options/0">
+
+  <div class="detail-header">
+    <a href="#t:play_options/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">play_options()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/voice.ex#L27" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>play_options() ::
+  [{:player, <a href="Coxir.Player.html#t:t/0">Coxir.Player.t</a>() | Coxir.Player.Default}] | <a href="Coxir.Player.html#t:options/0">Coxir.Player.options</a>()</pre>
+
+      </div>
+
+<p>The options that can be passed to <a href="#play/3"><code class="inline">play/3</code></a>.</p>
+  </section>
+</section>
+
+          </div>
+        </section>
+
+        <section id="functions" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#functions">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Functions
+          </h1>
+          <div class="functions-list">
+<section class="detail" id="join/2">
+
+  <div class="detail-header">
+    <a href="#join/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">join(channel, options)</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/voice.ex#L42" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>join(<a href="Coxir.Channel.html#t:t/0">Coxir.Channel.t</a>(), <a href="#t:join_options/0">join_options</a>()) :: <a href="Coxir.Voice.Instance.html#t:instance/0">Coxir.Voice.Instance.instance</a>()</pre>
+
+      </div>
+
+<p>Joins a given voice channel.</p><p>If the user is already in the channel, the function acts as a no-op.</p><p>If the user is in a different channel of the same guild, it will stop playing and then switch.</p>
+  </section>
+</section>
+<section class="detail" id="leave/2">
+
+  <div class="detail-header">
+    <a href="#leave/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">leave(arg1, options)</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/voice.ex#L110" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>leave(<a href="Coxir.Guild.html#t:t/0">Coxir.Guild.t</a>() | <a href="Coxir.Channel.html#t:t/0">Coxir.Channel.t</a>(), <a href="#t:leave_options/0">leave_options</a>()) :: :ok</pre>
+
+      </div>
+
+<p>Leaves from a given voice channel, or the active voice channel for a guild.</p>
+  </section>
+</section>
+<section class="detail" id="pause/1">
+
+  <div class="detail-header">
+    <a href="#pause/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">pause(instance)</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/voice.ex#L78" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>pause(<a href="Coxir.Voice.Instance.html#t:instance/0">Coxir.Voice.Instance.instance</a>()) :: :ok | {:error, :no_player}</pre>
+
+      </div>
+
+<p>Pauses audio playback on a given instance.</p>
+  </section>
+</section>
+<section class="detail" id="play/3">
+
+    <span id="play/2"></span>
+
+  <div class="detail-header">
+    <a href="#play/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">play(instance, playable, options \\ [])</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/voice.ex#L69" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>play(<a href="Coxir.Voice.Instance.html#t:instance/0">Coxir.Voice.Instance.instance</a>(), <a href="Coxir.Player.html#t:playable/0">Coxir.Player.playable</a>(), <a href="#t:play_options/0">play_options</a>()) ::
+  :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+<p>Begins playing audio on a given instance.</p><p>Refer to the documentation of the player in use for more information on the arguments.</p><p>If no custom player is provided, the default <a href="Coxir.Player.Default.html"><code class="inline">Coxir.Player.Default</code></a> will be used.</p>
+  </section>
+</section>
+<section class="detail" id="playing?/1">
+
+  <div class="detail-header">
+    <a href="#playing?/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">playing?(instance)</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/voice.ex#L94" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>playing?(<a href="Coxir.Voice.Instance.html#t:instance/0">Coxir.Voice.Instance.instance</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+      </div>
+
+<p>Returns whether audio is currently playing on a given instance.</p>
+  </section>
+</section>
+<section class="detail" id="resume/1">
+
+  <div class="detail-header">
+    <a href="#resume/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">resume(instance)</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/voice.ex#L86" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>resume(<a href="Coxir.Voice.Instance.html#t:instance/0">Coxir.Voice.Instance.instance</a>()) :: :ok | {:error, :no_player}</pre>
+
+      </div>
+
+<p>Resumes audio playback on a given instance.</p>
+  </section>
+</section>
+<section class="detail" id="stop_playing/1">
+
+  <div class="detail-header">
+    <a href="#stop_playing/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">stop_playing(instance)</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/voice.ex#L102" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>stop_playing(<a href="Coxir.Voice.Instance.html#t:instance/0">Coxir.Voice.Instance.instance</a>()) :: :ok</pre>
+
+      </div>
+
+<p>Stops playing audio on a given instance.</p>
+  </section>
+</section>
+
+          </div>
+        </section>
+
+      <footer class="footer">
+        <p>
+          <span class="line">
+            Built using
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.24.2) for the
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank">Elixir programming language</a>.
+          </span>
+          <span class="line">
+            Designed by
+            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire">Friedel Ziegelmayer</a>.
+          </span>
+        </p>
+        <p>
+
+            <a href="api-reference.html" title="API reference" class="line footer-button">API Reference</a>
+
+          <button class="line footer-button display-shortcuts-help">
+            Display keyboard shortcuts
+          </button>
+          <button class="line footer-button night-mode-toggle">
+            Toggle night mode
+          </button>
+          <button class="line footer-button display-quick-switch">
+            Go to a HexDocs package
+          </button>
+          <button class="line footer-button tooltips-toggle">
+            <span class="tooltips-option-disable">Disable tooltips</span>
+            <span class="tooltips-option-enable">Enable tooltips</span>
+          </button>
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

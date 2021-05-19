@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.24.2">
+    <meta name="project" content="coxir v2.0.0">
+
+    <title>Coxir.Channel — coxir v2.0.0</title>
+    <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
+
+    <script src="dist/sidebar_items-6ab30824c0.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/app-f27ff079945e43879c46.js"></script>
+
+
+  </head>
+  <body data-type="modules">
+    <script>
+
+      try {
+        if (localStorage.getItem('night-mode') === 'true') {
+          document.body.classList.add('night-mode');
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle">
+  <span class="icon-menu" title="Collapse/expand sidebar"></span>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <span class="icon-search" aria-hidden="true" title="Submit search"></span>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <span class="icon-cross" aria-hidden="true" title="Cancel search"></span>
+    </button>
+    <label class="search-label">
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectDetails">
+      <a href="introduction.html" class="sidebar-projectName">
+coxir
+      </a>
+      <strong class="sidebar-projectVersion">
+        v2.0.0
+      </strong>
+    </div>
+
+  </div>
+
+  <ul class="sidebar-listNav">
+    <li><a id="extras-list-link" href="#full-list">GUIDES</a></li>
+
+      <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+  </ul>
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+      <h1>
+Coxir.Channel <small class="app-vsn">(coxir v2.0.0)</small>
+
+          <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L1" title="View Source" class="view-source" rel="help">
+            <span class="icon-code" aria-hidden="true"></span>
+            <span class="sr-only">View Source</span>
+          </a>
+
+      </h1>
+
+
+        <section id="moduledoc">
+<p>Represents a Discord channel.</p>
+        </section>
+
+
+        <section id="summary" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#summary">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+            Summary
+          </h1>
+
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:application_id/0">application_id()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Application id of the group DM creator if it is bot-created.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:bitrate/0">bitrate()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The bitrate (in bits) of the voice channel.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:create_params/0">create_params()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The parameters that can be passed to <a href="#create/2"><code class="inline">create/2</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:create_params_dm/0">create_params_dm()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Parameters when creating a DM channel.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:create_params_guild/0">create_params_guild()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Parameters when creating a guild channel.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:guild/0">guild()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The guild the channel belongs to.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:guild_id/0">guild_id()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The id of the guild the channel belongs to.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:icon/0">icon()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The icon hash of the channel.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:id/0">id()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The id of the channel.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:key/0">key()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The coxir key of a channel.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:name/0">name()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The name of the channel.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:nsfw/0">nsfw()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Whether the channel is nsfw.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:owner/0">owner()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The creator of the group DM or thread.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:owner_id/0">owner_id()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The id of the creator of the group DM or thread.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:parent/0">parent()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The parent category for guild channels. The belonging channel for threads.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:parent_id/0">parent_id()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The id of the parent category for guild channels. The id of the belonging channel for threads.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:permission_overwrites/0">permission_overwrites()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Permission overwrites for members and roles.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:position/0">position()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Sorting position of the channel.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:rate_limit_per_user/0">rate_limit_per_user()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Amount of seconds a user has to wait before sending another message.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:recipient_id/0">recipient_id()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The id of the recipient user of the DM.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:recipients/0">recipients()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The recipients of the DM.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:rtc_region/0">rtc_region()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The voice region id for the voice channel, nil when automatic.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:t/0">t()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The struct for a channel.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:topic/0">topic()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The topic of the channel.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:type/0">type()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The type of the channel. For a list of types have a look <a href="https://discord.com/developers/docs/resources/channel#channel-object-channel-types">here</a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:update_params/0">update_params()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The parameters that can be passed to <a href="#update/2"><code class="inline">update/2</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:update_params_guild/0">update_params_guild()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Parameters when updating a guild channel.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:user_limit/0">user_limit()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The user limit of the voice channel.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:video_quality_mode/0">video_quality_mode()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The camera video quality mode of the voice channel.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:voice_states/0">voice_states()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Active voice states for the voice channel.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:webhooks/0">webhooks()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Webhooks configured for the channel.</p></div>
+
+</div>
+
+  </div>
+
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#create/2">create(params, options \\ [])</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Callback implementation for <a href="Coxir.Model.html#c:create/2"><code class="inline">Coxir.Model.create/2</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#create_overwrite/3">create_overwrite(channel, params, options \\ [])</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Delegates to <a href="Coxir.Overwrite.html#create/2"><code class="inline">Coxir.Overwrite.create/2</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#create_webhook/3">create_webhook(channel, params, options \\ [])</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Delegates to <a href="Coxir.Webhook.html#create/2"><code class="inline">Coxir.Webhook.create/2</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#delete/2">delete(struct, options \\ [])</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Callback implementation for <a href="Coxir.Model.html#c:delete/2"><code class="inline">Coxir.Model.delete/2</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#get/2">get(key, options \\ [])</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Callback implementation for <a href="Coxir.Model.html#c:get/2"><code class="inline">Coxir.Model.get/2</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#get!/2">get!(key, options \\ [])</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Callback implementation for <a href="Coxir.Model.html#c:get!/2"><code class="inline">Coxir.Model.get!/2</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#preload/3">preload(struct, preloads, options \\ [])</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Callback implementation for <a href="Coxir.Model.html#c:preload/3"><code class="inline">Coxir.Model.preload/3</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#preload!/3">preload!(struct, preloads, options \\ [])</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Callback implementation for <a href="Coxir.Model.html#c:preload!/3"><code class="inline">Coxir.Model.preload!/3</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#send_message/3">send_message(channel, params, options \\ [])</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Delegates to <a href="Coxir.Message.html#create/2"><code class="inline">Coxir.Message.create/2</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#start_typing/2">start_typing(channel, options \\ [])</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Triggers the typing indicator on a given channel.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#update/3">update(struct, params, options \\ [])</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Callback implementation for <a href="Coxir.Model.html#c:update/3"><code class="inline">Coxir.Model.update/3</code></a>.</p></div>
+
+</div>
+
+  </div>
+
+        </section>
+
+
+        <section id="types" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#types">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Types
+          </h1>
+          <div class="types-list">
+<section class="detail" id="t:application_id/0">
+
+  <div class="detail-header">
+    <a href="#t:application_id/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">application_id()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L94" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>application_id() :: <a href="Coxir.Model.Snowflake.html#t:t/0">Coxir.Model.Snowflake.t</a>() | nil</pre>
+
+      </div>
+
+<p>Application id of the group DM creator if it is bot-created.</p>
+  </section>
+</section>
+<section class="detail" id="t:bitrate/0">
+
+  <div class="detail-header">
+    <a href="#t:bitrate/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">bitrate()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L74" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>bitrate() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>() | nil</pre>
+
+      </div>
+
+<p>The bitrate (in bits) of the voice channel.</p>
+  </section>
+</section>
+<section class="detail" id="t:create_params/0">
+
+  <div class="detail-header">
+    <a href="#t:create_params/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">create_params()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L178" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>create_params() :: <a href="https://hexdocs.pm/elixir/Enum.html#t:t/0">Enum.t</a>() | <a href="#t:create_params_dm/0">create_params_dm</a>() | <a href="#t:create_params_guild/0">create_params_guild</a>()</pre>
+
+      </div>
+
+<p>The parameters that can be passed to <a href="#create/2"><code class="inline">create/2</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="t:create_params_dm/0">
+
+  <div class="detail-header">
+    <a href="#t:create_params_dm/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">create_params_dm()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L183" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>create_params_dm() :: %{recipient_id: <a href="#t:recipient_id/0">recipient_id</a>()}</pre>
+
+      </div>
+
+<p>Parameters when creating a DM channel.</p>
+  </section>
+</section>
+<section class="detail" id="t:create_params_guild/0">
+
+  <div class="detail-header">
+    <a href="#t:create_params_guild/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">create_params_guild()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L188" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>create_params_guild() :: %{
+  :guild_id =&gt; <a href="#t:guild_id/0">guild_id</a>(),
+  :name =&gt; <a href="#t:name/0">name</a>(),
+  optional(:type) =&gt; <a href="#t:type/0">type</a>(),
+  optional(:topic) =&gt; <a href="#t:topic/0">topic</a>(),
+  optional(:bitrate) =&gt; <a href="#t:bitrate/0">bitrate</a>(),
+  optional(:user_limit) =&gt; <a href="#t:user_limit/0">user_limit</a>(),
+  optional(:rate_limit_per_user) =&gt; <a href="#t:rate_limit_per_user/0">rate_limit_per_user</a>(),
+  optional(:position) =&gt; <a href="#t:position/0">position</a>(),
+  optional(:permission_overwrites) =&gt; <a href="#t:permission_overwrites/0">permission_overwrites</a>(),
+  optional(:parent_id) =&gt; <a href="#t:parent_id/0">parent_id</a>(),
+  optional(:nsfw) =&gt; <a href="#t:nsfw/0">nsfw</a>()
+}</pre>
+
+      </div>
+
+<p>Parameters when creating a guild channel.</p>
+  </section>
+</section>
+<section class="detail" id="t:guild/0">
+
+  <div class="detail-header">
+    <a href="#t:guild/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">guild()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L144" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>guild() ::
+  <a href="https://hexdocs.pm/ecto/3.6.1/Ecto.Association.NotLoaded.html#t:t/0">Ecto.Association.NotLoaded.t</a>() | <a href="Coxir.Guild.html#t:t/0">Coxir.Guild.t</a>() | nil | <a href="Coxir.API.Error.html#t:t/0">Coxir.API.Error.t</a>()</pre>
+
+      </div>
+
+<p>The guild the channel belongs to.</p><p>Needs to be preloaded via <a href="#preload/3"><code class="inline">preload/3</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="t:guild_id/0">
+
+  <div class="detail-header">
+    <a href="#t:guild_id/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">guild_id()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L137" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>guild_id() :: <a href="Coxir.Model.Snowflake.html#t:t/0">Coxir.Model.Snowflake.t</a>() | nil</pre>
+
+      </div>
+
+<p>The id of the guild the channel belongs to.</p>
+  </section>
+</section>
+<section class="detail" id="t:icon/0">
+
+  <div class="detail-header">
+    <a href="#t:icon/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">icon()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L89" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>icon() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil</pre>
+
+      </div>
+
+<p>The icon hash of the channel.</p>
+  </section>
+</section>
+<section class="detail" id="t:id/0">
+
+  <div class="detail-header">
+    <a href="#t:id/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">id()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L44" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>id() :: <a href="Coxir.Model.Snowflake.html#t:t/0">Coxir.Model.Snowflake.t</a>()</pre>
+
+      </div>
+
+<p>The id of the channel.</p>
+  </section>
+</section>
+<section class="detail" id="t:key/0">
+
+  <div class="detail-header">
+    <a href="#t:key/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">key()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L39" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>key() :: <a href="#t:id/0">id</a>()</pre>
+
+      </div>
+
+<p>The coxir key of a channel.</p>
+  </section>
+</section>
+<section class="detail" id="t:name/0">
+
+  <div class="detail-header">
+    <a href="#t:name/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">name()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L59" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>name() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil</pre>
+
+      </div>
+
+<p>The name of the channel.</p>
+  </section>
+</section>
+<section class="detail" id="t:nsfw/0">
+
+  <div class="detail-header">
+    <a href="#t:nsfw/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">nsfw()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L69" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>nsfw() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>() | nil</pre>
+
+      </div>
+
+<p>Whether the channel is nsfw.</p>
+  </section>
+</section>
+<section class="detail" id="t:owner/0">
+
+  <div class="detail-header">
+    <a href="#t:owner/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">owner()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L156" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>owner() ::
+  <a href="https://hexdocs.pm/ecto/3.6.1/Ecto.Association.NotLoaded.html#t:t/0">Ecto.Association.NotLoaded.t</a>() | <a href="Coxir.User.html#t:t/0">Coxir.User.t</a>() | nil | <a href="Coxir.API.Error.html#t:t/0">Coxir.API.Error.t</a>()</pre>
+
+      </div>
+
+<p>The creator of the group DM or thread.</p><p>Needs to be preloaded via <a href="#preload/3"><code class="inline">preload/3</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="t:owner_id/0">
+
+  <div class="detail-header">
+    <a href="#t:owner_id/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">owner_id()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L149" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>owner_id() :: <a href="Coxir.Model.Snowflake.html#t:t/0">Coxir.Model.Snowflake.t</a>() | nil</pre>
+
+      </div>
+
+<p>The id of the creator of the group DM or thread.</p>
+  </section>
+</section>
+<section class="detail" id="t:parent/0">
+
+  <div class="detail-header">
+    <a href="#t:parent/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">parent()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L168" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>parent() :: <a href="https://hexdocs.pm/ecto/3.6.1/Ecto.Association.NotLoaded.html#t:t/0">Ecto.Association.NotLoaded.t</a>() | <a href="#t:t/0">t</a>() | nil | <a href="Coxir.API.Error.html#t:t/0">Coxir.API.Error.t</a>()</pre>
+
+      </div>
+
+<p>The parent category for guild channels. The belonging channel for threads.</p><p>Needs to be preloaded via <a href="#preload/3"><code class="inline">preload/3</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="t:parent_id/0">
+
+  <div class="detail-header">
+    <a href="#t:parent_id/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">parent_id()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L161" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>parent_id() :: <a href="Coxir.Model.Snowflake.html#t:t/0">Coxir.Model.Snowflake.t</a>() | nil</pre>
+
+      </div>
+
+<p>The id of the parent category for guild channels. The id of the belonging channel for threads.</p>
+  </section>
+</section>
+<section class="detail" id="t:permission_overwrites/0">
+
+  <div class="detail-header">
+    <a href="#t:permission_overwrites/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">permission_overwrites()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L118" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>permission_overwrites() ::
+  <a href="https://hexdocs.pm/ecto/3.6.1/Ecto.Association.NotLoaded.html#t:t/0">Ecto.Association.NotLoaded.t</a>() | [<a href="Coxir.Overwrite.html#t:t/0">Coxir.Overwrite.t</a>()] | <a href="Coxir.API.Error.html#t:t/0">Coxir.API.Error.t</a>()</pre>
+
+      </div>
+
+<p>Permission overwrites for members and roles.</p><p>Needs to be preloaded via <a href="#preload/3"><code class="inline">preload/3</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="t:position/0">
+
+  <div class="detail-header">
+    <a href="#t:position/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">position()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L54" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>position() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>() | nil</pre>
+
+      </div>
+
+<p>Sorting position of the channel.</p>
+  </section>
+</section>
+<section class="detail" id="t:rate_limit_per_user/0">
+
+  <div class="detail-header">
+    <a href="#t:rate_limit_per_user/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">rate_limit_per_user()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L84" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>rate_limit_per_user() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>() | nil</pre>
+
+      </div>
+
+<p>Amount of seconds a user has to wait before sending another message.</p>
+  </section>
+</section>
+<section class="detail" id="t:recipient_id/0">
+
+  <div class="detail-header">
+    <a href="#t:recipient_id/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">recipient_id()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L173" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>recipient_id() :: <a href="Coxir.Model.Snowflake.html#t:t/0">Coxir.Model.Snowflake.t</a>()</pre>
+
+      </div>
+
+<p>The id of the recipient user of the DM.</p>
+  </section>
+</section>
+<section class="detail" id="t:recipients/0">
+
+  <div class="detail-header">
+    <a href="#t:recipients/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">recipients()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L111" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>recipients() :: [<a href="Coxir.User.html#t:t/0">Coxir.User.t</a>()] | nil</pre>
+
+      </div>
+
+<p>The recipients of the DM.</p><p>Needs to be preloaded via <a href="#preload/3"><code class="inline">preload/3</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="t:rtc_region/0">
+
+  <div class="detail-header">
+    <a href="#t:rtc_region/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">rtc_region()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L99" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>rtc_region() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil</pre>
+
+      </div>
+
+<p>The voice region id for the voice channel, nil when automatic.</p>
+  </section>
+</section>
+<section class="detail" id="t:t/0">
+
+  <div class="detail-header">
+    <a href="#t:t/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">t()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L10" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>t() :: %Coxir.Channel{
+  application_id: <a href="#t:application_id/0">application_id</a>(),
+  bitrate: <a href="#t:bitrate/0">bitrate</a>(),
+  guild: <a href="#t:guild/0">guild</a>(),
+  guild_id: <a href="#t:guild_id/0">guild_id</a>(),
+  icon: <a href="#t:icon/0">icon</a>(),
+  id: <a href="#t:id/0">id</a>(),
+  name: <a href="#t:name/0">name</a>(),
+  nsfw: <a href="#t:nsfw/0">nsfw</a>(),
+  owner: <a href="#t:owner/0">owner</a>(),
+  owner_id: <a href="#t:owner_id/0">owner_id</a>(),
+  parent: <a href="#t:parent/0">parent</a>(),
+  parent_id: <a href="#t:parent_id/0">parent_id</a>(),
+  permission_overwrites: <a href="#t:permission_overwrites/0">permission_overwrites</a>(),
+  position: <a href="#t:position/0">position</a>(),
+  rate_limit_per_user: <a href="#t:rate_limit_per_user/0">rate_limit_per_user</a>(),
+  recipients: <a href="#t:recipients/0">recipients</a>(),
+  rtc_region: <a href="#t:rtc_region/0">rtc_region</a>(),
+  topic: <a href="#t:topic/0">topic</a>(),
+  type: <a href="#t:type/0">type</a>(),
+  user_limit: <a href="#t:user_limit/0">user_limit</a>(),
+  video_quality_mode: <a href="#t:video_quality_mode/0">video_quality_mode</a>(),
+  voice_states: <a href="#t:voice_states/0">voice_states</a>(),
+  webhooks: <a href="#t:webhooks/0">webhooks</a>()
+}</pre>
+
+      </div>
+
+<p>The struct for a channel.</p>
+  </section>
+</section>
+<section class="detail" id="t:topic/0">
+
+  <div class="detail-header">
+    <a href="#t:topic/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">topic()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L64" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>topic() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil</pre>
+
+      </div>
+
+<p>The topic of the channel.</p>
+  </section>
+</section>
+<section class="detail" id="t:type/0">
+
+  <div class="detail-header">
+    <a href="#t:type/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">type()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L49" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>type() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>() | nil</pre>
+
+      </div>
+
+<p>The type of the channel. For a list of types have a look <a href="https://discord.com/developers/docs/resources/channel#channel-object-channel-types">here</a>.</p>
+  </section>
+</section>
+<section class="detail" id="t:update_params/0">
+
+  <div class="detail-header">
+    <a href="#t:update_params/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">update_params()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L205" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>update_params() :: <a href="https://hexdocs.pm/elixir/Enum.html#t:t/0">Enum.t</a>() | <a href="#t:update_params_guild/0">update_params_guild</a>()</pre>
+
+      </div>
+
+<p>The parameters that can be passed to <a href="#update/2"><code class="inline">update/2</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="t:update_params_guild/0">
+
+  <div class="detail-header">
+    <a href="#t:update_params_guild/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">update_params_guild()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L210" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>update_params_guild() :: %{
+  optional(:type) =&gt; <a href="#t:type/0">type</a>(),
+  optional(:topic) =&gt; <a href="#t:topic/0">topic</a>(),
+  optional(:bitrate) =&gt; <a href="#t:bitrate/0">bitrate</a>(),
+  optional(:user_limit) =&gt; <a href="#t:user_limit/0">user_limit</a>(),
+  optional(:rate_limit_per_user) =&gt; <a href="#t:rate_limit_per_user/0">rate_limit_per_user</a>(),
+  optional(:position) =&gt; <a href="#t:position/0">position</a>(),
+  optional(:permission_overwrites) =&gt; <a href="#t:permission_overwrites/0">permission_overwrites</a>(),
+  optional(:parent_id) =&gt; <a href="#t:parent_id/0">parent_id</a>(),
+  optional(:nsfw) =&gt; <a href="#t:nsfw/0">nsfw</a>()
+}</pre>
+
+      </div>
+
+<p>Parameters when updating a guild channel.</p>
+  </section>
+</section>
+<section class="detail" id="t:user_limit/0">
+
+  <div class="detail-header">
+    <a href="#t:user_limit/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">user_limit()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L79" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>user_limit() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>() | nil</pre>
+
+      </div>
+
+<p>The user limit of the voice channel.</p>
+  </section>
+</section>
+<section class="detail" id="t:video_quality_mode/0">
+
+  <div class="detail-header">
+    <a href="#t:video_quality_mode/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">video_quality_mode()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L104" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>video_quality_mode() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>() | nil</pre>
+
+      </div>
+
+<p>The camera video quality mode of the voice channel.</p>
+  </section>
+</section>
+<section class="detail" id="t:voice_states/0">
+
+  <div class="detail-header">
+    <a href="#t:voice_states/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">voice_states()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L132" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>voice_states() :: <a href="https://hexdocs.pm/ecto/3.6.1/Ecto.Association.NotLoaded.html#t:t/0">Ecto.Association.NotLoaded.t</a>() | [<a href="Coxir.VoiceState.html#t:t/0">Coxir.VoiceState.t</a>()]</pre>
+
+      </div>
+
+<p>Active voice states for the voice channel.</p><p>Needs to be preloaded via <a href="#preload/3"><code class="inline">preload/3</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="t:webhooks/0">
+
+  <div class="detail-header">
+    <a href="#t:webhooks/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">webhooks()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L125" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>webhooks() ::
+  <a href="https://hexdocs.pm/ecto/3.6.1/Ecto.Association.NotLoaded.html#t:t/0">Ecto.Association.NotLoaded.t</a>() | [<a href="Coxir.Webhook.html#t:t/0">Coxir.Webhook.t</a>()] | <a href="Coxir.API.Error.html#t:t/0">Coxir.API.Error.t</a>()</pre>
+
+      </div>
+
+<p>Webhooks configured for the channel.</p><p>Needs to be preloaded via <a href="#preload/3"><code class="inline">preload/3</code></a>.</p>
+  </section>
+</section>
+
+          </div>
+        </section>
+
+        <section id="functions" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#functions">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Functions
+          </h1>
+          <div class="functions-list">
+<section class="detail" id="create/2">
+
+    <span id="create/1"></span>
+
+  <div class="detail-header">
+    <a href="#create/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">create(params, options \\ [])</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L5" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>create(<a href="#t:create_params/0">create_params</a>(), <a href="Coxir.Model.Loader.html#t:options/0">Coxir.Model.Loader.options</a>()) ::
+  <a href="Coxir.Model.Loader.html#t:result/0">Coxir.Model.Loader.result</a>()</pre>
+
+      </div>
+
+<p>Callback implementation for <a href="Coxir.Model.html#c:create/2"><code class="inline">Coxir.Model.create/2</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="create_overwrite/3">
+
+    <span id="create_overwrite/2"></span>
+
+  <div class="detail-header">
+    <a href="#create_overwrite/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">create_overwrite(channel, params, options \\ [])</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L320" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>create_overwrite(<a href="#t:t/0">t</a>(), <a href="https://hexdocs.pm/elixir/Enum.html#t:t/0">Enum.t</a>(), <a href="Coxir.Model.Loader.html#t:options/0">Coxir.Model.Loader.options</a>()) ::
+  <a href="Coxir.Model.Loader.html#t:result/0">Coxir.Model.Loader.result</a>()</pre>
+
+      </div>
+
+<p>Delegates to <a href="Coxir.Overwrite.html#create/2"><code class="inline">Coxir.Overwrite.create/2</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="create_webhook/3">
+
+    <span id="create_webhook/2"></span>
+
+  <div class="detail-header">
+    <a href="#create_webhook/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">create_webhook(channel, params, options \\ [])</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L331" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>create_webhook(<a href="#t:t/0">t</a>(), <a href="https://hexdocs.pm/elixir/Enum.html#t:t/0">Enum.t</a>(), <a href="Coxir.Model.Loader.html#t:options/0">Coxir.Model.Loader.options</a>()) ::
+  <a href="Coxir.Model.Loader.html#t:result/0">Coxir.Model.Loader.result</a>()</pre>
+
+      </div>
+
+<p>Delegates to <a href="Coxir.Webhook.html#create/2"><code class="inline">Coxir.Webhook.create/2</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="delete/2">
+
+    <span id="delete/1"></span>
+
+  <div class="detail-header">
+    <a href="#delete/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">delete(struct, options \\ [])</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L5" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Callback implementation for <a href="Coxir.Model.html#c:delete/2"><code class="inline">Coxir.Model.delete/2</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="get/2">
+
+    <span id="get/1"></span>
+
+  <div class="detail-header">
+    <a href="#get/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">get(key, options \\ [])</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L5" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Callback implementation for <a href="Coxir.Model.html#c:get/2"><code class="inline">Coxir.Model.get/2</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="get!/2">
+
+    <span id="get!/1"></span>
+
+  <div class="detail-header">
+    <a href="#get!/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">get!(key, options \\ [])</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L5" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Callback implementation for <a href="Coxir.Model.html#c:get!/2"><code class="inline">Coxir.Model.get!/2</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="preload/3">
+
+    <span id="preload/2"></span>
+
+  <div class="detail-header">
+    <a href="#preload/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">preload(struct, preloads, options \\ [])</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L276" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Callback implementation for <a href="Coxir.Model.html#c:preload/3"><code class="inline">Coxir.Model.preload/3</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="preload!/3">
+
+    <span id="preload!/2"></span>
+
+  <div class="detail-header">
+    <a href="#preload!/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">preload!(struct, preloads, options \\ [])</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L5" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Callback implementation for <a href="Coxir.Model.html#c:preload!/3"><code class="inline">Coxir.Model.preload!/3</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="send_message/3">
+
+    <span id="send_message/2"></span>
+
+  <div class="detail-header">
+    <a href="#send_message/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">send_message(channel, params, options \\ [])</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L309" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>send_message(<a href="#t:t/0">t</a>(), <a href="https://hexdocs.pm/elixir/Enum.html#t:t/0">Enum.t</a>(), <a href="Coxir.Model.Loader.html#t:options/0">Coxir.Model.Loader.options</a>()) ::
+  <a href="Coxir.Model.Loader.html#t:result/0">Coxir.Model.Loader.result</a>()</pre>
+
+      </div>
+
+<p>Delegates to <a href="Coxir.Message.html#create/2"><code class="inline">Coxir.Message.create/2</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="start_typing/2">
+
+    <span id="start_typing/1"></span>
+
+  <div class="detail-header">
+    <a href="#start_typing/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">start_typing(channel, options \\ [])</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L301" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>start_typing(<a href="#t:t/0">t</a>(), <a href="Coxir.Model.Loader.html#t:options/0">Coxir.Model.Loader.options</a>()) :: <a href="Coxir.Model.Loader.html#t:result/0">Coxir.Model.Loader.result</a>()</pre>
+
+      </div>
+
+<p>Triggers the typing indicator on a given channel.</p>
+  </section>
+</section>
+<section class="detail" id="update/3">
+
+    <span id="update/2"></span>
+
+  <div class="detail-header">
+    <a href="#update/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">update(struct, params, options \\ [])</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model/entities/channel.ex#L5" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>update(<a href="#t:t/0">t</a>(), <a href="#t:update_params/0">update_params</a>(), <a href="Coxir.Model.Loader.html#t:options/0">Coxir.Model.Loader.options</a>()) ::
+  <a href="Coxir.Model.Loader.html#t:result/0">Coxir.Model.Loader.result</a>()</pre>
+
+      </div>
+
+<p>Callback implementation for <a href="Coxir.Model.html#c:update/3"><code class="inline">Coxir.Model.update/3</code></a>.</p>
+  </section>
+</section>
+
+          </div>
+        </section>
+
+      <footer class="footer">
+        <p>
+          <span class="line">
+            Built using
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.24.2) for the
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank">Elixir programming language</a>.
+          </span>
+          <span class="line">
+            Designed by
+            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire">Friedel Ziegelmayer</a>.
+          </span>
+        </p>
+        <p>
+
+            <a href="api-reference.html" title="API reference" class="line footer-button">API Reference</a>
+
+          <button class="line footer-button display-shortcuts-help">
+            Display keyboard shortcuts
+          </button>
+          <button class="line footer-button night-mode-toggle">
+            Toggle night mode
+          </button>
+          <button class="line footer-button display-quick-switch">
+            Go to a HexDocs package
+          </button>
+          <button class="line footer-button tooltips-toggle">
+            <span class="tooltips-option-disable">Disable tooltips</span>
+            <span class="tooltips-option-enable">Enable tooltips</span>
+          </button>
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

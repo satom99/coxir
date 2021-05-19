@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.24.2">
+    <meta name="project" content="coxir v2.0.0">
+
+    <title>Coxir.Gateway — coxir v2.0.0</title>
+    <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
+
+    <script src="dist/sidebar_items-6ab30824c0.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/app-f27ff079945e43879c46.js"></script>
+
+
+  </head>
+  <body data-type="modules">
+    <script>
+
+      try {
+        if (localStorage.getItem('night-mode') === 'true') {
+          document.body.classList.add('night-mode');
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle">
+  <span class="icon-menu" title="Collapse/expand sidebar"></span>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <span class="icon-search" aria-hidden="true" title="Submit search"></span>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <span class="icon-cross" aria-hidden="true" title="Cancel search"></span>
+    </button>
+    <label class="search-label">
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectDetails">
+      <a href="introduction.html" class="sidebar-projectName">
+coxir
+      </a>
+      <strong class="sidebar-projectVersion">
+        v2.0.0
+      </strong>
+    </div>
+
+  </div>
+
+  <ul class="sidebar-listNav">
+    <li><a id="extras-list-link" href="#full-list">GUIDES</a></li>
+
+      <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+  </ul>
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+      <h1>
+Coxir.Gateway <small class="app-vsn">(coxir v2.0.0)</small>
+
+          <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/gateway.ex#L1" title="View Source" class="view-source" rel="help">
+            <span class="icon-code" aria-hidden="true"></span>
+            <span class="sr-only">View Source</span>
+          </a>
+
+      </h1>
+
+
+        <section id="moduledoc">
+<p>Supervises the components necessary to interact with Discord's gateway.</p><h3 id="module-using-the-module" class="section-heading">
+  <a href="#module-using-the-module" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Using the module
+</h3>
+<p>The module can be used with <a href="https://hexdocs.pm/elixir/Kernel.html#use/2"><code class="inline">Kernel.use/2</code></a> to transform the calling module into a gateway.</p><p>Check out the <a href="#__using__/1"><code class="inline">__using__/1</code></a> macro to see what this does exactly.</p>
+        </section>
+
+
+        <section id="summary" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#summary">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+            Summary
+          </h1>
+
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:config/0">config()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The configuration that must be passed to <a href="#start_link/2"><code class="inline">start_link/2</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:gateway/0">gateway()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>A gateway process.</p></div>
+
+</div>
+
+  </div>
+
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#__using__/1">__using__(options)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Defines functions in order to transform the calling module into a gateway.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#get_producer/1">get_producer(gateway)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Returns the <a href="Coxir.Gateway.Producer.html#t:producer/0"><code class="inline">Coxir.Gateway.Producer.producer/0</code></a> process of a given gateway.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#get_shard/2">get_shard(gateway, index)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Returns the session process for a given channel, guild or specific shard.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#get_token/1">get_token(gateway)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Returns the token configured for the given gateway.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#get_user_id/1">get_user_id(gateway)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Returns the id of the user the given gateway is running for.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#request_guild_members/3">request_guild_members(gateway, guild, params)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Requests members for a given guild.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#start_link/2">start_link(config, options \\ [])</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Starts a gateway with the given configuration and options.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#update_presence/2">update_presence(gateway, params)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Calls <a href="#update_presence/3"><code class="inline">update_presence/3</code></a> on all the shards of a given gateway.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#update_presence/3">update_presence(gateway, where, params)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Updates the presence on a given channel, guild or specific shard.</p></div>
+
+</div>
+
+  </div>
+
+        </section>
+
+
+        <section id="types" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#types">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Types
+          </h1>
+          <div class="types-list">
+<section class="detail" id="t:config/0">
+
+  <div class="detail-header">
+    <a href="#t:config/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">config()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/gateway.ex#L38" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>config() :: [
+  token: <a href="Coxir.Token.html#t:t/0">Coxir.Token.t</a>() | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">none</a>(),
+  intents: <a href="Coxir.Gateway.Intents.html#t:intents/0">Coxir.Gateway.Intents.intents</a>() | :non_privileged,
+  shard_count: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>() | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">none</a>(),
+  sharder: <a href="Coxir.Sharder.html#t:t/0">Coxir.Sharder.t</a>() | Coxir.Sharder.Default,
+  handler: <a href="Coxir.Gateway.Handler.html#t:handler/0">Coxir.Gateway.Handler.handler</a>()
+]</pre>
+
+      </div>
+
+<p>The configuration that must be passed to <a href="#start_link/2"><code class="inline">start_link/2</code></a>.</p><p>If no <code class="inline">token</code> is provided, one is expected to be configured as <code class="inline">:token</code> under the <code class="inline">:coxir</code> app.</p><p>If no <code class="inline">shard_count</code> is provided, the value suggested by Discord will be used.</p>
+  </section>
+</section>
+<section class="detail" id="t:gateway/0">
+
+  <div class="detail-header">
+    <a href="#t:gateway/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">gateway()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/gateway.ex#L29" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>gateway() :: <a href="https://hexdocs.pm/elixir/Supervisor.html#t:supervisor/0">Supervisor.supervisor</a>()</pre>
+
+      </div>
+
+<p>A gateway process.</p>
+  </section>
+</section>
+
+          </div>
+        </section>
+
+        <section id="functions" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#functions">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Functions
+          </h1>
+          <div class="functions-list">
+<section class="detail" id="__using__/1">
+
+  <div class="detail-header">
+    <a href="#__using__/1" class="detail-link" title="Link to this macro">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this macro</span>
+    </a>
+    <h1 class="signature">__using__(options)</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/gateway.ex#L63" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+      <span class="note">(macro)</span>
+
+  </div>
+
+  <section class="docstring">
+
+<p>Defines functions in order to transform the calling module into a gateway.</p><p>Defines <code class="inline">child_spec/1</code> and <code class="inline">start_link/0</code> so that the module can be added to a supervisor.</p><p>Note that the <a href="#t:gateway/0"><code class="inline">gateway/0</code></a> process that the second function starts is named after the module.</p><p>Defines <code class="inline">get_user_id/0</code> which delegates to <a href="#get_user_id/1"><code class="inline">get_user_id/1</code></a>.</p><p>Defines <code class="inline">update_presence/1</code> which delegates to <a href="#update_presence/2"><code class="inline">update_presence/2</code></a>.</p><p>Defines <a href="#update_presence/2"><code class="inline">update_presence/2</code></a> which delegates to <a href="#update_presence/3"><code class="inline">update_presence/3</code></a>.</p><p>Requires the <a href="Coxir.Gateway.Handler.html"><code class="inline">Coxir.Gateway.Handler</code></a> behaviour to be implemented for handling events.</p><p>Custom configuration can be given for this module by configuring it under the <code class="inline">:coxir</code> app.</p>
+  </section>
+</section>
+<section class="detail" id="get_producer/1">
+
+  <div class="detail-header">
+    <a href="#get_producer/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">get_producer(gateway)</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/gateway.ex#L189" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>get_producer(<a href="#t:gateway/0">gateway</a>()) :: <a href="Coxir.Gateway.Producer.html#t:producer/0">Coxir.Gateway.Producer.producer</a>()</pre>
+
+      </div>
+
+<p>Returns the <a href="Coxir.Gateway.Producer.html#t:producer/0"><code class="inline">Coxir.Gateway.Producer.producer/0</code></a> process of a given gateway.</p>
+  </section>
+</section>
+<section class="detail" id="get_shard/2">
+
+  <div class="detail-header">
+    <a href="#get_shard/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">get_shard(gateway, index)</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/gateway.ex#L147" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>get_shard(<a href="#t:gateway/0">gateway</a>(), <a href="Coxir.Channel.html#t:t/0">Coxir.Channel.t</a>() | <a href="Coxir.Guild.html#t:t/0">Coxir.Guild.t</a>() | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>()) ::
+  <a href="Coxir.Gateway.Session.html#t:session/0">Coxir.Gateway.Session.session</a>()</pre>
+
+      </div>
+
+<p>Returns the session process for a given channel, guild or specific shard.</p>
+  </section>
+</section>
+<section class="detail" id="get_token/1">
+
+  <div class="detail-header">
+    <a href="#get_token/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">get_token(gateway)</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/gateway.ex#L180" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>get_token(<a href="#t:gateway/0">gateway</a>()) :: <a href="Coxir.Token.html#t:t/0">Coxir.Token.t</a>()</pre>
+
+      </div>
+
+<p>Returns the token configured for the given gateway.</p>
+  </section>
+</section>
+<section class="detail" id="get_user_id/1">
+
+  <div class="detail-header">
+    <a href="#get_user_id/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">get_user_id(gateway)</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/gateway.ex#L171" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>get_user_id(<a href="#t:gateway/0">gateway</a>()) :: <a href="Coxir.Model.Snowflake.html#t:t/0">Coxir.Model.Snowflake.t</a>()</pre>
+
+      </div>
+
+<p>Returns the id of the user the given gateway is running for.</p>
+  </section>
+</section>
+<section class="detail" id="request_guild_members/3">
+
+  <div class="detail-header">
+    <a href="#request_guild_members/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">request_guild_members(gateway, guild, params)</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/gateway.ex#L131" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>request_guild_members(<a href="#t:gateway/0">gateway</a>(), <a href="Coxir.Guild.html#t:t/0">Coxir.Guild.t</a>(), <a href="https://hexdocs.pm/elixir/Enum.html#t:t/0">Enum.t</a>()) :: :ok</pre>
+
+      </div>
+
+<p>Requests members for a given guild.</p><p>The possible parameters are the fields of <a href="Coxir.Gateway.Payload.RequestGuildMembers.html#t:t/0"><code class="inline">Coxir.Gateway.Payload.RequestGuildMembers.t/0</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="start_link/2">
+
+    <span id="start_link/1"></span>
+
+  <div class="detail-header">
+    <a href="#start_link/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">start_link(config, options \\ [])</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/gateway.ex#L205" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>start_link(<a href="#t:config/0">config</a>(), [<a href="https://hexdocs.pm/elixir/Supervisor.html#t:option/0">Supervisor.option</a>() | <a href="https://hexdocs.pm/elixir/Supervisor.html#t:init_option/0">Supervisor.init_option</a>()]) ::
+  <a href="https://hexdocs.pm/elixir/Supervisor.html#t:on_start/0">Supervisor.on_start</a>()</pre>
+
+      </div>
+
+<p>Starts a gateway with the given configuration and options.</p>
+  </section>
+</section>
+<section class="detail" id="update_presence/2">
+
+  <div class="detail-header">
+    <a href="#update_presence/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">update_presence(gateway, params)</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/gateway.ex#L102" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>update_presence(<a href="#t:gateway/0">gateway</a>(), <a href="https://hexdocs.pm/elixir/Enum.html#t:t/0">Enum.t</a>()) :: :ok</pre>
+
+      </div>
+
+<p>Calls <a href="#update_presence/3"><code class="inline">update_presence/3</code></a> on all the shards of a given gateway.</p>
+  </section>
+</section>
+<section class="detail" id="update_presence/3">
+
+  <div class="detail-header">
+    <a href="#update_presence/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">update_presence(gateway, where, params)</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/gateway.ex#L118" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>update_presence(
+  <a href="#t:gateway/0">gateway</a>(),
+  <a href="Coxir.Channel.html#t:t/0">Coxir.Channel.t</a>() | <a href="Coxir.Guild.html#t:t/0">Coxir.Guild.t</a>() | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>(),
+  <a href="https://hexdocs.pm/elixir/Enum.html#t:t/0">Enum.t</a>()
+) :: :ok</pre>
+
+      </div>
+
+<p>Updates the presence on a given channel, guild or specific shard.</p><p>The possible parameters are the fields of <a href="Coxir.Gateway.Payload.UpdatePresence.html#t:t/0"><code class="inline">Coxir.Gateway.Payload.UpdatePresence.t/0</code></a>.</p>
+  </section>
+</section>
+
+          </div>
+        </section>
+
+      <footer class="footer">
+        <p>
+          <span class="line">
+            Built using
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.24.2) for the
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank">Elixir programming language</a>.
+          </span>
+          <span class="line">
+            Designed by
+            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire">Friedel Ziegelmayer</a>.
+          </span>
+        </p>
+        <p>
+
+            <a href="api-reference.html" title="API reference" class="line footer-button">API Reference</a>
+
+          <button class="line footer-button display-shortcuts-help">
+            Display keyboard shortcuts
+          </button>
+          <button class="line footer-button night-mode-toggle">
+            Toggle night mode
+          </button>
+          <button class="line footer-button display-quick-switch">
+            Go to a HexDocs package
+          </button>
+          <button class="line footer-button tooltips-toggle">
+            <span class="tooltips-option-disable">Disable tooltips</span>
+            <span class="tooltips-option-enable">Enable tooltips</span>
+          </button>
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

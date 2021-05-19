@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.24.2">
+    <meta name="project" content="coxir v2.0.0">
+
+    <title>Coxir.Model — coxir v2.0.0</title>
+    <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
+
+    <script src="dist/sidebar_items-6ab30824c0.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/app-f27ff079945e43879c46.js"></script>
+
+
+  </head>
+  <body data-type="modules">
+    <script>
+
+      try {
+        if (localStorage.getItem('night-mode') === 'true') {
+          document.body.classList.add('night-mode');
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle">
+  <span class="icon-menu" title="Collapse/expand sidebar"></span>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <span class="icon-search" aria-hidden="true" title="Submit search"></span>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <span class="icon-cross" aria-hidden="true" title="Cancel search"></span>
+    </button>
+    <label class="search-label">
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectDetails">
+      <a href="introduction.html" class="sidebar-projectName">
+coxir
+      </a>
+      <strong class="sidebar-projectVersion">
+        v2.0.0
+      </strong>
+    </div>
+
+  </div>
+
+  <ul class="sidebar-listNav">
+    <li><a id="extras-list-link" href="#full-list">GUIDES</a></li>
+
+      <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+  </ul>
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+      <h1>
+Coxir.Model <small>behaviour</small> <small class="app-vsn">(coxir v2.0.0)</small>
+
+          <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model.ex#L1" title="View Source" class="view-source" rel="help">
+            <span class="icon-code" aria-hidden="true"></span>
+            <span class="sr-only">View Source</span>
+          </a>
+
+      </h1>
+
+
+        <section id="moduledoc">
+<p>The base behaviour for entities.</p>
+        </section>
+
+
+        <section id="summary" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#summary">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+            Summary
+          </h1>
+
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:instance/0">instance()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>A struct object of a given <a href="#t:model/0"><code class="inline">model/0</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:key/0">key()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The internal coxir identificator for a <a href="#t:instance/0"><code class="inline">instance/0</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:model/0">model()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>A module that implements the behaviour.</p></div>
+
+</div>
+
+  </div>
+
+  <div class="summary-callbacks summary">
+    <h2>
+      <a href="#callbacks">Callbacks</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:create/2">create(arg1, arg2)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Delegates to <a href="Coxir.Model.Loader.html#create/3"><code class="inline">Coxir.Model.Loader.create/3</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:delete/2">delete(instance, arg2)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Delegates to <a href="Coxir.Model.Loader.html#delete/2"><code class="inline">Coxir.Model.Loader.delete/2</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:drop/2">drop(key, keyword)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Called to delete a <a href="#t:instance/0"><code class="inline">instance/0</code></a> through the API.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:fetch/2">fetch(key, keyword)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Called to fetch a <a href="#t:instance/0"><code class="inline">instance/0</code></a> from the API.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:fetch_many/3">fetch_many(key, atom, keyword)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Called to fetch a <a href="https://hexdocs.pm/ecto/3.6.1/Ecto.Schema.html#has_many/3"><code class="inline">Ecto.Schema.has_many/3</code></a> association of a <a href="#t:instance/0"><code class="inline">instance/0</code></a> from the API.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:get/2">get(key, arg2)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Delegates to <a href="Coxir.Model.Loader.html#get/3"><code class="inline">Coxir.Model.Loader.get/3</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:get!/2">get!(key, arg2)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Delegates to <a href="Coxir.Model.Loader.html#get!/3"><code class="inline">Coxir.Model.Loader.get!/3</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:insert/2">insert(map, keyword)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Called to create a <a href="#t:instance/0"><code class="inline">instance/0</code></a> through the API.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:patch/3">patch(key, map, keyword)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Called to update a <a href="#t:instance/0"><code class="inline">instance/0</code></a> through the API.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:preload/3">preload(instance, arg2, arg3)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Delegates to <a href="Coxir.Model.Loader.html#preload/3"><code class="inline">Coxir.Model.Loader.preload/3</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:preload!/3">preload!(instance, arg2, arg3)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Delegates to <a href="Coxir.Model.Loader.html#preload!/3"><code class="inline">Coxir.Model.Loader.preload!/3</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:storable?/0">storable?()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Returns whether a <a href="#t:model/0"><code class="inline">model/0</code></a> is hardcoded to be stored.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:update/3">update(instance, arg2, arg3)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Delegates to <a href="Coxir.Model.Loader.html#update/3"><code class="inline">Coxir.Model.Loader.update/3</code></a>.</p></div>
+
+</div>
+
+  </div>
+
+        </section>
+
+
+        <section id="types" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#types">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Types
+          </h1>
+          <div class="types-list">
+<section class="detail" id="t:instance/0">
+
+  <div class="detail-header">
+    <a href="#t:instance/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">instance()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model.ex#L18" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>instance() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">struct</a>()</pre>
+
+      </div>
+
+<p>A struct object of a given <a href="#t:model/0"><code class="inline">model/0</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="t:key/0">
+
+  <div class="detail-header">
+    <a href="#t:key/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">key()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model.ex#L27" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>key() :: <a href="Coxir.Model.Snowflake.html#t:t/0">Coxir.Model.Snowflake.t</a>() | <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">tuple</a>()</pre>
+
+      </div>
+
+<p>The internal coxir identificator for a <a href="#t:instance/0"><code class="inline">instance/0</code></a>.</p><p>Matches the primary key of the <a href="#t:model/0"><code class="inline">model/0</code></a>.</p><p>If the primary key has many fields, they appear in the order they are defined.</p>
+  </section>
+</section>
+<section class="detail" id="t:model/0">
+
+  <div class="detail-header">
+    <a href="#t:model/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">model()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model.ex#L13" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>model() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">module</a>()</pre>
+
+      </div>
+
+<p>A module that implements the behaviour.</p>
+  </section>
+</section>
+
+          </div>
+        </section>
+
+        <section id="callbacks" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#callbacks">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Callbacks
+          </h1>
+          <div class="callbacks-list">
+<section class="detail" id="c:create/2">
+
+  <div class="detail-header">
+    <a href="#c:create/2" class="detail-link" title="Link to this callback">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature">create(arg1, arg2)</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model.ex#L86" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>create(<a href="https://hexdocs.pm/elixir/Enum.html#t:t/0">Enum.t</a>(), <a href="Coxir.Model.Loader.html#t:options/0">Coxir.Model.Loader.options</a>()) :: <a href="Coxir.Model.Loader.html#t:result/0">Coxir.Model.Loader.result</a>()</pre>
+
+      </div>
+
+<p>Delegates to <a href="Coxir.Model.Loader.html#create/3"><code class="inline">Coxir.Model.Loader.create/3</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="c:delete/2">
+
+  <div class="detail-header">
+    <a href="#c:delete/2" class="detail-link" title="Link to this callback">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature">delete(instance, arg2)</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model.ex#L96" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>delete(<a href="#t:instance/0">instance</a>(), <a href="Coxir.Model.Loader.html#t:options/0">Coxir.Model.Loader.options</a>()) :: <a href="Coxir.Model.Loader.html#t:result/0">Coxir.Model.Loader.result</a>()</pre>
+
+      </div>
+
+<p>Delegates to <a href="Coxir.Model.Loader.html#delete/2"><code class="inline">Coxir.Model.Loader.delete/2</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="c:drop/2">
+
+  <div class="detail-header">
+    <a href="#c:drop/2" class="detail-link" title="Link to this callback">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature">drop(key, keyword)</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model.ex#L52" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+      <span class="note">(optional)</span>
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>drop(<a href="#t:key/0">key</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()) :: <a href="Coxir.API.html#t:result/0">Coxir.API.result</a>()</pre>
+
+      </div>
+
+<p>Called to delete a <a href="#t:instance/0"><code class="inline">instance/0</code></a> through the API.</p>
+  </section>
+</section>
+<section class="detail" id="c:fetch/2">
+
+  <div class="detail-header">
+    <a href="#c:fetch/2" class="detail-link" title="Link to this callback">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature">fetch(key, keyword)</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model.ex#L32" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+      <span class="note">(optional)</span>
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>fetch(<a href="#t:key/0">key</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()) :: <a href="Coxir.API.html#t:result/0">Coxir.API.result</a>()</pre>
+
+      </div>
+
+<p>Called to fetch a <a href="#t:instance/0"><code class="inline">instance/0</code></a> from the API.</p>
+  </section>
+</section>
+<section class="detail" id="c:fetch_many/3">
+
+  <div class="detail-header">
+    <a href="#c:fetch_many/3" class="detail-link" title="Link to this callback">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature">fetch_many(key, atom, keyword)</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model.ex#L37" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+      <span class="note">(optional)</span>
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>fetch_many(<a href="#t:key/0">key</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()) :: <a href="Coxir.API.html#t:result/0">Coxir.API.result</a>()</pre>
+
+      </div>
+
+<p>Called to fetch a <a href="https://hexdocs.pm/ecto/3.6.1/Ecto.Schema.html#has_many/3"><code class="inline">Ecto.Schema.has_many/3</code></a> association of a <a href="#t:instance/0"><code class="inline">instance/0</code></a> from the API.</p>
+  </section>
+</section>
+<section class="detail" id="c:get/2">
+
+  <div class="detail-header">
+    <a href="#c:get/2" class="detail-link" title="Link to this callback">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature">get(key, arg2)</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model.ex#L62" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>get(<a href="#t:key/0">key</a>(), <a href="Coxir.Model.Loader.html#t:options/0">Coxir.Model.Loader.options</a>()) :: <a href="#t:instance/0">instance</a>() | <a href="Coxir.API.Error.html#t:t/0">Coxir.API.Error.t</a>()</pre>
+
+      </div>
+
+<p>Delegates to <a href="Coxir.Model.Loader.html#get/3"><code class="inline">Coxir.Model.Loader.get/3</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="c:get!/2">
+
+  <div class="detail-header">
+    <a href="#c:get!/2" class="detail-link" title="Link to this callback">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature">get!(key, arg2)</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model.ex#L67" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>get!(<a href="#t:key/0">key</a>(), <a href="Coxir.Model.Loader.html#t:options/0">Coxir.Model.Loader.options</a>()) :: <a href="#t:instance/0">instance</a>()</pre>
+
+      </div>
+
+<p>Delegates to <a href="Coxir.Model.Loader.html#get!/3"><code class="inline">Coxir.Model.Loader.get!/3</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="c:insert/2">
+
+  <div class="detail-header">
+    <a href="#c:insert/2" class="detail-link" title="Link to this callback">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature">insert(map, keyword)</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model.ex#L42" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+      <span class="note">(optional)</span>
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>insert(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()) :: <a href="Coxir.API.html#t:result/0">Coxir.API.result</a>()</pre>
+
+      </div>
+
+<p>Called to create a <a href="#t:instance/0"><code class="inline">instance/0</code></a> through the API.</p>
+  </section>
+</section>
+<section class="detail" id="c:patch/3">
+
+  <div class="detail-header">
+    <a href="#c:patch/3" class="detail-link" title="Link to this callback">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature">patch(key, map, keyword)</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model.ex#L47" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+      <span class="note">(optional)</span>
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>patch(<a href="#t:key/0">key</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">keyword</a>()) :: <a href="Coxir.API.html#t:result/0">Coxir.API.result</a>()</pre>
+
+      </div>
+
+<p>Called to update a <a href="#t:instance/0"><code class="inline">instance/0</code></a> through the API.</p>
+  </section>
+</section>
+<section class="detail" id="c:preload/3">
+
+  <div class="detail-header">
+    <a href="#c:preload/3" class="detail-link" title="Link to this callback">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature">preload(instance, arg2, arg3)</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model.ex#L72" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+      <span class="note">(optional)</span>
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>preload(<a href="#t:instance/0">instance</a>(), <a href="Coxir.Model.Loader.html#t:preloads/0">Coxir.Model.Loader.preloads</a>(), <a href="Coxir.Model.Loader.html#t:options/0">Coxir.Model.Loader.options</a>()) ::
+  <a href="#t:instance/0">instance</a>()</pre>
+
+          <pre>preload(
+  [<a href="#t:instance/0">instance</a>()],
+  <a href="Coxir.Model.Loader.html#t:preloads/0">Coxir.Model.Loader.preloads</a>(),
+  <a href="Coxir.Model.Loader.html#t:options/0">Coxir.Model.Loader.options</a>()
+) :: [<a href="#t:instance/0">instance</a>()]</pre>
+
+      </div>
+
+<p>Delegates to <a href="Coxir.Model.Loader.html#preload/3"><code class="inline">Coxir.Model.Loader.preload/3</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="c:preload!/3">
+
+  <div class="detail-header">
+    <a href="#c:preload!/3" class="detail-link" title="Link to this callback">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature">preload!(instance, arg2, arg3)</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model.ex#L79" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>preload!(
+  <a href="#t:instance/0">instance</a>(),
+  <a href="Coxir.Model.Loader.html#t:preloads/0">Coxir.Model.Loader.preloads</a>(),
+  <a href="Coxir.Model.Loader.html#t:options/0">Coxir.Model.Loader.options</a>()
+) :: <a href="#t:instance/0">instance</a>()</pre>
+
+          <pre>preload!(
+  [<a href="#t:instance/0">instance</a>()],
+  <a href="Coxir.Model.Loader.html#t:preloads/0">Coxir.Model.Loader.preloads</a>(),
+  <a href="Coxir.Model.Loader.html#t:options/0">Coxir.Model.Loader.options</a>()
+) :: [<a href="#t:instance/0">instance</a>()]</pre>
+
+      </div>
+
+<p>Delegates to <a href="Coxir.Model.Loader.html#preload!/3"><code class="inline">Coxir.Model.Loader.preload!/3</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="c:storable?/0">
+
+  <div class="detail-header">
+    <a href="#c:storable?/0" class="detail-link" title="Link to this callback">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature">storable?()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model.ex#L57" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>storable?() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+      </div>
+
+<p>Returns whether a <a href="#t:model/0"><code class="inline">model/0</code></a> is hardcoded to be stored.</p>
+  </section>
+</section>
+<section class="detail" id="c:update/3">
+
+  <div class="detail-header">
+    <a href="#c:update/3" class="detail-link" title="Link to this callback">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature">update(instance, arg2, arg3)</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/master/lib/coxir/model.ex#L91" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>update(<a href="#t:instance/0">instance</a>(), <a href="https://hexdocs.pm/elixir/Enum.html#t:t/0">Enum.t</a>(), <a href="Coxir.Model.Loader.html#t:options/0">Coxir.Model.Loader.options</a>()) ::
+  <a href="Coxir.Model.Loader.html#t:result/0">Coxir.Model.Loader.result</a>()</pre>
+
+      </div>
+
+<p>Delegates to <a href="Coxir.Model.Loader.html#update/3"><code class="inline">Coxir.Model.Loader.update/3</code></a>.</p>
+  </section>
+</section>
+
+          </div>
+        </section>
+
+      <footer class="footer">
+        <p>
+          <span class="line">
+            Built using
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.24.2) for the
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank">Elixir programming language</a>.
+          </span>
+          <span class="line">
+            Designed by
+            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire">Friedel Ziegelmayer</a>.
+          </span>
+        </p>
+        <p>
+
+            <a href="api-reference.html" title="API reference" class="line footer-button">API Reference</a>
+
+          <button class="line footer-button display-shortcuts-help">
+            Display keyboard shortcuts
+          </button>
+          <button class="line footer-button night-mode-toggle">
+            Toggle night mode
+          </button>
+          <button class="line footer-button display-quick-switch">
+            Go to a HexDocs package
+          </button>
+          <button class="line footer-button tooltips-toggle">
+            <span class="tooltips-option-disable">Disable tooltips</span>
+            <span class="tooltips-option-enable">Enable tooltips</span>
+          </button>
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

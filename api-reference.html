@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.24.2">
+    <meta name="project" content="coxir v2.0.0">
+
+    <title>API Reference — coxir v2.0.0</title>
+    <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
+
+    <script src="dist/sidebar_items-6ab30824c0.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/app-f27ff079945e43879c46.js"></script>
+
+
+  </head>
+  <body data-type="extras">
+    <script>
+
+      try {
+        if (localStorage.getItem('night-mode') === 'true') {
+          document.body.classList.add('night-mode');
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle">
+  <span class="icon-menu" title="Collapse/expand sidebar"></span>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <span class="icon-search" aria-hidden="true" title="Submit search"></span>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <span class="icon-cross" aria-hidden="true" title="Cancel search"></span>
+    </button>
+    <label class="search-label">
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectDetails">
+      <a href="introduction.html" class="sidebar-projectName">
+coxir
+      </a>
+      <strong class="sidebar-projectVersion">
+        v2.0.0
+      </strong>
+    </div>
+
+  </div>
+
+  <ul class="sidebar-listNav">
+    <li><a id="extras-list-link" href="#full-list">GUIDES</a></li>
+
+      <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+  </ul>
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+  API Reference <small class="app-vsn">coxir v2.0.0</small>
+</h1>
+
+  <section class="details-list">
+    <h2 id="modules" class="section-heading">
+  <a href="#modules" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Modules
+</h2>
+
+    <div class="summary">
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.html">Coxir</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Entry-point for the coxir application.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.API.html">Coxir.API</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Entry-point to the Discord REST API.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.API.Error.html">Coxir.API.Error</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.API.Headers.html">Coxir.API.Headers</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.API.Helper.html">Coxir.API.Helper</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Common helper functions for <a href="Coxir.API.html"><code class="inline">Coxir.API</code></a> middlewares.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.API.RateLimiter.html">Coxir.API.RateLimiter</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Responsible for handling ratelimits.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Ban.html">Coxir.Ban</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Represents a Discord guild ban.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Channel.html">Coxir.Channel</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Represents a Discord channel.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Gateway.html">Coxir.Gateway</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Supervises the components necessary to interact with Discord's gateway.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Gateway.Consumer.html">Coxir.Gateway.Consumer</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Gateway.Dispatcher.html">Coxir.Gateway.Dispatcher</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Gateway.Handler.html">Coxir.Gateway.Handler</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Behaviour for modules handling events from <a href="Coxir.Gateway.Consumer.html"><code class="inline">Coxir.Gateway.Consumer</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Gateway.Intents.html">Coxir.Gateway.Intents</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Gateway.Payload.html">Coxir.Gateway.Payload</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Gateway.Payload.GatewayInfo.html">Coxir.Gateway.Payload.GatewayInfo</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Gateway.Payload.GuildMembersChunk.html">Coxir.Gateway.Payload.GuildMembersChunk</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Gateway.Payload.Hello.html">Coxir.Gateway.Payload.Hello</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Gateway.Payload.Identify.html">Coxir.Gateway.Payload.Identify</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Gateway.Payload.Ready.html">Coxir.Gateway.Payload.Ready</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Gateway.Payload.RequestGuildMembers.html">Coxir.Gateway.Payload.RequestGuildMembers</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Gateway.Payload.Resume.html">Coxir.Gateway.Payload.Resume</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Gateway.Payload.SessionStartLimit.html">Coxir.Gateway.Payload.SessionStartLimit</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Gateway.Payload.UpdatePresence.html">Coxir.Gateway.Payload.UpdatePresence</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Gateway.Payload.UpdateVoiceState.html">Coxir.Gateway.Payload.UpdateVoiceState</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Gateway.Payload.VoiceInstanceUpdate.html">Coxir.Gateway.Payload.VoiceInstanceUpdate</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Gateway.Payload.VoiceServerUpdate.html">Coxir.Gateway.Payload.VoiceServerUpdate</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Gateway.Producer.html">Coxir.Gateway.Producer</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Gateway.Session.html">Coxir.Gateway.Session</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Guild.html">Coxir.Guild</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Integration.html">Coxir.Integration</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Interaction.html">Coxir.Interaction</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Interaction.ApplicationCommandData.html">Coxir.Interaction.ApplicationCommandData</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Interaction.ApplicationCommandDataOption.html">Coxir.Interaction.ApplicationCommandDataOption</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Limiter.html">Coxir.Limiter</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Handles how rate limit buckets are stored.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Limiter.Default.html">Coxir.Limiter.Default</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Stores bucket information in ETS.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Limiter.Helper.html">Coxir.Limiter.Helper</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Common helper functions for <a href="Coxir.Limiter.html"><code class="inline">Coxir.Limiter</code></a> implementations.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Member.html">Coxir.Member</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Message.html">Coxir.Message</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Message.Attachment.html">Coxir.Message.Attachment</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Message.Embed.html">Coxir.Message.Embed</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Message.Embed.Author.html">Coxir.Message.Embed.Author</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Message.Embed.Field.html">Coxir.Message.Embed.Field</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Message.Embed.Footer.html">Coxir.Message.Embed.Footer</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Message.Embed.Image.html">Coxir.Message.Embed.Image</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Message.Embed.Provider.html">Coxir.Message.Embed.Provider</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Message.Embed.Thumbnail.html">Coxir.Message.Embed.Thumbnail</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Message.Embed.Video.html">Coxir.Message.Embed.Video</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Message.Reference.html">Coxir.Message.Reference</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Model.html">Coxir.Model</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The base behaviour for entities.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Model.Helper.html">Coxir.Model.Helper</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Model.Loader.html">Coxir.Model.Loader</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Implements functionality for <a href="Coxir.Model.html#t:model/0"><code class="inline">Coxir.Model.model/0</code></a> implementations.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Model.Snowflake.html">Coxir.Model.Snowflake</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Overwrite.html">Coxir.Overwrite</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Player.html">Coxir.Player</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Handles the audio sent through voice.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Player.Default.html">Coxir.Player.Default</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Pipes audio from ffmpeg.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Presence.html">Coxir.Presence</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Presence.Activity.html">Coxir.Presence.Activity</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Role.html">Coxir.Role</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Sharder.html">Coxir.Sharder</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Handles how gateway shards are started.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Sharder.Default.html">Coxir.Sharder.Default</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Starts all shards locally.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Storage.html">Coxir.Storage</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Handles how models are cached.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Storage.Default.html">Coxir.Storage.Default</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Stores models in ETS.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Token.html">Coxir.Token</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.User.html">Coxir.User</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Voice.html">Coxir.Voice</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Allows for interaction with Discord voice channels.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Voice.Audio.html">Coxir.Voice.Audio</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Voice.Instance.html">Coxir.Voice.Instance</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Voice.Payload.html">Coxir.Voice.Payload</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Voice.Payload.Hello.html">Coxir.Voice.Payload.Hello</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Voice.Payload.Identify.html">Coxir.Voice.Payload.Identify</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Voice.Payload.Ready.html">Coxir.Voice.Payload.Ready</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Voice.Payload.Resume.html">Coxir.Voice.Payload.Resume</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Voice.Payload.SelectProtocol.html">Coxir.Voice.Payload.SelectProtocol</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Voice.Payload.SelectProtocol.Data.html">Coxir.Voice.Payload.SelectProtocol.Data</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Voice.Payload.SessionDescription.html">Coxir.Voice.Payload.SessionDescription</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Voice.Payload.Speaking.html">Coxir.Voice.Payload.Speaking</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Voice.Session.html">Coxir.Voice.Session</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.VoiceState.html">Coxir.VoiceState</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="Coxir.Webhook.html">Coxir.Webhook</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Work in progress.</p></div>
+
+</div>
+
+    </div>
+  </section>
+
+
+<div class="bottom-actions">
+  <div class="bottom-actions-item">
+
+  </div>
+  <div class="bottom-actions-item">
+
+      <a href="introduction.html" class="bottom-actions-button" rel="next">
+        <span class="subheader">
+          Next Page →
+        </span>
+        <span class="title">
+Introduction
+        </span>
+      </a>
+
+  </div>
+</div>
+
+      <footer class="footer">
+        <p>
+          <span class="line">
+            Built using
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.24.2) for the
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank">Elixir programming language</a>.
+          </span>
+          <span class="line">
+            Designed by
+            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire">Friedel Ziegelmayer</a>.
+          </span>
+        </p>
+        <p>
+
+            <a href="api-reference.html" title="API reference" class="line footer-button">API Reference</a>
+
+          <button class="line footer-button display-shortcuts-help">
+            Display keyboard shortcuts
+          </button>
+          <button class="line footer-button night-mode-toggle">
+            Toggle night mode
+          </button>
+          <button class="line footer-button display-quick-switch">
+            Go to a HexDocs package
+          </button>
+          <button class="line footer-button tooltips-toggle">
+            <span class="tooltips-option-disable">Disable tooltips</span>
+            <span class="tooltips-option-enable">Enable tooltips</span>
+          </button>
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

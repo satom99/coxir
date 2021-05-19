@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.24.2">
+    <meta name="project" content="coxir v2.0.0">
+
+    <title>Quickstart — coxir v2.0.0</title>
+    <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
+
+    <script src="dist/sidebar_items-6ab30824c0.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/app-f27ff079945e43879c46.js"></script>
+
+
+  </head>
+  <body data-type="extras">
+    <script>
+
+      try {
+        if (localStorage.getItem('night-mode') === 'true') {
+          document.body.classList.add('night-mode');
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle">
+  <span class="icon-menu" title="Collapse/expand sidebar"></span>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <span class="icon-search" aria-hidden="true" title="Submit search"></span>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <span class="icon-cross" aria-hidden="true" title="Cancel search"></span>
+    </button>
+    <label class="search-label">
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectDetails">
+      <a href="introduction.html" class="sidebar-projectName">
+coxir
+      </a>
+      <strong class="sidebar-projectVersion">
+        v2.0.0
+      </strong>
+    </div>
+
+  </div>
+
+  <ul class="sidebar-listNav">
+    <li><a id="extras-list-link" href="#full-list">GUIDES</a></li>
+
+      <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+  </ul>
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>Quickstart</h1><p>This guide offers a quick and simple example to get started with the library.</p><h3 id="installation" class="section-heading">
+  <a href="#installation" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Installation
+</h3>
+<p>Add coxir as a dependency to your <code class="inline">mix.exs</code> file:</p><pre><code class="makeup elixir"><span class="kd">defp</span><span class="w"> </span><span class="nf">deps</span><span class="w"> </span><span class="k" data-group-id="1298524507-1">do</span><span class="w">
+  </span><span class="p" data-group-id="1298524507-2">[</span><span class="p" data-group-id="1298524507-3">{</span><span class="ss">:coxir</span><span class="p">,</span><span class="w"> </span><span class="ss">git</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;https://github.com/satom99/coxir.git&quot;</span><span class="p" data-group-id="1298524507-3">}</span><span class="p" data-group-id="1298524507-2">]</span><span class="w">
+</span><span class="k" data-group-id="1298524507-1">end</span></code></pre><h3 id="consuming-events" class="section-heading">
+  <a href="#consuming-events" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Consuming events
+</h3>
+<p>In order to start consuming events from the Discord gateway, first configure the library:</p><pre><code class="makeup elixir"><span class="n">config</span><span class="w"> </span><span class="ss">:coxir</span><span class="p">,</span><span class="w">
+  </span><span class="ss">token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="ss">intents</span><span class="p">:</span><span class="w"> </span><span class="ss">:non_privileged</span></code></pre><p>And then define a module that will be responsible for handling the incoming events like:</p><pre><code class="makeup elixir"><span class="kd">defmodule</span><span class="w"> </span><span class="nc">Example.Bot</span><span class="w"> </span><span class="k" data-group-id="3585490975-1">do</span><span class="w">
+  </span><span class="kn">use</span><span class="w"> </span><span class="nc">Coxir.Gateway</span><span class="w">
+  
+  </span><span class="kn">alias</span><span class="w"> </span><span class="nc">Coxir</span><span class="o">.</span><span class="p" data-group-id="3585490975-2">{</span><span class="nc">User</span><span class="p">,</span><span class="w"> </span><span class="nc">Message</span><span class="p" data-group-id="3585490975-2">}</span><span class="w">
+
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="3585490975-3">(</span><span class="p" data-group-id="3585490975-4">{</span><span class="ss">:MESSAGE_CREATE</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3585490975-5">%</span><span class="nc" data-group-id="3585490975-5">Message</span><span class="p" data-group-id="3585490975-5">{</span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;!hello&quot;</span><span class="p" data-group-id="3585490975-5">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">message</span><span class="p" data-group-id="3585490975-4">}</span><span class="p" data-group-id="3585490975-3">)</span><span class="w"> </span><span class="k" data-group-id="3585490975-6">do</span><span class="w">
+    </span><span class="p" data-group-id="3585490975-7">%</span><span class="nc" data-group-id="3585490975-7">Message</span><span class="p" data-group-id="3585490975-7">{</span><span class="ss">author</span><span class="p">:</span><span class="w"> </span><span class="n">author</span><span class="p" data-group-id="3585490975-7">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Message</span><span class="o">.</span><span class="n">preload</span><span class="p" data-group-id="3585490975-8">(</span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="ss">:author</span><span class="p" data-group-id="3585490975-8">)</span><span class="w">
+
+    </span><span class="p" data-group-id="3585490975-9">%</span><span class="nc" data-group-id="3585490975-9">User</span><span class="p" data-group-id="3585490975-9">{</span><span class="ss">username</span><span class="p">:</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="ss">discriminator</span><span class="p">:</span><span class="w"> </span><span class="n">discriminator</span><span class="p" data-group-id="3585490975-9">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">author</span><span class="w">
+
+    </span><span class="nc">Message</span><span class="o">.</span><span class="n">reply</span><span class="p" data-group-id="3585490975-10">(</span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Hello </span><span class="si" data-group-id="3585490975-11">#{</span><span class="n">username</span><span class="si" data-group-id="3585490975-11">}</span><span class="s">#</span><span class="si" data-group-id="3585490975-12">#{</span><span class="n">discriminator</span><span class="si" data-group-id="3585490975-12">}</span><span class="s">!&quot;</span><span class="p" data-group-id="3585490975-10">)</span><span class="w">
+  </span><span class="k" data-group-id="3585490975-6">end</span><span class="w">
+  
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="3585490975-13">(</span><span class="c">_event</span><span class="p" data-group-id="3585490975-13">)</span><span class="w"> </span><span class="k" data-group-id="3585490975-14">do</span><span class="w">
+    </span><span class="ss">:noop</span><span class="w">
+  </span><span class="k" data-group-id="3585490975-14">end</span><span class="w">
+</span><span class="k" data-group-id="3585490975-1">end</span></code></pre><p>Which can then be added to a Supervisor as a child, or started directly from <code class="inline">iex</code> like:</p><pre><code class="makeup elixir"><span class="gp unselectable">iex(1)&gt; </span><span class="nc">Example.Bot</span><span class="o">.</span><span class="n">start_link</span><span class="p" data-group-id="3834917168-1">(</span><span class="p" data-group-id="3834917168-1">)</span><span class="w">
+</span><span class="p" data-group-id="3834917168-2">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3834917168-3">#</span><span class="nc" data-group-id="3834917168-3">PID</span><span class="p" data-group-id="3834917168-3">&lt;</span><span class="mi">0</span><span class="o">.</span><span class="mi">301</span><span class="o">.</span><span class="mi">0</span><span class="p" data-group-id="3834917168-3">&gt;</span><span class="p" data-group-id="3834917168-2">}</span></code></pre><p>For a complete and working example it is highly recommended to check out the <a href="https://github.com/satom99/coxir/tree/main/example"><code class="inline">example</code></a> app.</p>
+<div class="bottom-actions">
+  <div class="bottom-actions-item">
+
+      <a href="introduction.html" class="bottom-actions-button" rel="prev">
+        <span class="subheader">
+          ← Previous Page
+        </span>
+        <span class="title">
+Introduction
+        </span>
+      </a>
+
+  </div>
+  <div class="bottom-actions-item">
+
+      <a href="configuration.html" class="bottom-actions-button" rel="next">
+        <span class="subheader">
+          Next Page →
+        </span>
+        <span class="title">
+Configuration
+        </span>
+      </a>
+
+  </div>
+</div>
+
+      <footer class="footer">
+        <p>
+          <span class="line">
+            Built using
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.24.2) for the
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank">Elixir programming language</a>.
+          </span>
+          <span class="line">
+            Designed by
+            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire">Friedel Ziegelmayer</a>.
+          </span>
+        </p>
+        <p>
+
+            <a href="api-reference.html" title="API reference" class="line footer-button">API Reference</a>
+
+          <button class="line footer-button display-shortcuts-help">
+            Display keyboard shortcuts
+          </button>
+          <button class="line footer-button night-mode-toggle">
+            Toggle night mode
+          </button>
+          <button class="line footer-button display-quick-switch">
+            Go to a HexDocs package
+          </button>
+          <button class="line footer-button tooltips-toggle">
+            <span class="tooltips-option-disable">Disable tooltips</span>
+            <span class="tooltips-option-enable">Enable tooltips</span>
+          </button>
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>
