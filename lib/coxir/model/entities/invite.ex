@@ -25,4 +25,17 @@ defmodule Coxir.Invite do
     belongs_to(:inviter, User)
     belongs_to(:target_user, User)
   end
+
+  def fetch(code, options) do
+    query = Keyword.take(options, [:with_counts, :with_expiration])
+    API.get("invites/#{code}", query, options)
+  end
+
+  def insert(%{channel_id: channel_id} = params, options) do
+    API.post("channels/#{channel_id}/invites", params, options)
+  end
+
+  def drop(code, options) do
+    API.delete("invites/#{code}", options)
+  end
 end
