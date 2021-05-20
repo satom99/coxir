@@ -73,9 +73,8 @@ defmodule Coxir.Model.Loader do
   """
   @spec unload(Model.instance()) :: :ok
   def unload(%model{} = struct) do
-    key = get_key(struct)
-
     if storable?(model) do
+      key = get_key(struct)
       Storage.delete(model, key)
     else
       :ok
