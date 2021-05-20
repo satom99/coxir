@@ -357,6 +357,25 @@ defmodule Coxir.Channel do
   end
 
   @doc """
+  Deletes messages in bulk from a given channel.
+
+  This only works for messages not older than 2 weeks.
+  """
+  @spec bulk_delete_messages(t, list(Message.t()) | list(Snowflake.t()), Loader.options()) ::
+          Loader.result()
+  def bulk_delete_messages(channel, messages, options \\ [])
+
+  def bulk_delete_messages(channel, [%Message{} | _rest] = messages, options) do
+    messages = Enum.map(messages, & &1.id)
+    bulk_delete_messages(channel, messages, options)
+  end
+
+  def bulk_delete_messages(%Channel{id: id}, message_ids, options) do
+    params = %{messages: message_ids}
+    API.post("channels/#{id}/messages/bulk-delete", params, options)
+  end
+
+  @doc """
   Delegates to `Coxir.Overwrite.create/2`.
   """
   @spec create_overwrite(t, Enum.t(), Loader.options()) :: Loader.result()
