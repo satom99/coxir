@@ -359,6 +359,8 @@ defmodule Coxir.Model.Loader do
 
   defp getter(model, key, %{fetch: true} = options) do
     if function_exported?(model, :fetch, 2) do
+      options = Keyword.new(options)
+
       case model.fetch(key, options) do
         {:ok, object} ->
           load(model, object)
@@ -415,6 +417,8 @@ defmodule Coxir.Model.Loader do
 
     fetch =
       if is_nil(storage) and fetch? do
+        options = Keyword.new(options)
+
         case model.fetch_many(owner_value, field, options) do
           {:ok, objects} ->
             load(related, objects)

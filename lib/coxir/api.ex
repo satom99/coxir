@@ -42,8 +42,6 @@ defmodule Coxir.API do
   """
   @spec perform(Env.method(), Env.url(), Env.body(), options) :: result
   def perform(method, path, body \\ nil, options) do
-    options = Keyword.new(options)
-
     case request!(method: method, url: path, body: body, opts: options) do
       %{status: 204} ->
         :ok
