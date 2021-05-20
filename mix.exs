@@ -41,6 +41,7 @@ defmodule Coxir.MixProject do
         Entities: [
           Coxir.User,
           Coxir.Channel,
+          Coxir.Invite,
           Coxir.Overwrite,
           Coxir.Webhook,
           ~r/^Coxir.Message.?/,
