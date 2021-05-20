@@ -23,7 +23,7 @@ defmodule Coxir.API do
   @typedoc """
   The possible outcomes of `perform/4`.
   """
-  @type result :: :ok | {:ok, map} | {:error, Error.t()}
+  @type result :: :ok | {:ok, map} | {:ok, list(map)} | {:error, Error.t()}
 
   adapter(Tesla.Adapter.Gun)
 
