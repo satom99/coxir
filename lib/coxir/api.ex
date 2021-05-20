@@ -40,9 +40,9 @@ defmodule Coxir.API do
   @doc """
   Performs a request to the API.
   """
-  @spec perform(Env.method(), Env.url(), Env.body(), options) :: result
-  def perform(method, path, body \\ nil, options) do
-    case request!(method: method, url: path, body: body, opts: options) do
+  @spec perform(Env.method(), Env.url(), Env.query(), Env.body(), options) :: result
+  def perform(method, path, query, body, options) do
+    case request!(method: method, url: path, query: query, body: body, opts: options) do
       %{status: 204} ->
         :ok
 
@@ -58,9 +58,9 @@ defmodule Coxir.API do
   @doc """
   Delegates to `perform/4` with `method` set to `:get`.
   """
-  @spec get(Env.url(), options) :: result
-  def get(path, options) do
-    perform(:get, path, options)
+  @spec get(Env.url(), Env.query(), options) :: result
+  def get(path, query \\ [], options) do
+    perform(:get, path, query, nil, options)
   end
 
   @doc """
@@ -68,7 +68,7 @@ defmodule Coxir.API do
   """
   @spec post(Env.url(), Env.body(), options) :: result
   def post(path, body \\ %{}, options) do
-    perform(:post, path, body, options)
+    perform(:post, path, [], body, options)
   end
 
   @doc """
@@ -76,7 +76,7 @@ defmodule Coxir.API do
   """
   @spec put(Env.url(), Env.body(), options) :: result
   def put(path, body \\ %{}, options) do
-    perform(:put, path, body, options)
+    perform(:put, path, [], body, options)
   end
 
   @doc """
@@ -84,7 +84,7 @@ defmodule Coxir.API do
   """
   @spec patch(Env.url(), Env.body(), options) :: result
   def patch(path, body, options) do
-    perform(:patch, path, body, options)
+    perform(:patch, path, [], body, options)
   end
 
   @doc """
@@ -92,6 +92,6 @@ defmodule Coxir.API do
   """
   @spec delete(Env.url(), options) :: result
   def delete(path, options) do
-    perform(:delete, path, options)
+    perform(:delete, path, [], nil, options)
   end
 end
