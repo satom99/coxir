@@ -313,6 +313,14 @@ defmodule Coxir.Channel do
   end
 
   @doc """
+  Delegates to `Coxir.Message.get/2`.
+  """
+  @spec get_message(t, Snowflake.t(), Loader.options()) :: Message.t() | Error.t()
+  def get_message(%Channel{id: id}, message_id, options \\ []) do
+    Message.get({message_id, id}, options)
+  end
+
+  @doc """
   Delegates to `Coxir.Overwrite.create/2`.
   """
   @spec create_overwrite(t, Enum.t(), Loader.options()) :: Loader.result()
