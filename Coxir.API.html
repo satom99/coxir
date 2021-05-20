@@ -10,7 +10,7 @@
     <title>Coxir.API — coxir v2.0.0</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-e880c252c6.js"></script>
+    <script src="dist/sidebar_items-7c57a53589.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -114,7 +114,7 @@ Coxir.API <small class="app-vsn">(coxir v2.0.0)</small>
 
   </div>
 
-    <div class="summary-synopsis"><p>The options that can be passed to <a href="#perform/4"><code class="inline">perform/4</code></a>.</p></div>
+    <div class="summary-synopsis"><p>The options that can be passed to <code class="inline">perform/4</code>.</p></div>
 
 </div>
 <div class="summary-row">
@@ -123,7 +123,7 @@ Coxir.API <small class="app-vsn">(coxir v2.0.0)</small>
 
   </div>
 
-    <div class="summary-synopsis"><p>The possible outcomes of <a href="#perform/4"><code class="inline">perform/4</code></a>.</p></div>
+    <div class="summary-synopsis"><p>The possible outcomes of <code class="inline">perform/4</code>.</p></div>
 
 </div>
 
@@ -139,16 +139,16 @@ Coxir.API <small class="app-vsn">(coxir v2.0.0)</small>
 
   </div>
 
-    <div class="summary-synopsis"><p>Delegates to <a href="#perform/4"><code class="inline">perform/4</code></a> with <code class="inline">method</code> set to <code class="inline">:delete</code>.</p></div>
+    <div class="summary-synopsis"><p>Delegates to <code class="inline">perform/4</code> with <code class="inline">method</code> set to <code class="inline">:delete</code>.</p></div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#get/2">get(path, options)</a>
+    <a href="#get/3">get(path, query \\ [], options)</a>
 
   </div>
 
-    <div class="summary-synopsis"><p>Delegates to <a href="#perform/4"><code class="inline">perform/4</code></a> with <code class="inline">method</code> set to <code class="inline">:get</code>.</p></div>
+    <div class="summary-synopsis"><p>Delegates to <code class="inline">perform/4</code> with <code class="inline">method</code> set to <code class="inline">:get</code>.</p></div>
 
 </div>
 <div class="summary-row">
@@ -157,12 +157,12 @@ Coxir.API <small class="app-vsn">(coxir v2.0.0)</small>
 
   </div>
 
-    <div class="summary-synopsis"><p>Delegates to <a href="#perform/4"><code class="inline">perform/4</code></a> with <code class="inline">method</code> set to <code class="inline">:patch</code>.</p></div>
+    <div class="summary-synopsis"><p>Delegates to <code class="inline">perform/4</code> with <code class="inline">method</code> set to <code class="inline">:patch</code>.</p></div>
 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#perform/4">perform(method, path, body \\ nil, options)</a>
+    <a href="#perform/5">perform(method, path, query, body, options)</a>
 
   </div>
 
@@ -175,7 +175,7 @@ Coxir.API <small class="app-vsn">(coxir v2.0.0)</small>
 
   </div>
 
-    <div class="summary-synopsis"><p>Delegates to <a href="#perform/4"><code class="inline">perform/4</code></a> with <code class="inline">method</code> set to <code class="inline">:post</code>.</p></div>
+    <div class="summary-synopsis"><p>Delegates to <code class="inline">perform/4</code> with <code class="inline">method</code> set to <code class="inline">:post</code>.</p></div>
 
 </div>
 <div class="summary-row">
@@ -184,7 +184,7 @@ Coxir.API <small class="app-vsn">(coxir v2.0.0)</small>
 
   </div>
 
-    <div class="summary-synopsis"><p>Delegates to <a href="#perform/4"><code class="inline">perform/4</code></a> with <code class="inline">method</code> set to <code class="inline">:put</code>.</p></div>
+    <div class="summary-synopsis"><p>Delegates to <code class="inline">perform/4</code> with <code class="inline">method</code> set to <code class="inline">:put</code>.</p></div>
 
 </div>
 
@@ -231,7 +231,7 @@ Types
 
       </div>
 
-<p>The options that can be passed to <a href="#perform/4"><code class="inline">perform/4</code></a>.</p><p>If the <code class="inline">:as</code> option is present, the token of the given gateway will be used.</p><p>If no token is provided, one is expected to be configured as <code class="inline">:token</code> under the <code class="inline">:coxir</code> app.</p>
+<p>The options that can be passed to <code class="inline">perform/4</code>.</p><p>If the <code class="inline">:as</code> option is present, the token of the given gateway will be used.</p><p>If no token is provided, one is expected to be configured as <code class="inline">:token</code> under the <code class="inline">:coxir</code> app.</p>
   </section>
 </section>
 <section class="detail" id="t:result/0">
@@ -260,7 +260,7 @@ Types
 
       </div>
 
-<p>The possible outcomes of <a href="#perform/4"><code class="inline">perform/4</code></a>.</p>
+<p>The possible outcomes of <code class="inline">perform/4</code>.</p>
   </section>
 </section>
 
@@ -285,7 +285,7 @@ Functions
     </a>
     <h1 class="signature">delete(path, options)</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/api.ex#L96" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/api.ex#L94" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -302,19 +302,21 @@ Functions
 
       </div>
 
-<p>Delegates to <a href="#perform/4"><code class="inline">perform/4</code></a> with <code class="inline">method</code> set to <code class="inline">:delete</code>.</p>
+<p>Delegates to <code class="inline">perform/4</code> with <code class="inline">method</code> set to <code class="inline">:delete</code>.</p>
   </section>
 </section>
-<section class="detail" id="get/2">
+<section class="detail" id="get/3">
+
+    <span id="get/2"></span>
 
   <div class="detail-header">
-    <a href="#get/2" class="detail-link" title="Link to this function">
+    <a href="#get/3" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">get(path, options)</h1>
+    <h1 class="signature">get(path, query \\ [], options)</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/api.ex#L64" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/api.ex#L62" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -327,11 +329,11 @@ Functions
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>get(<a href="https://hexdocs.pm/tesla/1.4.1/Tesla.Env.html#t:url/0">Tesla.Env.url</a>(), <a href="#t:options/0">options</a>()) :: <a href="#t:result/0">result</a>()</pre>
+          <pre>get(<a href="https://hexdocs.pm/tesla/1.4.1/Tesla.Env.html#t:url/0">Tesla.Env.url</a>(), <a href="https://hexdocs.pm/tesla/1.4.1/Tesla.Env.html#t:query/0">Tesla.Env.query</a>(), <a href="#t:options/0">options</a>()) :: <a href="#t:result/0">result</a>()</pre>
 
       </div>
 
-<p>Delegates to <a href="#perform/4"><code class="inline">perform/4</code></a> with <code class="inline">method</code> set to <code class="inline">:get</code>.</p>
+<p>Delegates to <code class="inline">perform/4</code> with <code class="inline">method</code> set to <code class="inline">:get</code>.</p>
   </section>
 </section>
 <section class="detail" id="patch/3">
@@ -343,7 +345,7 @@ Functions
     </a>
     <h1 class="signature">patch(path, body, options)</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/api.ex#L88" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/api.ex#L86" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -360,19 +362,17 @@ Functions
 
       </div>
 
-<p>Delegates to <a href="#perform/4"><code class="inline">perform/4</code></a> with <code class="inline">method</code> set to <code class="inline">:patch</code>.</p>
+<p>Delegates to <code class="inline">perform/4</code> with <code class="inline">method</code> set to <code class="inline">:patch</code>.</p>
   </section>
 </section>
-<section class="detail" id="perform/4">
-
-    <span id="perform/3"></span>
+<section class="detail" id="perform/5">
 
   <div class="detail-header">
-    <a href="#perform/4" class="detail-link" title="Link to this function">
+    <a href="#perform/5" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">perform(method, path, body \\ nil, options)</h1>
+    <h1 class="signature">perform(method, path, query, body, options)</h1>
 
       <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/api.ex#L44" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
@@ -387,8 +387,13 @@ Functions
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>perform(<a href="https://hexdocs.pm/tesla/1.4.1/Tesla.Env.html#t:method/0">Tesla.Env.method</a>(), <a href="https://hexdocs.pm/tesla/1.4.1/Tesla.Env.html#t:url/0">Tesla.Env.url</a>(), <a href="https://hexdocs.pm/tesla/1.4.1/Tesla.Env.html#t:body/0">Tesla.Env.body</a>(), <a href="#t:options/0">options</a>()) ::
-  <a href="#t:result/0">result</a>()</pre>
+          <pre>perform(
+  <a href="https://hexdocs.pm/tesla/1.4.1/Tesla.Env.html#t:method/0">Tesla.Env.method</a>(),
+  <a href="https://hexdocs.pm/tesla/1.4.1/Tesla.Env.html#t:url/0">Tesla.Env.url</a>(),
+  <a href="https://hexdocs.pm/tesla/1.4.1/Tesla.Env.html#t:query/0">Tesla.Env.query</a>(),
+  <a href="https://hexdocs.pm/tesla/1.4.1/Tesla.Env.html#t:body/0">Tesla.Env.body</a>(),
+  <a href="#t:options/0">options</a>()
+) :: <a href="#t:result/0">result</a>()</pre>
 
       </div>
 
@@ -406,7 +411,7 @@ Functions
     </a>
     <h1 class="signature">post(path, body \\ %{}, options)</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/api.ex#L72" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/api.ex#L70" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -423,7 +428,7 @@ Functions
 
       </div>
 
-<p>Delegates to <a href="#perform/4"><code class="inline">perform/4</code></a> with <code class="inline">method</code> set to <code class="inline">:post</code>.</p>
+<p>Delegates to <code class="inline">perform/4</code> with <code class="inline">method</code> set to <code class="inline">:post</code>.</p>
   </section>
 </section>
 <section class="detail" id="put/3">
@@ -437,7 +442,7 @@ Functions
     </a>
     <h1 class="signature">put(path, body \\ %{}, options)</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/api.ex#L80" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/api.ex#L78" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -454,7 +459,7 @@ Functions
 
       </div>
 
-<p>Delegates to <a href="#perform/4"><code class="inline">perform/4</code></a> with <code class="inline">method</code> set to <code class="inline">:put</code>.</p>
+<p>Delegates to <code class="inline">perform/4</code> with <code class="inline">method</code> set to <code class="inline">:put</code>.</p>
   </section>
 </section>
 

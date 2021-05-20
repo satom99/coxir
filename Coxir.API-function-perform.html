@@ -10,7 +10,7 @@
     <title>Coxir.API.perform — coxir v2.0.0</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-e880c252c6.js"></script>
+    <script src="dist/sidebar_items-7c57a53589.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -85,16 +85,14 @@ coxir
   You're seeing just the function <code>perform</code>, go back to <a href="Coxir.API.html">Coxir.API</a> module for more information.
 </div>
 
-<section class="detail" id="perform/4">
-
-    <span id="perform/3"></span>
+<section class="detail" id="perform/5">
 
   <div class="detail-header">
-    <a href="#perform/4" class="detail-link" title="Link to this function">
+    <a href="#perform/5" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">perform(method, path, body \\ nil, options)</h1>
+    <h1 class="signature">perform(method, path, query, body, options)</h1>
 
       <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/api.ex#L44" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
@@ -109,8 +107,13 @@ coxir
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>perform(<a href="https://hexdocs.pm/tesla/1.4.1/Tesla.Env.html#t:method/0">Tesla.Env.method</a>(), <a href="https://hexdocs.pm/tesla/1.4.1/Tesla.Env.html#t:url/0">Tesla.Env.url</a>(), <a href="https://hexdocs.pm/tesla/1.4.1/Tesla.Env.html#t:body/0">Tesla.Env.body</a>(), <a href="#t:options/0">options</a>()) ::
-  <a href="#t:result/0">result</a>()</pre>
+          <pre>perform(
+  <a href="https://hexdocs.pm/tesla/1.4.1/Tesla.Env.html#t:method/0">Tesla.Env.method</a>(),
+  <a href="https://hexdocs.pm/tesla/1.4.1/Tesla.Env.html#t:url/0">Tesla.Env.url</a>(),
+  <a href="https://hexdocs.pm/tesla/1.4.1/Tesla.Env.html#t:query/0">Tesla.Env.query</a>(),
+  <a href="https://hexdocs.pm/tesla/1.4.1/Tesla.Env.html#t:body/0">Tesla.Env.body</a>(),
+  <a href="#t:options/0">options</a>()
+) :: <a href="#t:result/0">result</a>()</pre>
 
       </div>
 

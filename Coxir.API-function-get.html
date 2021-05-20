@@ -10,7 +10,7 @@
     <title>Coxir.API.get — coxir v2.0.0</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-e880c252c6.js"></script>
+    <script src="dist/sidebar_items-7c57a53589.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -85,16 +85,18 @@ coxir
   You're seeing just the function <code>get</code>, go back to <a href="Coxir.API.html">Coxir.API</a> module for more information.
 </div>
 
-<section class="detail" id="get/2">
+<section class="detail" id="get/3">
+
+    <span id="get/2"></span>
 
   <div class="detail-header">
-    <a href="#get/2" class="detail-link" title="Link to this function">
+    <a href="#get/3" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">get(path, options)</h1>
+    <h1 class="signature">get(path, query \\ [], options)</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/api.ex#L64" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/api.ex#L62" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -107,11 +109,11 @@ coxir
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>get(<a href="https://hexdocs.pm/tesla/1.4.1/Tesla.Env.html#t:url/0">Tesla.Env.url</a>(), <a href="#t:options/0">options</a>()) :: <a href="#t:result/0">result</a>()</pre>
+          <pre>get(<a href="https://hexdocs.pm/tesla/1.4.1/Tesla.Env.html#t:url/0">Tesla.Env.url</a>(), <a href="https://hexdocs.pm/tesla/1.4.1/Tesla.Env.html#t:query/0">Tesla.Env.query</a>(), <a href="#t:options/0">options</a>()) :: <a href="#t:result/0">result</a>()</pre>
 
       </div>
 
-<p>Delegates to <a href="#perform/4"><code class="inline">perform/4</code></a> with <code class="inline">method</code> set to <code class="inline">:get</code>.</p>
+<p>Delegates to <code class="inline">perform/4</code> with <code class="inline">method</code> set to <code class="inline">:get</code>.</p>
   </section>
 </section>
 
