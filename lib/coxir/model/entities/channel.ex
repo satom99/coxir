@@ -21,6 +21,7 @@ defmodule Coxir.Channel do
           application_id: application_id,
           rtc_region: rtc_region,
           video_quality_mode: video_quality_mode,
+          pinned_messages: pinned_messages,
           recipients: recipients,
           permission_overwrites: permission_overwrites,
           webhooks: webhooks,
@@ -102,6 +103,13 @@ defmodule Coxir.Channel do
   The camera video quality mode of the voice channel.
   """
   @type video_quality_mode :: non_neg_integer | nil
+
+  @typedoc """
+  The pinned messages in the channel.
+
+  Needs to be preloaded via `preload/3`.
+  """
+  @type pinned_messages :: list(Message.t()) | Error.t()
 
   @typedoc """
   The recipients of the DM.
@@ -233,6 +241,8 @@ defmodule Coxir.Channel do
     field(:rtc_region, :string)
     field(:video_quality_mode, :integer)
 
+    field(:pinned_messages, :any, virtual: true)
+
     embeds_many(:recipients, User)
 
     has_many(:permission_overwrites, Overwrite)
@@ -281,6 +291,32 @@ defmodule Coxir.Channel do
       |> Enum.to_list()
 
     %{channel | recipients: recipients}
+  end
+
+  def preload(
+        %Channel{pinned_messages: [%Message{} | _rest]} = channel,
+        :pinned_messages,
+        options
+      ) do
+    if options[:force] do
+      channel = %{channel | pinned_messages: nil}
+      preload(channel, :pinned_messages, options)
+    else
+      channel
+    end
+  end
+
+  def preload(%Channel{id: id} = channel, :pinned_messages, options) do
+    pinned_messages =
+      case API.get("channels/#{id}/pins", options) do
+        {:ok, messages} ->
+          Loader.load(Message, messages)
+
+        {:error, error} ->
+          error
+      end
+
+    %{channel | pinned_messages: pinned_messages}
   end
 
   def preload(channel, association, options) do
