@@ -278,7 +278,6 @@ defmodule Coxir.Channel do
       recipients
       |> Stream.map(& &1.id)
       |> Stream.map(&User.get(&1, options))
-      |> Stream.filter(& &1)
       |> Enum.to_list()
 
     %{channel | recipients: recipients}

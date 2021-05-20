@@ -57,7 +57,6 @@ defmodule Coxir.Member do
       roles
       |> Stream.map(&{&1, guild_id})
       |> Stream.map(&Role.get(&1, options))
-      |> Stream.filter(& &1)
       |> Enum.to_list()
 
     %{member | roles: roles}
