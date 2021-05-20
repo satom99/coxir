@@ -121,6 +121,12 @@ defmodule Coxir.Voice do
   end
 
   @doc false
+  @spec update_voice_state(
+          Gateway.gateway(),
+          Snowflake.t() | nil,
+          Snowflake.t() | nil,
+          join_options
+        ) :: :ok
   def update_voice_state(gateway, guild_id, channel_id, options \\ []) do
     channel = %Channel{id: channel_id, guild_id: guild_id}
     session = Gateway.get_shard(gateway, channel)
