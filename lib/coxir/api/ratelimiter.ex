@@ -46,6 +46,9 @@ defmodule Coxir.API.RateLimiter do
     reset = if reset, do: String.to_float(reset) * 1000
     retry = if retry, do: String.to_float(retry) * 1000
 
+    reset = if reset, do: round(reset)
+    retry = if retry, do: round(retry)
+
     if reset || retry do
       remaining = if remaining, do: remaining, else: 0
       reset = if reset, do: reset, else: time_now() + retry
