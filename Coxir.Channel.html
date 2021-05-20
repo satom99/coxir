@@ -10,7 +10,7 @@
     <title>Coxir.Channel — coxir v2.0.0</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-dede7baa6c.js"></script>
+    <script src="dist/sidebar_items-e880c252c6.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -191,6 +191,15 @@ Coxir.Channel <small class="app-vsn">(coxir v2.0.0)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#t:invites/0">invites()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Invites for the channel.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#t:key/0">key()</a>
 
   </div>
@@ -259,6 +268,15 @@ Coxir.Channel <small class="app-vsn">(coxir v2.0.0)</small>
   </div>
 
     <div class="summary-synopsis"><p>Permission overwrites for members and roles.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:pinned_messages/0">pinned_messages()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The pinned messages in the channel.</p></div>
 
 </div>
 <div class="summary-row">
@@ -396,6 +414,15 @@ Coxir.Channel <small class="app-vsn">(coxir v2.0.0)</small>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#bulk_delete_messages/3">bulk_delete_messages(channel, messages, options \\ [])</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Deletes messages in bulk from a given channel.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#create/2">create(params, options \\ [])</a>
 
   </div>
@@ -446,6 +473,15 @@ Coxir.Channel <small class="app-vsn">(coxir v2.0.0)</small>
   </div>
 
     <div class="summary-synopsis"><p>Callback implementation for <a href="Coxir.Model.html#c:get!/2"><code class="inline">Coxir.Model.get!/2</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#get_message/3">get_message(channel, message_id, options \\ [])</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Delegates to <a href="Coxir.Message.html#get/2"><code class="inline">Coxir.Message.get/2</code></a>.</p></div>
 
 </div>
 <div class="summary-row">
@@ -517,7 +553,7 @@ Types
     </a>
     <h1 class="signature">application_id()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L94" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L96" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -546,7 +582,7 @@ Types
     </a>
     <h1 class="signature">bitrate()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L74" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L76" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -575,7 +611,7 @@ Types
     </a>
     <h1 class="signature">create_params()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L178" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L194" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -604,7 +640,7 @@ Types
     </a>
     <h1 class="signature">create_params_dm()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L183" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L199" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -633,7 +669,7 @@ Types
     </a>
     <h1 class="signature">create_params_guild()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L188" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L204" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -674,7 +710,7 @@ Types
     </a>
     <h1 class="signature">guild()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L144" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L160" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -704,7 +740,7 @@ Types
     </a>
     <h1 class="signature">guild_id()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L137" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L153" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -733,7 +769,7 @@ Types
     </a>
     <h1 class="signature">icon()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L89" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L91" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -762,7 +798,7 @@ Types
     </a>
     <h1 class="signature">id()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L44" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L46" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -782,6 +818,36 @@ Types
 <p>The id of the channel.</p>
   </section>
 </section>
+<section class="detail" id="t:invites/0">
+
+  <div class="detail-header">
+    <a href="#t:invites/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">invites()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L127" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>invites() ::
+  <a href="https://hexdocs.pm/ecto/3.6.1/Ecto.Association.NotLoaded.html#t:t/0">Ecto.Association.NotLoaded.t</a>() | [<a href="Coxir.Invite.html#t:t/0">Coxir.Invite.t</a>()] | <a href="Coxir.API.Error.html#t:t/0">Coxir.API.Error.t</a>()</pre>
+
+      </div>
+
+<p>Invites for the channel.</p><p>Needs to be preloaded via <a href="#preload/3"><code class="inline">preload/3</code></a>.</p>
+  </section>
+</section>
 <section class="detail" id="t:key/0">
 
   <div class="detail-header">
@@ -791,7 +857,7 @@ Types
     </a>
     <h1 class="signature">key()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L39" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L41" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -820,7 +886,7 @@ Types
     </a>
     <h1 class="signature">name()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L59" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L61" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -849,7 +915,7 @@ Types
     </a>
     <h1 class="signature">nsfw()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L69" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L71" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -878,7 +944,7 @@ Types
     </a>
     <h1 class="signature">owner()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L156" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L172" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -908,7 +974,7 @@ Types
     </a>
     <h1 class="signature">owner_id()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L149" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L165" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -937,7 +1003,7 @@ Types
     </a>
     <h1 class="signature">parent()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L168" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L184" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -966,7 +1032,7 @@ Types
     </a>
     <h1 class="signature">parent_id()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L161" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L177" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -995,7 +1061,7 @@ Types
     </a>
     <h1 class="signature">permission_overwrites()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L118" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L134" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1016,6 +1082,35 @@ Types
 <p>Permission overwrites for members and roles.</p><p>Needs to be preloaded via <a href="#preload/3"><code class="inline">preload/3</code></a>.</p>
   </section>
 </section>
+<section class="detail" id="t:pinned_messages/0">
+
+  <div class="detail-header">
+    <a href="#t:pinned_messages/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">pinned_messages()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L113" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>pinned_messages() :: [<a href="Coxir.Message.html#t:t/0">Coxir.Message.t</a>()] | <a href="Coxir.API.Error.html#t:t/0">Coxir.API.Error.t</a>()</pre>
+
+      </div>
+
+<p>The pinned messages in the channel.</p><p>Needs to be preloaded via <a href="#preload/3"><code class="inline">preload/3</code></a>.</p>
+  </section>
+</section>
 <section class="detail" id="t:position/0">
 
   <div class="detail-header">
@@ -1025,7 +1120,7 @@ Types
     </a>
     <h1 class="signature">position()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L54" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L56" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1054,7 +1149,7 @@ Types
     </a>
     <h1 class="signature">rate_limit_per_user()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L84" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L86" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1083,7 +1178,7 @@ Types
     </a>
     <h1 class="signature">recipient_id()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L173" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L189" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1112,7 +1207,7 @@ Types
     </a>
     <h1 class="signature">recipients()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L111" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L120" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1141,7 +1236,7 @@ Types
     </a>
     <h1 class="signature">rtc_region()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L99" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L101" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1190,6 +1285,7 @@ Types
   guild_id: <a href="#t:guild_id/0">guild_id</a>(),
   icon: <a href="#t:icon/0">icon</a>(),
   id: <a href="#t:id/0">id</a>(),
+  invites: <a href="#t:invites/0">invites</a>(),
   name: <a href="#t:name/0">name</a>(),
   nsfw: <a href="#t:nsfw/0">nsfw</a>(),
   owner: <a href="#t:owner/0">owner</a>(),
@@ -1197,6 +1293,7 @@ Types
   parent: <a href="#t:parent/0">parent</a>(),
   parent_id: <a href="#t:parent_id/0">parent_id</a>(),
   permission_overwrites: <a href="#t:permission_overwrites/0">permission_overwrites</a>(),
+  pinned_messages: <a href="#t:pinned_messages/0">pinned_messages</a>(),
   position: <a href="#t:position/0">position</a>(),
   rate_limit_per_user: <a href="#t:rate_limit_per_user/0">rate_limit_per_user</a>(),
   recipients: <a href="#t:recipients/0">recipients</a>(),
@@ -1223,7 +1320,7 @@ Types
     </a>
     <h1 class="signature">topic()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L64" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L66" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1252,7 +1349,7 @@ Types
     </a>
     <h1 class="signature">type()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L49" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L51" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1281,7 +1378,7 @@ Types
     </a>
     <h1 class="signature">update_params()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L205" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L221" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1310,7 +1407,7 @@ Types
     </a>
     <h1 class="signature">update_params_guild()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L210" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L226" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1349,7 +1446,7 @@ Types
     </a>
     <h1 class="signature">user_limit()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L79" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L81" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1378,7 +1475,7 @@ Types
     </a>
     <h1 class="signature">video_quality_mode()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L104" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L106" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1407,7 +1504,7 @@ Types
     </a>
     <h1 class="signature">voice_states()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L132" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L148" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1436,7 +1533,7 @@ Types
     </a>
     <h1 class="signature">webhooks()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L125" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L141" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1470,6 +1567,41 @@ Types
 Functions
           </h1>
           <div class="functions-list">
+<section class="detail" id="bulk_delete_messages/3">
+
+    <span id="bulk_delete_messages/2"></span>
+
+  <div class="detail-header">
+    <a href="#bulk_delete_messages/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">bulk_delete_messages(channel, messages, options \\ [])</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L379" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>bulk_delete_messages(
+  <a href="#t:t/0">t</a>(),
+  [<a href="Coxir.Message.html#t:t/0">Coxir.Message.t</a>()] | [<a href="Coxir.Model.Snowflake.html#t:t/0">Coxir.Model.Snowflake.t</a>()],
+  <a href="Coxir.Model.Loader.html#t:options/0">Coxir.Model.Loader.options</a>()
+) :: <a href="Coxir.Model.Loader.html#t:result/0">Coxir.Model.Loader.result</a>()</pre>
+
+      </div>
+
+<p>Deletes messages in bulk from a given channel.</p><p>This only works for messages not older than 2 weeks.</p>
+  </section>
+</section>
 <section class="detail" id="create/2">
 
     <span id="create/1"></span>
@@ -1513,7 +1645,7 @@ Functions
     </a>
     <h1 class="signature">create_overwrite(channel, params, options \\ [])</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L320" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L395" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1545,7 +1677,7 @@ Functions
     </a>
     <h1 class="signature">create_webhook(channel, params, options \\ [])</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L331" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L406" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1638,6 +1770,38 @@ Functions
 <p>Callback implementation for <a href="Coxir.Model.html#c:get!/2"><code class="inline">Coxir.Model.get!/2</code></a>.</p>
   </section>
 </section>
+<section class="detail" id="get_message/3">
+
+    <span id="get_message/2"></span>
+
+  <div class="detail-header">
+    <a href="#get_message/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">get_message(channel, message_id, options \\ [])</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L368" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>get_message(<a href="#t:t/0">t</a>(), <a href="Coxir.Model.Snowflake.html#t:t/0">Coxir.Model.Snowflake.t</a>(), <a href="Coxir.Model.Loader.html#t:options/0">Coxir.Model.Loader.options</a>()) ::
+  <a href="Coxir.Message.html#t:t/0">Coxir.Message.t</a>() | <a href="Coxir.API.Error.html#t:t/0">Coxir.API.Error.t</a>()</pre>
+
+      </div>
+
+<p>Delegates to <a href="Coxir.Message.html#get/2"><code class="inline">Coxir.Message.get/2</code></a>.</p>
+  </section>
+</section>
 <section class="detail" id="preload/3">
 
     <span id="preload/2"></span>
@@ -1649,7 +1813,7 @@ Functions
     </a>
     <h1 class="signature">preload(struct, preloads, options \\ [])</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L276" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L299" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1697,7 +1861,7 @@ Functions
     </a>
     <h1 class="signature">send_message(channel, params, options \\ [])</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L309" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L357" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1729,7 +1893,7 @@ Functions
     </a>
     <h1 class="signature">start_typing(channel, options \\ [])</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L301" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/channel.ex#L349" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
