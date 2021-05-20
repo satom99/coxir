@@ -256,7 +256,7 @@ defmodule Coxir.Gateway do
       |> Keyword.merge(global)
       |> Keyword.merge(config)
 
-    token = Keyword.fetch!(config, :token)
+    token = Token.from_options!(config)
 
     intents =
       config

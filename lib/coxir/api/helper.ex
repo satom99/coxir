@@ -3,24 +3,10 @@ defmodule Coxir.API.Helper do
   Common helper functions for `Coxir.API` middlewares.
   """
   alias Tesla.Env
-  alias Coxir.{Token, Gateway}
-  alias Coxir.API.Error
+  alias Coxir.Token
 
   @spec get_token(Env.t()) :: Token.t()
   def get_token(%Env{opts: options}) do
-    options = Map.new(options)
-
-    with nil <- obtain_token(options) do
-      raise(Error, status: 401)
-    end
-  end
-
-  defp obtain_token(%{as: gateway}) do
-    Gateway.get_token(gateway)
-  end
-
-  defp obtain_token(options) do
-    config = Application.get_env(:coxir, :token)
-    Map.get(options, :token, config)
+    Token.from_options!(options)
   end
 end
