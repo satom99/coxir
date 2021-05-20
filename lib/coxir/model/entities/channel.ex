@@ -389,6 +389,17 @@ defmodule Coxir.Channel do
   end
 
   @doc """
+  Delegates to `Coxir.Invite.create/2`.
+  """
+  @spec create_invite(t, Enum.t(), Loader.options()) :: Loader.result()
+  def create_invite(%Channel{id: id}, params, options \\ []) do
+    params
+    |> Map.new()
+    |> Map.put(:channel_id, id)
+    |> Invite.create(options)
+  end
+
+  @doc """
   Delegates to `Coxir.Overwrite.create/2`.
   """
   @spec create_overwrite(t, Enum.t(), Loader.options()) :: Loader.result()
