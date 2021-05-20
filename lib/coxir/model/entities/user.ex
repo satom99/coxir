@@ -4,6 +4,8 @@ defmodule Coxir.User do
   """
   use Coxir.Model
 
+  alias Coxir.Token
+
   @type t :: %User{}
 
   embedded_schema do
@@ -23,6 +25,14 @@ defmodule Coxir.User do
 
   def fetch(id, options) do
     API.get("users/#{id}", options)
+  end
+
+  @spec get_me(Loader.options()) :: Model.instance() | Error.t()
+  def get_me(options \\ []) do
+    options
+    |> Token.from_options!()
+    |> Token.get_user_id()
+    |> get(options)
   end
 
   @spec create_dm(t, Loader.options()) :: Loader.result()
