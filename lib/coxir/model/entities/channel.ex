@@ -23,6 +23,7 @@ defmodule Coxir.Channel do
           video_quality_mode: video_quality_mode,
           pinned_messages: pinned_messages,
           recipients: recipients,
+          invites: invites,
           permission_overwrites: permission_overwrites,
           webhooks: webhooks,
           voice_states: voice_states,
@@ -117,6 +118,13 @@ defmodule Coxir.Channel do
   Needs to be preloaded via `preload/3`.
   """
   @type recipients :: list(User.t()) | nil
+
+  @typedoc """
+  Invites for the channel.
+
+  Needs to be preloaded via `preload/3`.
+  """
+  @type invites :: NotLoaded.t() | list(Invite.t()) | Error.t()
 
   @typedoc """
   Permission overwrites for members and roles.
@@ -245,6 +253,7 @@ defmodule Coxir.Channel do
 
     embeds_many(:recipients, User)
 
+    has_many(:invites, Invite)
     has_many(:permission_overwrites, Overwrite)
     has_many(:webhooks, Webhook)
     has_many(:voice_states, VoiceState)
@@ -256,6 +265,10 @@ defmodule Coxir.Channel do
 
   def fetch(id, options) do
     API.get("channels/#{id}", options)
+  end
+
+  def fetch_many(id, :invites, options) do
+    API.get("channels/#{id}/invites", options)
   end
 
   def fetch_many(id, :permission_overwrites, options) do
