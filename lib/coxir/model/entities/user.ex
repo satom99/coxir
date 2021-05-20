@@ -27,7 +27,7 @@ defmodule Coxir.User do
     API.get("users/#{id}", options)
   end
 
-  @spec get_me(Loader.options()) :: Model.instance() | Error.t()
+  @spec get_me(Loader.options()) :: User.t() | Error.t()
   def get_me(options \\ []) do
     options
     |> Token.from_options!()
