@@ -67,6 +67,20 @@ defmodule Coxir.Guild do
     API.delete("guilds/#{id}", options)
   end
 
+  @doc """
+  Delegates to `Coxir.Member.get/2`.
+  """
+  @spec get_member(t, User.t() | Snowflake.t(), Loader.options()) :: Member.t() | Error.t()
+  def get_member(guild, user, options \\ [])
+
+  def get_member(guild, %User{id: user_id}, options) do
+    get_member(guild, user_id, options)
+  end
+
+  def get_member(%Guild{id: id}, user_id, options) do
+    Member.get({user_id, id}, options)
+  end
+
   @spec create_channel(t, Enum.t(), Loader.options()) :: Loader.result()
   def create_channel(%Guild{id: id}, params, options \\ []) do
     params
