@@ -126,6 +126,14 @@ defmodule Coxir.Guild do
     Ban.get({user_id, id}, options)
   end
 
+  @doc """
+  Delegates to `Coxir.Role.get/2`.
+  """
+  @spec get_role(t, Snowflake.t(), Loader.options()) :: Message.t() | Error.t()
+  def get_role(%Guild{id: id}, role_id, options \\ []) do
+    Role.get({role_id, id}, options)
+  end
+
   @spec create_channel(t, Enum.t(), Loader.options()) :: Loader.result()
   def create_channel(%Guild{id: id}, params, options \\ []) do
     params
