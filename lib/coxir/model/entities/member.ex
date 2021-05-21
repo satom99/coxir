@@ -80,6 +80,28 @@ defmodule Coxir.Member do
     super(member, association, options)
   end
 
+  @spec add_role(t, Role.t() | Snowflake.t(), Loader.options()) :: Loader.result()
+  def add_role(member, role, options \\ [])
+
+  def add_role(member, %Role{id: role_id}, options) do
+    add_role(member, role_id, options)
+  end
+
+  def add_role(%Member{user_id: user_id, guild_id: guild_id}, role_id, options) do
+    API.put("guilds/#{guild_id}/members/#{user_id}/roles/#{role_id}", options)
+  end
+
+  @spec remove_role(t, Role.t() | Snowflake.t(), Loader.options()) :: Loader.result()
+  def remove_role(member, role, options \\ [])
+
+  def remove_role(member, %Role{id: id}, options) do
+    remove_role(member, id, options)
+  end
+
+  def remove_role(%Member{user_id: user_id, guild_id: guild_id}, role_id, options) do
+    API.delete("guilds/#{guild_id}/members/#{user_id}/roles/#{role_id}", options)
+  end
+
   @spec kick(t, Loader.options()) :: Loader.result()
   def kick(member, options \\ []) do
     delete(member, options)
