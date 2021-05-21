@@ -44,6 +44,7 @@ defmodule Coxir.Guild do
     belongs_to(:public_updates_channel, Channel)
 
     has_many(:roles, Role)
+    has_many(:bans, Ban)
     has_many(:members, Member)
     has_many(:voice_states, VoiceState)
   end
@@ -54,6 +55,13 @@ defmodule Coxir.Guild do
 
   def fetch_many(id, :roles, options) do
     with {:ok, objects} <- API.get("guilds/#{id}/roles", options) do
+      objects = Enum.map(objects, &Map.put(&1, "guild_id", id))
+      {:ok, objects}
+    end
+  end
+
+  def fetch_many(id, :bans, options) do
+    with {:ok, objects} <- API.get("guilds/#{id}/bans", options) do
       objects = Enum.map(objects, &Map.put(&1, "guild_id", id))
       {:ok, objects}
     end
