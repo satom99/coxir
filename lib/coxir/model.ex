@@ -103,8 +103,6 @@ defmodule Coxir.Model do
     quote location: :keep do
       use Ecto.Schema
 
-      import Coxir.Model.Snowflake, only: [is_snowflake: 1]
-
       alias Coxir.API
       alias Coxir.API.Error
       alias Coxir.Model.{Snowflake, Loader}
