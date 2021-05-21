@@ -81,6 +81,29 @@ defmodule Coxir.Guild do
     Member.get({user_id, id}, options)
   end
 
+  @spec get_prune_count(t, Loader.options()) :: non_neg_integer | Error.t()
+  def get_prune_count(%Guild{id: id}, options \\ []) do
+    query = Keyword.take(options, [:days, :include_roles])
+
+    case API.get("guilds/#{id}/prune", query, options) do
+      {:ok, %{"pruned" => pruned}} ->
+        pruned
+
+      {:error, error} ->
+        error
+    end
+  end
+
+  @spec prune(t, Enum.t(), Loader.options()) :: {:ok, non_neg_integer | nil} | Loader.result()
+  def prune(%Guild{id: id}, params \\ %{}, options \\ []) do
+    params = Map.new(params)
+    result = API.post("guilds/#{id}/prune", params, options)
+
+    with {:ok, %{"pruned" => pruned}} <- result do
+      {:ok, pruned}
+    end
+  end
+
   @spec create_channel(t, Enum.t(), Loader.options()) :: Loader.result()
   def create_channel(%Guild{id: id}, params, options \\ []) do
     params
