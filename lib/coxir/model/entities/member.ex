@@ -102,6 +102,22 @@ defmodule Coxir.Member do
     API.delete("guilds/#{guild_id}/members/#{user_id}/roles/#{role_id}", options)
   end
 
+  @spec has_role?(t, Role.t() | Snowflake.t(), Loader.options()) :: boolean
+  def has_role?(member, role, options \\ [])
+
+  def has_role?(member, %Role{id: role_id}, options) do
+    has_role?(member, role_id, options)
+  end
+
+  def has_role?(member, role_id, options) do
+    member = Member.preload!(member, :roles, options)
+    %Member{roles: roles} = member
+
+    roles
+    |> Stream.map(& &1.id)
+    |> Enum.find_value(false, &(&1 == role_id))
+  end
+
   @spec kick(t, Loader.options()) :: Loader.result()
   def kick(member, options \\ []) do
     delete(member, options)
