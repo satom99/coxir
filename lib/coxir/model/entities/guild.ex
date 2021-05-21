@@ -129,7 +129,7 @@ defmodule Coxir.Guild do
   @doc """
   Delegates to `Coxir.Role.get/2`.
   """
-  @spec get_role(t, Snowflake.t(), Loader.options()) :: Message.t() | Error.t()
+  @spec get_role(t, Snowflake.t(), Loader.options()) :: Role.t() | Error.t()
   def get_role(%Guild{id: id}, role_id, options \\ []) do
     Role.get({role_id, id}, options)
   end

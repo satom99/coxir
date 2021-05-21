@@ -110,7 +110,7 @@ defmodule Coxir.Member do
   end
 
   def has_role?(member, role_id, options) do
-    member = Member.preload!(member, :roles, options)
+    member = preload!(member, :roles, options)
     %Member{roles: roles} = member
 
     roles
