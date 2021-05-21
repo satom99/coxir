@@ -10,7 +10,7 @@
     <title>Coxir.Member — coxir v2.0.0</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-7362d488d1.js"></script>
+    <script src="dist/sidebar_items-58c66614de.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -124,6 +124,13 @@ Coxir.Member <small class="app-vsn">(coxir v2.0.0)</small>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#add_role/3">add_role(member, role, options \\ [])</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#ban/3">ban(member, params, options \\ [])</a>
 
   </div>
@@ -158,6 +165,13 @@ Coxir.Member <small class="app-vsn">(coxir v2.0.0)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#has_role?/3">has_role?(member, role, options \\ [])</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#kick/2">kick(member, options \\ [])</a>
 
   </div>
@@ -179,6 +193,13 @@ Coxir.Member <small class="app-vsn">(coxir v2.0.0)</small>
   </div>
 
     <div class="summary-synopsis"><p>Callback implementation for <a href="Coxir.Model.html#c:preload!/3"><code class="inline">Coxir.Model.preload!/3</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#remove_role/3">remove_role(member, role, options \\ [])</a>
+
+  </div>
 
 </div>
 <div class="summary-row">
@@ -261,6 +282,41 @@ Types
 Functions
           </h1>
           <div class="functions-list">
+<section class="detail" id="add_role/3">
+
+    <span id="add_role/2"></span>
+
+  <div class="detail-header">
+    <a href="#add_role/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">add_role(member, role, options \\ [])</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/member.ex#L84" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>add_role(
+  <a href="#t:t/0">t</a>(),
+  <a href="Coxir.Role.html#t:t/0">Coxir.Role.t</a>() | <a href="Coxir.Model.Snowflake.html#t:t/0">Coxir.Model.Snowflake.t</a>(),
+  <a href="Coxir.Model.Loader.html#t:options/0">Coxir.Model.Loader.options</a>()
+) :: <a href="Coxir.Model.Loader.html#t:result/0">Coxir.Model.Loader.result</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
 <section class="detail" id="ban/3">
 
     <span id="ban/2"></span>
@@ -272,7 +328,7 @@ Functions
     </a>
     <h1 class="signature">ban(member, params, options \\ [])</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/member.ex#L89" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/member.ex#L127" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -364,6 +420,41 @@ Functions
 <p>Callback implementation for <a href="Coxir.Model.html#c:get!/2"><code class="inline">Coxir.Model.get!/2</code></a>.</p>
   </section>
 </section>
+<section class="detail" id="has_role?/3">
+
+    <span id="has_role?/2"></span>
+
+  <div class="detail-header">
+    <a href="#has_role?/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">has_role?(member, role, options \\ [])</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/member.ex#L106" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>has_role?(
+  <a href="#t:t/0">t</a>(),
+  <a href="Coxir.Role.html#t:t/0">Coxir.Role.t</a>() | <a href="Coxir.Model.Snowflake.html#t:t/0">Coxir.Model.Snowflake.t</a>(),
+  <a href="Coxir.Model.Loader.html#t:options/0">Coxir.Model.Loader.options</a>()
+) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">boolean</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
 <section class="detail" id="kick/2">
 
     <span id="kick/1"></span>
@@ -375,7 +466,7 @@ Functions
     </a>
     <h1 class="signature">kick(member, options \\ [])</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/member.ex#L84" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/member.ex#L122" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -441,6 +532,41 @@ Functions
   <section class="docstring">
 
 <p>Callback implementation for <a href="Coxir.Model.html#c:preload!/3"><code class="inline">Coxir.Model.preload!/3</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="remove_role/3">
+
+    <span id="remove_role/2"></span>
+
+  <div class="detail-header">
+    <a href="#remove_role/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">remove_role(member, role, options \\ [])</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/member.ex#L95" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>remove_role(
+  <a href="#t:t/0">t</a>(),
+  <a href="Coxir.Role.html#t:t/0">Coxir.Role.t</a>() | <a href="Coxir.Model.Snowflake.html#t:t/0">Coxir.Model.Snowflake.t</a>(),
+  <a href="Coxir.Model.Loader.html#t:options/0">Coxir.Model.Loader.options</a>()
+) :: <a href="Coxir.Model.Loader.html#t:result/0">Coxir.Model.Loader.result</a>()</pre>
+
+      </div>
+
+
   </section>
 </section>
 <section class="detail" id="update/3">

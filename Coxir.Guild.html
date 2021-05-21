@@ -10,7 +10,7 @@
     <title>Coxir.Guild — coxir v2.0.0</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-7362d488d1.js"></script>
+    <script src="dist/sidebar_items-58c66614de.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -165,6 +165,40 @@ Coxir.Guild <small class="app-vsn">(coxir v2.0.0)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#get_ban/3">get_ban(guild, user, options \\ [])</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Delegates to <a href="Coxir.Ban.html#get/2"><code class="inline">Coxir.Ban.get/2</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#get_member/3">get_member(guild, user, options \\ [])</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Delegates to <a href="Coxir.Member.html#get/2"><code class="inline">Coxir.Member.get/2</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#get_prune_count/2">get_prune_count(guild, options \\ [])</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#get_role/3">get_role(guild, role_id, options \\ [])</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Delegates to <a href="Coxir.Role.html#get/2"><code class="inline">Coxir.Role.get/2</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#preload/3">preload(struct, preloads, options \\ [])</a>
 
   </div>
@@ -179,6 +213,13 @@ Coxir.Guild <small class="app-vsn">(coxir v2.0.0)</small>
   </div>
 
     <div class="summary-synopsis"><p>Callback implementation for <a href="Coxir.Model.html#c:preload!/3"><code class="inline">Coxir.Model.preload!/3</code></a>.</p></div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#prune/3">prune(guild, params \\ %{}, options \\ [])</a>
+
+  </div>
 
 </div>
 <div class="summary-row">
@@ -233,6 +274,7 @@ Types
   afk_timeout: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   application_id: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   banner: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
+  bans: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   default_message_notifications: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   description: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
   discovery_splash: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
@@ -303,7 +345,7 @@ Functions
     </a>
     <h1 class="signature">create_channel(guild, params, options \\ [])</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/guild.ex#L71" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/guild.ex#L138" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -335,7 +377,7 @@ Functions
     </a>
     <h1 class="signature">create_role(guild, params, options \\ [])</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/guild.ex#L79" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/guild.ex#L146" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -428,6 +470,140 @@ Functions
 <p>Callback implementation for <a href="Coxir.Model.html#c:get!/2"><code class="inline">Coxir.Model.get!/2</code></a>.</p>
   </section>
 </section>
+<section class="detail" id="get_ban/3">
+
+    <span id="get_ban/2"></span>
+
+  <div class="detail-header">
+    <a href="#get_ban/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">get_ban(guild, user, options \\ [])</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/guild.ex#L119" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>get_ban(
+  <a href="#t:t/0">t</a>(),
+  <a href="Coxir.User.html#t:t/0">Coxir.User.t</a>() | <a href="Coxir.Model.Snowflake.html#t:t/0">Coxir.Model.Snowflake.t</a>(),
+  <a href="Coxir.Model.Loader.html#t:options/0">Coxir.Model.Loader.options</a>()
+) :: <a href="Coxir.Ban.html#t:t/0">Coxir.Ban.t</a>() | <a href="Coxir.API.Error.html#t:t/0">Coxir.API.Error.t</a>()</pre>
+
+      </div>
+
+<p>Delegates to <a href="Coxir.Ban.html#get/2"><code class="inline">Coxir.Ban.get/2</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="get_member/3">
+
+    <span id="get_member/2"></span>
+
+  <div class="detail-header">
+    <a href="#get_member/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">get_member(guild, user, options \\ [])</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/guild.ex#L82" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>get_member(
+  <a href="#t:t/0">t</a>(),
+  <a href="Coxir.User.html#t:t/0">Coxir.User.t</a>() | <a href="Coxir.Model.Snowflake.html#t:t/0">Coxir.Model.Snowflake.t</a>(),
+  <a href="Coxir.Model.Loader.html#t:options/0">Coxir.Model.Loader.options</a>()
+) :: <a href="Coxir.Member.html#t:t/0">Coxir.Member.t</a>() | <a href="Coxir.API.Error.html#t:t/0">Coxir.API.Error.t</a>()</pre>
+
+      </div>
+
+<p>Delegates to <a href="Coxir.Member.html#get/2"><code class="inline">Coxir.Member.get/2</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="get_prune_count/2">
+
+    <span id="get_prune_count/1"></span>
+
+  <div class="detail-header">
+    <a href="#get_prune_count/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">get_prune_count(guild, options \\ [])</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/guild.ex#L93" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>get_prune_count(<a href="#t:t/0">t</a>(), <a href="Coxir.Model.Loader.html#t:options/0">Coxir.Model.Loader.options</a>()) ::
+  <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>() | <a href="Coxir.API.Error.html#t:t/0">Coxir.API.Error.t</a>()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="get_role/3">
+
+    <span id="get_role/2"></span>
+
+  <div class="detail-header">
+    <a href="#get_role/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">get_role(guild, role_id, options \\ [])</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/guild.ex#L133" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>get_role(<a href="#t:t/0">t</a>(), <a href="Coxir.Model.Snowflake.html#t:t/0">Coxir.Model.Snowflake.t</a>(), <a href="Coxir.Model.Loader.html#t:options/0">Coxir.Model.Loader.options</a>()) ::
+  <a href="Coxir.Message.html#t:t/0">Coxir.Message.t</a>() | <a href="Coxir.API.Error.html#t:t/0">Coxir.API.Error.t</a>()</pre>
+
+      </div>
+
+<p>Delegates to <a href="Coxir.Role.html#get/2"><code class="inline">Coxir.Role.get/2</code></a>.</p>
+  </section>
+</section>
 <section class="detail" id="preload/3">
 
     <span id="preload/2"></span>
@@ -474,6 +650,40 @@ Functions
   <section class="docstring">
 
 <p>Callback implementation for <a href="Coxir.Model.html#c:preload!/3"><code class="inline">Coxir.Model.preload!/3</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="prune/3">
+
+    <span id="prune/1"></span>
+
+    <span id="prune/2"></span>
+
+  <div class="detail-header">
+    <a href="#prune/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">prune(guild, params \\ %{}, options \\ [])</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/model/entities/guild.ex#L106" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>prune(<a href="#t:t/0">t</a>(), <a href="https://hexdocs.pm/elixir/Enum.html#t:t/0">Enum.t</a>(), <a href="Coxir.Model.Loader.html#t:options/0">Coxir.Model.Loader.options</a>()) ::
+  {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">non_neg_integer</a>() | nil} | <a href="Coxir.Model.Loader.html#t:result/0">Coxir.Model.Loader.result</a>()</pre>
+
+      </div>
+
+
   </section>
 </section>
 <section class="detail" id="update/3">
