@@ -51,10 +51,11 @@ defmodule Coxir.API.RateLimiter do
     retry = if retry, do: round(retry)
 
     if reset || retry do
-      remaining = if remaining, do: remaining, else: 0
-      reset = if reset, do: reset, else: time_now() + retry
-
       bucket = if global, do: :global, else: bucket
+
+      remaining = if remaining, do: remaining, else: 0
+
+      reset = if reset, do: reset, else: time_now() + retry
 
       remote = unix_from_date(date)
       latency = abs(time_now() - remote)
