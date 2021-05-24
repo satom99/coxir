@@ -43,8 +43,9 @@ defmodule Coxir.API.RateLimiter do
     date = Tesla.get_header(response, @header_date)
 
     remaining = if remaining, do: String.to_integer(remaining)
-    reset = if reset, do: String.to_float(reset) * 1000
-    retry = if retry, do: String.to_float(retry) * 1000
+
+    reset = if reset, do: string_to_float(reset) * 1000
+    retry = if retry, do: string_to_float(retry) * 1000
 
     reset = if reset, do: round(reset)
     retry = if retry, do: round(retry)
@@ -60,6 +61,11 @@ defmodule Coxir.API.RateLimiter do
 
       Limiter.put(bucket, remaining, reset + latency)
     end
+  end
+
+  defp string_to_float(string) do
+    {float, _rest} = Float.parse(string)
+    float
   end
 
   defp unix_from_date(header) do
