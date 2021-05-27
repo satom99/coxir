@@ -26,6 +26,7 @@ defmodule Coxir.Emoji do
   end
 
   defimpl String.Chars do
+    @spec to_string(Emoji.t()) :: binary
     defdelegate to_string(emoji), to: Emoji, as: :format
   end
 end
