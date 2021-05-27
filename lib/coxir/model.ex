@@ -152,7 +152,7 @@ defmodule Coxir.Model do
         Loader.delete(struct, options)
       end
 
-      defoverridable(preload: 3)
+      defoverridable(preload: 3, delete: 2)
     end
   end
 
