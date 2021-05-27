@@ -39,6 +39,7 @@ defmodule Coxir.Gateway.Dispatcher do
           | message_update
           | message_delete
           | message_delete_bulk
+          | message_reaction_add
           | presence_update
           | user_update
           | voice_state_update
@@ -93,6 +94,8 @@ defmodule Coxir.Gateway.Dispatcher do
   @type message_delete :: {:MESSAGE_DELETE, Message.t()}
 
   @type message_delete_bulk :: {:MESSAGE_DELETE_BULK, list(Message.t())}
+
+  @type message_reaction_add :: {:MESSAGE_REACTION_ADD, Reaction.t()}
 
   @type presence_update :: {:PRESENCE_UPDATE, Presence.t()}
 
@@ -274,6 +277,11 @@ defmodule Coxir.Gateway.Dispatcher do
     messages = Enum.map(ids, mapper)
 
     {:MESSAGE_DELETE_BULK, messages}
+  end
+
+  defp handle_event(%Payload{event: "MESSAGE_REACTION_ADD", data: object}) do
+    reaction = Loader.load(Reaction, object)
+    {:MESSAGE_REACTION_ADD, reaction}
   end
 
   defp handle_event(%Payload{event: "PRESENCE_UPDATE", data: object}) do
