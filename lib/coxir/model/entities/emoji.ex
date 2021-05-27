@@ -24,4 +24,8 @@ defmodule Coxir.Emoji do
   def format(%Emoji{id: id, name: name}) do
     "#{name}:#{id}"
   end
+
+  defimpl String.Chars do
+    defdelegate to_string(emoji), to: Emoji, as: :format
+  end
 end
