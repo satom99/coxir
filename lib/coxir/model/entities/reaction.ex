@@ -21,4 +21,14 @@ defmodule Coxir.Reaction do
   def insert(%{message_id: message_id, channel_id: channel_id, emoji: emoji}, options) do
     API.put("channels/#{channel_id}/messages/#{message_id}/reactions/#{emoji}/@me", options)
   end
+
+  def delete(
+        %Reaction{message_id: message_id, channel_id: channel_id, user_id: user_id, emoji: emoji},
+        options
+      ) do
+    API.delete(
+      "channels/#{channel_id}/messages/#{message_id}/reactions/#{emoji}/#{user_id}",
+      options
+    )
+  end
 end
