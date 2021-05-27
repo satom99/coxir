@@ -36,6 +36,8 @@ defmodule Coxir.Guild do
     field(:preferred_locale, :string)
     field(:max_video_channel_users, :integer)
 
+    embeds_many(:emojis, Emoji)
+
     belongs_to(:owner, User)
     belongs_to(:afk_channel, Channel)
     belongs_to(:widget_channel, Channel)
