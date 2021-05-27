@@ -6,6 +6,7 @@ Coxir.API.RateLimiter.html
 Coxir.API.html
 Coxir.Ban.html
 Coxir.Channel.html
+Coxir.Emoji.html
 Coxir.Gateway.Consumer.html
 Coxir.Gateway.Dispatcher.html
 Coxir.Gateway.Handler.html
@@ -14,6 +15,8 @@ Coxir.Gateway.Payload.GatewayInfo.html
 Coxir.Gateway.Payload.GuildMembersChunk.html
 Coxir.Gateway.Payload.Hello.html
 Coxir.Gateway.Payload.Identify.html
+Coxir.Gateway.Payload.MessageReactionRemoveAll.html
+Coxir.Gateway.Payload.MessageReactionRemoveEmoji.html
 Coxir.Gateway.Payload.Ready.html
 Coxir.Gateway.Payload.RequestGuildMembers.html
 Coxir.Gateway.Payload.Resume.html
@@ -56,6 +59,7 @@ Coxir.Player.Default.html
 Coxir.Player.html
 Coxir.Presence.Activity.html
 Coxir.Presence.html
+Coxir.Reaction.html
 Coxir.Role.html
 Coxir.Sharder.Default.html
 Coxir.Sharder.html
@@ -87,8 +91,8 @@ dist/html/fonts/icomoon.eot
 dist/html/fonts/icomoon.svg
 dist/html/fonts/icomoon.ttf
 dist/html/fonts/icomoon.woff
-dist/search_items-6f96d7c2de.js
-dist/sidebar_items-58c66614de.js
+dist/search_items-6af33e0e33.js
+dist/sidebar_items-9ac427f145.js
 entities.html
 index.html
 introduction.html

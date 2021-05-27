@@ -10,7 +10,7 @@
     <title>Coxir.Gateway.Dispatcher — coxir v2.0.0</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-58c66614de.js"></script>
+    <script src="dist/sidebar_items-9ac427f145.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -152,6 +152,13 @@ Coxir.Gateway.Dispatcher <small class="app-vsn">(coxir v2.0.0)</small>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#t:guild_emojis_update/0">guild_emojis_update()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#t:guild_member_add/0">guild_member_add()</a>
 
   </div>
@@ -223,6 +230,41 @@ Coxir.Gateway.Dispatcher <small class="app-vsn">(coxir v2.0.0)</small>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#t:message_delete/0">message_delete()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:message_delete_bulk/0">message_delete_bulk()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:message_reaction_add/0">message_reaction_add()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:message_reaction_remove/0">message_reaction_remove()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:message_reaction_remove_all/0">message_reaction_remove_all()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:message_reaction_remove_emoji/0">message_reaction_remove_emoji()</a>
 
   </div>
 
@@ -367,7 +409,7 @@ Types
     </a>
     <h1 class="signature">channel_create()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L50" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L58" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -396,7 +438,7 @@ Types
     </a>
     <h1 class="signature">channel_delete()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L54" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L62" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -425,7 +467,7 @@ Types
     </a>
     <h1 class="signature">channel_update()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L52" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L60" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -454,7 +496,7 @@ Types
     </a>
     <h1 class="signature">event()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L16" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L18" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -479,6 +521,7 @@ Types
   | <a href="#t:guild_create/0">guild_create</a>()
   | <a href="#t:guild_update/0">guild_update</a>()
   | <a href="#t:guild_delete/0">guild_delete</a>()
+  | <a href="#t:guild_emojis_update/0">guild_emojis_update</a>()
   | <a href="#t:guild_member_add/0">guild_member_add</a>()
   | <a href="#t:guild_member_update/0">guild_member_update</a>()
   | <a href="#t:guild_member_remove/0">guild_member_remove</a>()
@@ -490,6 +533,11 @@ Types
   | <a href="#t:message_create/0">message_create</a>()
   | <a href="#t:message_update/0">message_update</a>()
   | <a href="#t:message_delete/0">message_delete</a>()
+  | <a href="#t:message_delete_bulk/0">message_delete_bulk</a>()
+  | <a href="#t:message_reaction_add/0">message_reaction_add</a>()
+  | <a href="#t:message_reaction_remove/0">message_reaction_remove</a>()
+  | <a href="#t:message_reaction_remove_all/0">message_reaction_remove_all</a>()
+  | <a href="#t:message_reaction_remove_emoji/0">message_reaction_remove_emoji</a>()
   | <a href="#t:presence_update/0">presence_update</a>()
   | <a href="#t:user_update/0">user_update</a>()
   | <a href="#t:voice_state_update/0">voice_state_update</a>()
@@ -511,7 +559,7 @@ Types
     </a>
     <h1 class="signature">guild_create()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L62" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L70" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -540,7 +588,7 @@ Types
     </a>
     <h1 class="signature">guild_delete()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L66" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L74" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -560,6 +608,35 @@ Types
 
   </section>
 </section>
+<section class="detail" id="t:guild_emojis_update/0">
+
+  <div class="detail-header">
+    <a href="#t:guild_emojis_update/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">guild_emojis_update()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L76" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>guild_emojis_update() :: {:GUILD_EMOJIS_UPDATE, <a href="Coxir.Guild.html#t:t/0">Coxir.Guild.t</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
 <section class="detail" id="t:guild_member_add/0">
 
   <div class="detail-header">
@@ -569,7 +646,7 @@ Types
     </a>
     <h1 class="signature">guild_member_add()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L68" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L78" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -598,7 +675,7 @@ Types
     </a>
     <h1 class="signature">guild_member_remove()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L72" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L82" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -627,7 +704,7 @@ Types
     </a>
     <h1 class="signature">guild_member_update()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L70" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L80" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -656,7 +733,7 @@ Types
     </a>
     <h1 class="signature">guild_members_chunk()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L74" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L84" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -686,7 +763,7 @@ Types
     </a>
     <h1 class="signature">guild_role_create()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L76" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L86" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -715,7 +792,7 @@ Types
     </a>
     <h1 class="signature">guild_role_delete()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L80" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L90" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -744,7 +821,7 @@ Types
     </a>
     <h1 class="signature">guild_role_update()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L78" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L88" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -773,7 +850,7 @@ Types
     </a>
     <h1 class="signature">guild_update()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L64" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L72" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -802,7 +879,7 @@ Types
     </a>
     <h1 class="signature">interaction_create()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L82" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L92" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -831,7 +908,7 @@ Types
     </a>
     <h1 class="signature">message_create()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L84" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L94" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -860,7 +937,7 @@ Types
     </a>
     <h1 class="signature">message_delete()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L88" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L98" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -880,6 +957,155 @@ Types
 
   </section>
 </section>
+<section class="detail" id="t:message_delete_bulk/0">
+
+  <div class="detail-header">
+    <a href="#t:message_delete_bulk/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">message_delete_bulk()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L100" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>message_delete_bulk() :: {:MESSAGE_DELETE_BULK, [<a href="Coxir.Message.html#t:t/0">Coxir.Message.t</a>()]}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:message_reaction_add/0">
+
+  <div class="detail-header">
+    <a href="#t:message_reaction_add/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">message_reaction_add()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L102" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>message_reaction_add() :: {:MESSAGE_REACTION_ADD, <a href="Coxir.Reaction.html#t:t/0">Coxir.Reaction.t</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:message_reaction_remove/0">
+
+  <div class="detail-header">
+    <a href="#t:message_reaction_remove/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">message_reaction_remove()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L104" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>message_reaction_remove() :: {:MESSAGE_REACTION_REMOVE, <a href="Coxir.Reaction.html#t:t/0">Coxir.Reaction.t</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:message_reaction_remove_all/0">
+
+  <div class="detail-header">
+    <a href="#t:message_reaction_remove_all/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">message_reaction_remove_all()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L106" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>message_reaction_remove_all() ::
+  {:MESSAGE_REACTION_REMOVE_ALL,
+   <a href="Coxir.Gateway.Payload.MessageReactionRemoveAll.html#t:t/0">Coxir.Gateway.Payload.MessageReactionRemoveAll.t</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:message_reaction_remove_emoji/0">
+
+  <div class="detail-header">
+    <a href="#t:message_reaction_remove_emoji/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">message_reaction_remove_emoji()</h1>
+
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L109" class="view-source" rel="help" title="View Source">
+       <span class="icon-code" aria-hidden="true"></span>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>message_reaction_remove_emoji() ::
+  {:MESSAGE_REACTION_REMOVE_EMOJI,
+   <a href="Coxir.Gateway.Payload.MessageReactionRemoveEmoji.html#t:t/0">Coxir.Gateway.Payload.MessageReactionRemoveEmoji.t</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
 <section class="detail" id="t:message_update/0">
 
   <div class="detail-header">
@@ -889,7 +1115,7 @@ Types
     </a>
     <h1 class="signature">message_update()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L86" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L96" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -918,7 +1144,7 @@ Types
     </a>
     <h1 class="signature">payload()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L100" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L122" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -947,7 +1173,7 @@ Types
     </a>
     <h1 class="signature">presence_update()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L90" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L112" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -976,7 +1202,7 @@ Types
     </a>
     <h1 class="signature">ready()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L46" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L54" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1005,7 +1231,7 @@ Types
     </a>
     <h1 class="signature">resumed()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L48" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L56" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1034,7 +1260,7 @@ Types
     </a>
     <h1 class="signature">thread_create()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L56" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L64" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1063,7 +1289,7 @@ Types
     </a>
     <h1 class="signature">thread_delete()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L60" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L68" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1092,7 +1318,7 @@ Types
     </a>
     <h1 class="signature">thread_update()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L58" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L66" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1121,7 +1347,7 @@ Types
     </a>
     <h1 class="signature">user_update()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L92" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L114" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1150,7 +1376,7 @@ Types
     </a>
     <h1 class="signature">voice_instance_update()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L98" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L120" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1180,7 +1406,7 @@ Types
     </a>
     <h1 class="signature">voice_server_update()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L96" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L118" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1210,7 +1436,7 @@ Types
     </a>
     <h1 class="signature">voice_state_update()</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L94" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L116" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1252,7 +1478,7 @@ Functions
     </a>
     <h1 class="signature">handle_events(payloads, from, state)</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L110" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L132" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1274,7 +1500,7 @@ Functions
     </a>
     <h1 class="signature">init(producer)</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L106" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L128" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
@@ -1296,7 +1522,7 @@ Functions
     </a>
     <h1 class="signature">start_link(producer)</h1>
 
-      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L102" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/satom99/coxir/blob/main/lib/coxir/gateway/stage/dispatcher.ex#L124" class="view-source" rel="help" title="View Source">
        <span class="icon-code" aria-hidden="true"></span>
        <span class="sr-only">View Source</span>
      </a>
