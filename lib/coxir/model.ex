@@ -106,9 +106,10 @@ defmodule Coxir.Model do
       alias Coxir.API
       alias Coxir.API.Error
       alias Coxir.Model.{Snowflake, Loader}
-      alias Coxir.{User, Channel, Invite, Overwrite, Webhook, Message, Interaction}
-      alias Coxir.{Guild, Integration, Role, Ban}
-      alias Coxir.{Member, Presence, VoiceState}
+      alias Coxir.{User, Channel, Guild}
+      alias Coxir.{Invite, Overwrite, Webhook}
+      alias Coxir.{Message, Emoji, Reaction, Interaction}
+      alias Coxir.{Integration, Role, Ban, Member, Presence, VoiceState}
       alias Ecto.Association.NotLoaded
       alias __MODULE__
 

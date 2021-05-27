@@ -5,12 +5,13 @@ defmodule Coxir.Gateway.Dispatcher do
   use GenStage
 
   alias Coxir.Gateway.Payload
-  alias Coxir.Gateway.Payload.{Ready, GuildMembersChunk, VoiceServerUpdate, VoiceInstanceUpdate}
+  alias Coxir.Gateway.Payload.{Ready, GuildMembersChunk}
+  alias Coxir.Gateway.Payload.{VoiceServerUpdate, VoiceInstanceUpdate}
 
   alias Coxir.Model.Loader
-  alias Coxir.{Channel, Message, Interaction}
-  alias Coxir.{User, Guild, Role}
-  alias Coxir.{Member, Presence, VoiceState}
+  alias Coxir.{User, Channel, Guild}
+  alias Coxir.{Message, Reaction, Interaction}
+  alias Coxir.{Role, Member, Presence, VoiceState}
   alias Coxir.Voice
 
   @type event ::
