@@ -16,4 +16,12 @@ defmodule Coxir.Emoji do
 
     belongs_to(:user, User)
   end
+
+  def format(%Emoji{id: nil, name: name}) do
+    name
+  end
+
+  def format(%Emoji{id: id, name: name}) do
+    "#{name}:#{id}"
+  end
 end
