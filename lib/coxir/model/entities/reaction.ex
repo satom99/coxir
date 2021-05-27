@@ -17,4 +17,8 @@ defmodule Coxir.Reaction do
     belongs_to(:guild, Guild)
     belongs_to(:user, User)
   end
+
+  def insert(%{message_id: message_id, channel_id: channel_id, emoji: emoji}, options) do
+    API.put("channels/#{channel_id}/messages/#{message_id}/reactions/#{emoji}/@me", options)
+  end
 end
