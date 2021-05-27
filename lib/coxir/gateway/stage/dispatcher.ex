@@ -43,6 +43,7 @@ defmodule Coxir.Gateway.Dispatcher do
           | message_reaction_add
           | message_reaction_remove
           | message_reaction_remove_all
+          | message_reaction_remove_emoji
           | presence_update
           | user_update
           | voice_state_update
@@ -104,6 +105,9 @@ defmodule Coxir.Gateway.Dispatcher do
 
   @type message_reaction_remove_all ::
           {:MESSAGE_REACTION_REMOVE_ALL, MessageReactionRemoveAll.t()}
+
+  @type message_reaction_remove_emoji ::
+          {:MESSAGE_REACTION_REMOVE_EMOJI, MessageReactionRemoveEmoji.t()}
 
   @type presence_update :: {:PRESENCE_UPDATE, Presence.t()}
 
@@ -300,6 +304,11 @@ defmodule Coxir.Gateway.Dispatcher do
   defp handle_event(%Payload{event: "MESSAGE_REACTION_REMOVE_ALL", data: object}) do
     message_reaction_remove_all = MessageReactionRemoveAll.cast(object)
     {:MESSAGE_REACTION_REMOVE_ALL, message_reaction_remove_all}
+  end
+
+  defp handle_event(%Payload{event: "MESSAGE_REACTION_REMOVE_EMOJI", data: object}) do
+    message_reaction_remove_emoji = MessageReactionRemoveEmoji.cast(object)
+    {:MESSAGE_REACTION_REMOVE_EMOJI, message_reaction_remove_emoji}
   end
 
   defp handle_event(%Payload{event: "PRESENCE_UPDATE", data: object}) do
