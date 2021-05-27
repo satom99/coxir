@@ -6,6 +6,7 @@ defmodule Coxir.Gateway.Dispatcher do
 
   alias Coxir.Gateway.Payload
   alias Coxir.Gateway.Payload.{Ready, GuildMembersChunk}
+  alias Coxir.Gateway.Payload.{MessageReactionRemoveAll, MessageReactionRemoveEmoji}
   alias Coxir.Gateway.Payload.{VoiceServerUpdate, VoiceInstanceUpdate}
 
   alias Coxir.Model.Loader
@@ -41,6 +42,7 @@ defmodule Coxir.Gateway.Dispatcher do
           | message_delete_bulk
           | message_reaction_add
           | message_reaction_remove
+          | message_reaction_remove_all
           | presence_update
           | user_update
           | voice_state_update
@@ -99,6 +101,9 @@ defmodule Coxir.Gateway.Dispatcher do
   @type message_reaction_add :: {:MESSAGE_REACTION_ADD, Reaction.t()}
 
   @type message_reaction_remove :: {:MESSAGE_REACTION_REMOVE, Reaction.t()}
+
+  @type message_reaction_remove_all ::
+          {:MESSAGE_REACTION_REMOVE_ALL, MessageReactionRemoveAll.t()}
 
   @type presence_update :: {:PRESENCE_UPDATE, Presence.t()}
 
@@ -290,6 +295,11 @@ defmodule Coxir.Gateway.Dispatcher do
   defp handle_event(%Payload{event: "MESSAGE_REACTION_REMOVE", data: object}) do
     reaction = Loader.load(Reaction, object)
     {:MESSAGE_REACTION_REMOVE, reaction}
+  end
+
+  defp handle_event(%Payload{event: "MESSAGE_REACTION_REMOVE_ALL", data: object}) do
+    message_reaction_remove_all = MessageReactionRemoveAll.cast(object)
+    {:MESSAGE_REACTION_REMOVE_ALL, message_reaction_remove_all}
   end
 
   defp handle_event(%Payload{event: "PRESENCE_UPDATE", data: object}) do
