@@ -67,4 +67,10 @@ defmodule Coxir.Message do
   def unpin(%Message{id: id, channel_id: channel_id}, options \\ []) do
     API.delete("channels/#{channel_id}/pins/#{id}", options)
   end
+
+  @spec react(t, Emoji.t() | String.t(), Loader.options()) :: Loader.result()
+  def react(%Message{id: id, channel_id: channel_id}, emoji, options \\ []) do
+    params = %{message_id: id, channel_id: channel_id, emoji: emoji}
+    Reaction.create(params, options)
+  end
 end
