@@ -10,7 +10,7 @@
     <title>Multiple clients — coxir v2.0.0</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-9ac427f145.js"></script>
+    <script src="dist/sidebar_items-51ef2f2b1e.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -87,51 +87,51 @@ coxir
   <a href="#multiple-gateways" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Multiple gateways
 </h3>
-<p>First of all, let us define two separate modules using the <a href="Coxir.Gateway.html"><code class="inline">Coxir.Gateway</code></a> module as follows:</p><pre><code class="makeup elixir"><span class="kd">defmodule</span><span class="w"> </span><span class="nc">Example.Adam</span><span class="w"> </span><span class="k" data-group-id="7940290290-1">do</span><span class="w">
+<p>First of all, let us define two separate modules using the <a href="Coxir.Gateway.html"><code class="inline">Coxir.Gateway</code></a> module as follows:</p><pre><code class="makeup elixir"><span class="kd">defmodule</span><span class="w"> </span><span class="nc">Example.Adam</span><span class="w"> </span><span class="k" data-group-id="5010201320-1">do</span><span class="w">
   </span><span class="kn">use</span><span class="w"> </span><span class="nc">Coxir.Gateway</span><span class="w">
   
-  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="7940290290-2">(</span><span class="c">_event</span><span class="p" data-group-id="7940290290-2">)</span><span class="w"> </span><span class="k" data-group-id="7940290290-3">do</span><span class="w">
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="5010201320-2">(</span><span class="c">_event</span><span class="p" data-group-id="5010201320-2">)</span><span class="w"> </span><span class="k" data-group-id="5010201320-3">do</span><span class="w">
     </span><span class="ss">:noop</span><span class="w">
-  </span><span class="k" data-group-id="7940290290-3">end</span><span class="w">
-</span><span class="k" data-group-id="7940290290-1">end</span><span class="w">
+  </span><span class="k" data-group-id="5010201320-3">end</span><span class="w">
+</span><span class="k" data-group-id="5010201320-1">end</span><span class="w">
 
-</span><span class="kd">defmodule</span><span class="w"> </span><span class="nc">Example.Eva</span><span class="w"> </span><span class="k" data-group-id="7940290290-4">do</span><span class="w">
+</span><span class="kd">defmodule</span><span class="w"> </span><span class="nc">Example.Eva</span><span class="w"> </span><span class="k" data-group-id="5010201320-4">do</span><span class="w">
   </span><span class="kn">use</span><span class="w"> </span><span class="nc">Coxir.Gateway</span><span class="w">
   
-  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="7940290290-5">(</span><span class="c">_event</span><span class="p" data-group-id="7940290290-5">)</span><span class="w"> </span><span class="k" data-group-id="7940290290-6">do</span><span class="w">
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="5010201320-5">(</span><span class="c">_event</span><span class="p" data-group-id="5010201320-5">)</span><span class="w"> </span><span class="k" data-group-id="5010201320-6">do</span><span class="w">
     </span><span class="ss">:noop</span><span class="w">
-  </span><span class="k" data-group-id="7940290290-6">end</span><span class="w">
-</span><span class="k" data-group-id="7940290290-4">end</span></code></pre><p>For which we can then, as mentioned, configure their <code class="inline">token</code> separately the following way:</p><pre><code class="makeup elixir"><span class="n">config</span><span class="w"> </span><span class="ss">:coxir</span><span class="p">,</span><span class="w"> </span><span class="nc">Example.Adam</span><span class="p">,</span><span class="w"> </span><span class="ss">token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w">
+  </span><span class="k" data-group-id="5010201320-6">end</span><span class="w">
+</span><span class="k" data-group-id="5010201320-4">end</span></code></pre><p>For which we can then, as mentioned, configure their <code class="inline">token</code> separately the following way:</p><pre><code class="makeup elixir"><span class="n">config</span><span class="w"> </span><span class="ss">:coxir</span><span class="p">,</span><span class="w"> </span><span class="nc">Example.Adam</span><span class="p">,</span><span class="w"> </span><span class="ss">token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w">
 
-</span><span class="n">config</span><span class="w"> </span><span class="ss">:coxir</span><span class="p">,</span><span class="w"> </span><span class="nc">Example.Eva</span><span class="p">,</span><span class="w"> </span><span class="ss">token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span></code></pre><p>Then as mentioned in the Configuration guide, when calling functions we must pass the gateway along:</p><pre><code class="makeup elixir"><span class="kd">defmodule</span><span class="w"> </span><span class="nc">Example.Adam</span><span class="w"> </span><span class="k" data-group-id="3881779229-1">do</span><span class="w">
-  </span><span class="kn">use</span><span class="w"> </span><span class="nc">Coxir.Gateway</span><span class="w">
-  
-  </span><span class="kn">alias</span><span class="w"> </span><span class="nc">Coxir.Message</span><span class="w">
-  </span><span class="kn">alias</span><span class="w"> </span><span class="bp">__MODULE__</span><span class="w">
-
-  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="3881779229-2">(</span><span class="p" data-group-id="3881779229-3">{</span><span class="ss">:MESSAGE_CREATE</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3881779229-4">%</span><span class="nc" data-group-id="3881779229-4">Message</span><span class="p" data-group-id="3881779229-4">{</span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;!hello&quot;</span><span class="p" data-group-id="3881779229-4">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">message</span><span class="p" data-group-id="3881779229-3">}</span><span class="p" data-group-id="3881779229-2">)</span><span class="w"> </span><span class="k" data-group-id="3881779229-5">do</span><span class="w">
-    </span><span class="nc">Message</span><span class="o">.</span><span class="n">reply</span><span class="p" data-group-id="3881779229-6">(</span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Hello this is Adam!&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">as</span><span class="p">:</span><span class="w"> </span><span class="nc">Adam</span><span class="p" data-group-id="3881779229-6">)</span><span class="w">
-  </span><span class="k" data-group-id="3881779229-5">end</span><span class="w">
-  
-  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="3881779229-7">(</span><span class="c">_event</span><span class="p" data-group-id="3881779229-7">)</span><span class="w"> </span><span class="k" data-group-id="3881779229-8">do</span><span class="w">
-    </span><span class="ss">:noop</span><span class="w">
-  </span><span class="k" data-group-id="3881779229-8">end</span><span class="w">
-</span><span class="k" data-group-id="3881779229-1">end</span><span class="w">
-
-</span><span class="kd">defmodule</span><span class="w"> </span><span class="nc">Example.Eva</span><span class="w"> </span><span class="k" data-group-id="3881779229-9">do</span><span class="w">
+</span><span class="n">config</span><span class="w"> </span><span class="ss">:coxir</span><span class="p">,</span><span class="w"> </span><span class="nc">Example.Eva</span><span class="p">,</span><span class="w"> </span><span class="ss">token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span></code></pre><p>Then as mentioned in the Configuration guide, when calling functions we must pass the gateway along:</p><pre><code class="makeup elixir"><span class="kd">defmodule</span><span class="w"> </span><span class="nc">Example.Adam</span><span class="w"> </span><span class="k" data-group-id="6407144941-1">do</span><span class="w">
   </span><span class="kn">use</span><span class="w"> </span><span class="nc">Coxir.Gateway</span><span class="w">
   
   </span><span class="kn">alias</span><span class="w"> </span><span class="nc">Coxir.Message</span><span class="w">
   </span><span class="kn">alias</span><span class="w"> </span><span class="bp">__MODULE__</span><span class="w">
 
-  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="3881779229-10">(</span><span class="p" data-group-id="3881779229-11">{</span><span class="ss">:MESSAGE_CREATE</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3881779229-12">%</span><span class="nc" data-group-id="3881779229-12">Message</span><span class="p" data-group-id="3881779229-12">{</span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;!hello&quot;</span><span class="p" data-group-id="3881779229-12">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">message</span><span class="p" data-group-id="3881779229-11">}</span><span class="p" data-group-id="3881779229-10">)</span><span class="w"> </span><span class="k" data-group-id="3881779229-13">do</span><span class="w">
-    </span><span class="nc">Message</span><span class="o">.</span><span class="n">reply</span><span class="p" data-group-id="3881779229-14">(</span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Hello this is Eva!&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">as</span><span class="p">:</span><span class="w"> </span><span class="nc">Eva</span><span class="p" data-group-id="3881779229-14">)</span><span class="w">
-  </span><span class="k" data-group-id="3881779229-13">end</span><span class="w">
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="6407144941-2">(</span><span class="p" data-group-id="6407144941-3">{</span><span class="ss">:MESSAGE_CREATE</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6407144941-4">%</span><span class="nc" data-group-id="6407144941-4">Message</span><span class="p" data-group-id="6407144941-4">{</span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;!hello&quot;</span><span class="p" data-group-id="6407144941-4">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">message</span><span class="p" data-group-id="6407144941-3">}</span><span class="p" data-group-id="6407144941-2">)</span><span class="w"> </span><span class="k" data-group-id="6407144941-5">do</span><span class="w">
+    </span><span class="nc">Message</span><span class="o">.</span><span class="n">reply</span><span class="p" data-group-id="6407144941-6">(</span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Hello this is Adam!&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">as</span><span class="p">:</span><span class="w"> </span><span class="nc">Adam</span><span class="p" data-group-id="6407144941-6">)</span><span class="w">
+  </span><span class="k" data-group-id="6407144941-5">end</span><span class="w">
   
-  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="3881779229-15">(</span><span class="c">_event</span><span class="p" data-group-id="3881779229-15">)</span><span class="w"> </span><span class="k" data-group-id="3881779229-16">do</span><span class="w">
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="6407144941-7">(</span><span class="c">_event</span><span class="p" data-group-id="6407144941-7">)</span><span class="w"> </span><span class="k" data-group-id="6407144941-8">do</span><span class="w">
     </span><span class="ss">:noop</span><span class="w">
-  </span><span class="k" data-group-id="3881779229-16">end</span><span class="w">
-</span><span class="k" data-group-id="3881779229-9">end</span></code></pre><p>In which case the resulting behaviour will be as expected from two independent clients.</p>
+  </span><span class="k" data-group-id="6407144941-8">end</span><span class="w">
+</span><span class="k" data-group-id="6407144941-1">end</span><span class="w">
+
+</span><span class="kd">defmodule</span><span class="w"> </span><span class="nc">Example.Eva</span><span class="w"> </span><span class="k" data-group-id="6407144941-9">do</span><span class="w">
+  </span><span class="kn">use</span><span class="w"> </span><span class="nc">Coxir.Gateway</span><span class="w">
+  
+  </span><span class="kn">alias</span><span class="w"> </span><span class="nc">Coxir.Message</span><span class="w">
+  </span><span class="kn">alias</span><span class="w"> </span><span class="bp">__MODULE__</span><span class="w">
+
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="6407144941-10">(</span><span class="p" data-group-id="6407144941-11">{</span><span class="ss">:MESSAGE_CREATE</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6407144941-12">%</span><span class="nc" data-group-id="6407144941-12">Message</span><span class="p" data-group-id="6407144941-12">{</span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;!hello&quot;</span><span class="p" data-group-id="6407144941-12">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">message</span><span class="p" data-group-id="6407144941-11">}</span><span class="p" data-group-id="6407144941-10">)</span><span class="w"> </span><span class="k" data-group-id="6407144941-13">do</span><span class="w">
+    </span><span class="nc">Message</span><span class="o">.</span><span class="n">reply</span><span class="p" data-group-id="6407144941-14">(</span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="ss">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Hello this is Eva!&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">as</span><span class="p">:</span><span class="w"> </span><span class="nc">Eva</span><span class="p" data-group-id="6407144941-14">)</span><span class="w">
+  </span><span class="k" data-group-id="6407144941-13">end</span><span class="w">
+  
+  </span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_event</span><span class="p" data-group-id="6407144941-15">(</span><span class="c">_event</span><span class="p" data-group-id="6407144941-15">)</span><span class="w"> </span><span class="k" data-group-id="6407144941-16">do</span><span class="w">
+    </span><span class="ss">:noop</span><span class="w">
+  </span><span class="k" data-group-id="6407144941-16">end</span><span class="w">
+</span><span class="k" data-group-id="6407144941-9">end</span></code></pre><p>In which case the resulting behaviour will be as expected from two independent clients.</p>
 <div class="bottom-actions">
   <div class="bottom-actions-item">
 

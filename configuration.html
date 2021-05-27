@@ -10,7 +10,7 @@
     <title>Configuration — coxir v2.0.0</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
-    <script src="dist/sidebar_items-9ac427f145.js"></script>
+    <script src="dist/sidebar_items-51ef2f2b1e.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -91,7 +91,7 @@ coxir
   <a href="#when-a-token-is-not-configured-globally" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   When a token is not configured globally
 </h3>
-<p>If no token is configured globally but configured for a gateway instead, the following is required:</p><pre><code class="makeup elixir"><span class="nc">Coxir.Channel</span><span class="o">.</span><span class="n">get</span><span class="p" data-group-id="5512261142-1">(</span><span class="mi">432535429162729494</span><span class="p">,</span><span class="w"> </span><span class="ss">as</span><span class="p">:</span><span class="w"> </span><span class="nc">Example.Bot</span><span class="p" data-group-id="5512261142-1">)</span></code></pre><p>where a gateway process must be passed as the <code class="inline">:as</code> option. Or if there is no available gateway:</p><pre><code class="makeup elixir"><span class="nc">Coxir.Channel</span><span class="o">.</span><span class="n">get</span><span class="p" data-group-id="5265329459-1">(</span><span class="mi">432535429162729494</span><span class="p">,</span><span class="w"> </span><span class="ss">token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p" data-group-id="5265329459-1">)</span></code></pre><p>Note that this applies to most functions. Be sure to always check out the functions' specification.</p>
+<p>If no token is configured globally but configured for a gateway instead, the following is required:</p><pre><code class="makeup elixir"><span class="nc">Coxir.Channel</span><span class="o">.</span><span class="n">get</span><span class="p" data-group-id="9008196957-1">(</span><span class="mi">432535429162729494</span><span class="p">,</span><span class="w"> </span><span class="ss">as</span><span class="p">:</span><span class="w"> </span><span class="nc">Example.Bot</span><span class="p" data-group-id="9008196957-1">)</span></code></pre><p>where a gateway process must be passed as the <code class="inline">:as</code> option. Or if there is no available gateway:</p><pre><code class="makeup elixir"><span class="nc">Coxir.Channel</span><span class="o">.</span><span class="n">get</span><span class="p" data-group-id="0867706578-1">(</span><span class="mi">432535429162729494</span><span class="p">,</span><span class="w"> </span><span class="ss">token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p" data-group-id="0867706578-1">)</span></code></pre><p>Note that this applies to most functions. Be sure to always check out the functions' specification.</p>
 <div class="bottom-actions">
   <div class="bottom-actions-item">
 
