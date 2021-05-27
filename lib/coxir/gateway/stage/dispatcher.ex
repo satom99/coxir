@@ -26,6 +26,7 @@ defmodule Coxir.Gateway.Dispatcher do
           | guild_create
           | guild_update
           | guild_delete
+          | guild_emojis_update
           | guild_member_add
           | guild_member_update
           | guild_member_remove
@@ -66,6 +67,8 @@ defmodule Coxir.Gateway.Dispatcher do
   @type guild_update :: {:GUILD_UPDATE, Guild.t()}
 
   @type guild_delete :: {:GUILD_DELETE, Guild.t()}
+
+  @type guild_emojis_update :: {:GUILD_EMOJIS_UPDATE, Guild.t()}
 
   @type guild_member_add :: {:GUILD_MEMBER_ADD, Member.t()}
 
@@ -178,6 +181,14 @@ defmodule Coxir.Gateway.Dispatcher do
     end
 
     {:GUILD_DELETE, guild}
+  end
+
+  defp handle_event(%Payload{event: "GUILD_EMOJIS_UPDATE", data: data}) do
+    %{"guild_id" => guild_id, "emojis" => emojis} = data
+    object = %{"id" => guild_id, "emojis" => emojis}
+
+    guild = Loader.load(Guild, object)
+    {:GUILD_EMOJIS_UPDATE, guild}
   end
 
   defp handle_event(%Payload{event: "GUILD_MEMBER_ADD", data: object}) do
