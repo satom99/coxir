@@ -4,7 +4,7 @@ defmodule Coxir.Message do
   """
   use Coxir.Model
 
-  alias Coxir.Message.{Attachment, Embed, Reference}
+  alias Coxir.Message.{Attachment, Embed, Reference, Components}
 
   @type t :: %Message{}
 
@@ -24,6 +24,7 @@ defmodule Coxir.Message do
     embeds_many(:embeds, Embed)
 
     embeds_one(:message_reference, Reference)
+    embeds_one(:components, Components)
 
     belongs_to(:channel, Channel, primary_key: true)
     belongs_to(:guild, Guild)
