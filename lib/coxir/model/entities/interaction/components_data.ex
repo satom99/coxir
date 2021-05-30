@@ -1,4 +1,7 @@
 defmodule Coxir.Interaction.ComponentsData do
+  @moduledoc """
+  Work in progress.
+  """
   use Coxir.Model, storable?: false
 
   @primary_key false
