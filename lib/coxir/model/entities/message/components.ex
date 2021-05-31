@@ -9,6 +9,6 @@ defmodule Coxir.Message.Components do
 
   embedded_schema do
     field(:type, :integer)
-    belongs_to(:components, ComponentsData)
+    embeds_many(:components, Component)
   end
 end
