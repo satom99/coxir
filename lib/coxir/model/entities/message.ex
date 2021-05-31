@@ -24,7 +24,7 @@ defmodule Coxir.Message do
     embeds_many(:embeds, Embed)
 
     embeds_one(:message_reference, Reference)
-    embeds_one(:components, Components)
+    embeds_many(:components, Components)
 
     belongs_to(:channel, Channel, primary_key: true)
     belongs_to(:guild, Guild)
