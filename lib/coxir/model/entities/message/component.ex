@@ -3,12 +3,14 @@ defmodule Coxir.Message.Component do
   Work in progress.
   """
   use Coxir.Model, storable?: false
-  alias Coxir.Interaction.ComponentsData
 
   @type t :: %Component{}
 
   embedded_schema do
     field(:type, :integer)
+    field(:label, :string)
+    field(:style, :integer)
+    field(:custom_id, :string)
     embeds_many(:components, Component)
   end
 end
