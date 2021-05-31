@@ -1,11 +1,11 @@
-defmodule Coxir.Message.Components do
+defmodule Coxir.Message.Component do
   @moduledoc """
   Work in progress.
   """
   use Coxir.Model, storable?: false
   alias Coxir.Interaction.ComponentsData
 
-  @type t :: %Components{}
+  @type t :: %Component{}
 
   embedded_schema do
     field(:type, :integer)
