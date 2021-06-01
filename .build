@@ -40,6 +40,7 @@ Coxir.Limiter.Helper.html
 Coxir.Limiter.html
 Coxir.Member.html
 Coxir.Message.Attachment.html
+Coxir.Message.Component.html
 Coxir.Message.Embed.Author.html
 Coxir.Message.Embed.Field.html
 Coxir.Message.Embed.Footer.html
@@ -91,8 +92,8 @@ dist/html/fonts/icomoon.eot
 dist/html/fonts/icomoon.svg
 dist/html/fonts/icomoon.ttf
 dist/html/fonts/icomoon.woff
-dist/search_items-c809fc7eb3.js
-dist/sidebar_items-25c1d8490f.js
+dist/search_items-7456691f8d.js
+dist/sidebar_items-599c6a92f8.js
 entities.html
 index.html
 introduction.html
