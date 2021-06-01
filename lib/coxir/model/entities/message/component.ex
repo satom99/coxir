@@ -8,9 +8,14 @@ defmodule Coxir.Message.Component do
 
   embedded_schema do
     field(:type, :integer)
-    field(:label, :string)
     field(:style, :integer)
+    field(:label, :string)
     field(:custom_id, :string)
+    field(:url, :string)
+    field(:disabled, :boolean)
+
+    embeds_one(:emoji, Emoji)
+
     embeds_many(:components, Component)
   end
 end
